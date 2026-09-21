@@ -1,0 +1,10 @@
+# Arbeitsprodukte und Abwägungen (nicht verbindlich)
+arbeit/
+
+# Früherer Arbeitsbestand, nicht verbindlich
+concept-entwurf-v0.1/
+
+# Betriebssystem- und Sync-Artefakte
+desktop.ini
+Thumbs.db
+.DS_Store
