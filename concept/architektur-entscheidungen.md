@@ -260,9 +260,9 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 ## A-030 – Lieferkette
 
 - **Status:** angenommen, 20.09.2026.
-- **Umfang:** GitHub mit privatem Repository, geschütztem Hauptzweig und Pull Requests; GitHub Actions für Build, Prüfungen, Tests in Testcontainern, Architekturtests, Lint-Grenzen, Ladebudget, Dependabot und Trivy; GitHub Container Registry mit Digest-Pins und wöchentlichem Neubau; Deployment per SSH mit Migrations-Container vor dem Anwendungsstart, Gesundheitsprüfung und Rollback auf vorherigen Digest; Migrationen vorwärtskompatibel; Staging vor Produktion mit ausdrücklicher Freigabe.
-- **Begründung:** GitHub-Runner liefern Docker für Testcontainers ohne eigene Runner; ein Weg auf Produktion für Menschen und Agenten.
-- **Folgen:** kein Weg an CI vorbei; manuelle Hosteingriffe werden binnen einer Woche in Code überführt.
+- **Umfang:** GitHub mit privatem Repository; Arbeit direkt auf `master` ohne Branch-Schutz und ohne Pull-Request-Pflicht; GitHub Actions bei jedem Push auf `master` für Build, Prüfungen, Tests in Testcontainern, Architekturtests, Lint-Grenzen, Ladebudget, Dependabot und Trivy; GitHub Container Registry mit Digest-Pins und wöchentlichem Neubau; Deployment per SSH mit Migrations-Container vor dem Anwendungsstart, Gesundheitsprüfung und Rollback auf vorherigen Digest; Migrationen vorwärtskompatibel; Staging vor Produktion mit ausdrücklicher Freigabe.
+- **Begründung:** GitHub-Runner liefern Docker für Testcontainers ohne eigene Runner; ein kleines Team arbeitet ohne Verzweigungsaufwand direkt auf `master`.
+- **Folgen:** CI läuft nach jedem Push; ein Deployment auf Staging oder Produktion setzt einen grünen CI-Lauf des betreffenden Commits voraus; ein roter Lauf auf `master` wird als Nächstes repariert; manuelle Hosteingriffe werden binnen einer Woche in Code überführt.
 - **Nachweise:** fehlerhafte Migration bricht vor Anwendungsstart ab; Rollback ohne Datenbank-Rollback; kritischer Trivy-Fund blockiert das Release.
 
 ## A-031 – Backups und Wiederherstellung
@@ -799,7 +799,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 ## A-106 – Technischer Durchstich
 
 - **Status:** angenommen, 21.09.2026.
-- **Umfang:** Schmalster Pfad durch Zugang, Organisation, Marke, Entitlements mit M1, Challenges, Fortschritt, Feed, Benachrichtigungen, Metering und Datenschutz mit zwei Tenants in Compose; ohne Inhaltsmodule, Arena, Vault, Veranstaltungen, Firmenkanal, Mehrsprachigkeit, Verzeichnis, Partner-Konsole, KI-Authoring, Rechnungsversand, Mahnwesen. Acht Stufen in fester Reihenfolge (Fundament, Isolation, Queue und Idempotenz, Zugang, Vertrag und Oberfläche, Fachpfad, Geld, Onboarding), Stufen 4 und 5 parallel erlaubt; jede Stufe mit grüner CI und Abnahmeprotokoll. Vier Produktwahlen mit Version ins Register. Abschluss: alle Nachweise grün oder manuell abgenommen, Ladebudget gemessen, Neuaufbau innerhalb RTO, Lasttest bestanden, Zusatz „technisch nachgewiesen“ je Entscheidung. Keine Termine; Abweichungen vom Konzept sind Registeränderungen vor dem Merge.
+- **Umfang:** Schmalster Pfad durch Zugang, Organisation, Marke, Entitlements mit M1, Challenges, Fortschritt, Feed, Benachrichtigungen, Metering und Datenschutz mit zwei Tenants in Compose; ohne Inhaltsmodule, Arena, Vault, Veranstaltungen, Firmenkanal, Mehrsprachigkeit, Verzeichnis, Partner-Konsole, KI-Authoring, Rechnungsversand, Mahnwesen. Acht Stufen in fester Reihenfolge (Fundament, Isolation, Queue und Idempotenz, Zugang, Vertrag und Oberfläche, Fachpfad, Geld, Onboarding), Stufen 4 und 5 parallel erlaubt; jede Stufe mit grüner CI und Abnahmeprotokoll. Vier Produktwahlen mit Version ins Register. Abschluss: alle Nachweise grün oder manuell abgenommen, Ladebudget gemessen, Neuaufbau innerhalb RTO, Lasttest bestanden, Zusatz „technisch nachgewiesen“ je Entscheidung. Keine Termine; Abweichungen vom Konzept sind Registeränderungen im selben Commit.
 - **Begründung:** Beweise vor Breite; Isolation und Idempotenz zuerst, weil Fehler dort alles Spätere entwerten.
 - **Nachweise:** Abnahmeprotokolle im Repository; Register mit Produktwahlen und Zusätzen.
 

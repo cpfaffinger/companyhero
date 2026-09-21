@@ -48,10 +48,10 @@ Jede Stufe endet mit grüner CI und einem Abnahmeprotokoll je Nachweis. Eine Stu
 ## 4. Arbeitsweise
 
 - Test Driven Development nach Backend 9: Akzeptanzfall, roter Test aus fachlichem Grund, kleinste Implementierung, Refaktorieren, Architekturprüfung.
-- Ein Pull Request je Nachweis oder je zusammengehöriger Nachweisgruppe; kein Weg an CI vorbei (A-030).
-- Agentische Entwicklung mit denselben Pull Requests, derselben CI und denselben Lint-Grenzen; die Regeln aus den Integrationsregeln sind Lint- und Abhängigkeitsprüfungen ab Stufe 1.
+- Commits direkt auf `master`, ein Commit oder eine zusammenhängende Commit-Folge je Nachweis; CI läuft nach jedem Push (A-030).
+- Agentische Entwicklung mit derselben CI und denselben Lint-Grenzen; die Regeln aus den Integrationsregeln sind Lint- und Abhängigkeitsprüfungen ab Stufe 1.
 - Testdaten synthetisch; keine echten Personen; feste Testuhren; Testcontainer mit echtem PostgreSQL und Laufzeitrechten.
-- Jede Abweichung vom Konzept, die der Durchstich erzwingt, ist eine Registeränderung vor dem Merge, nicht danach.
+- Jede Abweichung vom Konzept, die der Durchstich erzwingt, ist eine Registeränderung im selben Commit, nicht danach.
 
 ## 5. Abschlusskriterien
 
@@ -68,4 +68,4 @@ Danach beginnt die Umsetzung der übrigen Domänen in der Reihenfolge, die der B
 
 1. Abnahmeprotokoll je Stufe liegt im Repository; CI-Lauf referenziert.
 2. Register enthält die vier Produktwahlen mit Version und die Zusätze „technisch nachgewiesen“.
-3. Kein Merge auf den Hauptzweig ohne grüne CI; Stichprobe der Historie.
+3. Jeder deployte Commit hat einen grünen CI-Lauf; Stichprobe der Historie.

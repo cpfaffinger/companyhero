@@ -91,8 +91,8 @@ AGPL-Komponenten werden selbst betrieben und nicht verändert weitergegeben; dar
 
 | Schritt | Festlegung |
 |---|---|
-| Codehosting | GitHub, privates Repository, geschützter Hauptzweig, Pull Requests mit grünem CI als Voraussetzung |
-| CI | GitHub Actions: Build, Compiler- und Templateprüfung, Fachtests, API- und Datenbanktests in Testcontainern, Architekturtests, Lint-Grenzen aus den Integrationsregeln, Ladebudget, Abhängigkeits- und Image-Scan |
+| Codehosting | GitHub, privates Repository; Arbeit direkt auf `master`, kein Branch-Schutz, keine Pull-Request-Pflicht |
+| CI | GitHub Actions bei jedem Push auf `master`: Build, Compiler- und Templateprüfung, Fachtests, API- und Datenbanktests in Testcontainern, Architekturtests, Lint-Grenzen aus den Integrationsregeln, Ladebudget, Abhängigkeits- und Image-Scan |
 | Abhängigkeiten | Dependabot für NuGet, npm und Basis-Images; wöchentliche Sammel-Updates; Sicherheitsupdates sofort |
 | Image-Scan | Trivy in CI; kritische Funde blockieren das Release |
 | Registry | GitHub Container Registry, Images mit Version und Digest, wöchentlicher Neubau für Basis-Image-Updates |
@@ -101,7 +101,7 @@ AGPL-Komponenten werden selbst betrieben und nicht verändert weitergegeben; dar
 | Staging vor Produktion | jedes Release läuft zuerst auf Staging mit Smoke-Tests; Produktion nur per ausdrücklicher Freigabe |
 | Reproduzierbarkeit | Lockfiles, festgelegtes SDK, festgelegte Node-Version, Build im Container |
 
-Agentische Entwicklung läuft über dieselben Pull Requests und dieselbe CI. Kein Weg an CI vorbei auf Produktion.
+Agentische Entwicklung committet ebenfalls direkt auf `master` und durchläuft dieselbe CI. Ein Deployment setzt einen grünen CI-Lauf des betreffenden Commits voraus; ein roter Lauf auf `master` wird als Nächstes repariert.
 
 ## 5. Backups und Wiederherstellung (A-031)
 
