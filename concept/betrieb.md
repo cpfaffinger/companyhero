@@ -148,7 +148,7 @@ Regeln:
 
 - Zugangsdaten liegen in OpenBao, nie in der Datenbank im Klartext und nie in Logs.
 - Jede Konfiguration wird vor Aktivierung mit einer Testnachricht an eine vom Konfigurierenden bestätigte Adresse geprüft; erst danach ist sie aktiv.
-- Öffnungs- und Klickverfolgung der Anbieter ist deaktiviert; Nachrichten enthalten keine Personendaten außer dem Link und keine Tracking-Elemente.
+- Öffnungs- und Klickverfolgung der Anbieter ist deaktiviert; Nachrichten enthalten keine Personendaten außer der Anrede mit Anzeigenamen und dem Link und keine Tracking-Elemente.
 - SPF, DKIM und DMARC sind für jede Absenderdomain erforderlich. Für Anbieter-Transporte zeigt die Verwaltung die einzutragenden DNS-Einträge und prüft sie; für SMTP liegt die Verantwortung beim Betreiber der Absenderdomain.
 - Bei Tenant-Konfiguration gilt: Schlägt der Versand fehl, wird der Tenant-Admin benachrichtigt. Ob in diesem Fall auf den Plattformversand zurückgefallen wird, stellt der Tenant-Admin ein; Voreinstellung ist Rückfall aktiv, weil Magic-Links und Rollencodes zugestellt werden müssen.
 - Datenschutz: Ein auf Plattformebene konfigurierter Anbieter ist Unterauftragsverarbeiter des Betreibers und steht in der Unterauftragsverarbeiterliste. Ein vom Tenant konfigurierter Transport ist ein Auftragsverarbeiter des Tenants; die Verwaltung weist darauf hin.

@@ -20,10 +20,10 @@ Externe Anmeldeanbieter und Anbieterzwang gehören zum Kern. Das Modul Verzeichn
 
 | Element | Festlegung |
 |---|---|
-| Protokoll | SCIM 2.0 als Empfänger; der Tenant konfiguriert seinen Verzeichnisdienst (etwa Entra ID) mit Endpunkt und Bearer-Token aus der Verwaltung; Token in OpenBao, jederzeit rotierbar |
-| Gruppen | Verzeichnisgruppen werden Gruppen einer Dimension zugeordnet (Mapping in der Verwaltung); die Mitgliederanzahl der Verzeichnisgruppe wird zur Sollstärke mit Stichtag; Mitgliederkennungen werden nach der Zählung verworfen |
+| Protokoll | SCIM 2.0 als Empfänger; der Tenant-Admin konfiguriert den Verzeichnisdienst des Tenants (etwa Entra ID) mit Endpunkt und Bearer-Token aus der Verwaltung; Token in OpenBao, jederzeit rotierbar |
+| Gruppen | Verzeichnisgruppen werden Gruppen einer Dimension zugeordnet (Mapping durch den Tenant-Admin im Bereich Zugang und Integrationen); die Mitgliederanzahl der Verzeichnisgruppe wird zur Sollstärke mit Stichtag; Mitgliederkennungen werden nach der Zählung verworfen |
 | Benutzer | Benutzerressourcen werden angenommen, aber nur `externalId` und `active` verwendet; alle anderen Attribute werden verworfen; es entsteht keine Person |
-| Deaktivierungssignal | `active = false` oder Löschung: Ist die `externalId` als Subject einer Anbieterverknüpfung bekannt, werden Sitzungen der Person beendet und die Verknüpfung entfernt. Ohne anderen Anmeldeweg wird die Person nach 30 Tagen ohne Anmeldung automatisch ausgetreten (A-019); mit anderem Weg bleibt die Mitgliedschaft |
+| Deaktivierungssignal | `active = false` oder Löschung: Ist die `externalId` als Subject einer Anbieterverknüpfung bekannt, werden Sitzungen der Person beendet und die Verknüpfung entfernt. Ohne anderen Anmeldeweg wird die Person nach 30 Tagen ohne Anmeldung automatisch ausgetreten (kürzere Frist gegenüber den 24 Monaten aus A-024, festgelegt in A-105; Austrittsfolgen nach A-019); mit anderem Weg bleibt die Mitgliedschaft |
 | Reaktivierung | `active = true` innerhalb der 30 Tage stellt die Verknüpfung wieder her |
 | Protokoll | jede Gruppen- und Sollstärkenänderung und jedes Deaktivierungssignal im Prüfprotokoll ohne Personenbezug |
 
@@ -31,14 +31,14 @@ Was der Tenant sieht: Zuordnung der Gruppen, Zeitpunkt der letzten Synchronisier
 
 ### 2.2 Netzwerkregeln
 
-- Allowlist von IP-Bereichen für den Zugriff auf die Verwaltung und auf Rollen mit Verwaltungsrechten (Tenant-Admin, Programm-Manager, Redakteur, Einsichtsrolle). Außerhalb der Bereiche werden diese Rollen abgelehnt; Mitgliedsfunktionen derselben Person bleiben erreichbar.
+- Vom Tenant-Admin gepflegte Allowlist von IP-Bereichen für den Zugriff auf die Verwaltung und auf Rollen mit Verwaltungsrechten (Tenant-Admin, Programm-Manager, Redakteur, Einsichtsrolle). Außerhalb der Bereiche werden diese Rollen abgelehnt; Mitgliedsfunktionen derselben Person bleiben erreichbar.
 - Mitglieder-App, Kiosk, Beitritt und Anmeldung sind nie betroffen.
 - Eine Sperrliste, die den Tenant-Admin selbst aussperren würde, wird abgelehnt; die Verwaltung prüft die aktuelle Adresse vor dem Speichern.
 
 ### 2.3 Protokollexport
 
 - Täglicher Export des Prüfprotokolls (A-025) als JSON-Datei über einen signierten Verweis in der Verwaltung.
-- Optional signierter HTTPS-Push an einen vom Tenant konfigurierten Endpunkt mit Wiederholung und Zustellstatus.
+- Optional signierter HTTPS-Push an einen vom Tenant-Admin konfigurierten Endpunkt mit Wiederholung und Zustellstatus.
 - Inhalt wie das Prüfprotokoll: Klarnamen der Funktionsrollen, keine Mitgliederdaten.
 
 ## 3. Schnittmengen

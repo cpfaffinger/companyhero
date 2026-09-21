@@ -74,7 +74,7 @@ Apple Health und Health Connect haben keine Web-Schnittstelle und sind nicht anb
 | | Gewicht, Körperfett, Körpermaße, Kalorien |
 | | Stress-, Energie- oder Erholungswerte |
 
-Die Scopes im Programmantrag entsprechen genau der linken Spalte. Ein Tenant kann einzelne Metriken der linken Spalte für seine Mitglieder deaktivieren, nie zusätzliche aktivieren.
+Die Scopes im Programmantrag entsprechen genau der linken Spalte. Der Tenant konfiguriert nichts außer der Buchung (A-064); welche Metriken bezogen werden, bestimmt allein der Katalog.
 
 ### 3.4 Ableitung und Export aus dem Vault
 
@@ -105,7 +105,7 @@ Unter „Ich → Geräte“: Hersteller, Verbindungszustand, Zeitpunkt der letzt
 ### 4.2 Rechte
 
 - **Auskunft und Export:** Der Selbstexport (A-025) enthält die abgeleiteten Werte. Auf Wunsch erzeugt der Vault einen Export der Rohdaten der letzten 90 Tage als Datei; der Monolith liefert einen signierten, 24 Stunden gültigen Verweis. Der Vault speichert die Datei höchstens 24 Stunden.
-- **Löschung:** Trennen löscht Rohdaten binnen 30 Tagen; Austritt löscht sofort Tokens, Rohdaten, Subjektschlüssel und Zuordnung; Tenant-Kündigung löscht alle Verbindungen des Tenants mit der Tenant-Löschung (A-024).
+- **Löschung:** Trennen löscht Rohdaten binnen 30 Tagen; Austritt löscht sofort Tokens, Rohdaten, Subjektschlüssel und Zuordnung; Tenant-Kündigung und Kündigung von M8 trennen alle Verbindungen des Tenants zum Kündigungstermin; Tokens werden widerrufen, Rohdaten binnen 30 Tagen gelöscht, abgeleitete Werte bleiben bis zur Tenant-Löschung (A-024, A-066).
 - **Widerruf beim Hersteller:** Widerruft die Person den Zugriff im Herstellerkonto, erkennt der Vault den Fehler beim nächsten Abruf, beendet die Verbindung und startet die 30-Tage-Löschung.
 
 ### 4.3 Was niemand sieht

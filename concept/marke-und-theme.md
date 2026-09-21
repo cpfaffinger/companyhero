@@ -96,7 +96,7 @@ Material Symbols Rounded, selbst ausgeliefert, Outline bei 24 px, gefüllt nur f
 | Anrede Du oder Sie | Datenschutzregeln und Schwellen |
 | Tonalität sachlich, freundlich, motivierend | Sichtbarkeit fremder Mitgliederdaten |
 | Startbild und Willkommenstext | Systemtexte (nur Stufe und Bezeichnungen) |
-| Bezeichnungen für Punkte, Serie, Stufen, Gruppendimensionen | Erfolgsmoment und Bewegung |
+| Bezeichnungen für Punkte, Serie, Stufen | Erfolgsmoment und Bewegung |
 | Sprachen mit Mehrsprachigkeitsmodul | Icon-Stil |
 
 ### 3.2 Theme-Dokument
@@ -116,8 +116,7 @@ Ein Tenant-Theme ist ein versioniertes JSON-Dokument mit Schemaversion:
   "bezeichnungen": {
     "punkte": "Punkte",
     "serie": "Serie",
-    "stufen": ["Neu dabei", "Dabei", "Dranbleiber", "Vorbild", "Urgestein"],
-    "dimensionen": { "1": "Standort", "2": "Abteilung", "3": "Schicht" }
+    "stufen": ["Neu dabei", "Dabei", "Dranbleiber", "Vorbild", "Urgestein"]
   },
   "startbild": "<Medienreferenz>",
   "willkommenstext": "…"
@@ -154,7 +153,7 @@ Der Operator pflegt die Plattformmarke: Produktname der Plattform, Wortmarke, Bi
 | Geltungsbereich | Wann | Erscheinungsbild |
 |---|---|---|
 | **Tenant** | Start, Challenges, Entdecken, Firma, Ich, Verwaltung, Kiosk | vollständig Tenant: Name, Logo, Farben, Anrede, Tonalität; Plattform nur in Impressum und „Über“ |
-| **Plattform** | Arena-Übersicht, Arena-Detail, arenaweite Ranglisten, Arena-Feed-Ereignisse, Operator-Konsole, Anmeldeseite vor Tenant-Zuordnung | neutrale Plattform-Schale im Standard-Theme; das Tenant-Logo erscheint als Teilnehmerkennzeichen gleichrangig neben anderen |
+| **Plattform** | Arena-Übersicht, Arena-Detail, arenaweite Ranglisten, Arena-Feed-Ereignisse, Partner-Konsole, Operator-Konsole, Anmeldeseite vor Tenant-Zuordnung | neutrale Plattform-Schale im Standard-Theme; das Tenant-Logo erscheint als Teilnehmerkennzeichen gleichrangig neben anderen |
 
 Der Wechsel ist sichtbar gestaltet: Die Arena wird über eine eigene Kopfzeile („Firmenübergreifend“) betreten, Rahmen und Farben wechseln. Beim Verlassen kehrt die Tenant-Marke zurück. Kein dauerhaftes Doppel-Logo. Der Theme-Service verwaltet Markenkontext und Modus gemeinsam; Overlays folgen, kontextgebundene Overlays werden beim Wechsel geschlossen (K05). Der Markenwechsel ändert nie die Mitgliedschaft oder Sitzung.
 
@@ -217,7 +216,7 @@ Ziel ist WCAG 2.2 AA vollständig, weil die Zielgruppe alle Beschäftigten umfas
 | Schnittmenge | Festlegung |
 |---|---|
 | Marke ↔ Frontend | Tokensatz → `--ch-*` → Material-Adapter; Theme-Service für Kontext und Modus; kein Ableitungscode im Frontend (A-013, K01 bis K09) |
-| Marke ↔ Organisation | Produktname, Sprache und Zeitzone aus Stammdaten; Partner-Voreinstellungen als Startwerte; Bezeichnungen der Gruppendimensionen (A-034) |
+| Marke ↔ Organisation | Produktname, Sprache und Zeitzone aus Stammdaten; Partner-Voreinstellungen als Startwerte; die Bezeichnungen der Gruppendimensionen gehören zu Organisation (A-034), nicht zum Theme |
 | Marke ↔ Benachrichtigungen | Tonalität, Anrede, Bezeichnungen und Sperrliste für alle Texte; Tokensatz für Aushang und E-Mail-Layout; Tenant-Logo als Push-Symbol |
 | Marke ↔ Feed und Inhalte | Tonalitätsvorschläge für Ankündigungen; Sperrliste in der Moderation; Arena-Karten in Plattform-Schale |
 | Marke ↔ Fortschritt | Bezeichnungen für Punkte, Serie und Stufen; Erfolgsmoment als einzige Erfolgsanimation |

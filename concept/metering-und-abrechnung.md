@@ -65,8 +65,8 @@ Die Preisgestaltung ist maximal variabel und nie fest. Jeder Kunde erhält ein i
 | `module.trial_day` | Testtage | alle | Entitlements | Nachweis, nie bewertet |
 | `challenge.active_month` | Challenges je Monat | M1 | Challenges | Programmintensität |
 | `challenge.participant_day` | Teilnehmertage | M1 | Challenges | verbrauchsnah |
-| `arena.entry` | Beitritte | M2 | Arena | je Teilnahme |
-| `arena.size_class` | Größenklasse je Monat | M2 | Arena | Staffel ohne Personenzähler |
+| `arena.entry` | Beitritte | M2 | Challenges (Arena-Beitritt im Monolithen) | je Teilnahme |
+| `arena.size_class` | Größenklasse je Monat | M2 | Challenges (Arena-Beitritt im Monolithen) | Staffel ohne Personenzähler |
 | `content.published` | veröffentlichte Inhalte | M3, M5, M6, M7, M10 | Feed und Inhalte | „Euro je Video“ |
 | `content.minute_played` | Abspielminuten | M3, M6 | Feed und Inhalte | nutzungsabhängig |
 | `content.completion` | Abschlüsse | M3 bis M7 | Feed und Inhalte | ergebnisabhängig |
@@ -75,17 +75,17 @@ Die Preisgestaltung ist maximal variabel und nie fest. Jeder Kunde erhält ein i
 | `event.booking` | gebuchte Plätze | M9 | Workshops | je Platzkontingent; **nie je tatsächlichem Teilnehmer** |
 | `event.delivered` | durchgeführte Termine | M9 | Workshops | Festpreis oder Provision |
 | `event.cancellation` | Stornobetrag | M9 | Workshops | Storno innerhalb der Frist |
-| `workshop.credit_redeemed` | eingelöste Belohnungen | M9 | Challenges | meist 0 Euro, protokolliert |
+| `workshop.credit_redeemed` | eingelöste Belohnungen mit Betrag | M9 | Workshops | Betrag null bei „vom Tenant zugesagt“, gedeckter Betrag bei „im Preisplan enthalten“ (A-085) |
 | `channel.post` | Firmenkanal-Beiträge | M10 | Feed und Inhalte | je Beitrag |
 | `document.stored` | Dokumente je Monat | M10 | Feed und Inhalte | Speicherbezug |
 | `language.active_month` | aktive Zusatzsprachen | M11 | Entitlements | je Sprache |
-| `directory.sync_month` | Monate | M12 | Verzeichnis | Flatrate |
+| `directory.sync_month` | Monate | M12 | Entitlements | Flatrate |
 | `notification.push_sent` | gesendete Push | Kern | Benachrichtigungen | nur falls Volumen relevant |
 | `notification.email_sent` | gesendete E-Mails | Kern | Benachrichtigungen | nur bei Plattformtransport |
 | `kiosk.device_month` | Kiosk-Geräte je Monat | Kern | Zugang | optional |
 | `storage.gb_month` | GB-Monate | Kern | Feed und Inhalte | Medienspeicher |
 | `ai.call` | KI-Aufrufe | Kern | Feed und Inhalte | nur Nachweis, Kosten trägt der Tenant über eigene Zugangsdaten |
-| `setup.onetime` | Stück | alle | Verwaltung | Einrichtung, Import, Schulung |
+| `setup.onetime` | Stück | alle | Operator-Admin, manuell in der Operator-Konsole | Einrichtung, Import, Schulung |
 
 Neue Metriken sind Konfiguration plus eine Emissionsstelle, kein Preisrelease. Eine Metrik ohne Preisregel wird erfasst und nicht bewertet.
 
@@ -164,13 +164,13 @@ Der Bereich „Module und Kosten“ zeigt dem Tenant-Admin permanent:
 | Laufender Monat | aufgelaufene Menge und Betrag je Regel, Gesamtsumme, Fortschritt im Monat | aus Tagesaggregaten, aktualisiert stündlich und bei jeder Buchung |
 | Prognose Monatsende | Hochrechnung aus bisherigem Verlauf und den letzten drei Monaten | als Schätzung gekennzeichnet |
 | Simulation vor Buchung | „Dieses Modul erhöht den laufenden Monat um X, den Folgemonat um Y“ | vor dem Klick auf Buchen (A-066) |
-| Verbrauchsdetail | je Metrik und Tag aggregiert, mit Mengennachweis | **keine Ledger-Einzelzeilen**; bei personennahen Metriken ausschließlich die Summe |
+| Verbrauchsdetail | Mengen ohne Personenbezug je Metrik und Tag aggregiert, mit Mengennachweis; personennahe Metriken (aktive Mitglieder, Teilnehmertage) ausschließlich als Monatssumme | **keine Ledger-Einzelzeilen**; keine Tagesschnitte bei personennahen Metriken (A-023) |
 | Stufenwarnung | „In 6 Tagen überschreitest du 250 aktive Mitglieder, dann sinkt der Stückpreis“ | Sprünge nach unten aktiv, nach oben zwingend |
 | Testphase | „In der Testphase wären das X Euro gewesen“ | aus nicht bewerteten Ereignissen |
 | Definitionen | Klartext jeder verwendeten Metrik, insbesondere „aktives Mitglied“ | immer sichtbar |
 | Rechnungen | Liste, Status, PDF, CSV, XML | sieben Jahre |
 
-Programm-Manager, Botschafter und Einsichtsrolle sehen keine Kosten. Die Einsichtsrolle sieht, welche Metriken vertraglich verwendet werden, ohne Beträge. Partner sehen je Tenant Mengen und Beträge ihrer Pläne sowie ihre Provision.
+Programm-Manager, Botschafter und Einsichtsrolle sehen keine Kostenvorschau, keine Rechnungen und kein Verbrauchsdetail; der Programm-Manager sieht die Angebotspreise im Veranstaltungskatalog (A-083). Die Einsichtsrolle sieht, welche Metriken vertraglich verwendet werden, ohne Beträge. Partner sehen je Tenant Mengen und Beträge ihrer Pläne sowie ihre Provision.
 
 Tagesaggregate je Tenant, Metrik und Tag werden vom Worker aus dem Ledger geführt; sie sind die einzige Datenquelle für Oberflächen und Exporte des Tenants.
 
@@ -218,7 +218,8 @@ Die Sperre setzt ein Operator-Admin bewusst (A-033). Während der Sperre laufen 
 | Korrektur | Gegenbuchung im Ledger; nach Versand Gutschrift oder Nachbelastung |
 | Doppelzählung | über Idempotenzschlüssel ausgeschlossen |
 | Modul gekündigt, Daten in 90-Tage-Frist | Speichermetrik läuft weiter bis zur Löschung, transparent ausgewiesen |
-| Verdiente Belohnung | `workshop.credit_redeemed` mit 0 Euro, protokolliert |
+| Verdiente Belohnung | `workshop.credit_redeemed` mit Betrag null oder gedecktem Betrag je Kostenmodell (A-085), protokolliert |
+| Sensible Challenge-Kategorie | Beiträge erzeugen weder `challenge.participant_day` noch `challenge.active_month`; sie zählen nur als Handlung für aktive Mitglieder (A-038) |
 | Tenant gekündigt | Schlussrechnung zum Kündigungstermin; Speicher bis zur Löschung nach 90 Tagen |
 | Gesperrter Tenant | Flatrates weiter, keine nutzungsabhängigen Mengen |
 

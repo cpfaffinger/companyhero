@@ -11,7 +11,7 @@
 
 ### 1.1 Enthalten
 
-Ein Tenant wird vom Operator angelegt, ein Tenant-Admin löst den Rollencode ein, richtet Gruppen, Sollstärke, Marke und Anmeldewege ein, startet die Kickoff-Challenge, registriert einen Kiosk. Personen treten ohne E-Mail bei, erfassen Beiträge am Handy (online und offline) und am Kiosk, sehen Fortschritt und Feed, erhalten Push. Metering zählt, die Kostenvorschau rechnet, ein Rechnungsentwurf entsteht. Zwei Tenants beweisen die Isolation. Alles läuft in Compose mit Caddy, PostgreSQL, Garage, OpenBao und Beobachtung.
+Ein Tenant wird vom Operator angelegt, ein Tenant-Admin löst den Rollencode ein, richtet Gruppen, Sollstärke, Marke und Anmeldewege ein, übernimmt zusätzlich die Rolle Programm-Manager, startet die Kickoff-Challenge und registriert einen Kiosk. Personen treten ohne E-Mail bei, erfassen Beiträge am Handy (online und offline) und am Kiosk, sehen Fortschritt und Feed, erhalten Push. Metering zählt, die Kostenvorschau rechnet, ein Rechnungsentwurf entsteht. Zwei Tenants beweisen die Isolation. Alles läuft in Compose mit Caddy, PostgreSQL, Garage, OpenBao und Beobachtung.
 
 Domänen im Durchstich: Identität und Zugang, Organisation, Marke und Theme, Entitlements (Kern plus M1), Challenges (Sammelziel, Häkchen), Fortschritt, Feed (System-Ereignisse, ein Tenant-Beitrag), Benachrichtigungen (In-App, Push, E-Mail über SMTP), Metering und Abrechnung (Ledger, Kostenvorschau, Rechnungsentwurf), Datenschutz (Sichtbarkeit, Mindestzahl, Prüfprotokoll, Austritt).
 

@@ -73,7 +73,7 @@ Der Feed ist die Oberfläche, auf der jedes andere Modul sichtbar wird; die Inha
 
 ### 3.1 Tenant-Beiträge
 
-- Autoren: Programm-Manager (tenantweit), Redakteur (Firmenkanal, tenantweit), Botschafter (eigene Gruppen). Absender ist Klarname und Rolle beziehungsweise „Team Gesundheit“ als wählbarer Rollenabsender.
+- Autoren: Programm-Manager (tenantweit), Redakteur (Firmenkanal, tenantweit), Botschafter (eigene Gruppen). Absender ist bei Programm-Manager und Redakteur Klarname und Rolle, bei Botschaftern Anzeigename und Rollenkennzeichen, oder „Team Gesundheit“ als wählbarer Rollenabsender.
 - Inhalt: Text bis 2.000 Zeichen mit einfacher Formatierung (Absätze, Fett, Listen, Links), bis zu 4 Bilder oder ein Dokument, optional ein Termin (Titel, Zeit, Ort, ICS-Export) oder ein Link auf Challenge oder Inhalt.
 - Zeitsteuerung: sofort oder geplant; Ablaufdatum optional. Anheftung wie 2.3.
 - Tonalität: Textvorschläge für Ankündigungen entstehen aus der Tonalitätsstufe des Tenants (Marke); der Autor bearbeitet sie frei.
@@ -91,7 +91,7 @@ Der Feed ist die Oberfläche, auf der jedes andere Modul sichtbar wird; die Inha
 
 - Kommentare sind auf Tenant- und Mitglieder-Beiträgen möglich, eine Ebene tief, bis 500 Zeichen, ohne Bilder.
 - Der Programm-Manager schaltet Kommentare tenantweit ein oder aus (Voreinstellung ein); jeder Autor kann sie je Beitrag abschalten.
-- Sichtbarkeit eines Kommentars folgt dem Beitrag; kommentieren kann nur, wer den Beitrag sieht und selbst mindestens „Mein Team“ gesetzt hat. Der Kommentar zeigt den Anzeigenamen.
+- Kommentieren kann nur, wer den Beitrag sieht und selbst mindestens „Mein Team“ gesetzt hat. Ein Kommentar ist im Schnitt aus der Reichweite des Beitrags und der Sichtbarkeitsstufe des Kommentators sichtbar: Mit „Mein Team“ sehen ihn nur die eigenen Gruppen, mit „Ganze Firma“ der ganze Kreis des Beitrags. Außerhalb dieses Schnitts erscheint der Kommentar nicht. Der Kommentar zeigt den Anzeigenamen.
 - Autor löscht eigene Kommentare; Beitragsautor und Moderation können Kommentare ausblenden.
 - Auf Inhaltsobjekten gibt es keine Kommentare; Diskussion findet auf der Feed-Karte statt.
 
@@ -112,7 +112,7 @@ Der Feed ist die Oberfläche, auf der jedes andere Modul sichtbar wird; die Inha
 | Automatische Zurückhaltung | Beiträge mit Treffern der Sperrliste werden bis zur Prüfung zurückgehalten; drei Meldungen blenden einen Beitrag bis zur Prüfung automatisch aus |
 | Sperrliste | plattformweite Grundliste des Operators plus tenant-eigene Ergänzungen; keine Freigabe von Begriffen der Grundliste durch Tenants |
 | Folgen | Ausblenden ist reversibel; Entfernen löscht; die betroffene Person erhält einen neutralen Hinweis ohne Nennung des Melders; wiederholte Entfernungen (drei in 30 Tagen) sperren das Posten für 30 Tage, nicht die Mitgliedschaft |
-| Protokoll | jede Moderationsentscheidung mit Klarname der Rolle im Prüfprotokoll; Meldungen ohne Personenbezug des Melders |
+| Protokoll | jede Moderationsentscheidung im Prüfprotokoll mit Klarname der Funktionsrolle beziehungsweise Anzeigename und Rolle des Botschafters; Meldungen ohne Personenbezug des Melders |
 | Kein Eingriff in Sichtbarkeit | Moderation ändert nie die Sichtbarkeitsstufe einer Person |
 
 ---
@@ -149,8 +149,8 @@ Jeder Inhalt trägt: Kategorie (Bewegung, Ergonomie, Wissen, Regeneration, Ernä
 
 | Ebene | Pflege | Sichtbar für |
 |---|---|---|
-| Plattforminhalte | Operator-Redaktion | alle Tenants mit freigeschalteter Kategorie |
-| Partnerinhalte | Partner-Redaktion | Tenants des Partners |
+| Plattforminhalte | Operator-Admins in der Operator-Konsole | alle Tenants mit freigeschalteter Kategorie |
+| Partnerinhalte | Partner-Admins in der Partner-Konsole | Tenants des Partners |
 | Tenantinhalte | Redakteur, Programm-Manager | eigener Tenant |
 
 Ein Tenant schaltet Plattform- und Partnersammlungen frei oder blendet einzelne Inhalte aus. Tenantinhalte in einer Kategorie setzen die Freischaltung dieser Kategorie voraus; Dokumente und Firmenbeiträge setzen den Firmenkanal voraus. Zuordnung der Kategorien zu Modulen und Regeln der Freischaltung stehen in [Entitlements](entitlements.md).
@@ -166,7 +166,7 @@ Texte je Sprache mit Pflicht in der Sprache des Inhaltsverantwortlichen; Unterti
 | Zustand | Bedeutung |
 |---|---|
 | Entwurf | nur für Redaktion sichtbar |
-| Prüfung | optionale Vier-Augen-Freigabe; der Tenant stellt ein, ob Prüfung Pflicht ist |
+| Prüfung | optionale Vier-Augen-Freigabe; der Tenant-Admin stellt ein, ob Prüfung Pflicht ist |
 | Geplant | Veröffentlichungszeitpunkt gesetzt |
 | Veröffentlicht | sichtbar in der Bibliothek; Feed-Karte gemäß Redaktionsplan |
 | Zurückgezogen | nicht mehr sichtbar; Fortschritt und Favoriten der Personen bleiben |
@@ -205,7 +205,7 @@ Jede Veröffentlichung erzeugt eine Version; frühere Versionen bleiben für Nac
 | Offline | Videos nur auf ausdrücklichen Wunsch der Person mit Größenangabe lokal speicherbar; Aufbewahrung 30 Tage ohne Nutzung, Löschung bei Austritt |
 | Status | Verarbeitung ist ein Job mit sichtbarem Fortschritt in der Redaktion; ein Inhalt kann erst veröffentlicht werden, wenn alle Ableitungen vorliegen |
 
-### 8.5 KI-Authoring in der Redaktion (A-057)
+### 8.1 KI-Authoring in der Redaktion (A-057)
 
 Redakteure und Programm-Manager können eine KI-Schreibhilfe verwenden. Sie ist optional, je Tenant ein- oder ausschaltbar und läuft ausschließlich mit vom Tenant beigestellten Zugangsdaten (Bring Your Own Key).
 

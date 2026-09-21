@@ -25,7 +25,7 @@ Entitlements beantworten genau eine Frage: **Darf dieser Tenant dieses Modul jet
 | Identität und Zugang | Beitritt per Code, alle Anmeldewege einschließlich externer Anbieter, Passkey, Magic-Link, Wiederherstellungscode, Kiosk mit Gerät- und Personensitzung, Anbieterzwang, Sitzungen (A-014 bis A-019) |
 | Organisation | Gruppen in bis zu drei Dimensionen, Sollstärken, Rollen, Rollencodes, Mitgliederliste ohne Aktivitätsdaten (A-033 bis A-036) |
 | Profil und Fortschritt | Check-in, Punkte, Serie, Abwesenheit, Abzeichen, Stufen, Tagesziel, Rückblicke (A-044 bis A-048) |
-| Feed | System-Ereignisse, Tenant-Beiträge durch Programm-Manager und Botschafter mit Ankündigungen, Mitglieder-Beiträge, Kommentare, Anerkennung, Moderation (A-049 bis A-051) |
+| Feed | System-Ereignisse, Tenant-Beiträge durch Programm-Manager, Redakteur und Botschafter mit Ankündigungen, Mitglieder-Beiträge, Kommentare, Anerkennung, Moderation (A-049 bis A-051) |
 | Benachrichtigungen | In-App, Web Push, E-Mail, Aushang, Kalender mit allen Kategorien und Schaltern (A-058 bis A-063) |
 | Marke und Tonalität | Name, Logo, Saatfarbe, Anrede, Tonalität, Bezeichnungen, Theme-Ableitung (A-013) |
 | Datenschutz und Nachweis | Sichtbarkeitsstufen, Zustimmungen, Prüfprotokoll, Einsichtsrolle, Export, Austritt (A-020 bis A-026) |
@@ -49,7 +49,7 @@ Der nackte Kern ist ein Firmen-Feed mit Fortschrittsanzeige. Er funktioniert, wi
 | **M7 Ernährung** | Kategorie Ernährung, Rezepte, Zubereitungsvideos, Trinkerinnerung, Gewohnheitsvorlagen | Freischaltung, eigene Rezepte | keine | keine Kalorien, Gewichtsziele oder Ernährungs-Scores |
 | **M8 Wearables** | „Gerät verbinden“, Quelle und Synchronisationszeitpunkt, automatische Tageswerte als Handlung und Challenge-Beitrag | nur die Buchung; die Verwaltung sieht nie, wer verbunden hat | keine, M1 empfohlen; buchbar nur, wenn der Operator mindestens einen Hersteller freigegeben hat | Rohdaten im isolierten Vault, 90 Tage; nur abgeleitete Tageswerte verlassen ihn; keine KI |
 | **M9 Workshops und Events** | Bereich „Firma“ mit Terminen, Anmeldung, „freigespielt“-Karte für verdiente Belohnungen | Katalog, Buchung, Teilnehmerlisten, Verknüpfung Challenge → Belohnung | M1 | Belohnungen immer kollektiv; Anmeldung unter Anzeigename mit Ticket-QR; Teilnehmerliste nur für den Organisator, nicht exportierbar, nach 30 Tagen gelöscht; Preise je Termin oder Platzkontingent, nie je Teilnehmer |
-| **M10 Firmenkanal** | Bereich „Firma“ mit Beiträgen von HR, Betriebsrat und Standorten, Dokumente, Termine mit ICS | Redakteursrolle, Redakteursrechte je Gruppe, Zielgruppensteuerung, Dokumentkategorien | keine | Dokumente ohne Personenbezug; Zielgruppen über Gruppen |
+| **M10 Firmenkanal** | Bereich „Firma“ mit Beiträgen von HR, Betriebsrat und Standorten, Dokumente, Termine mit ICS | Firmenkanal-Rechte je Gruppe für die im Kern vorhandene Redakteursrolle, Zielgruppensteuerung, Dokumentkategorien | keine | Dokumente ohne Personenbezug; Zielgruppen über Gruppen |
 | **M11 Mehrsprachigkeit** | Sprachwahl im Beitritt, Oberfläche und Inhalte in gewählter Sprache | aktive Sprachen | keine | keine |
 | **M12 Verzeichnis und Netzwerk** | nichts Sichtbares | Übernahme von Gruppen und Sollstärken aus dem Verzeichnis, Deaktivierungssignal je Identität nur mit Subject und Status, IP-Regeln für die Verwaltung, Protokollexport | keine | kein Personenimport; das Verzeichnis liefert keine Namen in die Plattform |
 
@@ -169,7 +169,7 @@ Grenzwerte sind Betriebsschutz. Der Operator ändert sie je Tenant; Änderungen 
 | Entitlements ↔ Metering | Entitlements senden „aktiviert“, „Testphase gestartet“, „gekündigt“, „inaktiv“ als Ereignisse; Metering bewertet; Entitlements prüfen nie Zahlungen; Kostenvorschau vor Buchung kommt aus Metering |
 | Entitlements ↔ Organisation | Rahmen entlang Operator → Partner → Tenant; Voreinstellungen bei Tenant-Anlage; Tenant-Sperre überlagert alle Entitlements |
 | Entitlements ↔ Autorisierung | jede Moduloperation prüft das Entitlement im Querschnitt; Antwort „nicht gefunden“ |
-| Entitlements ↔ Feed und Inhalte | Kategorien, Sammlungen, Firmenkanal-Rollen und Karten nur mit aktivem Modul; keine Hinweise auf inaktive Module |
+| Entitlements ↔ Feed und Inhalte | Kategorien, Sammlungen, Firmenkanal-Rechte und Karten nur mit aktivem Modul; keine Hinweise auf inaktive Module |
 | Entitlements ↔ Challenges | Achsenwerte und Vorlagen mit Ersatzmetrik; Kündigung von M1 beendet laufende Challenges zum Termin |
 | Entitlements ↔ Benachrichtigungen | Kategorien folgen Modulen; Benachrichtigung an Tenant-Admins bei Rahmenänderung, Testphasenende, erzwungener Deaktivierung |
 | Entitlements ↔ Datenschutz | Datenschutzhinweis je Modul im Katalog; Historie für Einsichtsrolle; 90-Tage-Lesbarkeit und Verdichtung nach A-024; Wearable-Rohdaten binnen 30 Tagen |

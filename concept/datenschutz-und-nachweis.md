@@ -37,7 +37,7 @@ Die Plattform entsteht ohne konkreten Kunden. Anforderungen kommen ausschließli
 Diese Regeln sind Produkteigenschaften. Kein Tenant, keine Rolle und kein Operator kann sie ändern.
 
 1. **Kein Arbeitgeber sieht individuelle Aktivitätswerte.** Das gilt für alle Rollen des Tenants einschließlich Tenant-Admin und für den Operator.
-2. **Aggregate erst ab fünf beitragenden Personen** in der Auswertungsgruppe. Darunter wird nichts angezeigt: nicht gerundet, nicht ungenau, sondern nichts.
+2. **Aggregate erst ab fünf beitragenden Personen** in der Auswertungsgruppe. Darunter wird nichts angezeigt: nicht gerundet, nicht ungenau, sondern nichts. Das gilt für jede Auswertung gegenüber Rollen des Tenants, Partnern, dem Operator, der Arena und in Exporten. Zwei benannte Abgrenzungen: Der Kollektivstand einer Challenge in der Mitglieder-App zeigt unter fünf sichtbaren Beitragenden nur den gerundeten Zielprozentwert ohne Einzelbeiträge (Abschnitt 4.2); Abrechnungsmengen erscheinen als Monatssumme je Metrik auf Rechnung und in der Kostenvorschau, weil sie Vertragsgrundlage sind (Regel 3).
 3. **Die Beteiligungsquote verlässt den Tenant nicht** in Richtung anderer Tenants und nicht in die Arena. Der Betreiber kennt sie als Auftragsverarbeiter, weil die Abrechnung auf aktiven Mitgliedern beruht; das steht im Auftragsverarbeitungsvertrag.
 4. **Inaktivität ist für niemanden sichtbar.** Es existiert keine Abfrage, keine Sortierung und kein Export, der nicht teilnehmende Personen erkennbar macht.
 5. **Stimmungs- und Belastungsdaten werden nie aggregiert**, auch nicht anonymisiert. Sie bleiben ausschließlich bei der Person.
@@ -61,7 +61,7 @@ Die Wahl erfolgt beim Beitritt ausdrücklich aus drei gleichrangigen Kacheln ohn
 
 ### 3.2 Zusätzliche Zustimmungen
 
-- **Arena:** Die Sichtbarkeit einzelner Beiträge in der Arena ist eine separate Zustimmung der Person. Sie wird nur wirksam, wenn zusätzlich der Tenant-Admin Einzelränge für diese Arena erlaubt hat. Fehlt eines von beidem, zählt der Beitrag nur in den Pro-Kopf-Wert der Firma.
+- **Arena:** Die Sichtbarkeit einzelner Beiträge in der Arena ist eine separate Zustimmung der Person. Sie wird nur wirksam, wenn zusätzlich der Tenant-Admin Einzelränge für diese Arena erlaubt hat und der Operator für die Arena eine Einzelrangliste vorsieht. Fehlt eines davon, zählt der Beitrag nur in den Pro-Kopf-Wert der Firma und es wird nichts übertragen. Übertragen wird ein von der Person gewähltes Arena-Pseudonym, voreingestellt der Anzeigename; Personen mit Klarname als Anzeigename wählen ein eigenes Pseudonym.
 - **Buddy-Paar:** Zwei Personen geben sich gegenseitig Serie und Fortschritt frei. Beidseitig zugestimmt, jederzeit einseitig mit sofortiger Wirkung widerrufbar, wirksam ausschließlich zwischen diesen zwei Personen. Es ist die einzige Ausnahme von der Regel in 3.3.
 - **Foto-Belege:** Fotos zu Beiträgen sind höchstens teamsichtbar, nie für Admin, Operator oder Arena.
 
@@ -82,7 +82,7 @@ Jedes Aggregat mit Personenbezug in der Grundgesamtheit wird nur ausgegeben, wen
 ### 4.2 Schutz gegen Differenzbildung
 
 - Auswertungsgruppen sind ausschließlich die vom Tenant gepflegten Gruppen je Dimension und der ganze Tenant. Keine frei wählbaren Filter, keine Kombination zweier Dimensionen.
-- Zeiträume sind Challenge-Zeitraum, Kalenderwoche und Kalendermonat. Keine feineren Schnitte in Verwaltungsansichten.
+- Zeiträume sind Challenge-Zeitraum, Kalenderwoche und Kalendermonat. Keine feineren Schnitte in Verwaltungsansichten. Im Verbrauchsdetail der Abrechnung gilt: Mengen ohne Personenbezug (Inhalte, Speicher, Termine, Nachrichten) je Tag; personennahe Mengen (aktive Mitglieder, Teilnehmertage) nur als Monatssumme.
 - Wird eine Gruppe umgebaut oder eine Person wechselt die Gruppe, werden Aggregate der betroffenen Gruppen für den laufenden Zeitraum nur ausgegeben, wenn beide Zustände die Mindestzahl erfüllen.
 - Kollektivbalken in der Mitglieder-App zeigen unter fünf sichtbaren Beitragenden nur den gerundeten Prozentwert, keine Einzelbeiträge.
 - Exporte für den Tenant enthalten ausschließlich Aggregate, die dieselbe Prüfung bestanden haben.
@@ -129,7 +129,7 @@ Der Austritt ist ein Button mit einer Bestätigung und einem Klartext dieser Fol
 
 ### 5.3 Verwaiste Personen
 
-Eine Person ohne Anmeldung und ohne erfasste Handlung über 24 Monate wird automatisch wie ausgetreten behandelt. Ist eine E-Mail hinterlegt, geht 30 Tage vorher ein Hinweis. Das schließt Personen ein, die alle Anmeldewege verloren haben.
+Eine Person ohne Anmeldung und ohne erfasste Handlung über 24 Monate wird automatisch wie ausgetreten behandelt. Ist eine E-Mail hinterlegt, geht 30 Tage vorher ein Hinweis. Das schließt Personen ein, die alle Anmeldewege verloren haben. Nach einem Deaktivierungssignal aus dem Verzeichnis (A-105) gilt für Personen ohne anderen Anmeldeweg die kürzere Frist von 30 Tagen.
 
 ### 5.4 Kündigung eines Moduls oder eines Tenants
 
@@ -147,11 +147,11 @@ Jede Änderung der Sichtbarkeitsstufe, jede Arena-Zustimmung und jede Buddy-Frei
 
 ### 6.2 Prüfprotokoll
 
-Append-only, ohne Personenbezug auf Mitglieder, mit Klarnamen der handelnden Funktionsrolle. Erfasst werden: Modulbuchungen und -kündigungen, Änderungen an Marke, Anmeldewegen, Gruppen und Sollstärken, Rollencode-Ausgabe und -Einlösung, Kiosk-Registrierung und -Widerruf, Arena-Beitritte und -Einstellungen, Exporte, Support-Zugriffe des Operators und Änderungen an Preisplänen durch den Operator.
+Append-only, ohne Personenbezug auf Mitglieder, mit Klarnamen der handelnden Funktionsrolle beziehungsweise Anzeigename und Rolle bei Botschaftern. Erfasst werden: Modulbuchungen und -kündigungen, Änderungen an Marke, Anmeldewegen, Gruppen und Sollstärken, Rollencode-Ausgabe und -Einlösung, Kiosk-Registrierung und -Widerruf, Arena-Beitritte und -Einstellungen, Exporte, Support-Zugriffe des Operators und Änderungen an Preisplänen durch den Operator.
 
 ### 6.3 Einsichtsrolle
 
-Die Einsichtsrolle liest: aktive Module, geltende Sichtbarkeitsregeln und Schwellen, was der Tenant-Admin sehen kann und was nicht, die tenantweite Beteiligungsquote ab fünf beitragenden Personen, den Auftragsverarbeitungsvertrag, die Löschfristen und das vollständige Prüfprotokoll. Sie sieht keine Inhalte, keine Person und keinen Einzelwert. Sie kann nichts ändern.
+Die Einsichtsrolle liest: aktive Module, geltende Sichtbarkeitsregeln und Schwellen, was der Tenant-Admin sehen kann und was nicht, Stammdaten, Marke, Anmeldewege, Gruppen, Dimensionen und Sollstärken, Arena-Einstellungen, Benachrichtigungsschalter und Integrationskonfiguration jeweils lesend, die tenantweite Beteiligungsquote ab fünf beitragenden Personen, den Auftragsverarbeitungsvertrag, die Löschfristen und das vollständige Prüfprotokoll. Sie sieht keine Inhalte, keine Person und keinen Einzelwert. Sie kann nichts ändern.
 
 ### 6.4 Auskunft und Export
 
@@ -200,7 +200,7 @@ Verfahrensverzeichnis, Beschreibung technischer und organisatorischer Maßnahmen
 | Datenschutz ↔ Metering | Ledger ohne Personen-ID, periodisch gesalzene Slots, Verbrauchsdetail nur aggregiert und ab fünf |
 | Datenschutz ↔ Arena | nur Pro-Kopf-Wert, Größenklasse, Name, Logo, Zeitpunkt; Einzelwerte nur bei doppelter Zustimmung; kein Wert unter fünf |
 | Datenschutz ↔ Wearable-Vault | 90 Tage Rohdaten, nur abgeleitete Tageswerte nach außen, keine Verarbeitung durch Dritte oder KI |
-| Datenschutz ↔ Benachrichtigungen | Push ohne Inhalt; Re-Engagement kollektiv formuliert; Abwesenheitsmodus unterdrückt alles |
+| Datenschutz ↔ Benachrichtigungen | Push ohne Inhalt; Re-Engagement kollektiv formuliert; Abwesenheit unterdrückt alle Kategorien außer Konto und Sicherheit sowie Plattform |
 | Datenschutz ↔ Betrieb | EU-Speicherung, Backup-Frist 35 Tage, Geheimnisspeicher getrennt von der Datenbank; Produkte gemäß [Betrieb](betrieb.md): OpenBao, Garage, pgBackRest, Beobachtung ohne Fremddienste |
 
 ## 9. Nachweise

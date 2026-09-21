@@ -99,7 +99,7 @@ Die Domäne Challenges berechnet je Tenant und Arena stündlich:
 | Größenklasse | aus Sollstärke zum Start |
 | Zeitpunkt | letzte Aktualisierung |
 | Status | „wertend“ ab fünf beitragenden Personen, sonst „nimmt teil“ |
-| Einzelwerte | nur bei doppelter Zustimmung: Arena-Token, Anzeigename, persönlicher Wert der Metrik in der Arena |
+| Einzelwerte | nur wenn der Operator für die Arena eine Einzelrangliste vorsieht und die doppelte Zustimmung vorliegt: Arena-Token, Arena-Pseudonym der Person (voreingestellt der Anzeigename; Personen mit Klarname als Anzeigename wählen ein eigenes Pseudonym), persönlicher Wert der Metrik in der Arena; ohne Einzelrangliste wird nichts übertragen |
 
 Übergeben werden nur diese Felder. Beitragssummen, Teilnehmerzahlen, Beteiligungsquoten und Gruppenwerte existieren im Arena-Dienst nicht. Ein Wechsel der Arena-Sichtbarkeit einer Person entfernt oder ergänzt ihren Einzelwert mit der nächsten Projektion; Rückzug wirkt rückwirkend auf die Anzeige.
 
@@ -115,7 +115,7 @@ Die Domäne Challenges berechnet je Tenant und Arena stündlich:
 
 ### 4.4 Persönliche Zustimmung
 
-Die Arena-Sichtbarkeit ist eine separate Zustimmung im Profil (A-022) mit Klartext: Welche Firmen sie sehen, was sie sehen (Anzeigename und Wert der Arena-Metrik), dass der Betreiber Verantwortlicher ist, jederzeit widerrufbar mit sofortiger Wirkung. Sie ist standardmäßig aus und wird beim Beitritt des Tenants nicht abgefragt, sondern erst beim ersten Öffnen der Arena angeboten.
+Die Arena-Sichtbarkeit ist eine separate Zustimmung im Profil (A-022) mit Klartext: Welche Firmen sie sehen, was sie sehen (Arena-Pseudonym und Wert der Arena-Metrik), dass Pseudonym und Wert an den Arena-Dienst des Betreibers übertragen und dort erst ab fünf zustimmenden Personen angezeigt werden, dass der Betreiber Verantwortlicher ist, jederzeit widerrufbar mit sofortiger Wirkung. Die Person wählt dabei ihr Arena-Pseudonym; Voreinstellung ist der Anzeigename, bei Klarnamen als Anzeigename ist ein eigenes Pseudonym Pflicht. Sie ist standardmäßig aus und wird beim Beitritt des Tenants nicht abgefragt, sondern erst beim ersten Öffnen der Arena angeboten.
 
 ### 4.5 Ende und Anerkennung
 
@@ -138,7 +138,7 @@ Zum Endstand nach der Nachfrist: Feed-Karte je Tenant mit Rang und Pro-Kopf-Wert
 ## 6. Nachweise
 
 1. Der Arena-Dienst hat keinen Zugriff auf die Monolith-Datenbank und umgekehrt; öffentliche Route existiert nicht.
-2. Nach einem Testlauf enthält die Arena-Datenbank keine Personen-IDs, Beitragssummen, Teilnehmerzahlen oder Quoten; nur Pro-Kopf-Werte, Größenklassen, Namen, Logos, Zeitpunkte und Arena-Tokens mit Anzeigenamen.
+2. Nach einem Testlauf enthält die Arena-Datenbank keine Personen-IDs, Klarnamen, Beitragssummen, Teilnehmerzahlen oder Quoten; nur Pro-Kopf-Werte, Größenklassen, Firmennamen, Logos, Zeitpunkte und Arena-Tokens mit Arena-Pseudonymen.
 3. Tenant mit vier Beitragenden erscheint als „nimmt teil“ ohne Wert; mit fünf wertend.
 4. Einzelwert erscheint nur bei doppelter Zustimmung; Widerruf entfernt ihn mit der nächsten Projektion.
 5. Arena mit drei Tenants startet nicht; Verschiebung oder Absage benachrichtigt die Tenants; Ligen entstehen erst ab vier je Klasse.

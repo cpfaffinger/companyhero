@@ -36,7 +36,7 @@ Der Deckel wird der Person sichtbar gemacht („Tagesziel voll, weitere Beiträg
 
 ### 2.3 Automatische Quellen
 
-Automatische Tageswerte zählen für Punkte und Serie wie eine Handlung, aber nicht für „aktives Mitglied“ in der Abrechnung, weil keine eigene Interaktion vorliegt. Die Domäne Metering erhält das Ereignis mit gesetzter Quelle und wertet es entsprechend.
+Automatische Tageswerte zählen für Punkte und Serie wie eine Handlung, aber nicht für „aktives Mitglied“ in der Abrechnung, weil keine eigene Interaktion vorliegt. Fortschritt emittiert `member.active_month` und `member.active_day` genau einmal je Person und Periode bei der ersten gewerteten Handlung mit Quelle „selbst“ oder „Plattform“; automatische Tageswerte lösen keine dieser Emissionen aus (A-071).
 
 ## 3. Serie und Abwesenheit (A-045)
 
@@ -51,7 +51,7 @@ Automatische Tageswerte zählen für Punkte und Serie wie eine Handlung, aber ni
 ### 3.2 Abwesenheit
 
 - Die Person setzt sich selbst abwesend „von–bis“. Es wird kein Grund gespeichert und keiner abgefragt.
-- Wirkung: Serie pausiert ohne Bruch; keine Erinnerungen, keine Re-Engagement-Nachrichten, keine Buddy-Anstöße; Challenge-Teilnahmen bleiben bestehen.
+- Wirkung: Serie pausiert ohne Bruch; Benachrichtigungen unterdrücken alle Kategorien außer Konto und Sicherheit sowie Plattform (A-060); Challenge-Teilnahmen bleiben bestehen.
 - Beginn heute oder in der Zukunft, rückwirkend bis drei Tage; höchstens acht Wochen je Eintrag, beliebig verlängerbar.
 - Abwesenheit ist für niemanden außer der Person sichtbar. Sie erscheint nicht in Aggregaten und nicht gegenüber dem Buddy; der Buddy sieht lediglich eine pausierte Serie.
 
@@ -129,7 +129,7 @@ Aktivitätsereignisse bleiben 24 Monate im Detail. Danach werden sie zu Monatsag
 |---|---|
 | Fortschritt ↔ Challenges | ein Aktivitätsereignis je Beitrag; Gegenereignis bei Korrektur; Kollektivereignisse (Gruppenziel, Firmenziel) lösen Abzeichen aus; Messwerte bleiben in Challenges |
 | Fortschritt ↔ Feed und Inhalte | abgeschlossene Inhalte, gelesene Beiträge, Anerkennungen und Feed-Beiträge sind Handlungen; Abzeichen, Stufen und Check-in erzeugen Feed-Ereignisse gemäß Sichtbarkeit |
-| Fortschritt ↔ Benachrichtigungen | Inaktivitätssignale, Erfolgsmomente und Buddy-Anstöße als Ereignisse; Abwesenheit unterdrückt alles |
+| Fortschritt ↔ Benachrichtigungen | Inaktivitätssignale, Erfolgsmomente und Buddy-Anstöße als Ereignisse; Abwesenheit unterdrückt alle Kategorien außer Konto und Sicherheit sowie Plattform (A-060) |
 | Fortschritt ↔ Datenschutz | Anzeigen nur für die Person; Sammelereignisse ab fünf; Abwesenheit ohne Grund und ohne Sichtbarkeit; Aufbewahrung nach A-024 |
 | Fortschritt ↔ Metering | Handlungen sind die Basis für „aktives Mitglied“; automatische Tageswerte zählen dafür nicht |
 | Fortschritt ↔ Marke | Bezeichnungen für Punkte, Stufen und Serie kommen aus der Tenant-Konfiguration |

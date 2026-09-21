@@ -35,7 +35,7 @@ Die fünf Inhaltsmodule füllen die Bibliothek „Entdecken“ mit je einer Kate
 
 | Element | Festlegung |
 |---|---|
-| Arbeitsplatztypen | Bildschirmarbeitsplatz, Stehplatz, Produktions- und Montageplatz, Hebe- und Tragetätigkeit, mobiler Arbeitsplatz; der Tenant wählt, welche Typen er anbietet |
+| Arbeitsplatztypen | Bildschirmarbeitsplatz, Stehplatz, Produktions- und Montageplatz, Hebe- und Tragetätigkeit, mobiler Arbeitsplatz; der Programm-Manager wählt, welche Typen der Tenant anbietet |
 | Check | geführte Schritte je Typ mit Illustration und konkreten Maßangaben (Bildschirmhöhe, Sitz- und Tischhöhe, Anordnung, Fußstellung, Hebehaltung); Eingabe als Auswahl oder Zahl; 5 bis 8 Minuten |
 | Ergebnis | drei Empfehlungen in Nutzersprache mit verknüpften Übungen aus M3, falls aktiv; Kategorie je Schritt (passt, anpassen, prüfen lassen) |
 | Wiederholung | Erinnerung nach drei Monaten über Erinnerungsfenster; Verlauf nur für die Person |
@@ -43,7 +43,7 @@ Die fünf Inhaltsmodule füllen die Bibliothek „Entdecken“ mit je einer Kate
 | Aggregat für den Arbeitsschutz | je Gruppe ab fünf abgeschlossenen Checks: Anzahl Checks und Anteil je Empfehlungskategorie; keine Maßwerte, keine Personen; sichtbar für Programm-Manager und Tenant-Admin |
 | Handlung | abgeschlossener Check erzeugt „Ergonomie-Check“ |
 | Challenge-Bezug | Metrik „Ergonomie-Check“; Vorlage Ergonomie-Woche |
-| Hinweis | Der Check ist keine arbeitsmedizinische Beurteilung; Standardtext mit Verweis auf die Präventivfachkräfte des Tenants, wenn hinterlegt |
+| Hinweis | Der Check ist keine arbeitsmedizinische Beurteilung; Standardtext mit Verweis auf die Präventivfachkräfte des Tenants, wenn der Tenant-Admin sie hinterlegt hat |
 
 ## 4. M5 Wissen (A-101)
 
@@ -64,11 +64,11 @@ Die fünf Inhaltsmodule füllen die Bibliothek „Entdecken“ mit je einer Kate
 |---|---|
 | Inhalte | Atemübungen mit Animation (Muster 4-4-4-4, 4-7-8, verlängertes Ausatmen), Kurzmeditationen und Entspannungsklänge als Audio 2 bis 15 Minuten, Pausenrituale |
 | Atemanimation | Vollbild, Zyklusanleitung, ohne Ton möglich, reduzierte Bewegung respektiert; Abschluss ohne Bewertung |
-| Empfehlungen je Schichtmodell | der Tenant wählt Sammlungen für Früh-, Spät- und Nachtschicht |
+| Empfehlungen je Schichtmodell | der Programm-Manager wählt Sammlungen für Früh-, Spät- und Nachtschicht |
 | Stimmungs-Check-in | fünf Symbole ohne Zahlen, optional Stichworte aus einer festen Liste (Schlaf, Arbeit, Familie, Gesundheit, Wetter, Sonstiges), einmal je Tag; ausschließlich privat; feldverschlüsselt; 12 Monate; jederzeit selbst löschbar; **in keinem Aggregat, auch nicht anonym**; keine Sichtbarkeitsstufe; keine Feed-Karte; keine Benachrichtigung darüber |
 | Verlauf | private Monatsansicht der Symbole; keine Trendbewertung, kein Vergleich, keine automatisierte Einordnung |
-| Hilfsangebote | statischer Hinweis auf vom Tenant hinterlegte Anlaufstellen (Betriebsarzt, Sozialberatung, externe Beratung) auf der Check-in-Seite; kein Auslöser durch Werte |
-| Handlung | Atemübung, Audio beendet und Stimmungs-Check-in erzeugen je eine Handlung; der Stimmungs-Check-in erscheint dabei nur als Handlung ohne Inhalt |
+| Hilfsangebote | statischer Hinweis auf vom Tenant-Admin hinterlegte Anlaufstellen (Betriebsarzt, Sozialberatung, externe Beratung) auf der Check-in-Seite; kein Auslöser durch Werte |
+| Handlung | Atemübung und Audio beendet erzeugen je eine Handlung. Der Stimmungs-Check-in erzeugt **keine** Handlung, kein Aktivitätsereignis und kein Metering-Ereignis; er hinterlässt außerhalb des feldverschlüsselten Speichers keine Spur |
 | Challenge-Bezug | Metriken „Atemübungsminuten“ (Dauer) und „Inhalt abgeschlossen“; Vorlage Zwei Minuten Atempause; Stimmung ist nie Challenge-Metrik |
 | Grenze | kein „Burnout-Frühwarnsystem“, keine Belastungsauswertung, keine KI-Einordnung |
 

@@ -43,16 +43,18 @@ Der Beitritt erzeugt die Person, die Mitgliedschaft im Tenant, die gewählten Gr
 
 ### 2.3 Rollencodes
 
-Rollen werden über personalisierte Einmalcodes vergeben. Der Aussteller übergibt den Code außerhalb der Plattform; die Plattform speichert keine Zuordnung zwischen Aussteller-Wissen und Anzeigename.
+Rollen werden über personalisierte Einmalcodes vergeben. Der Aussteller übergibt den Code außerhalb der Plattform oder lässt ihn für Funktionsrollen per E-Mail an eine von ihm eingegebene Adresse senden; die Adresse wird nach Einlösung oder Ablauf gelöscht. Die Plattform speichert keine Zuordnung zwischen Aussteller-Wissen und Anzeigename. Die einzige Ausnahme von „keine gespeicherte Zuordnung von Klarname zu Anzeigename“ ist die freiwillige Klarname-Freigabe je Veranstaltungsanmeldung, die nach 30 Tagen gelöscht wird (A-084).
 
 | Rolle | Aussteller | Anzeigename | Pflichtangaben beim Einlösen |
 |---|---|---|---|
-| Gesundheitsbotschafter | Tenant-Admin, Programm-Manager | frei | keine |
-| Programm-Manager, Redakteur, Einsichtsrolle | Tenant-Admin | Klarname | Klarname, E-Mail oder externer Anbieter |
-| Tenant-Admin | Operator, bestehender Tenant-Admin | Klarname | Klarname, E-Mail oder externer Anbieter, Passkey oder externer Anbieter |
-| Partner-Admin | Operator | Klarname | wie Tenant-Admin |
+| Gesundheitsbotschafter | Tenant-Admin, Programm-Manager | frei | keine; der Code trägt die Gruppen, für die der Botschafter zuständig ist |
+| Redakteur, Einsichtsrolle | Tenant-Admin | Klarname | Klarname, E-Mail oder externer Anbieter |
+| Programm-Manager | Tenant-Admin | Klarname | Klarname, E-Mail oder externer Anbieter, Passkey oder externer Anbieter |
+| Tenant-Admin | Operator-Admin, Partner-Admin für eigene Tenants, bestehender Tenant-Admin | Klarname | Klarname, E-Mail oder externer Anbieter, Passkey oder externer Anbieter |
+| Partner-Admin | Operator-Admin | Klarname | wie Tenant-Admin |
+| Operator-Admin, Operator-Support | Operator-Admin | Klarname | wie Tenant-Admin |
 
-Rollencodes sind einmalig, 14 Tage gültig, widerrufbar und an genau eine Rolle und einen Tenant gebunden. Das Einlösen wird protokolliert. Eine bestehende Person kann einen Rollencode einlösen; die Rolle wird ihrer Person hinzugefügt. Für Funktionsrollen wird beim Einlösen der Anzeigename auf den Klarnamen gesetzt.
+Rollencodes sind einmalig, 14 Tage gültig, widerrufbar und an genau eine Rolle und eine Organisation gebunden; Botschaftercodes zusätzlich an Gruppen. Das Einlösen wird protokolliert. Eine bestehende Person kann einen Rollencode einlösen; die Rolle wird ihrer Person hinzugefügt. Für Funktionsrollen wird beim Einlösen der Anzeigename auf den Klarnamen gesetzt.
 
 ## 3. Anmeldewege (A-015)
 
@@ -100,7 +102,7 @@ Der Tenant bestimmt, welche Anmeldewege seinen Mitgliedern offenstehen.
 - **Verknüpfen** eines weiteren Weges ist nur aus einer bestehenden Sitzung heraus möglich und erfordert das vollständige Durchlaufen des neuen Weges. Es gibt keine automatische Verknüpfung aufgrund gleicher E-Mail oder gleichen Namens.
 - **Trennen** eines Weges ist in der Profilansicht möglich, solange mindestens ein Weg verbleibt. Für Personen ohne E-Mail und ohne Anbieter bleibt der Wiederherstellungscode immer aktiv.
 - **Geräteverlust:** Anmeldung auf einem anderen Gerät über einen beliebigen Weg, dann „Abmeldung aus allen Sitzungen“ und Entfernen des verlorenen Passkeys.
-- **Verlust aller Wege:** Es gibt keine Wiederherstellung durch Tenant-Admin oder Operator, weil sie die Person nicht identifizieren können und keine Zuordnung erzeugen sollen. Die Person tritt mit einem Beitrittscode neu bei und erhält eine neue Person. Die verwaiste Person wird nach 24 Monaten ohne Anmeldung und Handlung automatisch ausgetreten (A-024).
+- **Verlust aller Wege:** Es gibt keine Wiederherstellung durch Tenant-Admin oder Operator, weil sie die Person nicht identifizieren können und keine Zuordnung erzeugen sollen. Die Person tritt mit einem Beitrittscode neu bei und erhält eine neue Person. Die verwaiste Person wird nach 24 Monaten ohne Anmeldung und Handlung automatisch ausgetreten (A-024); nach einem Deaktivierungssignal aus dem Verzeichnis gilt die kürzere Frist von 30 Tagen (A-105).
 - **Claims** externer Anbieter werden nach dem Anmeldevorgang verworfen. Der Anzeigename wird nie aus Claims befüllt; die E-Mail wird nur gespeichert, wenn die Person sie ausdrücklich für den Magic-Link hinterlegt.
 
 ## 5. Sitzungen (A-017)
@@ -131,12 +133,12 @@ Ein registriertes Gerät zeigt ohne Personensitzung nur den Kollektivstand des T
 - Jede Person erhält beim Beitritt eine **Kiosk-Kennung**: sechs Ziffern, zufällig, je Tenant eindeutig. Sie wird beim Beitritt angezeigt und ist jederzeit in der eigenen App sichtbar, dort auch als druckbarer QR-Code.
 - Die **PIN** hat vier Ziffern, wird von der Person gewählt und in der App oder am Kiosk nach Anmeldung geändert. Triviale Folgen und Wiederholungen werden abgelehnt.
 - Anmeldung am Kiosk: Kennung eingeben oder persönlichen QR-Code scannen, dann PIN. Es gibt keine Namensliste und keine Namenssuche am Gerät.
-- Drosselung: nach fünf Fehlversuchen für eine Kennung 15 Minuten Sperre dieser Kennung am Gerät; nach 20 Fehlversuchen an einem Gerät innerhalb von 15 Minuten 15 Minuten Sperre des Geräts. Fehlversuche werden dem Prüfprotokoll ohne Personenbezug gemeldet.
+- Drosselung: nach fünf Fehlversuchen für eine Kennung 15 Minuten Sperre dieser Kennung am Gerät; nach 20 Fehlversuchen an einem Gerät innerhalb von 15 Minuten 15 Minuten Sperre des Geräts. Fehlversuche werden im Sicherheitsprotokoll pseudonymisiert erfasst (12 Monate, A-024).
 - Vergessene PIN: Änderung in der eigenen App. Personen ohne eigenes Gerät setzen die PIN am Kiosk mit ihrem Wiederherstellungscode neu, der beim Kiosk-Beitritt zusammen mit der Kennung angezeigt wird.
 
 ### 6.3 Was am Kiosk möglich ist
 
-Check-in, Beitrag zu laufenden Challenges, Kollektivstand, PIN-Änderung, Übertragung auf ein eigenes Gerät. Nicht möglich: Historie, Sichtbarkeitseinstellungen, Feed schreiben, Profiländerungen, Verwaltung. Alle Beiträge folgen A-005 mit serverseitig reservierter Vorgangskennung.
+Check-in, Beitrag zu laufenden Challenges, Kollektivstand, Anmeldung zu Veranstaltungen (A-084), PIN-Änderung, Übertragung auf ein eigenes Gerät. Nicht möglich: Historie, Sichtbarkeitseinstellungen, Feed schreiben, Profiländerungen, Verwaltung. Alle Beiträge folgen A-005 mit serverseitig reservierter Vorgangskennung.
 
 ### 6.4 Übertragung auf ein eigenes Gerät
 
@@ -165,9 +167,10 @@ Rollenentzug ist kein Austritt: Die Person bleibt Mitglied, verliert die Rolle u
 | Schnittmenge | Festlegung |
 |---|---|
 | Identität ↔ Organisation | Der Beitritt erzeugt Person, Mitgliedschaft und Gruppen in einer Transaktion; Rollen liegen bei Organisation und werden über Rollencodes aus Identität vergeben |
-| Identität ↔ Datenschutz | Sichtbarkeitswahl im Beitritt gehört Datenschutz; Rollencode-Einlösung, Anbieterkonfiguration, Geräteregistrierung und -widerruf, Fehlversuche und Austritt gehen ins Prüfprotokoll |
+| Identität ↔ Datenschutz | Sichtbarkeitswahl im Beitritt gehört Datenschutz; Rollencode-Einlösung, Anbieterkonfiguration, Geräteregistrierung und -widerruf und Austritt gehen ins Prüfprotokoll; Anmeldungen und Fehlversuche ins pseudonymisierte Sicherheitsprotokoll |
+| Identität ↔ Metering | Beitritte (`member.joined`) und registrierte Kiosk-Geräte (`kiosk.device_month`) als Metering-Ereignisse ohne Personenbezug |
 | Identität ↔ Challenges | Kiosk-Beiträge und Offline-Beiträge verwenden die Idempotenzregime aus A-009; die Person bleibt über alle Anmeldewege dieselbe |
-| Identität ↔ Benachrichtigungen | Magic-Links und Rollencode-Einladungen per E-Mail werden über Benachrichtigungen versendet; Inhalte enthalten keine Personendaten außer dem Link |
+| Identität ↔ Benachrichtigungen | Magic-Links und Rollencode-Einladungen per E-Mail werden über Benachrichtigungen versendet; Inhalte enthalten keine Personendaten außer der Anrede mit Anzeigenamen und dem Link |
 | Identität ↔ Marke | Beitritts- und Kiosk-Oberflächen verwenden den Tokensatz des Tenants; die Tenant-Vorschau beim Beitritt zeigt Name und Logo |
 
 ## 10. Nachweise

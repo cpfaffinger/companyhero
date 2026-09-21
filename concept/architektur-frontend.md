@@ -61,7 +61,7 @@ TypeScript ersetzt keine Laufzeitvalidierung. Berechtigungen und verbindliche Fa
 
 **Zustand:** Typed Reactive Forms besitzen den Formularzustand; Signals steuern lokale Ansichten und abgeleitete Werte; RxJS bearbeitet asynchrone Abläufe in der Datenzugriffsschicht. Es gibt keine parallelen beschreibbaren Modelle derselben Daten. Quellen: [Typed Forms](https://angular.dev/guide/forms/typed-forms), [RxJS Interop](https://angular.dev/ecosystem/rxjs-interop).
 
-**Offline (A-008):** Der Angular-Service-Worker verwaltet App-Shell und freigegebene statische Ressourcen. Ein dediziertes Offline-Repository hält den freigegebenen persönlichen Bestand: eigene ungesendete Beiträge, die zur Erfassung nötigen Challenge-Definitionen, den zuletzt bekannten Kollektivstand der eigenen Challenges mit Zeitstempel und das eigene Minimalprofil. Der Kollektivstand wird mit Altersangabe dargestellt. Der Kiosk verwendet dieses Repository nicht; dort liegen unbestätigte Eingaben nur im Sitzungsspeicher.
+**Offline (A-008):** Der Angular-Service-Worker verwaltet App-Shell und freigegebene statische Ressourcen. Ein dediziertes Offline-Repository hält den freigegebenen persönlichen Bestand: eigene ungesendete Beiträge und Check-ins, die zur Erfassung nötigen Challenge-Definitionen, den zuletzt bekannten Kollektivstand der eigenen Challenges mit Zeitstempel, das eigene Minimalprofil und auf Wunsch lokal gespeicherte Inhaltsvideos (A-054). Der Kollektivstand wird mit Altersangabe dargestellt. Der Kiosk verwendet dieses Repository nicht; dort liegen unbestätigte Eingaben nur im Sitzungsspeicher.
 
 **Build:** Die Angular-CLI-Buildkette ist der Standard. Node wird für containerisierte Builds und Tests benötigt; es gibt keinen Node-Anwendungsserver.
 

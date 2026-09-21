@@ -55,7 +55,7 @@ Sperren darf der Operator, für Partner-Tenants auch der Partner-Admin; Gründe 
 
 ### 1.4 Anlage eines Tenants
 
-Der Operator oder ein Partner-Admin legt den Tenant mit Stammdaten an, wählt gegebenenfalls einen Partner, setzt Module und Preisplan im jeweiligen Rahmen und stellt den ersten Tenant-Admin-Rollencode aus. Der Code wird außerhalb der Plattform übergeben. Mit der Einlösung entsteht die erste Person des Tenants mit Klarname, E-Mail oder externem Anbieter und Passkey oder externem Anbieter (A-014, A-015).
+Der Operator oder ein Partner-Admin legt den Tenant mit Stammdaten an, wählt gegebenenfalls einen Partner, setzt Module und Preisplan im jeweiligen Rahmen und stellt den ersten Tenant-Admin-Rollencode aus. Der Code wird außerhalb der Plattform oder per E-Mail an eine vom Aussteller eingegebene Adresse übergeben (A-014). Mit der Einlösung entsteht die erste Person des Tenants mit Klarname, E-Mail oder externem Anbieter und Passkey oder externem Anbieter (A-014, A-015).
 
 ### 1.5 Keine Selbstregistrierung
 
@@ -87,7 +87,7 @@ Firmen registrieren sich nicht selbst. Tenants werden ausschließlich vom Operat
 | Zustand | Bedeutung |
 |---|---|
 | Aktiv | Person ist Mitglied des Tenants |
-| Ausgetreten | durch die Person selbst (A-019) oder automatisch nach 24 Monaten Inaktivität (A-024); Löschung binnen 30 Tagen |
+| Ausgetreten | durch die Person selbst (A-019), automatisch nach 24 Monaten Inaktivität (A-024) oder 30 Tage nach einem Deaktivierungssignal aus dem Verzeichnis ohne anderen Anmeldeweg (A-105); Löschung binnen 30 Tagen |
 | Entfernt | durch einen Tenant-Admin, etwa bei Missbrauch; wirkt wie Austritt; die Person sieht beim nächsten Anmeldeversuch einen Hinweis ohne Begründungstext; protokolliert |
 
 Es gibt keinen Sperrzustand für einzelne Mitglieder und keine Obergrenze der Mitgliederzahl je Tenant.
@@ -116,7 +116,7 @@ Ein Beitrag wird der Gruppe zugeordnet, der die Person zum Zeitpunkt des Beitrag
 | Gesundheitsbotschafter | Gruppe(n) eines Tenants | frei | alle Wege |
 | Mitglied | Tenant | frei | alle Wege |
 
-Eine Person kann mehrere Rollen ihrer Organisation halten. Rollen werden über Rollencodes vergeben (A-014) und vom Aussteller oder einer höheren Rolle entzogen. Jeder aktive Tenant hat mindestens einen Tenant-Admin; der letzte kann seine Rolle nicht selbst abgeben. Operator- und Partner-Rollen wirken ausschließlich über ihre Konsolen und nie innerhalb eines Tenants; wer zusätzlich Mitglied eines Tenants sein will, braucht eine eigene Login-Identität dafür.
+Eine Person kann mehrere Rollen ihrer Organisation halten. Rollen werden über Rollencodes vergeben (A-014) und vom Aussteller oder einer höheren Rolle entzogen. Jeder aktive Tenant hat mindestens einen Tenant-Admin; der letzte kann seine Rolle nicht selbst abgeben. Fällt der letzte Tenant-Admin dennoch weg (Austritt, Entfernen, Deaktivierungssignal), stellt der Operator-Admin oder der Partner-Admin einen neuen Tenant-Admin-Rollencode aus; bis zur Einlösung bleibt der Tenant aktiv. Operator- und Partner-Rollen wirken ausschließlich über ihre Konsolen und nie innerhalb eines Tenants; wer zusätzlich Mitglied eines Tenants sein will, braucht eine eigene Login-Identität dafür.
 
 ### 4.2 Rechtematrix
 
@@ -127,10 +127,17 @@ Eine Person kann mehrere Rollen ihrer Organisation halten. Rollen werden über R
 | Stammdaten des Tenants | ja | lesen | eigene Tenants | ja | – | – | – | lesen | – |
 | Marke und Anmeldewege | – | lesen | Voreinstellungen | ja | – | – | – | lesen | – |
 | Gruppen, Dimensionen, Sollstärken | – | – | – | ja | ja | – | – | lesen | eigene Zuordnung |
-| Rollencodes ausstellen | Operator-Rollen, erster Tenant-Admin | – | erster Tenant-Admin | alle Tenant-Rollen | Botschafter | – | – | – | – |
+| Rollencodes ausstellen | Operator-Rollen, Partner-Admin, Tenant-Admin | – | Tenant-Admin für eigene Tenants | alle Tenant-Rollen | Botschafter | – | – | – | – |
+| Beitrittscodes erstellen und widerrufen | – | – | – | ja | ja | – | – | – | – |
 | Mitgliederliste (Anzeigename, Gruppen, Rolle, Beitritt) | – | – | – | ja | – | – | – | – | – |
 | Mitglied entfernen | – | – | – | ja | – | – | – | – | – |
 | Kiosk-Geräte registrieren und widerrufen | – | – | – | ja | – | – | – | – | – |
+| E-Mail-Transport, KI-Anbieter, Verzeichnisanbindung, IP-Regeln, Protokollexport konfigurieren | – | – | – | ja | – | – | – | lesen | – |
+| Inhalte und Redaktionsplan pflegen, KI-Authoring nutzen | – | – | – | – | ja | – | ja | – | – |
+| Feed moderieren, Sperrliste ergänzen, Kommentarschalter | – | – | – | – | ja | eigene Gruppen | Firmenkanal | – | – |
+| Benachrichtigungsschalter, Ruhezeit, Kontingente | – | – | – | ja | ja | – | – | lesen | – |
+| Veranstaltungen anfragen, organisieren, Gutschein verknüpfen | – | – | – | – | ja | Gruppenveranstaltungen ohne Kosten | – | – | – |
+| Veranstaltungen verbindlich buchen, Gutschein-Kostenwirkung freigeben | – | – | – | ja | – | – | – | – | – |
 | Challenges tenantweit anlegen, Vorlagen freigeben, Kadenz | – | – | – | – | ja | – | – | – | – |
 | Challenges für eigene Gruppen aus freigegebenen Vorlagen | – | – | – | – | ja | ja | – | – | – |
 | Tenant-Beiträge und Dokumente | – | – | – | – | ja | eigene Gruppen | ja | – | – |
@@ -146,7 +153,7 @@ Die letzten beiden Zeilen sind Produkteigenschaft (A-021). Operator-Support-Zugr
 
 ### 4.3 Gesundheitsbotschafter
 
-Ein Botschafter ist an eine oder mehrere Gruppen gebunden. Er legt Challenges nur für diese Gruppen und nur aus den vom Programm-Manager freigegebenen Vorlagen an, schreibt Beiträge für seine Gruppen und sieht deren Beteiligungsquote ab fünf Beitragenden. Er sieht keine Mitgliederliste und keine Einzelwerte. Empfohlen ist ein Botschafter je 50 gemeldete Personen; die Verwaltung zeigt das Verhältnis.
+Ein Botschafter ist an eine oder mehrere Gruppen gebunden. Die Bindung wird beim Ausstellen des Rollencodes gesetzt und ist von Tenant-Admin und Programm-Manager änderbar; sie ist unabhängig von der eigenen Gruppenzugehörigkeit der Person. Er legt Challenges nur für diese Gruppen und nur aus den vom Programm-Manager freigegebenen Vorlagen an, schreibt Beiträge für seine Gruppen, legt kostenfreie Gruppenveranstaltungen an und sieht die Beteiligungsquote seiner Gruppen ab fünf Beitragenden. Er sieht keine Mitgliederliste des Tenants und keine Einzelwerte; als Organisator einer Veranstaltung sieht er nur deren Anmeldeliste mit Anzeigenamen (A-084). Er tritt mit Anzeigename und Rollenkennzeichen auf; Protokolleinträge führen Anzeigename und Rolle. Empfohlen ist ein Botschafter je 50 gemeldete Personen; die Verwaltung zeigt das Verhältnis.
 
 ## 5. Partner (A-037)
 
@@ -163,11 +170,11 @@ Ein Partner setzt für seine Tenants:
 
 ### 5.2 Was ein Partner sieht
 
-Stammdaten, Zustand, gebuchte Module, Preisplan, aggregierte Abrechnungsmengen (Anzahl aktiver Mitglieder je Periode als Zahl) und das Prüfprotokoll seiner Tenants. Nicht: Mitgliederlisten, Inhalte, Challenges, Beteiligungsquoten, Gruppen oder Sollstärken. Die Abrechnungsmenge ist für Provisionen notwendig und steht als solche im Auftragsverarbeitungsvertrag.
+Stammdaten, Zustand, gebuchte Module, Preisplan, aggregierte Abrechnungsmengen (Anzahl aktiver Mitglieder je Periode als Zahl) und die Protokolleinträge seiner Tenants zu Anlage, Zustand, Modulen, Preisen und Rahmen; nicht die tenant-internen Konfigurationsänderungen. Nicht: Mitgliederlisten, Inhalte, Challenges, Beteiligungsquoten, Gruppen oder Sollstärken. Die Abrechnungsmenge ist für Provisionen notwendig und steht als solche im Auftragsverarbeitungsvertrag.
 
 ### 5.3 Wechsel und Auflösung
 
-Ein Tenant kann vom Operator einem anderen Partner zugeordnet oder aus einem Partner gelöst werden; Rahmen und Voreinstellungen werden dann neu angewendet, bestehende Buchungen bleiben bis zur nächsten Abrechnungsperiode gültig. Wird ein Partner aufgelöst, werden seine Tenants dem Operator direkt zugeordnet.
+Ein Tenant kann vom Operator einem anderen Partner zugeordnet oder aus einem Partner gelöst werden; Rahmen und Voreinstellungen werden dann neu angewendet, bestehende Buchungen außerhalb des neuen Rahmens laufen zum übernächsten Monatsende aus (A-065), die übrigen bleiben bestehen. Wird ein Partner aufgelöst, werden seine Tenants dem Operator direkt zugeordnet.
 
 ## 6. Schnittmengen dieses Themas
 

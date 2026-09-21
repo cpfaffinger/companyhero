@@ -56,7 +56,7 @@ Titel, Beschreibung und Belohnungstext werden als Textkarte je Sprache gespeiche
 
 ### 2.5 Sensible Gewohnheiten
 
-Verzichts- und Konsum-Challenges (Alkohol, Tabak, Zucker, Bildschirmzeit) sind eine eigene Kategorie: Sichtbarkeit erzwungen „Nur ich“, keine Teilnehmerzahl, keine Feed-Ereignisse, kein Kollektivstand, kein Beitrag zu Gruppen- oder Tenant-Aggregaten. Sie stehen nicht in der Vorlagenbibliothek, sondern nur als leere Vorlage mit Warnhinweis.
+Verzichts- und Konsum-Challenges (Alkohol, Tabak, Zucker, Bildschirmzeit) sind eine eigene Kategorie: Sichtbarkeit erzwungen „Nur ich“, keine Teilnehmerzahl, keine Feed-Ereignisse, kein Kollektivstand, kein Beitrag zu Gruppen- oder Tenant-Aggregaten, keine Challenge-Metriken im Metering (weder Teilnehmertage noch aktive Challenge); Beiträge zählen nur als Handlung für Fortschritt. Sie stehen nicht in der Vorlagenbibliothek, sondern nur als leere Vorlage mit Warnhinweis.
 
 ## 3. Erfassung und Korrektur (A-039)
 
@@ -72,7 +72,7 @@ Verzichts- und Konsum-Challenges (Alkohol, Tabak, Zucker, Bildschirmzeit) sind e
 | Foto | Neukodierung ohne Metadaten (A-026), höchstens gruppensichtbar, Löschung 90 Tage nach Ende |
 | Automatische Quellen | abgeleitete Tageswerte aus dem Vault; eine manuelle Erfassung derselben Metrik am selben Tag wird nicht addiert, der höhere Wert gilt bis zum Deckel |
 
-Jeder gültige Beitrag erzeugt in einer Transaktion: den Beitrag, das Fachereignis „Beitrag erfasst“, ein pauschales Aktivitätsereignis für Fortschritt, ein Metering-Ereignis und die Folgejobs für Kollektivstand, Feed und Benachrichtigungen (A-006).
+Jeder gültige Beitrag erzeugt in einer Transaktion: den Beitrag, das Fachereignis „Beitrag erfasst“, ein pauschales Aktivitätsereignis für Fortschritt, beim ersten Beitrag einer Person am Tag ein Metering-Ereignis `challenge.participant_day` und die Folgejobs für Kollektivstand, Feed und Benachrichtigungen (A-006).
 
 ## 4. Lebenszyklus, Kadenz und Zuständigkeit (A-040)
 
@@ -191,7 +191,7 @@ Für Challenges mit Sichtbarkeit Arena berechnet die Domäne je teilnehmendem Te
 | Challenges ↔ Zugang | Kiosk-Vorgangskennung und Offline-Idempotenzschlüssel; Nachfrist für Offline-Synchronisierung |
 | Challenges ↔ Feed und Benachrichtigungen | Ereignisse für Start, Meilenstein, Ende, Belohnung eingelöst, Raster-Reihe; nie individuelle Rückstände |
 | Challenges ↔ Entitlements | Erfassungsart „automatisch“ und Sichtbarkeit „Arena“ nur mit freigeschalteten Modulen; Vorlagen mit Ersatzmetrik |
-| Challenges ↔ Metering | je Beitrag ein Metering-Ereignis; aktive Challenge je Monat und Teilnehmertage als Metriken |
+| Challenges ↔ Metering | Teilnehmertag einmal je Person und Tag, aktive Challenge je Monat, Arena-Beitritt und Größenklasse als Metriken; sensible Kategorie ohne Challenge-Metriken |
 | Challenges ↔ Arena | Projektion als Ereignis; keine Beitragssummen, keine Teilnehmerzahlen |
 | Challenges ↔ Wearable-Vault | nur abgeleitete Tageswerte; höherer Wert von manuell und automatisch bis zum Deckel |
 

@@ -115,7 +115,7 @@ Die UI bildet serverseitig gelieferte Entitlements und Berechtigungen ab. ASP.NE
 
 ### K15 – Persönliche Caches, Schreibwarteschlangen und Kiosk
 
-Der Service Worker verwaltet App-Shell und ausdrücklich freigegebene statische Ressourcen. Persönliche API-Antworten und Schreibaufträge werden dort nicht gecacht. Ein dediziertes Offline-Repository besitzt den freigegebenen persönlichen Bestand aus A-008, getrennt nach Tenant und Person: eigene ungesendete Beiträge, die zur Erfassung nötigen Challenge-Definitionen, der zuletzt bekannte Kollektivstand der eigenen Challenges mit Zeitstempel und das eigene Minimalprofil. Quelle: [Angular Service Worker Configuration](https://angular.dev/ecosystem/service-workers/config).
+Der Service Worker verwaltet App-Shell und ausdrücklich freigegebene statische Ressourcen. Persönliche API-Antworten und Schreibaufträge werden dort nicht gecacht. Ein dediziertes Offline-Repository besitzt den freigegebenen persönlichen Bestand aus A-008, getrennt nach Tenant und Person: eigene ungesendete Beiträge und Check-ins, die zur Erfassung nötigen Challenge-Definitionen, der zuletzt bekannte Kollektivstand der eigenen Challenges mit Zeitstempel, das eigene Minimalprofil und auf Wunsch lokal gespeicherte Inhaltsvideos (A-054). Quelle: [Angular Service Worker Configuration](https://angular.dev/ecosystem/service-workers/config).
 
 Offline erfasste Beiträge tragen einen clientseitig erzeugten Idempotenzschlüssel, der bei Wiederholungen unverändert bleibt. Das Backend prüft aktuelle Berechtigungen und dedupliziert im selben Namensraum wie Vorgangskennungen. Updates lesen wartende Aufträge kompatibel oder migrieren sie. Es gibt keine Erfolgsmeldung vor der Serverbestätigung; lokal gespeicherte Beiträge haben einen eigenen Status.
 

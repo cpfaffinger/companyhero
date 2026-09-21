@@ -16,7 +16,7 @@ Der Firmenvertreter ist eine andere Person mit einem anderen Job als das Mitglie
 - **Vorschau vor Start:** Challenges, Marke, Ankündigungen und Module werden vorher so gezeigt, wie Mitglieder sie sehen.
 - **Kosten vor dem Klick:** jede kostenwirksame Aktion zeigt die Auswirkung aus der Kostenvorschau (A-073).
 - **Nicht freigeschaltete Module** erscheinen nur im Modulkatalog der Verwaltung, nie als ausgegraute Bereiche.
-- **Desktop-first, responsiv.** Aufgaben von Botschaftern und Organisatoren (Moderation eigener Gruppen, Gruppen-Challenges, Ticket-Scan) liegen zusätzlich in der Mitglieder-App unter „Meine Aufgaben“.
+- **Desktop-first, responsiv.** Aufgaben von Botschaftern und Organisatoren (Moderation eigener Gruppen, Gruppen-Challenges aus freigegebenen Vorlagen, Beiträge für eigene Gruppen, Aushang je Gruppe, kostenfreie Gruppenveranstaltungen, Beteiligungsquote eigener Gruppen ab fünf, Anmeldeliste und Ticket-Scan als Organisator) liegen zusätzlich in der Mitglieder-App unter „Meine Aufgaben“.
 - **Layout** nach Design-System in Tenant-Marke (Verwaltung) beziehungsweise Plattform-Marke (Partner- und Operator-Konsole).
 
 ## 2. Verwaltung des Tenants (A-096)
@@ -25,7 +25,8 @@ Der Firmenvertreter ist eine andere Person mit einem anderen Job als das Mitglie
 |---|---|---|
 | **Übersicht** | Aktivierungsquote als Schätzgröße gegen Sollstärke, aktive Challenge mit Kollektivstand, Rollout-Fortschritt, nächste empfohlene Handlung, offene Aufgaben (Meldungen, Pflichtschritte, Gutscheinablauf). Keine Gesundheitskennzahlen. | Tenant-Admin, Programm-Manager |
 | **Programmstart** | geführte Checkliste (A-094), bis der Rollout freigegeben ist; danach als Rollout-Werkzeuge | Tenant-Admin, Programm-Manager |
-| **Mitglieder und Gruppen** | Dimensionen, Gruppen, Sollstärken mit Stichtag, CSV-Import; Mitgliederliste mit Anzeigename, Gruppen, Rolle, Beitritt; Rollencodes ausstellen und entziehen; Mitglied entfernen (A-034, A-035) | Tenant-Admin; Programm-Manager ohne Mitgliederliste und Rollen außer Botschafter |
+| **Stammdaten** | Firmierung, Anschrift, Rechnungsanschrift und -kontakt, Zeitzone, Standardsprache, Sollstärke gesamt, Anlaufstellen und Präventivfachkräfte für Hinweise in Modulen (A-033) | Tenant-Admin; Einsichtsrolle lesend |
+| **Mitglieder und Gruppen** | Dimensionen, Gruppen, Sollstärken mit Stichtag, CSV-Import; Beitrittscodes mit Gruppenvorbelegung erstellen und widerrufen; Mitgliederliste mit Anzeigename, Gruppen, Rolle, Beitritt; Rollencodes ausstellen und entziehen; Mitglied entfernen (A-014, A-034, A-035) | Tenant-Admin; Programm-Manager ohne Mitgliederliste und mit Rollencodes nur für Botschafter; Einsichtsrolle lesend ohne Mitgliederliste |
 | **Challenges** | Vorlagenbibliothek, Wizard mit Achsen, Vorschau, Kadenzkalender, laufende und beendete Challenges, Belohnungen einlösen, Vorlagenfreigabe für Botschafter, Arena-Übersicht (A-038 bis A-042) | Programm-Manager; Arena-Beitritt Tenant-Admin |
 | **Inhalte** | Bibliothek freischalten und ausblenden, eigene Inhalte, Redaktionsplan, Serien, Medienverarbeitung, KI-Authoring, Inhaltsauswertung ab fünf (A-052 bis A-057) | Programm-Manager, Redakteur |
 | **Feed** | Ankündigungen und Beiträge verfassen, anheften, planen; Moderationswarteschlange; Sperrliste; Kommentar- und Beitragsschalter (A-050, A-051) | Programm-Manager; Redakteur im Firmenkanal; Botschafter eigene Gruppen |
@@ -33,10 +34,10 @@ Der Firmenvertreter ist eine andere Person mit einem anderen Job als das Mitglie
 | **Benachrichtigungen** | Tenant-Schalter je Kanal und Kategorie, Ruhezeit, Kontingente, Auswertung ab fünf, Aushang-Zettel (A-058 bis A-063) | Programm-Manager, Tenant-Admin |
 | **Module und Kosten** | Modulkatalog mit Vorschau und Datenschutzhinweis, Buchen, Testphase, Kündigen, Kostenvorschau, Verbrauchsdetail aggregiert, Rechnungen, Metrikdefinitionen (A-064 bis A-066, A-073) | Tenant-Admin |
 | **Marke und Sprache** | Theme-Dokument, Live-Vorschau, Kontrastbericht, Versionen, Tonalität, Anrede, Bezeichnungen, Sprachen (A-077, A-080) | Tenant-Admin |
-| **Zugang** | Anmeldewege und Anbieter, Anbieterzwang, Kiosk-Geräte, Sitzungen des Tenants beenden (A-015, A-018) | Tenant-Admin |
+| **Zugang und Integrationen** | Anmeldewege und Anbieter, Anbieterzwang, Kiosk-Geräte (A-015, A-018); E-Mail-Transport des Tenants (A-032); KI-Anbieter für das Authoring (A-057); mit M12 Verzeichnisanbindung, IP-Regeln und Protokollexport (A-105) | Tenant-Admin; Einsichtsrolle lesend |
 | **Datenschutz** | nur lesend: geltende Regeln und Schwellen, was der Admin sehen kann und was nicht, Auftragsverarbeitungsvertrag, Unterauftragsverarbeiterliste, Löschfristen, Tenant-Export (A-025) | Tenant-Admin, Einsichtsrolle |
 | **Prüfprotokoll** | alle Konfigurations-, Rollen- und Zugangsänderungen, Support-Zugriffe, filterbar, exportierbar | Tenant-Admin, Einsichtsrolle |
-| **Einsicht** | Ansicht der Einsichtsrolle: aktive Module und Kanäle, Regeln, tenantweite Quote ab fünf, verwendete Metriken ohne Beträge, Gutscheine, Prüfprotokoll; nichts änderbar (A-025) | Einsichtsrolle |
+| **Einsicht** | Ansicht der Einsichtsrolle: aktive Module und Kanäle, Regeln und Schwellen, tenantweite Quote ab fünf, verwendete Metriken ohne Beträge, Gutscheine, Prüfprotokoll sowie lesend Stammdaten, Marke, Anmeldewege, Gruppen, Dimensionen und Sollstärken, Arena-Einstellungen, Benachrichtigungsschalter und Integrationskonfiguration; nichts änderbar (A-025, A-036) | Einsichtsrolle |
 
 Die Verwaltung zeigt jeder Rolle beim Öffnen ihre offenen Aufgaben zuerst.
 
@@ -46,7 +47,7 @@ Die Verwaltung zeigt jeder Rolle beim Öffnen ihre offenen Aufgaben zuerst.
 |---|---|
 | Tenants | anlegen mit Stammdaten, ersten Tenant-Admin-Rollencode ausstellen, Zustand (aktiv, gesperrt, gekündigt), sperren und kündigen (A-033) |
 | Rahmen | erlaubte Module, Testphasen, Preisrahmen innerhalb des Operator-Rahmens, Voreinstellungen für Marke und Anmeldewege (A-037, A-065, A-072) |
-| Vorlagen und Inhalte | Partnervorlagen für Challenges, Partnerinhalte, Partneranbieter für Veranstaltungen (A-041, A-052, A-082) |
+| Vorlagen und Inhalte | Partnervorlagen für Challenges, Partnerinhalte mit Redaktion durch Partner-Admins, Partneranbieter für Veranstaltungen einschließlich Anfragen und Terminbestätigungen (A-041, A-052, A-082, A-083) |
 | Abrechnung | Mengen und Beträge je Tenant, Provisionsgutschriften oder Sammelrechnung (A-075) |
 | Prüfprotokoll | eigene Aktionen und Tenant-Ereignisse auf Konfigurationsebene |
 
@@ -60,7 +61,7 @@ Nie sichtbar: Mitgliederlisten, Inhalte der Tenants, Challenges, Quoten, Gruppen
 | Module und Preise | Modulkatalog, Listenpreisplan, Tenant-Pläne, Partner-Rahmen, Steuerregeln, Grenzwerte, Funktionsfreigaben (A-064 bis A-068, A-072) |
 | Abrechnung | Versiegelung, Rechnungsentwürfe, Freigabe, Versand, Zahlungseingänge, Mahnstufen, Sperrvorschläge, Gutschriften (A-074, A-075) |
 | Arena | Arenen anlegen, Ligen, Moderation, Stände (A-088) |
-| Vorlagen und Inhalte | Plattformvorlagen, Plattforminhalte, Serien, Redaktion mit Vier-Augen-Freigabe (A-041, A-053) |
+| Vorlagen und Inhalte | Plattformvorlagen, Plattforminhalte, Serien, Redaktion durch Operator-Admins mit Vier-Augen-Freigabe (A-041, A-053) |
 | Textkatalog und Marke | drei Tonalitätsvarianten je Schlüssel und Sprache, Sperrliste, Plattformmarke, Standard-Theme, Abzeichenkatalog (A-046, A-078, A-080) |
 | Rechtstexte und Betreiberdaten | versionierte Rechtstexte, Betreiberdaten, Nachweisdokumente (A-020) |
 | Anbieter | Anbieter und Angebote für Veranstaltungen, Anbieterübersicht, Rückmeldungen (A-082, A-086) |

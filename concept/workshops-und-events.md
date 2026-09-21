@@ -55,9 +55,9 @@ Anbieter erhalten Buchungsanfragen, Bestätigungen, Teilnehmerzahlen, Kalenderei
 
 ### 3.1 Ablauf
 
-1. **Auswahl:** Programm-Manager oder Tenant-Admin wählt ein Angebot, Geltungsbereich, Wunschtermine (bis zu drei), Ort, Kapazität. Die Kostenvorschau zeigt Preis, Stornobedingungen und Auswirkung auf den Monat (A-073).
+1. **Auswahl:** Programm-Manager oder Tenant-Admin wählt ein Angebot, Geltungsbereich, Wunschtermine (bis zu drei), Ort, Kapazität. Der Katalog zeigt Angebotspreis und Stornobedingungen; die Auswirkung auf den Monat aus der Kostenvorschau (A-073) sieht der Tenant-Admin in Schritt 4.
 2. **Anfrage:** Die Plattform sendet die Anfrage an den Anbieter und den Operator. Zustand „angefragt“. Für interne Veranstaltungen entfällt dieser Schritt.
-3. **Terminbestätigung:** Der Operator oder Partner trägt den bestätigten Termin ein. Zustand „bestätigt, nicht gebucht“; die Bestätigung hält den Termin sieben Tage.
+3. **Terminbestätigung:** Der Operator-Admin, für Partneranbieter der Partner-Admin und für interne Anbieter der Organisator trägt den bestätigten Termin ein. Zustand „bestätigt, nicht gebucht“; die Bestätigung hält den Termin sieben Tage.
 4. **Buchung:** Der Tenant-Admin bucht verbindlich. Sensible Aktion mit frischer Anmeldung (A-015), protokolliert. Zustand „gebucht“. Metering erhält `event.booking` mit der Anzahl gebuchter Plätze.
 5. **Veröffentlichung:** Der Organisator veröffentlicht die Veranstaltung für den Geltungsbereich; Anmeldungen beginnen; Feed-Karte und Benachrichtigung der Kategorie Veranstaltungen.
 6. **Durchführung:** Check-in per Ticket-Scan.
@@ -79,7 +79,7 @@ Stornobedingungen stehen vor der Buchung in der Kostenvorschau und auf der Rechn
 
 ### 3.3 Sichtbarkeit in der Verwaltung
 
-Tenant-Admin und Programm-Manager sehen Buchungen, Termine, Kosten, Kapazität und Anmeldezahl. Anmeldezahlen unter fünf werden als „unter 5“ angezeigt, außer dem Organisator der Veranstaltung, der die Liste der Anzeigenamen sieht (Abschnitt 4.4). Die Einsichtsrolle sieht Anzahl der Veranstaltungen und Teilnehmerzahlen ab fünf. Partner sehen Buchungen und Beträge ihrer Tenants ohne Anmeldedaten.
+Der Tenant-Admin sieht Buchungen, Termine, Kosten, Kapazität und Anmeldezahl. Der Programm-Manager sieht Buchungen, Termine, Kapazität, Anmeldezahl und die Angebotspreise des Katalogs, aber keine Kostenvorschau, Rechnungen oder Verbrauchsdetails (A-073). Anmeldezahlen erscheinen erst ab fünf; darunter wird keine Zahl angezeigt. Der Organisator der Veranstaltung sieht deren Anmeldeliste mit Anzeigenamen (Abschnitt 4.4). Die Einsichtsrolle sieht Anzahl der Veranstaltungen und Teilnehmerzahlen ab fünf. Partner sehen Buchungen und Beträge ihrer Tenants ohne Anmeldedaten.
 
 ## 4. Anmeldung der Mitglieder (A-084)
 
@@ -106,7 +106,7 @@ Braucht ein Betrieb Klarnamen für den Zutritt (Werksausweis, Besucherliste), ka
 
 | Wer | Sieht |
 |---|---|
-| Organisator der Veranstaltung | Anzeigenamen, freigegebene Klarnamen, Check-in-Status, Anzahl |
+| Organisator der Veranstaltung | Anzeigenamen der Angemeldeten, freigegebene Klarnamen, Anzahl der Anmeldungen und der Check-ins; kein Check-in-Status je Person, der Scan zeigt nur „gültig“ oder „ungültig“ |
 | Anbieter | nur Anzahl, per E-Mail vor dem Termin |
 | Tenant-Admin, Programm-Manager ohne Organisatorrolle | Anzahl ab fünf |
 | Einsichtsrolle | Anzahl ab fünf |
@@ -125,7 +125,7 @@ Der Programm-Manager verknüpft beim Anlegen einer Challenge (A-038, Block Beloh
 | Vom Tenant zugesagt | Der Tenant zahlt die Einlösung nach seinem Preisplan | `event.booking` und `event.delivered` regulär, `workshop.credit_redeemed` mit Betrag null als Nachweis |
 | Im Preisplan enthalten | Eine Gutschriftregel des Preisplans deckt die Einlösung | `event.delivered` und gegenläufige `credit`-Regel; `workshop.credit_redeemed` mit dem gedeckten Betrag |
 
-Welche Modelle wählbar sind, ergibt sich aus dem Preisplan und dem Partnerrahmen; die Kostenvorschau zeigt die Wirkung vor der Verknüpfung.
+Welche Modelle wählbar sind, ergibt sich aus dem Preisplan und dem Partnerrahmen. Der Programm-Manager verknüpft; die Kostenwirkung gibt der Tenant-Admin als sensible Aktion frei, bevor die Challenge startet, und sieht sie dabei in der Kostenvorschau. Ohne Freigabe startet die Challenge ohne Gutschein.
 
 ### 5.2 Freischaltung
 
@@ -147,8 +147,9 @@ Nach der Veranstaltung erhalten Angemeldete mit Check-in eine optionale anonyme 
 
 | Empfänger | Sieht |
 |---|---|
-| Organisator | Anmeldungen, Warteliste, Check-in-Quote, Rückmeldung ab fünf |
-| Programm-Manager, Tenant-Admin | Veranstaltungen, Buchungen, Kosten, Teilnehmerzahlen ab fünf, Gutscheine mit Zustand |
+| Organisator | Anmeldeliste mit Anzeigenamen, Warteliste, Anzahl der Check-ins, Rückmeldung ab fünf |
+| Programm-Manager | Veranstaltungen, Buchungen, Angebotspreise, Teilnehmerzahlen ab fünf, Gutscheine mit Zustand |
+| Tenant-Admin | zusätzlich Kosten, Kostenvorschau und Rechnungspositionen |
 | Einsichtsrolle | Anzahl Veranstaltungen, Teilnehmerzahlen ab fünf, freigeschaltete und eingelöste Gutscheine |
 | Partner | Buchungen und Beträge ihrer Tenants |
 | Operator | Anbieterübersicht mit Terminen, Beträgen, Rückmeldungen und Freitexten; Katalogpflege |
