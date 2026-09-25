@@ -1,0 +1,56 @@
+# Fixierte Versionen des Durchstichs
+
+Beim Projektaufbau festgelegt (A-002, Betrieb 4 Reproduzierbarkeit). Quellen der Wahrheit sind die Lockfiles und
+Konfigurationsdateien; diese Liste dokumentiert sie an einem Ort. Änderungen laufen über Dependabot und CI.
+
+## Backend
+
+| Bestandteil | Version | Festgelegt in |
+|---|---|---|
+| .NET SDK | 10.0.401 (rollForward latestFeature) | `global.json` |
+| .NET Laufzeit-Images | `mcr.microsoft.com/dotnet/aspnet:10.0`, `runtime:10.0`, `sdk:10.0` | `Dockerfile` |
+| EF Core, Npgsql-Provider | 10.0.12, 10.0.3 | `Directory.Packages.props` |
+| Npgsql, Npgsql.OpenTelemetry | 10.0.3 | `Directory.Packages.props` |
+| OpenTelemetry (Hosting, OTLP, AspNetCore, Http, Runtime) | 1.19.1 / 1.19.0 | `Directory.Packages.props` |
+| xUnit v3 auf Microsoft.Testing.Platform | 4.0.1 | `Directory.Packages.props`, `tests/Directory.Build.props` |
+| Testcontainers.PostgreSql | 4.15.0 | `Directory.Packages.props` |
+| NetArchTest.Rules | 1.3.2 | `Directory.Packages.props` |
+| dotnet-ef | 10.0.12 | `.config/dotnet-tools.json` |
+| Analyseregeln | `latest-recommended`, Warnungen als Fehler, Ausnahmen in `.editorconfig` | `Directory.Build.props` |
+
+## Frontend
+
+| Bestandteil | Version | Festgelegt in |
+|---|---|---|
+| Node, npm | 24.15.0, 11.12.1 | `package.json` (engines über Angular CLI), `Dockerfile` |
+| Angular, Material, CDK, Service Worker | 22.2.0 | `src/frontend/package.json`, Lockfile |
+| TypeScript | 6.0.x (Angular 22 verlangt >=6.0 <6.1) | Lockfile |
+| Vitest | 5.0.2 | Lockfile |
+| Playwright | 1.63.0 | Lockfile |
+| ESLint, angular-eslint, typescript-eslint | 10.11.0, 22.5.0, 8.70.1 | `package.json` |
+| Stylelint, stylelint-config-standard-scss | 17.15.0, 17.0.0 | `package.json` |
+| Inter, Inter Tight, Material Symbols Rounded (selbst ausgeliefert) | fontsource 5.3.0 / 5.3.0 / 5.3.7 | `package.json` |
+
+Browsermatrix (K18): Angular 22 unterstützt die aktuelle und die vorherige Hauptversion von Chrome, Firefox, Edge und
+Safari sowie iOS-Safari ab 16.4; Web Push in installierten PWAs setzt auf iOS 16.4 voraus (A-059). Ältere Browser erhalten
+keine Unterstützung.
+
+## Plattformkomponenten (A-029)
+
+| Komponente | Image | Festgelegt in |
+|---|---|---|
+| PostgreSQL | `postgres:18` (18.6 zum Zeitpunkt der Fixierung) plus pgBackRest aus Debian trixie | `deploy/compose/plattform/postgres/Dockerfile` |
+| Caddy | `caddy:2.11-alpine` | `Dockerfile` |
+| Garage | `dxflrs/garage:v2.4.1` | `deploy/compose/plattform/compose.yaml` |
+| OpenBao | `openbao/openbao:2.7.0` | `deploy/compose/plattform/compose.yaml` |
+| OpenTelemetry Collector | `otel/opentelemetry-collector-contrib:0.161.0` | `deploy/compose/beobachtung/compose.yaml` |
+| Prometheus | `prom/prometheus:v3.15.0` | ebd. |
+| Loki | `grafana/loki:3.7.8` | ebd. |
+| Tempo | `grafana/tempo:3.0.3` | ebd. |
+| Grafana | `grafana/grafana:13.2.2` | ebd. |
+| Uptime Kuma | `louislam/uptime-kuma:2.5.5` | ebd. |
+| Trivy (CI) | `aquasec/trivy:0.74.0` | `.github/workflows/ci.yml` |
+| GitHub Actions | checkout v5, setup-dotnet v5, setup-node v5, buildx v3, login v3, upload-artifact v4 | `.github/workflows/ci.yml` |
+
+Produktionsimages werden per Digest ausgerollt (Betrieb 4); die CI schreibt die Digests in die Job-Ausgaben und der
+Deploy-Job in `deploy/compose/plattform/.env` des Zielhosts.

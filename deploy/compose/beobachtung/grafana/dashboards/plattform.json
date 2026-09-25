@@ -1,0 +1,62 @@
+{
+  "uid": "companyhero-plattform",
+  "title": "CompanyHero Plattform",
+  "tags": ["companyhero"],
+  "timezone": "utc",
+  "schemaVersion": 39,
+  "editable": false,
+  "time": { "from": "now-6h", "to": "now" },
+  "panels": [
+    {
+      "type": "timeseries", "title": "Anfragen je Sekunde nach Endpunktgruppe",
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 },
+      "datasource": { "uid": "prometheus" },
+      "targets": [{ "expr": "sum by (http_route) (rate(http_server_request_duration_seconds_count{service_name=\"companyhero-api\"}[5m]))", "legendFormat": "{{http_route}}" }]
+    },
+    {
+      "type": "timeseries", "title": "Fehlerquote 5xx",
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 },
+      "datasource": { "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "percentunit", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 0.02 }] } } },
+      "targets": [{ "expr": "sum(rate(http_server_request_duration_seconds_count{service_name=\"companyhero-api\",http_response_status_code=~\"5..\"}[5m])) / clamp_min(sum(rate(http_server_request_duration_seconds_count{service_name=\"companyhero-api\"}[5m])), 1e-9)", "legendFormat": "5xx" }]
+    },
+    {
+      "type": "timeseries", "title": "API-Latenz 95. Perzentil",
+      "gridPos": { "x": 0, "y": 8, "w": 12, "h": 8 },
+      "datasource": { "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "s", "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 0.3 }] } } },
+      "targets": [{ "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_request_duration_seconds_bucket{service_name=\"companyhero-api\"}[5m])))", "legendFormat": "p95" }]
+    },
+    {
+      "type": "timeseries", "title": "Datenbankverbindungen (Npgsql)",
+      "gridPos": { "x": 12, "y": 8, "w": 12, "h": 8 },
+      "datasource": { "uid": "prometheus" },
+      "targets": [
+        { "expr": "sum by (service_name) (db_client_connection_count{service_name=~\"companyhero-.*\"})", "legendFormat": "{{service_name}}" }
+      ]
+    },
+    {
+      "type": "timeseries", "title": "Job-Queue: Länge und Alter des ältesten Jobs",
+      "gridPos": { "x": 0, "y": 16, "w": 12, "h": 8 },
+      "datasource": { "uid": "prometheus" },
+      "targets": [
+        { "expr": "sum(companyhero_jobs_pending)", "legendFormat": "wartend" },
+        { "expr": "sum(companyhero_jobs_dead_letter)", "legendFormat": "Dead-Letter" },
+        { "expr": "max(companyhero_jobs_oldest_pending_age_seconds)", "legendFormat": "ältester Job (s)" }
+      ]
+    },
+    {
+      "type": "stat", "title": "Letztes erfolgreiches Backup",
+      "gridPos": { "x": 12, "y": 16, "w": 6, "h": 8 },
+      "datasource": { "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "dateTimeFromNow" } },
+      "targets": [{ "expr": "max(companyhero_backup_last_success_timestamp_seconds) * 1000" }]
+    },
+    {
+      "type": "logs", "title": "Fehler in API und Worker",
+      "gridPos": { "x": 18, "y": 16, "w": 6, "h": 8 },
+      "datasource": { "uid": "loki" },
+      "targets": [{ "expr": "{service_name=~\"companyhero-.*\"} | json | severity_text =~ \"Error|Critical\"" }]
+    }
+  ]
+}

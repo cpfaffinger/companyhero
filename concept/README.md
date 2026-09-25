@@ -17,7 +17,7 @@ Die Plattform entsteht ohne konkreten Kunden. Es gibt keine externen Stakeholder
 
 | Export | Inhalt | Status |
 |---|---|---|
-| [Entscheidungsregister](architektur-entscheidungen.md) | A-001 bis A-106 | angenommen, 20. und 21.09.2026 |
+| [Entscheidungsregister](architektur-entscheidungen.md) | A-001 bis A-107 | angenommen, 20., 21. und 25.09.2026 |
 | [Backend-Architektur](architektur-backend.md) | C#/ASP.NET Core auf .NET 10 LTS, PostgreSQL mit RLS, modularer Monolith, logische Job-Queue in PostgreSQL, Sitzung und Anmeldung, Theme-Ableitung, Betrieb, Durchstich | beschlossen |
 | [Frontend-Architektur](architektur-frontend.md) | Angular/TypeScript, Angular Material mit eigenem CSS und gemeinsamen Tokens, Offline-Bestand, Ladebudget, Referenzscreen | beschlossen |
 | [Zuständigkeiten und Integrationsregeln](architektur-integrationsregeln.md) | Zuständigkeitsmatrix und Regeln K01 bis K19 für Gestaltung, Zustand, API, Offline, Kiosk, Build und Qualität | beschlossen |
@@ -45,4 +45,4 @@ Die Plattform entsteht ohne konkreten Kunden. Es gibt keine externen Stakeholder
 
 ## Stand
 
-Alle Themengebiete des Konzepts sind ausgearbeitet. Der nächste Schritt ist der technische Durchstich gemäß A-106; danach die Umsetzung der übrigen Domänen in der vom Betreiber festgelegten Reihenfolge. Neue Themen entstehen als eigene Exporte mit Registereinträgen.
+Alle Themengebiete des Konzepts sind ausgearbeitet. Der technische Durchstich gemäß A-106 läuft; Stand, Abnahmeprotokolle und fixierte Versionen stehen unter [durchstich/](../durchstich/abnahme/). Danach folgt die Umsetzung der übrigen Domänen in der vom Betreiber festgelegten Reihenfolge. Neue Themen entstehen als eigene Exporte mit Registereinträgen.

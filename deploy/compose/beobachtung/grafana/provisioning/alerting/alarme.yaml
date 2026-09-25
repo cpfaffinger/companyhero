@@ -1,0 +1,109 @@
+# Pflicht-Alarme (Betrieb 3.2): Fehlerquote über 2 % für 5 Minuten, Job-Alter über 15 Minuten, fehlgeschlagenes Backup,
+# Speicher über 80 %, Zertifikat unter 14 Tagen. Zustellung per E-Mail an die Bereitschaftsadresse (Kontaktpunkt unten).
+# Job- und Backup-Metriken entstehen in Stufe 3 beziehungsweise mit dem Backup-Exporter; ihre Regeln sind vorbereitet.
+apiVersion: 1
+contactPoints:
+  - orgId: 1
+    name: bereitschaft
+    receivers:
+      - uid: bereitschaft-mail
+        type: email
+        settings:
+          addresses: ${CH_BEREITSCHAFT_EMAIL}
+policies:
+  - orgId: 1
+    receiver: bereitschaft
+    group_by: [alertname]
+    group_wait: 30s
+    group_interval: 5m
+    repeat_interval: 4h
+groups:
+  - orgId: 1
+    name: plattform
+    folder: CompanyHero
+    interval: 1m
+    rules:
+      - uid: api-fehlerquote
+        title: API-Fehlerquote über 2 Prozent
+        condition: C
+        for: 5m
+        labels: { severity: critical }
+        annotations: { summary: "Anteil der 5xx-Antworten über 2 % für 5 Minuten (Betrieb 3.2)" }
+        data:
+          - refId: A
+            relativeTimeRange: { from: 600, to: 0 }
+            datasourceUid: prometheus
+            model:
+              expr: sum(rate(http_server_request_duration_seconds_count{http_response_status_code=~"5.."}[5m])) / clamp_min(sum(rate(http_server_request_duration_seconds_count[5m])), 1e-9)
+              instant: true
+              refId: A
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: gt, params: [0.02] } }]
+              refId: C
+      - uid: api-nicht-erreichbar
+        title: API liefert keine Metriken
+        condition: C
+        for: 5m
+        labels: { severity: critical }
+        annotations: { summary: "Von der API kommen seit 5 Minuten keine Metriken; Ausfall oder Collector gestört" }
+        data:
+          - refId: A
+            relativeTimeRange: { from: 600, to: 0 }
+            datasourceUid: prometheus
+            model:
+              expr: absent_over_time(up{job="otel-collector"}[5m]) or absent_over_time(process_runtime_dotnet_gc_collections_count{service_name="companyhero-api"}[5m])
+              instant: true
+              refId: A
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: gt, params: [0] } }]
+              refId: C
+      - uid: job-alter
+        title: Ältester Job älter als 15 Minuten
+        condition: C
+        for: 1m
+        labels: { severity: warning }
+        annotations: { summary: "Job-Queue: ältester wartender Job über 15 Minuten (A-006, Betrieb 3.2)" }
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus
+            model:
+              expr: max(companyhero_jobs_oldest_pending_age_seconds)
+              instant: true
+              refId: A
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: gt, params: [900] } }]
+              refId: C
+      - uid: backup-fehlt
+        title: Kein erfolgreiches Backup in 26 Stunden
+        condition: C
+        for: 5m
+        labels: { severity: critical }
+        annotations: { summary: "Ausbleibendes Backup ist eine Störung (A-031)" }
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus
+            model:
+              expr: time() - max(companyhero_backup_last_success_timestamp_seconds)
+              instant: true
+              refId: A
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: gt, params: [93600] } }]
+              refId: C

@@ -1,0 +1,26 @@
+# Tempo (A-029): Traces 7 Tage (Betrieb 3.2), Einzelknoten, lokaler Speicher.
+server:
+  http_listen_port: 3200
+
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+
+storage:
+  trace:
+    backend: local
+    wal:
+      path: /var/tempo/wal
+    local:
+      path: /var/tempo/blocks
+
+overrides:
+  defaults:
+    compaction:
+      block_retention: 168h
+
+usage_report:
+  reporting_enabled: false

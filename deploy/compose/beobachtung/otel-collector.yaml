@@ -1,0 +1,78 @@
+# OpenTelemetry Collector (A-029): ein Eingang für Logs, Metriken und Traces aus API und Worker; keine Exporte an Fremdsysteme.
+# Personenbezug wird bereits in der Anwendung vermieden (Betrieb 3.2); der Collector entfernt zusätzlich Attribute,
+# die Nutzdaten tragen könnten (Query, Cookies, Authorization, Client-Adressen).
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  memory_limiter:
+    check_interval: 5s
+    limit_mib: 400
+    spike_limit_mib: 100
+  batch:
+    timeout: 5s
+  attributes/personenbezug:
+    actions:
+      - key: url.query
+        action: delete
+      - key: http.url
+        action: delete
+      - key: url.full
+        action: delete
+      - key: client.address
+        action: delete
+      - key: net.peer.ip
+        action: delete
+      - key: http.request.header.cookie
+        action: delete
+      - key: http.request.header.authorization
+        action: delete
+      - key: user_agent.original
+        action: delete
+      - key: enduser.id
+        action: delete
+  resource:
+    attributes:
+      - key: deployment.environment
+        value: ${env:CH_ENVIRONMENT:-lokal}
+        action: upsert
+
+exporters:
+  prometheusremotewrite:
+    endpoint: http://prometheus:9090/api/v1/write
+    resource_to_telemetry_conversion:
+      enabled: true
+  otlphttp/loki:
+    endpoint: http://loki:3100/otlp
+  otlp/tempo:
+    endpoint: tempo:4317
+    tls:
+      insecure: true
+
+extensions:
+  health_check:
+    endpoint: 0.0.0.0:13133
+
+service:
+  extensions: [health_check]
+  telemetry:
+    metrics:
+      level: basic
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, attributes/personenbezug, resource, batch]
+      exporters: [otlp/tempo]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, resource, batch]
+      exporters: [prometheusremotewrite]
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, attributes/personenbezug, resource, batch]
+      exporters: [otlphttp/loki]

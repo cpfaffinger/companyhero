@@ -1,0 +1,17 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
+**/.angular/
+**/TestResults/
+.git/
+.github/
+arbeit/
+concept-entwurf-v0.1/
+concept/
+design/
+durchstich/
+deploy/compose/**/secrets/
+deploy/compose/**/data/
+**/*.md
+!README.md

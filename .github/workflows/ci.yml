@@ -1,0 +1,180 @@
+# CI bei jedem Push auf master (A-030, Betrieb 4): Build, Compiler- und Templateprüfung, Fachtests, API- und
+# Datenbanktests in Testcontainern, Architekturtests, Lint-Grenzen aus den Integrationsregeln, Ladebudget,
+# Image-Bau mit Trivy-Scan, Betriebsnachweise in Compose, Push nach GHCR mit Digest.
+name: CI
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  DOTNET_NOLOGO: "true"
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  CI: "true"
+  REGISTRY: ghcr.io
+  IMAGE_PREFIX: ghcr.io/${{ github.repository_owner }}/companyhero
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  backend:
+    name: Backend (Build, Architektur, Integration)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - name: Wiederherstellen (Lockfiles)
+        run: dotnet restore CompanyHero.slnx --locked-mode
+      - name: Build (Warnungen sind Fehler)
+        run: dotnet build CompanyHero.slnx -c Release --no-restore
+      - name: Architekturtests
+        run: dotnet test tests/CompanyHero.Architecture.Tests -c Release --no-build
+      - name: Integrationstests (PostgreSQL 18 in Testcontainern, Laufzeitrechte)
+        run: dotnet test tests/CompanyHero.Integration.Tests -c Release --no-build
+      - name: EF-Migrationen sind vollständig (Modell ohne ausstehende Änderungen)
+        run: |
+          dotnet tool restore
+          dotnet ef migrations has-pending-model-changes \
+            --project src/backend/CompanyHero.Migrations --startup-project src/backend/CompanyHero.Migrations \
+            --context PlatformDbContext --no-build --configuration Release
+
+  frontend:
+    name: Frontend (Lint-Grenzen, Tests, Build, Ladebudget)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/frontend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24.15.0
+          cache: npm
+          cache-dependency-path: src/frontend/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - name: Verbotene Pakete (K01, K08, K11, A-003, A-013)
+        run: node scripts/check-dependencies.mjs
+      - name: Generierter Client unverändert (K12)
+        run: node scripts/check-generated-client.mjs
+      - name: ESLint (TypeScript und Templates)
+        run: npx ng lint
+      - name: Stylelint (keine Rohfarben, keine privaten Material-Selektoren)
+        run: npx stylelint "src/**/*.scss"
+      - name: Komponententests (Vitest)
+        run: npx ng test --watch=false
+      - name: Produktionsbuild (strict, strictTemplates, Budgets)
+        run: npm run build
+      - name: Ladebudget 180 KB komprimiert (K17)
+        run: node scripts/ladebudget.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: src/frontend/dist/companyhero-frontend/browser
+          retention-days: 7
+
+  images:
+    name: Images, Trivy, Betriebsnachweise in Compose, Push
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    outputs:
+      app: ${{ steps.push.outputs.app }}
+      migrate: ${{ steps.push.outputs.migrate }}
+      web: ${{ steps.push.outputs.web }}
+      postgres: ${{ steps.push.outputs.postgres }}
+    env:
+      RELEASE_VERSION: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: docker/setup-buildx-action@v3
+      - name: Images bauen (lokal geladen)
+        run: |
+          set -euo pipefail
+          for target in app migrate web; do
+            docker buildx build --load --target "$target" \
+              --build-arg RELEASE_VERSION="$RELEASE_VERSION" \
+              --cache-from type=gha,scope="$target" --cache-to type=gha,scope="$target",mode=max \
+              -t "$IMAGE_PREFIX-$target:$RELEASE_VERSION" .
+          done
+          docker buildx build --load \
+            --cache-from type=gha,scope=postgres --cache-to type=gha,scope=postgres,mode=max \
+            -t "$IMAGE_PREFIX-postgres:$RELEASE_VERSION" deploy/compose/plattform/postgres
+      - name: Trivy (kritische Funde blockieren das Release, A-030)
+        run: |
+          set -euo pipefail
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$HOME/.cache/trivy:/root/.cache/" \
+            aquasec/trivy:0.74.0 image --exit-code 0 --severity HIGH --ignore-unfixed --scanners vuln \
+            "$IMAGE_PREFIX-app:$RELEASE_VERSION" "$IMAGE_PREFIX-migrate:$RELEASE_VERSION" "$IMAGE_PREFIX-web:$RELEASE_VERSION" "$IMAGE_PREFIX-postgres:$RELEASE_VERSION" || true
+          for img in app migrate web postgres; do
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$HOME/.cache/trivy:/root/.cache/" \
+              aquasec/trivy:0.74.0 image --exit-code 1 --severity CRITICAL --ignore-unfixed --scanners vuln --quiet "$IMAGE_PREFIX-$img:$RELEASE_VERSION"
+          done
+      - name: Betriebsnachweise in Compose (Betrieb 9.4, 9.5, 9.7; A-032 eine Origin)
+        env:
+          CH_IMAGE_APP: ${{ env.IMAGE_PREFIX }}-app:${{ github.sha }}
+          CH_IMAGE_MIGRATE: ${{ env.IMAGE_PREFIX }}-migrate:${{ github.sha }}
+          CH_IMAGE_WEB: ${{ env.IMAGE_PREFIX }}-web:${{ github.sha }}
+          CH_IMAGE_POSTGRES: ${{ env.IMAGE_PREFIX }}-postgres:${{ github.sha }}
+        run: bash deploy/scripts/compose-nachweise.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: compose-nachweise
+          path: durchstich/abnahme/laeufe/
+          retention-days: 30
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push nach GHCR (Version und Digest)
+        id: push
+        run: |
+          set -euo pipefail
+          for img in app migrate web postgres; do
+            docker push "$IMAGE_PREFIX-$img:$RELEASE_VERSION" > /dev/null
+            docker tag "$IMAGE_PREFIX-$img:$RELEASE_VERSION" "$IMAGE_PREFIX-$img:master"
+            docker push "$IMAGE_PREFIX-$img:master" > /dev/null
+            digest="$(docker inspect --format='{{index .RepoDigests 0}}' "$IMAGE_PREFIX-$img:$RELEASE_VERSION")"
+            echo "$img=$digest" >> "$GITHUB_OUTPUT"
+            echo "$img: $digest"
+          done
+
+  wiederherstellung:
+    name: Wiederherstellungsübung (Betrieb 9.1, A-031)
+    runs-on: ubuntu-latest
+    needs: [images]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Übung ausführen
+        env:
+          CH_IMAGE_APP: ${{ needs.images.outputs.app }}
+          CH_IMAGE_MIGRATE: ${{ needs.images.outputs.migrate }}
+          CH_IMAGE_WEB: ${{ needs.images.outputs.web }}
+          CH_IMAGE_POSTGRES: ${{ needs.images.outputs.postgres }}
+          CH_DRILL_REPORT: durchstich/abnahme/laeufe/wiederherstellung-${{ github.run_number }}.md
+        run: |
+          set -euo pipefail
+          bash deploy/scripts/bootstrap-secrets.sh > /dev/null
+          cp deploy/compose/plattform/.env.example deploy/compose/plattform/.env
+          docker pull -q "$CH_IMAGE_POSTGRES" && docker pull -q "$CH_IMAGE_MIGRATE"
+          bash deploy/scripts/wiederherstellung.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wiederherstellung
+          path: durchstich/abnahme/laeufe/
+          retention-days: 90

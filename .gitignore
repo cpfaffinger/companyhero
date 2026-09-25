@@ -9,9 +9,11 @@ desktop.ini
 Thumbs.db
 .DS_Store
 
-# Build- und Werkzeugausgaben
-bin/
-obj/
+# Build- und Werkzeugausgaben (.NET nur unter src und tests, damit deploy/**/bin nicht ausgeschlossen wird)
+src/**/bin/
+src/**/obj/
+tests/**/bin/
+tests/**/obj/
 node_modules/
 dist/
 .angular/
@@ -26,4 +28,10 @@ test-results/
 # Lokale Geheimnisse und Laufzeitdaten der Compose-Projekte
 deploy/compose/**/secrets/
 deploy/compose/**/.env
+deploy/compose/**/.env.drill
+deploy/compose/**/.env.previous
+deploy/compose/**/.env.nachweise-vorher
 deploy/compose/**/data/
+
+# Protokolle einzelner Läufe entstehen als CI-Artefakte; nur referenzierte Läufe werden eingecheckt
+durchstich/abnahme/laeufe/*.log

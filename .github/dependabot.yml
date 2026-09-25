@@ -1,0 +1,39 @@
+# Dependabot (A-030): NuGet, npm, Basis-Images und Actions; wöchentliche Sammel-Updates, Sicherheitsupdates sofort.
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      nuget:
+        patterns: ["*"]
+  - package-ecosystem: npm
+    directory: /src/frontend
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      npm:
+        patterns: ["*"]
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+  - package-ecosystem: docker
+    directory: /deploy/compose/plattform/postgres
+    schedule:
+      interval: weekly
+      day: monday
+  - package-ecosystem: docker-compose
+    directories: ["/deploy/compose/plattform", "/deploy/compose/beobachtung"]
+    schedule:
+      interval: weekly
+      day: monday
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday

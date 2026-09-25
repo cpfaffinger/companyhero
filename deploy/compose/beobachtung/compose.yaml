@@ -1,0 +1,110 @@
+# Compose-Projekt "beobachtung" (A-029, Betrieb 3.2): OpenTelemetry Collector, Prometheus, Loki, Tempo, Grafana, Uptime Kuma.
+# Kein Port ist veröffentlicht; Grafana ist nur intern erreichbar (SSH-Tunnel oder internes Netz) und verlangt
+# Passkey oder externen Anbieter (Konfiguration in grafana/grafana.ini). Aufbewahrung: Logs 30 Tage, Metriken 90 Tage, Traces 7 Tage.
+name: beobachtung
+
+x-common: &common
+  restart: unless-stopped
+  security_opt: [no-new-privileges:true]
+  networks: [beobachtung]
+  logging:
+    driver: json-file
+    options: { max-size: "20m", max-file: "3" }
+
+services:
+  otel-collector:
+    <<: *common
+    image: otel/opentelemetry-collector-contrib:0.161.0
+    command: ["--config=/etc/otelcol/config.yaml"]
+    volumes:
+      - ./otel-collector.yaml:/etc/otelcol/config.yaml:ro
+    depends_on: [loki, tempo, prometheus]
+
+  prometheus:
+    <<: *common
+    image: prom/prometheus:v3.15.0
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=90d
+      - --web.enable-remote-write-receiver
+      - --web.enable-otlp-receiver
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+
+  loki:
+    <<: *common
+    image: grafana/loki:3.7.8
+    command: ["-config.file=/etc/loki/loki.yaml"]
+    volumes:
+      - ./loki.yaml:/etc/loki/loki.yaml:ro
+      - loki-data:/loki
+
+  tempo:
+    <<: *common
+    image: grafana/tempo:3.0.3
+    command: ["-config.file=/etc/tempo/tempo.yaml"]
+    volumes:
+      - ./tempo.yaml:/etc/tempo/tempo.yaml:ro
+      - tempo-data:/var/tempo
+
+  grafana:
+    <<: *common
+    image: grafana/grafana:13.2.2
+    environment:
+      GF_SECURITY_ADMIN_USER__FILE: /run/secrets/grafana_admin_user
+      GF_SECURITY_ADMIN_PASSWORD__FILE: /run/secrets/grafana_admin_password
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+      GF_ANALYTICS_CHECK_FOR_UPDATES: "false"
+      GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: "false"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_SERVER_ROOT_URL: ${CH_GRAFANA_ROOT_URL:-http://grafana.internal:3000}
+      # Passkey oder externer Anbieter (A-029): generischer OIDC-Anbieter, Werte je Umgebung in .env
+      GF_AUTH_GENERIC_OAUTH_ENABLED: ${CH_GRAFANA_OAUTH_ENABLED:-false}
+      GF_AUTH_GENERIC_OAUTH_NAME: ${CH_GRAFANA_OAUTH_NAME:-Anmeldung}
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: ${CH_GRAFANA_OAUTH_CLIENT_ID:-}
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET__FILE: /run/secrets/grafana_oauth_client_secret
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: ${CH_GRAFANA_OAUTH_AUTH_URL:-}
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: ${CH_GRAFANA_OAUTH_TOKEN_URL:-}
+      GF_AUTH_GENERIC_OAUTH_API_URL: ${CH_GRAFANA_OAUTH_API_URL:-}
+      GF_AUTH_GENERIC_OAUTH_SCOPES: openid profile email
+      GF_AUTH_GENERIC_OAUTH_USE_PKCE: "true"
+      GF_SMTP_ENABLED: ${CH_GRAFANA_SMTP_ENABLED:-false}
+      GF_SMTP_HOST: ${CH_GRAFANA_SMTP_HOST:-}
+      GF_SMTP_FROM_ADDRESS: ${CH_GRAFANA_SMTP_FROM:-}
+      CH_BEREITSCHAFT_EMAIL: ${CH_BEREITSCHAFT_EMAIL:-bereitschaft@example.invalid}
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    secrets: [grafana_admin_user, grafana_admin_password, grafana_oauth_client_secret]
+    depends_on: [prometheus, loki, tempo]
+
+  uptime-kuma:
+    <<: *common
+    # Erreichbarkeitsprüfung von außen; in Produktion auf dem Beobachtungshost an einem anderen Standort (Betrieb 2.2).
+    image: louislam/uptime-kuma:2.5.5
+    volumes:
+      - uptime-kuma-data:/app/data
+
+networks:
+  beobachtung:
+    name: companyhero-beobachtung
+    external: true
+
+volumes:
+  prometheus-data:
+  loki-data:
+  tempo-data:
+  grafana-data:
+  uptime-kuma-data:
+
+secrets:
+  grafana_admin_user:
+    file: ./secrets/grafana_admin_user
+  grafana_admin_password:
+    file: ./secrets/grafana_admin_password
+  grafana_oauth_client_secret:
+    file: ./secrets/grafana_oauth_client_secret

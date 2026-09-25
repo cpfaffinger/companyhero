@@ -1,7 +1,7 @@
 # CompanyHero – Entscheidungsregister
 
-**Stand:** 21.09.2026  
-**Status:** A-001 bis A-106 angenommen durch Christopher. Dokumentierte Entscheidungen, noch keine implementierten oder technisch abgenommenen Funktionen.
+**Stand:** 25.09.2026  
+**Status:** A-001 bis A-107 angenommen durch Christopher. Dokumentierte Entscheidungen; technisch nachgewiesene Nachweise tragen den Zusatz „technisch nachgewiesen“ mit Datum und Verweis auf das Abnahmeprotokoll unter `durchstich/abnahme/`.
 
 Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetzung: [Backend](architektur-backend.md), [Frontend](architektur-frontend.md), [Zuständigkeiten und Integrationsregeln](architektur-integrationsregeln.md), [Domänen und Schnittmengen](domaenen-und-schnittmengen.md), [Zugang und Identität](zugang-und-identitaet.md), [Datenschutz und Nachweis](datenschutz-und-nachweis.md), [Betrieb](betrieb.md), [Organisation und Mandanten](organisation-und-mandanten.md), [Challenges](challenges.md), [Fortschritt](fortschritt.md), [Feed und Inhalte](feed-und-inhalte.md), [Benachrichtigungen](benachrichtigungen.md), [Entitlements](entitlements.md), [Metering und Abrechnung](metering-und-abrechnung.md), [Marke und Theme](marke-und-theme.md), [Workshops und Events](workshops-und-events.md), [Arena](arena.md), [Wearable-Vault](wearable-vault.md), [Onboarding und Rollout](onboarding-und-rollout.md), [Verwaltung und Konsolen](verwaltung-und-konsolen.md), [Inhaltsmodule](inhaltsmodule.md), [Mehrsprachigkeit](mehrsprachigkeit.md), [Verzeichnis und Netzwerk](verzeichnis-und-netzwerk.md), [Technischer Durchstich](technischer-durchstich.md). Jede Entscheidung steht hier in ihrer gültigen Form. Wird eine Entscheidung geändert, wird der Eintrag ersetzt und die betroffenen Dateien werden gemeinsam angepasst.
 
@@ -802,6 +802,14 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Schmalster Pfad durch Zugang, Organisation, Marke, Entitlements mit M1, Challenges, Fortschritt, Feed, Benachrichtigungen, Metering und Datenschutz mit zwei Tenants in Compose; ohne Inhaltsmodule, Arena, Vault, Veranstaltungen, Firmenkanal, Mehrsprachigkeit, Verzeichnis, Partner-Konsole, KI-Authoring, Rechnungsversand, Mahnwesen. Acht Stufen in fester Reihenfolge (Fundament, Isolation, Queue und Idempotenz, Zugang, Vertrag und Oberfläche, Fachpfad, Geld, Onboarding), Stufen 4 und 5 parallel erlaubt; jede Stufe mit grüner CI und Abnahmeprotokoll. Vier Produktwahlen mit Version ins Register. Abschluss: alle Nachweise grün oder manuell abgenommen, Ladebudget gemessen, Neuaufbau innerhalb RTO, Lasttest bestanden, Zusatz „technisch nachgewiesen“ je Entscheidung. Keine Termine; Abweichungen vom Konzept sind Registeränderungen im selben Commit.
 - **Begründung:** Beweise vor Breite; Isolation und Idempotenz zuerst, weil Fehler dort alles Spätere entwerten.
 - **Nachweise:** Abnahmeprotokolle im Repository; Register mit Produktwahlen und Zusätzen.
+
+## A-107 – Durchstich-Umgebungen ohne bereitgestellte Hosts
+
+- **Status:** angenommen, 25.09.2026.
+- **Umfang:** Bis der Betreiber Produktiv-, Staging- und Beobachtungshost bereitstellt (A-028), ist der GitHub-Actions-Runner die frische Umgebung für Wiederherstellungsübung, Betriebsnachweise in Compose und Lasttest. Es gelten dieselben Compose-Definitionen und Images wie für die Hosts. In diesen Läufen liegt das pgBackRest-Repository auf einem eigenen Volume als Stellvertreter des Offsite-Speichers; OpenBao wird automatisch initialisiert und entsiegelt, die Schlüsselteile liegen im lokalen Volume. Abnahmeprotokolle je Lauf sind CI-Artefakte; die für eine Stufenabnahme referenzierten Läufe liegen unter `durchstich/abnahme/`.
+- **Begründung:** Hosting ist Betreibersache (A-028) und keine Vorbedingung; die Nachweise sollen nicht auf Hosts warten. Ein frischer Runner erfüllt „Neuaufbau aus Images, Konfiguration und Backups“ wörtlich und ohne Altbestand.
+- **Folgen:** In Produktion bleiben Entsiegelung durch zwei Personen und Offsite-S3 am zweiten Standort unverändert (A-029, A-031). Erste Wiederherstellungsübung und Lasttest werden nach Bereitstellung der Hosts auf echtem Staging wiederholt; die Protokolle vermerken die Umgebung. Betriebsnachweise 9.3 (Alarme innerhalb von 5 Minuten bei Komponentenausfall) und 9.8 (Zertifikatserneuerung) setzen die Hosts voraus und bleiben bis dahin offen.
+- **Nachweise:** Protokolle unter `durchstich/abnahme/` nennen Umgebung, Images und CI-Lauf; die Wiederherstellungsübung läuft bei jedem Push auf `master` und schreibt RTO und RPO.
 
 ## Noch zu entscheidende Produktwahlen
 

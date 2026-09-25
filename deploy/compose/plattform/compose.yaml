@@ -1,0 +1,273 @@
+# Compose-Projekt "plattform" (Betrieb 2.2): Caddy, API, Worker, Migrations-Container, PostgreSQL mit pgBackRest,
+# Garage, OpenBao. Dieselbe Definition für lokal, Staging und Produktion; Unterschiede kommen aus .env und secrets/.
+# Nur Caddy veröffentlicht Ports (A-028, Betrieb 2.4). Beobachtung ist ein eigenes Projekt im Netz companyhero-beobachtung.
+name: companyhero
+
+x-app: &app
+  image: ${CH_IMAGE_APP:-ghcr.io/cpfaffinger/companyhero-app:local}
+  build:
+    context: ../../..
+    target: app
+    args:
+      RELEASE_VERSION: ${CH_RELEASE_VERSION:-local}
+  environment: &app-env
+    ASPNETCORE_ENVIRONMENT: ${CH_ASPNET_ENVIRONMENT:-Production}
+    CH_OPENBAO_ADDR: http://openbao:8200
+    CH_OPENBAO_TOKEN_FILE: /run/companyhero/openbao-app-token
+    OTEL_EXPORTER_OTLP_ENDPOINT: ${CH_OTLP_ENDPOINT:-http://otel-collector:4317}
+    OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+    TZ: UTC
+  volumes:
+    - runtime:/run/companyhero:ro
+  depends_on:
+    migrate:
+      condition: service_completed_successfully
+    openbao-init:
+      condition: service_completed_successfully
+  networks: [internal, beobachtung]
+  read_only: true
+  tmpfs: [/tmp]
+  security_opt: [no-new-privileges:true]
+  cap_drop: [ALL]
+  restart: unless-stopped
+  healthcheck:
+    test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/8080 && printf 'GET /api/health/ready HTTP/1.0\\r\\nHost: localhost\\r\\n\\r\\n' >&3 && head -n1 <&3 | grep -q ' 200 '"]
+    interval: 15s
+    timeout: 5s
+    retries: 5
+    start_period: 30s
+  logging: &logging
+    driver: json-file
+    options: { max-size: "50m", max-file: "5" }
+
+services:
+  web:
+    image: ${CH_IMAGE_WEB:-ghcr.io/cpfaffinger/companyhero-web:local}
+    build:
+      context: ../../..
+      target: web
+    ports:
+      - "${CH_HTTP_PORT:-80}:80"
+      - "${CH_HTTPS_PORT:-443}:443"
+      - "${CH_HTTPS_PORT:-443}:443/udp"
+    sysctls:
+      # Caddy läuft ohne Root und darf trotzdem 80 und 443 binden (A-028).
+      - net.ipv4.ip_unprivileged_port_start=0
+    environment:
+      CH_ORIGIN: ${CH_ORIGIN:-localhost}
+      # Caddy akzeptiert keinen leeren Wert; der Platzhalter gilt nur lokal mit internem Zertifikat.
+      CH_ACME_EMAIL: ${CH_ACME_EMAIL:-betreiber@example.invalid}
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      api:
+        condition: service_healthy
+    networks: [edge, internal]
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    logging: *logging
+
+  api:
+    <<: *app
+    environment:
+      <<: *app-env
+      CH_PROCESS: api
+
+  worker:
+    <<: *app
+    environment:
+      <<: *app-env
+      CH_PROCESS: worker
+
+  migrate:
+    image: ${CH_IMAGE_MIGRATE:-ghcr.io/cpfaffinger/companyhero-migrate:local}
+    build:
+      context: ../../..
+      target: migrate
+      args:
+        RELEASE_VERSION: ${CH_RELEASE_VERSION:-local}
+    environment:
+      CH_DB_HOST: postgres
+      CH_DB_NAME: ${CH_DB_NAME:-companyhero}
+      CH_MIGRATOR_PASSWORD_FILE: /run/secrets/db_migrator_password
+      CH_RELEASE_VERSION: ${CH_RELEASE_VERSION:-local}
+      CH_IMAGE_DIGEST: ${CH_IMAGE_DIGEST:-}
+      TZ: UTC
+    secrets: [db_migrator_password]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [internal]
+    read_only: true
+    tmpfs: [/tmp]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    restart: "no"
+    logging: *logging
+
+  postgres:
+    image: ${CH_IMAGE_POSTGRES:-ghcr.io/cpfaffinger/companyhero-postgres:local}
+    build:
+      context: ./postgres
+    entrypoint: ["ch-postgres-entrypoint.sh"]
+    environment: &pg-env
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_superuser_password
+      CH_MIGRATOR_PASSWORD_FILE: /run/secrets/db_migrator_password
+      CH_APP_PASSWORD_FILE: /run/secrets/db_app_password
+      CH_DB_NAME: ${CH_DB_NAME:-companyhero}
+      CH_BACKUP_CIPHER_PASS_FILE: /run/secrets/backup_cipher_pass
+      PGBACKREST_STANZA: main
+      TZ: UTC
+    env_file:
+      # Produktion: Offsite-Repository (PGBACKREST_REPO1_TYPE=s3, -S3-ENDPOINT, -S3-BUCKET, -S3-KEY, -S3-KEY-SECRET, -S3-REGION).
+      - path: ./secrets/backup-repo.env
+        required: false
+    volumes: &pg-volumes
+      - pgdata:/var/lib/postgresql
+      - pg-socket:/var/run/postgresql
+      - backup-repo:/var/lib/pgbackrest
+      - pgbackrest-spool:/var/spool/pgbackrest
+      - pgbackrest-log:/var/log/pgbackrest
+    secrets: &pg-secrets [postgres_superuser_password, db_migrator_password, db_app_password, backup_cipher_pass]
+    shm_size: 256m
+    networks: [internal]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -h /var/run/postgresql -q"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    logging: *logging
+
+  backup:
+    image: ${CH_IMAGE_POSTGRES:-ghcr.io/cpfaffinger/companyhero-postgres:local}
+    user: postgres
+    entrypoint: ["ch-backup-env.sh"]
+    command: ["ch-backup-loop.sh"]
+    environment:
+      <<: *pg-env
+      CH_BACKUP_HOUR_UTC: ${CH_BACKUP_HOUR_UTC:-02}
+    env_file:
+      - path: ./secrets/backup-repo.env
+        required: false
+    volumes: *pg-volumes
+    secrets: *pg-secrets
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [internal]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    restart: unless-stopped
+    logging: *logging
+
+  garage:
+    image: dxflrs/garage:v2.4.1
+    environment:
+      # Garage verweigert den Start bei weltlesbaren Geheimnisdateien. Auf Linux-Hosts und in CI sind sie 0600;
+      # nur auf NTFS-Mounts unter WSL (lokale Entwicklung) fehlen die Rechtebits. Standard false.
+      GARAGE_ALLOW_WORLD_READABLE_SECRETS: ${CH_GARAGE_ALLOW_WORLD_READABLE_SECRETS:-false}
+    volumes:
+      - ./garage/garage.toml:/etc/garage.toml:ro
+      - garage-meta:/var/lib/garage/meta
+      - garage-data:/var/lib/garage/data
+    secrets: [garage_rpc_secret, garage_admin_token]
+    networks: [internal]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/garage", "-c", "/etc/garage.toml", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    logging: *logging
+
+  openbao:
+    image: openbao/openbao:2.7.0
+    # Der Einstiegspunkt des Images ergänzt -config=/openbao/config selbst.
+    command: ["server"]
+    volumes:
+      - ./openbao/config.hcl:/openbao/config/config.hcl:ro
+      - openbao-data:/openbao/file
+    networks: [internal]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8200/v1/sys/health?standbyok=true&uninitcode=200&sealedcode=200"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    logging: *logging
+
+  openbao-init:
+    image: openbao/openbao:2.7.0
+    # Einmaliger Einrichtungslauf; schreibt den Anwendungstoken in das gemeinsame Laufzeitvolume und braucht dafür dessen Besitz.
+    user: "0:0"
+    entrypoint: ["/bin/sh", "/openbao/init.sh"]
+    environment:
+      BAO_ADDR: http://openbao:8200
+      CH_OPENBAO_AUTO_INIT: ${CH_OPENBAO_AUTO_INIT:-false}
+      CH_OPENBAO_ROOT_TOKEN_FILE: ${CH_OPENBAO_ROOT_TOKEN_FILE:-/run/secrets/openbao_root_token}
+      CH_DB_HOST: postgres
+      CH_DB_NAME: ${CH_DB_NAME:-companyhero}
+    volumes:
+      - ./openbao/init.sh:/openbao/init.sh:ro
+      - openbao-init:/openbao/init
+      - runtime:/run/companyhero
+    secrets: [db_app_password]
+    depends_on:
+      openbao:
+        condition: service_healthy
+    networks: [internal]
+    restart: "no"
+    logging: *logging
+
+networks:
+  edge:
+  internal:
+  beobachtung:
+    name: companyhero-beobachtung
+
+volumes:
+  pgdata:
+  pg-socket:
+  backup-repo:
+    # Stellvertreter des Offsite-Speichers für lokale Läufe und die Wiederherstellungsübung; projektübergreifend benannt.
+    name: ${CH_BACKUP_REPO_VOLUME:-companyhero-backup-repo}
+  pgbackrest-spool:
+  pgbackrest-log:
+  garage-meta:
+  garage-data:
+  openbao-data:
+  openbao-init:
+  runtime:
+  caddy-data:
+  caddy-config:
+
+secrets:
+  postgres_superuser_password:
+    file: ./secrets/postgres_superuser_password
+  db_migrator_password:
+    file: ./secrets/db_migrator_password
+  db_app_password:
+    file: ./secrets/db_app_password
+  backup_cipher_pass:
+    file: ./secrets/backup_cipher_pass
+  garage_rpc_secret:
+    file: ./secrets/garage_rpc_secret
+  garage_admin_token:
+    file: ./secrets/garage_admin_token
