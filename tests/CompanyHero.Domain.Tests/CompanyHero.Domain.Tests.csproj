@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Schnelle Fachtests ohne Infrastruktur (Backend 9): reine Fachregeln der Module.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/backend/CompanyHero.ModuleCatalog/CompanyHero.ModuleCatalog.csproj" />
+  </ItemGroup>
+</Project>

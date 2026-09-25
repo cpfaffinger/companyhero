@@ -36,16 +36,20 @@ jobs:
         run: dotnet restore CompanyHero.slnx --locked-mode
       - name: Build (Warnungen sind Fehler)
         run: dotnet build CompanyHero.slnx -c Release --no-restore
+      - name: Fachtests ohne Infrastruktur
+        run: dotnet test tests/CompanyHero.Domain.Tests -c Release --no-build
       - name: Architekturtests
         run: dotnet test tests/CompanyHero.Architecture.Tests -c Release --no-build
       - name: Integrationstests (PostgreSQL 18 in Testcontainern, Laufzeitrechte)
         run: dotnet test tests/CompanyHero.Integration.Tests -c Release --no-build
-      - name: EF-Migrationen sind vollständig (Modell ohne ausstehende Änderungen)
+      - name: EF-Migrationen sind vollständig (jeder Kontext ohne ausstehende Modelländerungen)
         run: |
           dotnet tool restore
-          dotnet ef migrations has-pending-model-changes \
-            --project src/backend/CompanyHero.Migrations --startup-project src/backend/CompanyHero.Migrations \
-            --context PlatformDbContext --no-build --configuration Release
+          for ctx in PlatformDbContext OrganisationDbContext IdentityDbContext PrivacyDbContext ProgressDbContext; do
+            dotnet ef migrations has-pending-model-changes \
+              --project src/backend/CompanyHero.Migrations --startup-project src/backend/CompanyHero.Migrations \
+              --context "$ctx" --no-build --configuration Release
+          done
 
   frontend:
     name: Frontend (Lint-Grenzen, Tests, Build, Ladebudget)

@@ -1,4 +1,9 @@
+using CompanyHero.Modules.Progress.Api;
+using CompanyHero.Modules.Progress.Application;
+using CompanyHero.Modules.Progress.Infrastructure;
+using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Modules;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,5 +17,10 @@ public sealed class ProgressModule : IModule
 
     public void AddModule(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddModuleDbContext<ProgressDbContext>(ModuleSchemas.Progress);
+        services.AddScoped<IActivityRecorder, ActivityRecorder>();
+        services.AddScoped<IPersonalActivityQuery, PersonalActivityQuery>();
     }
+
+    public void MapEndpoints(IEndpointRouteBuilder endpoints) => ProgressEndpoints.Map(endpoints);
 }

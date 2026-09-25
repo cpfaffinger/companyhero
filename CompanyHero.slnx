@@ -20,6 +20,7 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/CompanyHero.Architecture.Tests/CompanyHero.Architecture.Tests.csproj" />
+    <Project Path="tests/CompanyHero.Domain.Tests/CompanyHero.Domain.Tests.csproj" />
     <Project Path="tests/CompanyHero.Integration.Tests/CompanyHero.Integration.Tests.csproj" />
   </Folder>
 </Solution>

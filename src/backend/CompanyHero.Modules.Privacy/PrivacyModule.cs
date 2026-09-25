@@ -1,3 +1,6 @@
+using CompanyHero.Modules.Privacy.Application;
+using CompanyHero.Modules.Privacy.Infrastructure;
+using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,5 +15,8 @@ public sealed class PrivacyModule : IModule
 
     public void AddModule(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddModuleDbContext<PrivacyDbContext>(ModuleSchemas.Privacy);
+        services.AddScoped<IVisibilityRule, VisibilityRuleService>();
+        services.AddScoped<IVisibilityChoice, VisibilityChoice>();
     }
 }

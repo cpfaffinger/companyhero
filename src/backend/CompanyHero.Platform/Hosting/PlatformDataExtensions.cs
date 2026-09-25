@@ -1,4 +1,5 @@
 using CompanyHero.Platform.Data;
+using CompanyHero.Platform.Tenancy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace CompanyHero.Platform.Hosting;
@@ -17,6 +19,7 @@ public static class PlatformDataExtensions
     /// <summary>
     /// Datenzugriff der Laufzeit (Rolle ch_app): kurzlebige DbContexte ohne Pooling (Backend 5.2), Npgsql-Verbindungspool bleibt aktiv.
     /// Die Verbindung kommt aus <c>ConnectionStrings:Default</c>, in Compose aus OpenBao (app/database), in Tests aus der Umgebung.
+    /// Muss vor der Modulregistrierung laufen, weil Modulkontexte die Optionen lesen.
     /// </summary>
     public static IServiceCollection AddPlatformData(this IServiceCollection services, IConfiguration configuration)
     {
@@ -26,7 +29,21 @@ public static class PlatformDataExtensions
         var connectionString = configuration.GetConnectionString("Default")
             ?? throw new InvalidOperationException("ConnectionStrings:Default fehlt. In Compose liefert OpenBao das Geheimnis app/database.");
 
-        services.AddDbContext<PlatformDbContext>(o => o.UseNpgsql(connectionString));
+        return services.AddPlatformData(new PlatformDataOptions { ConnectionString = connectionString, EnforceTenantContext = true });
+    }
+
+    public static IServiceCollection AddPlatformData(this IServiceCollection services, PlatformDataOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(options);
+
+        services.AddSingleton(Microsoft.Extensions.Options.Options.Create(options));
+        services.TryAddSingleton(TimeProvider.System);
+        services.TryAddScoped<TenantContextAccessor>();
+        services.TryAddScoped<ITenantContextAccessor>(sp => sp.GetRequiredService<TenantContextAccessor>());
+        services.TryAddSingleton<ITenantScopeFactory, TenantScopeFactory>();
+
+        services.AddDbContext<PlatformDbContext>(o => o.UseNpgsql(options.ConnectionString));
         services.AddHealthChecks().AddCheck<DatabaseHealthCheck>("database", tags: [ReadyTag]);
         return services;
     }

@@ -1,4 +1,11 @@
 using CompanyHero.Migrations;
+using CompanyHero.Modules.Organisation.Application;
+using CompanyHero.Platform.Tenancy;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging.Abstractions;
 using Npgsql;
 using Testcontainers.PostgreSql;
@@ -7,7 +14,8 @@ namespace CompanyHero.Integration.Tests;
 
 /// <summary>
 /// Echtes PostgreSQL 18 in Testcontainern mit denselben Rollen wie im Compose-Projekt (Backend 9):
-/// dasselbe Init-Skript, dieselbe Migrationsrolle, dieselbe Laufzeitrolle ohne BYPASSRLS.
+/// dasselbe Init-Skript, dieselbe Migrationsrolle, dieselbe Laufzeitrolle ohne BYPASSRLS. Nach dem Migrationslauf
+/// startet der API-Host mit der Laufzeitrolle und zwei synthetischen Tenants (<see cref="TwoTenants"/>).
 /// </summary>
 public sealed class PostgresFixture : IAsyncLifetime
 {
@@ -17,6 +25,8 @@ public sealed class PostgresFixture : IAsyncLifetime
     public const string ReleaseVersion = "test-release";
 
     private readonly PostgreSqlContainer _container;
+    private WebApplicationFactory<Program>? _api;
+    private TwoTenants? _tenants;
 
     public PostgresFixture()
     {
@@ -29,13 +39,25 @@ public sealed class PostgresFixture : IAsyncLifetime
             .Build();
     }
 
+    /// <summary>Superuser auf der Wartungsdatenbank des Containers (nur für Rollen und Datenbankanlage).</summary>
     public string SuperuserConnectionString => _container.GetConnectionString();
+
+    /// <summary>Superuser auf der Anwendungsdatenbank; nur für Katalogprüfungen, nie für Fachzugriffe.</summary>
+    public string SuperuserDatabaseConnectionString =>
+        new NpgsqlConnectionStringBuilder(SuperuserConnectionString) { Database = DatabaseName }.ConnectionString;
 
     public string MigratorConnectionString => For("ch_migrator", MigratorPassword, DatabaseName);
 
     public string AppConnectionString => For("ch_app", AppPassword, DatabaseName);
 
     public int MigrationExitCode { get; private set; } = -1;
+
+    /// <summary>API-Host mit Laufzeitrolle, Test-Sitzung und fester Uhr; die Dienste darin tragen den Tenant-Kontext je Scope.</summary>
+    public WebApplicationFactory<Program> Api => _api ?? throw new InvalidOperationException("Fixture nicht initialisiert.");
+
+    public TwoTenants Tenants => _tenants ?? throw new InvalidOperationException("Fixture nicht initialisiert.");
+
+    public FixedClock Clock { get; } = new(FixedClock.Start);
 
     public string For(string user, string password, string database)
     {
@@ -48,6 +70,27 @@ public sealed class PostgresFixture : IAsyncLifetime
         return b.ConnectionString;
     }
 
+    /// <summary>Ein weiterer API-Host gegen dieselbe Datenbank, etwa mit anderem Verbindungspool.</summary>
+    public WebApplicationFactory<Program> CreateApi(string? connectionString = null) =>
+        new WebApplicationFactory<Program>().WithWebHostBuilder(b =>
+        {
+            b.UseSetting("ConnectionStrings:Default", connectionString ?? AppConnectionString);
+            b.ConfigureServices(services =>
+            {
+                services.Replace(ServiceDescriptor.Singleton<TimeProvider>(Clock));
+                services.AddAuthentication(TestSessionHandler.SchemeName)
+                    .AddScheme<AuthenticationSchemeOptions, TestSessionHandler>(TestSessionHandler.SchemeName, _ => { });
+            });
+        });
+
+    /// <summary>Ein eigener, aktiver Tenant für Tests, die Daten schreiben; die beiden Stamm-Tenants bleiben unverändert.</summary>
+    public async Task<TenantId> CreateScratchTenantAsync(string displayName, CancellationToken cancellationToken)
+    {
+        var scopes = Api.Services.GetRequiredService<ITenantScopeFactory>();
+        return await scopes.RunAsync(TenantContext.ForPlatform(), (sp, ct) =>
+            sp.GetRequiredService<IOrganisationDirectory>().CreateTenantAsync(displayName, Tenants.OperatorId, ct), cancellationToken);
+    }
+
     public async ValueTask InitializeAsync()
     {
         await _container.StartAsync();
@@ -55,9 +98,23 @@ public sealed class PostgresFixture : IAsyncLifetime
             new MigrationOptions { MigratorConnectionString = MigratorConnectionString, ReleaseVersion = ReleaseVersion, ImageDigest = "sha256:test" },
             NullLoggerFactory.Instance,
             CancellationToken.None);
+
+        if (MigrationExitCode == 0)
+        {
+            _api = CreateApi();
+            _tenants = await TwoTenants.SeedAsync(_api.Services, Clock);
+        }
     }
 
-    public async ValueTask DisposeAsync() => await _container.DisposeAsync();
+    public async ValueTask DisposeAsync()
+    {
+        if (_api is not null)
+        {
+            await _api.DisposeAsync();
+        }
+
+        await _container.DisposeAsync();
+    }
 }
 
 [CollectionDefinition(Name)]

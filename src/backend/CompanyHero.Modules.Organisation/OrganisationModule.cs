@@ -1,4 +1,8 @@
+using CompanyHero.Modules.Organisation.Application;
+using CompanyHero.Modules.Organisation.Infrastructure;
+using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Modules;
+using CompanyHero.Platform.Tenancy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,5 +16,8 @@ public sealed class OrganisationModule : IModule
 
     public void AddModule(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddModuleDbContext<OrganisationDbContext>(ModuleSchemas.Organisation);
+        services.AddScoped<IOrganisationDirectory, OrganisationDirectory>();
+        services.AddScoped<IMembershipVerification, MembershipVerification>();
     }
 }

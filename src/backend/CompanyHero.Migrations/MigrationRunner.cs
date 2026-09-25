@@ -1,8 +1,12 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
+using CompanyHero.ModuleCatalog;
 using CompanyHero.Platform.Data;
+using CompanyHero.Platform.Hosting;
 using CompanyHero.Platform.Modules;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 
@@ -10,9 +14,9 @@ namespace CompanyHero.Migrations;
 
 /// <summary>
 /// Der Migrationslauf (Betrieb 4, A-030): läuft mit der Migrationsrolle vor dem Anwendungsstart,
-/// wendet alle Migrationen an, erteilt der Laufzeitrolle ausschließlich Datenrechte auf den Modulschemata
-/// und protokolliert den Release-Stand. Jeder Fehler beendet den Lauf mit Exit-Code ungleich null;
-/// der Anwendungsstart hängt davon ab.
+/// wendet die Migrationen des Plattformbereichs und jedes Modulschemas an (eigene Historie je Schema, A-012),
+/// erteilt der Laufzeitrolle ausschließlich Datenrechte auf den Modulschemata und protokolliert den Release-Stand.
+/// Jeder Fehler beendet den Lauf mit Exit-Code ungleich null; der Anwendungsstart hängt davon ab.
 /// </summary>
 public static partial class MigrationRunner
 {
@@ -36,9 +40,17 @@ public static partial class MigrationRunner
             await WaitForDatabaseAsync(options.MigratorConnectionString, log, cancellationToken);
 
             await using var db = CreatePlatformContext(options.MigratorConnectionString, loggerFactory);
-            var pending = (await db.Database.GetPendingMigrationsAsync(cancellationToken)).ToList();
-            log.LogInformation("Schema {Schema}: {Count} ausstehende Migration(en)", ModuleSchemas.Platform, pending.Count);
-            await db.Database.MigrateAsync(cancellationToken);
+            await MigrateAsync(db, ModuleSchemas.Platform, log, cancellationToken);
+
+            await using (var modules = BuildModuleServices(options.MigratorConnectionString, loggerFactory))
+            {
+                foreach (var registration in modules.GetServices<ModuleDbContextRegistration>())
+                {
+                    await using var scope = modules.CreateAsyncScope();
+                    var context = (DbContext)scope.ServiceProvider.GetRequiredService(registration.ContextType);
+                    await MigrateAsync(context, registration.Schema, log, cancellationToken);
+                }
+            }
 
             await GrantRuntimeRoleAsync(db, options.RuntimeRole, log, cancellationToken);
 
@@ -60,6 +72,13 @@ public static partial class MigrationRunner
         }
     }
 
+    private static async Task MigrateAsync(DbContext context, string schema, ILogger log, CancellationToken cancellationToken)
+    {
+        var pending = (await context.Database.GetPendingMigrationsAsync(cancellationToken)).ToList();
+        log.LogInformation("Schema {Schema}: {Count} ausstehende Migration(en)", schema, pending.Count);
+        await context.Database.MigrateAsync(cancellationToken);
+    }
+
     private static PlatformDbContext CreatePlatformContext(string connectionString, ILoggerFactory loggerFactory)
     {
         var options = new DbContextOptionsBuilder<PlatformDbContext>()
@@ -67,6 +86,25 @@ public static partial class MigrationRunner
             .UseLoggerFactory(loggerFactory)
             .Options;
         return new PlatformDbContext(options);
+    }
+
+    /// <summary>
+    /// Dieselben Module wie API und Worker, registriert gegen die Migrationsrolle und ohne Kontextdurchsetzung:
+    /// der Migrationslauf bewegt keine Tenant-Daten.
+    /// </summary>
+    private static ServiceProvider BuildModuleServices(string connectionString, ILoggerFactory loggerFactory)
+    {
+        var services = new ServiceCollection();
+        services.AddSingleton(loggerFactory);
+        services.AddLogging();
+        services.AddPlatformData(new PlatformDataOptions { ConnectionString = connectionString, EnforceTenantContext = false });
+        var configuration = new ConfigurationBuilder().Build();
+        foreach (var module in AllModules.Create())
+        {
+            module.AddModule(services, configuration);
+        }
+
+        return services.BuildServiceProvider(new ServiceProviderOptions { ValidateScopes = true });
     }
 
     private static async Task WaitForDatabaseAsync(string connectionString, ILogger log, CancellationToken cancellationToken)
