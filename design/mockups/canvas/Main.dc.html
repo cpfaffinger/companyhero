@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Start: Feed mit Kopfkarte</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#FCFCFF;color:#1A1B21}
+a{color:#2A45C9}a:hover{color:#05157A}
+
+.ch-stack > *{animation:ch-rise 320ms cubic-bezier(.2,.7,.2,1) both}
+.ch-stack > :nth-child(2){animation-delay:50ms}.ch-stack > :nth-child(3){animation-delay:100ms}.ch-stack > :nth-child(4){animation-delay:150ms}.ch-stack > :nth-child(5){animation-delay:200ms}.ch-stack > :nth-child(6){animation-delay:250ms}.ch-stack > :nth-child(7){animation-delay:300ms}.ch-stack > :nth-child(8){animation-delay:350ms}.ch-stack > :nth-child(9){animation-delay:400ms}.ch-stack > :nth-child(10){animation-delay:450ms}
+.ch-fill{animation:ch-fill 900ms cubic-bezier(.2,.7,.2,1) 200ms both}
+.ch-ring{animation:ch-ring 1000ms cubic-bezier(.2,.7,.2,1) 250ms both}
+.ch-num{animation:ch-num 600ms cubic-bezier(.2,.7,.2,1) 500ms both}
+.ch-next{animation:ch-pip 2400ms ease-in-out 1400ms infinite}
+.ch-pop{animation:ch-pop 520ms cubic-bezier(.2,.9,.3,1.15) 100ms both}
+.ch-glow{animation:ch-glow 1000ms ease-out 900ms both}
+button,a{transition:background-color 120ms ease,color 120ms ease,border-color 120ms ease,transform 120ms ease,box-shadow 120ms ease,filter 120ms ease}
+button:not(:disabled):hover,a:hover{filter:brightness(.97)}
+button:not(:disabled):active,a:active{transform:scale(.98)}
+label{transition:border-color 120ms ease,background-color 120ms ease}
+label:hover{border-color:#767780}
+@keyframes ch-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes ch-fill{from{width:0}}
+@keyframes ch-ring{from{stroke-dashoffset:var(--ch-len)}}
+@keyframes ch-num{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes ch-pip{0%,100%{box-shadow:0 0 0 0 rgba(228,103,10,.45)}50%{box-shadow:0 0 0 7px rgba(228,103,10,0)}}
+@keyframes ch-pop{from{opacity:0;transform:scale(.72)}to{opacity:1;transform:none}}
+@keyframes ch-glow{from{box-shadow:0 0 0 0 rgba(228,103,10,.55)}to{box-shadow:0 0 0 40px rgba(228,103,10,0)}}
+@media (prefers-reduced-motion:reduce){.ch-stack>*,.ch-fill,.ch-ring,.ch-num,.ch-next,.ch-pop,.ch-glow{animation:none}button,a,label{transition:none}}
+</style>
+</helmet>
+<div style="width: 390px; height: 1580px; box-sizing: border-box; background: #FCFCFF; display: flex; flex-direction: column; position: relative">
+  <div style="display: flex; align-items: center; gap: 12px; padding: 56px 16px 12px 16px">
+    <div style="width: 32px; height: 32px; border-radius: 8px; background: #2A45C9; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-family: 'Inter Tight', Inter, sans-serif; font-weight: 700; font-size: 14px">W</div>
+    <div style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 18px; font-weight: 700">Wiesner Aktiv</div>
+    <div style="flex-grow: 1"></div>
+    <button type="button" aria-label="Benachrichtigungen" style="width: 48px; height: 48px; border-radius: 999px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1B21" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg>
+      <span style="position: absolute; top: 10px; right: 12px; width: 8px; height: 8px; border-radius: 999px; background: #E4670A"></span>
+    </button>
+  </div>
+  <div class="ch-stack" style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px 16px 16px">
+    <div style="border-radius: 16px; background: #F1F2F9; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; align-items: center; gap: 8px">
+        <span style="padding: 3px 10px; border-radius: 999px; background: #B8F0EA; color: #00201D; font-size: 12px; font-weight: 600">Firmenziel</span>
+        <span style="font-size: 12px; color: #45464F">noch 12 Tage</span>
+        <div style="flex-grow: 1"></div>
+        <span style="font-size: 12px; color: #45464F">Stand vor 3 Min</span>
+      </div>
+      <div style="display: flex; align-items: flex-end; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1">
+          <div style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 22px; line-height: 28px; font-weight: 600">Gemeinsam nach Bregenz</div>
+          <div style="font-size: 14px; line-height: 20px; color: #45464F">Aktive Minuten, ganze Firma</div>
+        </div>
+        <div class="ch-num" style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 40px; line-height: 44px; font-weight: 700; color: #E4670A; font-variant-numeric: tabular-nums">62 %</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px" role="img" aria-label="62 Prozent des Firmenziels erreicht, nächster Meilenstein Salzburg bei 75 Prozent">
+        <div style="position: relative; height: 14px; border-radius: 999px; background: #FFDFC2">
+          <div class="ch-fill" style="position: absolute; left: 0; top: 0; height: 14px; width: 62%; border-radius: 999px; background: #E4670A"></div>
+          <div style="position: absolute; top: 2px; left: 25%; width: 10px; height: 10px; margin-left: -5px; border-radius: 999px; background: #FFFFFF; border: 2px solid #E4670A; box-sizing: border-box"></div>
+          <div style="position: absolute; top: 2px; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 999px; background: #FFFFFF; border: 2px solid #E4670A; box-sizing: border-box"></div>
+          <div class="ch-next" style="position: absolute; top: 2px; left: 75%; width: 10px; height: 10px; margin-left: -5px; border-radius: 999px; background: #FFFFFF; border: 2px solid #C6C6D0; box-sizing: border-box"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 12px; line-height: 16px; color: #45464F">
+          <span>Wien</span><span>St. Pölten</span><span>Linz</span><span style="font-weight: 600; color: #1A1B21">Salzburg</span><span>Bregenz</span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px">
+        <div style="font-size: 14px; line-height: 20px; color: #45464F; flex-grow: 1">Dein Beitrag heute: <strong style="color: #1A1B21">25 Min</strong></div>
+        <a href="Challenge-Detail.dc.html" style="display: flex; align-items: center; justify-content: center; height: 44px; padding: 0 20px; border-radius: 999px; background: #2A45C9; color: #FFFFFF; font-size: 14px; font-weight: 600; text-decoration: none">Beitrag erfassen</a>
+      </div>
+    </div>
+    <div style="border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: baseline; gap: 8px">
+        <div style="font-size: 16px; line-height: 22px; font-weight: 600">Wie war dein Tag bisher?</div>
+        <div style="flex-grow: 1"></div>
+        <div style="font-size: 12px; color: #45464F">Check-in</div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+        <label style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 4px; border-radius: 12px; border: 1px solid #C6C6D0; background: #FCFCFF; cursor: pointer; min-height: 72px; box-sizing: border-box">
+          <input type="checkbox" style="width: 20px; height: 20px; margin: 0; accent-color: #2A45C9">
+          <span style="font-size: 14px; font-weight: 600">Bewegt</span>
+        </label>
+        <label style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 4px; border-radius: 12px; border: 1px solid #C6C6D0; background: #FCFCFF; cursor: pointer; min-height: 72px; box-sizing: border-box">
+          <input type="checkbox" style="width: 20px; height: 20px; margin: 0; accent-color: #2A45C9">
+          <span style="font-size: 14px; font-weight: 600">Pause gemacht</span>
+        </label>
+        <label style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 4px; border-radius: 12px; border: 1px solid #C6C6D0; background: #FCFCFF; cursor: pointer; min-height: 72px; box-sizing: border-box">
+          <input type="checkbox" style="width: 20px; height: 20px; margin: 0; accent-color: #2A45C9">
+          <span style="font-size: 14px; font-weight: 600">Erholt</span>
+        </label>
+      </div>
+    </div>
+    <div style="border-radius: 12px; background: #DFE1FF; padding: 16px; display: flex; flex-direction: column; gap: 8px">
+      <div style="display: flex; align-items: center; gap: 8px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000F5C" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 17v5"></path><path d="M8 3h8l-1 6 3 3H6l3-3z"></path></svg>
+        <span style="font-size: 12px; font-weight: 600; color: #000F5C">Angeheftet · Team Gesundheit</span>
+      </div>
+      <div style="font-size: 16px; line-height: 22px; font-weight: 600; color: #000F5C">Gesundheitstag am 14. Oktober</div>
+      <div style="font-size: 14px; line-height: 20px; color: #000F5C">Wenn wir Bregenz erreichen, gibt es für alle einen freien Nachmittag mit Programm in der Kantine.</div>
+      <div style="display: flex; gap: 8px; margin-top: 4px">
+        <span style="padding: 4px 10px; border-radius: 999px; background: #FFFFFF; color: #000F5C; font-size: 12px; font-weight: 600">14.10. · 13:00 · Halle 2</span>
+        <span style="padding: 4px 10px; border-radius: 999px; background: #FFFFFF; color: #000F5C; font-size: 12px; font-weight: 600">In Kalender</span>
+      </div>
+    </div>
+    <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #45464F; padding: 8px 0 0 0">Heute</div>
+    <div style="border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; padding: 12px 16px; display: flex; gap: 12px; align-items: center">
+      <div style="width: 40px; height: 40px; border-radius: 999px; background: #B8F0EA; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00201D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"></path><path d="M10 20V4"></path><path d="M16 20v-8"></path><path d="M22 20H2"></path></svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1">
+        <div style="font-size: 14px; line-height: 20px">Standort Graz hat die Hälfte der Strecke geschafft.</div>
+        <div style="font-size: 12px; color: #45464F">vor 20 Min · Gemeinsam nach Bregenz</div>
+      </div>
+      <button type="button" aria-label="Anerkennung geben" style="width: 44px; height: 44px; border-radius: 999px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2A45C9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11v9H4v-9z"></path><path d="M7 11l4-7c1.5 0 2.5 1 2.5 2.5L13 10h5.5a2 2 0 0 1 2 2.4l-1.2 6A2 2 0 0 1 17.3 20H7"></path></svg>
+      </button>
+    </div>
+    <div style="border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; overflow: hidden; display: flex; flex-direction: column">
+      <div style="height: 150px; background: #E9EAF2; display: flex; align-items: center; justify-content: center; color: #45464F; font-size: 12px; position: relative">
+        [Bild: Kollegin dehnt den Nacken am Schreibtisch]
+        <span style="position: absolute; right: 12px; bottom: 12px; padding: 3px 8px; border-radius: 999px; background: #1A1B21; color: #FFFFFF; font-size: 12px; font-weight: 600">4 Min</span>
+      </div>
+      <div style="padding: 12px 16px 16px 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <div style="font-size: 12px; font-weight: 600; color: #2A45C9">Ergonomie · Video</div>
+          <div style="font-size: 18px; line-height: 24px; font-weight: 600">Nacken lockern, ohne aufzustehen</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px">
+          <button type="button" style="height: 40px; padding: 0 18px; border-radius: 999px; border: none; background: #2A45C9; color: #FFFFFF; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer">Starten</button>
+          <button type="button" aria-label="Favorit" style="width: 40px; height: 40px; border-radius: 999px; border: 1px solid #C6C6D0; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div style="border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; padding: 12px 16px; display: flex; gap: 12px; align-items: center">
+      <div style="width: 40px; height: 40px; border-radius: 999px; background: #FFDFC2; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#331100" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5"></circle><path d="M9 13.5L7 22l5-3 5 3-2-8.5"></path></svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1">
+        <div style="font-size: 14px; line-height: 20px">Heute haben 12 Personen ein Abzeichen verdient.</div>
+        <div style="font-size: 12px; color: #45464F">vor 1 Std</div>
+      </div>
+    </div>
+    <div style="border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+      <div style="display: flex; align-items: center; gap: 10px">
+        <div style="width: 36px; height: 36px; border-radius: 999px; background: #E9EAF2; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: #45464F">M</div>
+        <div style="display: flex; flex-direction: column">
+          <div style="font-size: 14px; font-weight: 600">Moni K.</div>
+          <div style="font-size: 12px; color: #45464F">Standort Graz · vor 2 Std</div>
+        </div>
+      </div>
+      <div style="font-size: 16px; line-height: 24px">Mittagsrunde um den Teich, wer kommt morgen mit? Treffpunkt 12:15 beim Tor 3.</div>
+      <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; background: #F1F2F9">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4L19 6"></path></svg>
+        <span style="font-size: 12px; color: #45464F">Beitrag zu „Gemeinsam nach Bregenz“ erfasst</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#2A45C9" stroke="#2A45C9" stroke-width="1" stroke-linejoin="round" aria-hidden="true"><path d="M7 11v9H4v-9z"></path><path d="M7 11l4-7c1.5 0 2.5 1 2.5 2.5L13 10h5.5a2 2 0 0 1 2 2.4l-1.2 6A2 2 0 0 1 17.3 20H7"></path></svg>
+        <span style="font-size: 12px; color: #45464F">Anerkennung von Sepp R., Lena und dir</span>
+        <div style="flex-grow: 1"></div>
+        <button type="button" style="height: 32px; padding: 0 10px; border-radius: 999px; border: none; background: transparent; color: #2A45C9; font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; cursor: pointer">Kommentieren</button>
+      </div>
+    </div>
+  </div>
+  <nav aria-label="Hauptnavigation" style="position: absolute; left: 0; right: 0; bottom: 0; height: 80px; border-top: 1px solid #C6C6D0; background: #F1F2F9; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 8px 0 16px 0; box-sizing: border-box">
+    <a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #2A45C9; font-size: 12px; font-weight: 600">
+      <span style="display: flex; align-items: center; justify-content: center; width: 56px; height: 32px; border-radius: 999px; background: #DFE1FF"><svg width="24" height="24" viewBox="0 0 24 24" fill="#2A45C9" aria-hidden="true"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"></path></svg></span>Start
+    </a>
+    <a href="Challenge-Detail.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #45464F; font-size: 12px; font-weight: 600">
+      <span style="display: flex; align-items: center; justify-content: center; width: 56px; height: 32px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l6-6 4 4 6-8"></path><path d="M16 10h4v4"></path></svg></span>Challenges
+    </a>
+    <a href="Entdecken.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #45464F; font-size: 12px; font-weight: 600">
+      <span style="display: flex; align-items: center; justify-content: center; width: 56px; height: 32px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M15.5 8.5l-2 5-5 2 2-5z"></path></svg></span>Entdecken
+    </a>
+    <a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #45464F; font-size: 12px; font-weight: 600">
+      <span style="display: flex; align-items: center; justify-content: center; width: 56px; height: 32px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"></path><path d="M5 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16"></path><path d="M15 10h3a1 1 0 0 1 1 1v10"></path></svg></span>Firma
+    </a>
+    <a href="Ich.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #45464F; font-size: 12px; font-weight: 600">
+      <span style="display: flex; align-items: center; justify-content: center; width: 56px; height: 32px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></span>Ich
+    </a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1580}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

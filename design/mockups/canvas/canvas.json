@@ -1,0 +1,282 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Arena.dc.html": {
+      "h": 980,
+      "is_interactive": true,
+      "title": "7 · Arena (Plattform-Schale)",
+      "w": 390,
+      "x": 2820,
+      "y": 0
+    },
+    "Challenge-Detail.dc.html": {
+      "h": 1320,
+      "is_interactive": true,
+      "title": "4 · Challenge und Beitrag",
+      "w": 390,
+      "x": 1410,
+      "y": 0
+    },
+    "Entdecken.dc.html": {
+      "h": 1300,
+      "is_interactive": true,
+      "title": "6 · Entdecken",
+      "w": 390,
+      "x": 2350,
+      "y": 0
+    },
+    "Ich.dc.html": {
+      "h": 1060,
+      "is_interactive": true,
+      "title": "5 · Ich",
+      "w": 390,
+      "x": 1880,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "h": 1580,
+      "is_interactive": true,
+      "title": "3 · Start (Feed)",
+      "w": 390,
+      "x": 940,
+      "y": 0
+    },
+    "Onboarding-Erfolgsmoment.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "2 · Beitritt: Erstes Abzeichen",
+      "w": 390,
+      "x": 470,
+      "y": 0
+    },
+    "Onboarding-Sichtbarkeit.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "1 · Beitritt: Sichtbarkeit",
+      "w": 390,
+      "x": 0,
+      "y": 0
+    },
+    "Start-Dunkel.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "title": "8 · Zweiter Tenant, dunkel, Sie",
+      "w": 390,
+      "x": 3290,
+      "y": 0
+    },
+    "Verwaltung-Desktop.dc.html": {
+      "h": 800,
+      "is_interactive": true,
+      "title": "9 · Verwaltung: Übersicht (Desktop)",
+      "w": 1280,
+      "x": 0,
+      "y": 1700
+    },
+    "Ref-Mobil-wiesner-light.dc.html": {
+      "x": 0,
+      "y": 2700,
+      "w": 390,
+      "h": 1000,
+      "title": "R1 · Wiesner · hell · Du",
+      "is_interactive": true
+    },
+    "Ref-Mobil-wiesner-dark.dc.html": {
+      "x": 470,
+      "y": 2700,
+      "w": 390,
+      "h": 1000,
+      "title": "R2 · Wiesner · dunkel",
+      "is_interactive": true
+    },
+    "Ref-Mobil-hoedl-light.dc.html": {
+      "x": 940,
+      "y": 2700,
+      "w": 390,
+      "h": 1000,
+      "title": "R3 · Hödl · hell · Sie",
+      "is_interactive": true
+    },
+    "Ref-Mobil-hoedl-dark.dc.html": {
+      "x": 1410,
+      "y": 2700,
+      "w": 390,
+      "h": 1000,
+      "title": "R4 · Hödl · dunkel",
+      "is_interactive": true
+    },
+    "Ref-Mobil-plattform-light.dc.html": {
+      "x": 1880,
+      "y": 2700,
+      "w": 390,
+      "h": 1000,
+      "title": "R5 · Plattform · hell",
+      "is_interactive": true
+    },
+    "Ref-Mobil-plattform-dark.dc.html": {
+      "x": 2350,
+      "y": 2700,
+      "w": 390,
+      "h": 1000,
+      "title": "R6 · Plattform · dunkel",
+      "is_interactive": true
+    },
+    "Ref-Mobil-wiesner-light-gross.dc.html": {
+      "x": 2820,
+      "y": 2700,
+      "w": 390,
+      "h": 1220,
+      "title": "R7 · Wiesner · Großflächenmodus",
+      "is_interactive": true
+    },
+    "Ref-Tablet-wiesner-light.dc.html": {
+      "x": 0,
+      "y": 4040,
+      "w": 800,
+      "h": 1000,
+      "title": "R8 · Tablet 800 · Wiesner hell",
+      "is_interactive": true
+    },
+    "Ref-Tablet-hoedl-dark.dc.html": {
+      "x": 880,
+      "y": 4040,
+      "w": 800,
+      "h": 1000,
+      "title": "R9 · Tablet 800 · Hödl dunkel",
+      "is_interactive": true
+    },
+    "Ref-Kiosk-wiesner.dc.html": {
+      "x": 1760,
+      "y": 4040,
+      "w": 1024,
+      "h": 768,
+      "title": "R10 · Kiosk 1024 · Großflächenmodus",
+      "is_interactive": true
+    },
+    "Ref-Desktop-wiesner-light.dc.html": {
+      "x": 0,
+      "y": 5160,
+      "w": 1280,
+      "h": 960,
+      "title": "R11 · Desktop 1280 · Wiesner hell",
+      "is_interactive": true
+    },
+    "Ref-Desktop-hoedl-dark.dc.html": {
+      "x": 1360,
+      "y": 5160,
+      "w": 1280,
+      "h": 960,
+      "title": "R12 · Desktop 1280 · Hödl dunkel",
+      "is_interactive": true
+    },
+    "Ref-Desktop-plattform-light.dc.html": {
+      "x": 2720,
+      "y": 5160,
+      "w": 1280,
+      "h": 960,
+      "title": "R13 · Desktop 1280 · Plattform hell",
+      "is_interactive": true
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-09-25T10:00:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "admin": {
+      "kind": "title1",
+      "maxW": 1280,
+      "text": "Verwaltung · Desktop mit Seitennavigation und Kontextspalte",
+      "w": 240,
+      "x": 0,
+      "y": 1420
+    },
+    "app": {
+      "kind": "title1",
+      "maxW": 3680,
+      "text": "Mitglieder-App · Tenant „Wiesner Aktiv“ (hell, Du) · Screens 7 und 8: Plattform-Schale und zweiter Tenant „Hödl Fit“ (dunkel, Sie)",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "regeln": {
+      "fill": "blue",
+      "size": 24,
+      "text": "Gestaltungsregeln aus dem Konzept, die in allen Screens gelten:\n\n• Fortschritt ist die Hauptfigur: die größte Fläche jedes Screens ist ein Kollektivstand oder der Tagesring.\n• Zwei Farbachsen: Marke (blau) für Navigation und Aktion, warmes Orange nur für Fortschritt, Serie und Erfolg; Teal für Kollektiv und Gruppe.\n• Keine Zahlen bei Anerkennung, keine Ranglisten unter fünf Personen, keine Nullwerte, kein Konfetti.\n• Bilder: Platzhalter für echte Menschen in echten Arbeitsumgebungen.\n• Inter und Inter Tight, Radien 8/12/16, Bedienflächen mindestens 48 px.",
+      "w": 420,
+      "x": 1360,
+      "y": 1700
+    },
+    "bewegung": {
+      "fill": "orange",
+      "size": 24,
+      "text": "Bewegung (Play-Modus): Karten steigen gestaffelt ein (320 ms), Kollektivbalken und Ringe füllen sich (900 ms), der nächste Meilenstein pulsiert leise, der Erfolgsmoment hat genau einen warmen Aufleuchtimpuls. Alles wird bei „reduzierte Bewegung“ abgeschaltet.",
+      "w": 420,
+      "x": 1860,
+      "y": 1700
+    },
+    "ref": {
+      "kind": "title1",
+      "maxW": 3300,
+      "w": 240,
+      "x": 0,
+      "y": 2400,
+      "text": "Referenzscreen für den Durchstich (Stufe 5) · Challenge-Karte, Formular mit Select-Fehler und Fokus, Dialog · mobil 390 px"
+    },
+    "ref-tablet": {
+      "kind": "title1",
+      "maxW": 2800,
+      "w": 240,
+      "x": 0,
+      "y": 3760,
+      "text": "Referenzscreen · Tablet 800 px mit Navigations-Rail · Kiosk 1024 px im Großflächenmodus"
+    },
+    "ref-desktop": {
+      "kind": "title1",
+      "maxW": 4000,
+      "w": 240,
+      "x": 0,
+      "y": 4880,
+      "text": "Referenzscreen · Desktop 1280 px mit Seitennavigation und Kontextspalte 320 px"
+    },
+    "ref-regeln": {
+      "fill": "orange",
+      "size": 24,
+      "w": 420,
+      "x": 2820,
+      "y": 4040,
+      "text": "Prüfliste je Board (Integrationsregeln §6, Marke §9):\n\n• Farbwerte identisch mit dem Backend-Tokensatz der Marke; Wiesner hat hier eine eigene warme Saatfarbe (Bordeaux), damit sich Firmenmarke und Plattformmarke unterscheiden. Fortschritt bleibt warm und ist nie Blau.\n• Select im Fehlerzustand, Textfeld im Fokus, Dialog offen, alle drei gleichzeitig sichtbar.\n• Kontrast 4,5:1 Text, 3:1 Bedienflächen und Balken, hell und dunkel.\n• Bedienflächen 48 px, im Großflächenmodus 56 px und Text zwei Stufen größer.\n• Bewegung nur 120/200/320 ms; bei „reduzierte Bewegung“ keine."
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Onboarding-Sichtbarkeit.dc.html",
+    "Onboarding-Erfolgsmoment.dc.html",
+    "Challenge-Detail.dc.html",
+    "Ich.dc.html",
+    "Entdecken.dc.html",
+    "Arena.dc.html",
+    "Start-Dunkel.dc.html",
+    "Verwaltung-Desktop.dc.html",
+    "Ref-Mobil-wiesner-light.dc.html",
+    "Ref-Mobil-wiesner-dark.dc.html",
+    "Ref-Mobil-hoedl-light.dc.html",
+    "Ref-Mobil-hoedl-dark.dc.html",
+    "Ref-Mobil-plattform-light.dc.html",
+    "Ref-Mobil-plattform-dark.dc.html",
+    "Ref-Mobil-wiesner-light-gross.dc.html",
+    "Ref-Tablet-wiesner-light.dc.html",
+    "Ref-Tablet-hoedl-dark.dc.html",
+    "Ref-Kiosk-wiesner.dc.html",
+    "Ref-Desktop-wiesner-light.dc.html",
+    "Ref-Desktop-hoedl-dark.dc.html",
+    "Ref-Desktop-plattform-light.dc.html"
+  ],
+  "pages": [],
+  "title": "CompanyHero Mockups"
+}

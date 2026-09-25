@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Verwaltung: Übersicht am Desktop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#FCFCFF;color:#1A1B21}
+a{color:#2A45C9}a:hover{color:#05157A}
+
+.ch-stack > *{animation:ch-rise 320ms cubic-bezier(.2,.7,.2,1) both}
+.ch-stack > :nth-child(2){animation-delay:50ms}.ch-stack > :nth-child(3){animation-delay:100ms}.ch-stack > :nth-child(4){animation-delay:150ms}.ch-stack > :nth-child(5){animation-delay:200ms}.ch-stack > :nth-child(6){animation-delay:250ms}.ch-stack > :nth-child(7){animation-delay:300ms}.ch-stack > :nth-child(8){animation-delay:350ms}.ch-stack > :nth-child(9){animation-delay:400ms}.ch-stack > :nth-child(10){animation-delay:450ms}
+.ch-fill{animation:ch-fill 900ms cubic-bezier(.2,.7,.2,1) 200ms both}
+.ch-ring{animation:ch-ring 1000ms cubic-bezier(.2,.7,.2,1) 250ms both}
+.ch-num{animation:ch-num 600ms cubic-bezier(.2,.7,.2,1) 500ms both}
+.ch-next{animation:ch-pip 2400ms ease-in-out 1400ms infinite}
+.ch-pop{animation:ch-pop 520ms cubic-bezier(.2,.9,.3,1.15) 100ms both}
+.ch-glow{animation:ch-glow 1000ms ease-out 900ms both}
+button,a{transition:background-color 120ms ease,color 120ms ease,border-color 120ms ease,transform 120ms ease,box-shadow 120ms ease,filter 120ms ease}
+button:not(:disabled):hover,a:hover{filter:brightness(.97)}
+button:not(:disabled):active,a:active{transform:scale(.98)}
+label{transition:border-color 120ms ease,background-color 120ms ease}
+label:hover{border-color:#767780}
+@keyframes ch-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes ch-fill{from{width:0}}
+@keyframes ch-ring{from{stroke-dashoffset:var(--ch-len)}}
+@keyframes ch-num{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes ch-pip{0%,100%{box-shadow:0 0 0 0 rgba(228,103,10,.45)}50%{box-shadow:0 0 0 7px rgba(228,103,10,0)}}
+@keyframes ch-pop{from{opacity:0;transform:scale(.72)}to{opacity:1;transform:none}}
+@keyframes ch-glow{from{box-shadow:0 0 0 0 rgba(228,103,10,.55)}to{box-shadow:0 0 0 40px rgba(228,103,10,0)}}
+@media (prefers-reduced-motion:reduce){.ch-stack>*,.ch-fill,.ch-ring,.ch-num,.ch-next,.ch-pop,.ch-glow{animation:none}button,a,label{transition:none}}
+</style>
+</helmet>
+<div style="width: 1280px; height: 800px; box-sizing: border-box; background: #FCFCFF; display: flex">
+  <nav aria-label="Verwaltung" style="width: 240px; flex-shrink: 0; background: #F1F2F9; border-right: 1px solid #C6C6D0; display: flex; flex-direction: column; padding: 20px 12px; gap: 4px; box-sizing: border-box">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 4px 8px 16px 8px">
+      <div style="width: 32px; height: 32px; border-radius: 8px; background: #2A45C9; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-family: 'Inter Tight', Inter, sans-serif; font-weight: 700; font-size: 14px">W</div>
+      <div style="display: flex; flex-direction: column"><span style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 16px; font-weight: 700">Wiesner Aktiv</span><span style="font-size: 12px; color: #45464F">Verwaltung</span></div>
+    </div>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; background: #DFE1FF; color: #000F5C; font-size: 14px; font-weight: 600; text-decoration: none">Übersicht</a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Programmstart<span style="flex-grow: 1"></span><span style="padding: 2px 8px; border-radius: 999px; background: #FFDFC2; color: #331100; font-size: 12px; font-weight: 600">2 offen</span></a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Stammdaten</a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Mitglieder und Gruppen</a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Challenges</a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Inhalte</a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Feed<span style="flex-grow: 1"></span><span style="padding: 2px 8px; border-radius: 999px; background: #FFDFC2; color: #331100; font-size: 12px; font-weight: 600">1 Meldung</span></a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Veranstaltungen</a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Benachrichtigungen</a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Module und Kosten</a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Marke und Sprache</a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Zugang und Integrationen</a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Datenschutz</a>
+    <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 999px; color: #1A1B21; font-size: 14px; text-decoration: none">Prüfprotokoll</a>
+    <div style="flex-grow: 1"></div>
+    <div style="display: flex; align-items: center; gap: 10px; padding: 8px 12px">
+      <div style="width: 32px; height: 32px; border-radius: 999px; background: #E9EAF2; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #45464F">AH</div>
+      <div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Andrea Huber</span><span style="font-size: 12px; color: #45464F">Programm-Managerin</span></div>
+    </div>
+  </nav>
+  <main class="ch-stack" style="flex-grow: 1; display: flex; flex-direction: column; gap: 20px; padding: 32px 40px; box-sizing: border-box; overflow: hidden">
+    <div style="display: flex; align-items: flex-end; gap: 16px">
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <h1 style="margin: 0; font-family: 'Inter Tight', Inter, sans-serif; font-size: 32px; line-height: 40px; font-weight: 700">Übersicht</h1>
+        <div style="font-size: 14px; color: #45464F">Rollout Tag 19 von 90 · Stand heute 09:40</div>
+      </div>
+      <div style="flex-grow: 1"></div>
+      <button type="button" style="height: 44px; padding: 0 20px; border-radius: 999px; border: 1px solid #C6C6D0; background: #FFFFFF; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; color: #1A1B21; cursor: pointer">Aushang-Zettel erzeugen</button>
+      <button type="button" style="height: 44px; padding: 0 20px; border-radius: 999px; border: none; background: #2A45C9; color: #FFFFFF; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer">Ankündigung verfassen</button>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <div style="font-size: 16px; font-weight: 600">Offene Aufgaben</div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+        <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; text-decoration: none; color: #1A1B21">
+          <div style="width: 36px; height: 36px; border-radius: 999px; background: #FFDFC2; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#331100" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V4h16l-3 5 3 5H4"></path></svg></div>
+          <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">1 Meldung prüfen</span><span style="font-size: 12px; color: #45464F">Mitglieder-Beitrag, Standort Graz</span></div>
+        </a>
+        <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; text-decoration: none; color: #1A1B21">
+          <div style="width: 36px; height: 36px; border-radius: 999px; background: #FFDFC2; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#331100" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"></path><path d="M20 12v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h11"></path></svg></div>
+          <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">2 Pflichtschritte offen</span><span style="font-size: 12px; color: #45464F">Kiosk registrieren, Botschafter Schicht C</span></div>
+        </a>
+        <a href="Verwaltung-Desktop.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; text-decoration: none; color: #1A1B21">
+          <div style="width: 36px; height: 36px; border-radius: 999px; background: #E9EAF2; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></div>
+          <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">Nächste Challenge planen</span><span style="font-size: 12px; color: #45464F">Empfehlung: Ergonomie-Woche ab 3.11.</span></div>
+        </a>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+      <div style="border-radius: 16px; background: #F1F2F9; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; align-items: center; gap: 8px">
+          <span style="padding: 3px 10px; border-radius: 999px; background: #B8F0EA; color: #00201D; font-size: 12px; font-weight: 600">Laufende Challenge</span>
+          <span style="font-size: 12px; color: #45464F">noch 12 Tage · Stand vor 3 Min</span>
+        </div>
+        <div style="display: flex; align-items: flex-end; gap: 12px">
+          <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1"><div style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 22px; line-height: 28px; font-weight: 600">Gemeinsam nach Bregenz</div><div style="font-size: 14px; color: #45464F">Meilenstein-Route · aktive Minuten · Firma</div></div>
+          <div class="ch-num" style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 40px; line-height: 44px; font-weight: 700; color: #E4670A; font-variant-numeric: tabular-nums">62 %</div>
+        </div>
+        <div style="position: relative; height: 14px; border-radius: 999px; background: #FFDFC2" role="img" aria-label="62 Prozent erreicht">
+          <div class="ch-fill" style="position: absolute; left: 0; top: 0; height: 14px; width: 62%; border-radius: 999px; background: #E4670A"></div>
+          <div style="position: absolute; top: 2px; left: 25%; width: 10px; height: 10px; margin-left: -5px; border-radius: 999px; background: #FFFFFF; border: 2px solid #E4670A; box-sizing: border-box"></div>
+          <div style="position: absolute; top: 2px; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 999px; background: #FFFFFF; border: 2px solid #E4670A; box-sizing: border-box"></div>
+          <div class="ch-next" style="position: absolute; top: 2px; left: 75%; width: 10px; height: 10px; margin-left: -5px; border-radius: 999px; background: #FFFFFF; border: 2px solid #C6C6D0; box-sizing: border-box"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 12px; line-height: 16px; color: #45464F"><span>Linz erreicht</span><span style="font-weight: 600; color: #1A1B21">Nächster Halt: Salzburg, 75 %</span></div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+          <div style="padding: 10px 12px; border-radius: 8px; background: #FFFFFF; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 24px; line-height: 28px; font-weight: 700; font-variant-numeric: tabular-nums">58 %</span><span style="font-size: 12px; line-height: 16px; color: #45464F">der Aktivierten beteiligt</span></div>
+          <div style="padding: 10px 12px; border-radius: 8px; background: #FFFFFF; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 24px; line-height: 28px; font-weight: 700; font-variant-numeric: tabular-nums">4 von 5</span><span style="font-size: 12px; line-height: 16px; color: #45464F">Gruppen über 50 %</span></div>
+        </div>
+      </div>
+      <div style="border-radius: 16px; background: #FFFFFF; border: 1px solid #C6C6D0; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; align-items: baseline; gap: 8px">
+          <div style="font-size: 16px; font-weight: 600">Rollout-Fortschritt</div>
+          <div style="flex-grow: 1"></div>
+          <div style="font-size: 12px; color: #45464F">Schätzgröße, bezogen auf Sollstärke 180</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <div style="display: flex; font-size: 14px"><span style="font-weight: 600">Aktivierung in 14 Tagen</span><span style="flex-grow: 1"></span><span style="font-variant-numeric: tabular-nums">64 % <span style="color: #45464F">· Ziel 60 %</span></span></div>
+            <div style="position: relative; height: 10px; border-radius: 999px; background: #DFE1FF"><div class="ch-fill" style="position: absolute; left: 0; top: 0; height: 10px; width: 64%; border-radius: 999px; background: #2A45C9"></div><div style="position: absolute; left: 60%; top: -3px; width: 2px; height: 16px; background: #1A1B21"></div></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <div style="display: flex; font-size: 14px"><span style="font-weight: 600">Teilnahme an der Challenge</span><span style="flex-grow: 1"></span><span style="font-variant-numeric: tabular-nums">58 % <span style="color: #45464F">· Ziel 50 %</span></span></div>
+            <div style="position: relative; height: 10px; border-radius: 999px; background: #DFE1FF"><div class="ch-fill" style="position: absolute; left: 0; top: 0; height: 10px; width: 58%; border-radius: 999px; background: #2A45C9"></div><div style="position: absolute; left: 50%; top: -3px; width: 2px; height: 16px; background: #1A1B21"></div></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <div style="display: flex; font-size: 14px"><span style="font-weight: 600">Installiert und Push aktiv</span><span style="flex-grow: 1"></span><span style="font-variant-numeric: tabular-nums">41 % <span style="color: #45464F">· Ziel 50 %</span></span></div>
+            <div style="position: relative; height: 10px; border-radius: 999px; background: #DFE1FF"><div class="ch-fill" style="position: absolute; left: 0; top: 0; height: 10px; width: 41%; border-radius: 999px; background: #2A45C9"></div><div style="position: absolute; left: 50%; top: -3px; width: 2px; height: 16px; background: #1A1B21"></div></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <div style="display: flex; font-size: 14px"><span style="font-weight: 600">Ohne E-Mail beigetreten</span><span style="flex-grow: 1"></span><span style="font-variant-numeric: tabular-nums">37 % <span style="color: #45464F">· Ziel 30 %</span></span></div>
+            <div style="position: relative; height: 10px; border-radius: 999px; background: #DFE1FF"><div class="ch-fill" style="position: absolute; left: 0; top: 0; height: 10px; width: 37%; border-radius: 999px; background: #2A45C9"></div><div style="position: absolute; left: 30%; top: -3px; width: 2px; height: 16px; background: #1A1B21"></div></div>
+          </div>
+        </div>
+        <div style="font-size: 12px; line-height: 16px; color: #45464F">Alle Werte ab fünf Personen und nur als Anteil. Keine Gesundheitskennzahlen, keine Personenlisten.</div>
+      </div>
+    </div>
+  </main>
+  <aside class="ch-stack" style="width: 320px; flex-shrink: 0; border-left: 1px solid #C6C6D0; background: #FCFCFF; padding: 32px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
+    <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #45464F">Nächste empfohlene Handlung</div>
+    <div style="border-radius: 12px; background: #DFE1FF; padding: 16px; display: flex; flex-direction: column; gap: 10px; color: #000F5C">
+      <div style="font-size: 16px; line-height: 22px; font-weight: 600">Meilenstein Salzburg ankündigen</div>
+      <div style="font-size: 14px; line-height: 20px">Noch 13 % bis zum nächsten Halt. Ein kurzer Beitrag im Feed hilft in dieser Phase erfahrungsgemäß am meisten.</div>
+      <div style="padding: 12px; border-radius: 8px; background: #FFFFFF; font-size: 14px; line-height: 20px; color: #1A1B21; font-style: italic">„Ihr seid bei 62 % – Salzburg ist zum Greifen nah. Schön, dass so viele dabei sind.“</div>
+      <div style="font-size: 12px; color: #000F5C">Vorschlag in Tonalität „freundlich“, Du-Anrede. Frei bearbeitbar.</div>
+      <button type="button" style="height: 40px; border-radius: 999px; border: none; background: #2A45C9; color: #FFFFFF; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer">Beitrag übernehmen</button>
+    </div>
+    <div style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #45464F; margin-top: 8px">Kadenz</div>
+    <div style="display: flex; flex-direction: column; border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; overflow: hidden">
+      <div style="display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #E9EAF2"><span style="width: 44px; font-size: 12px; font-weight: 600; color: #45464F">Okt</span><span style="font-size: 14px">Gemeinsam nach Bregenz</span></div>
+      <div style="display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #E9EAF2"><span style="width: 44px; font-size: 12px; font-weight: 600; color: #45464F">Nov</span><span style="font-size: 14px; color: #45464F">Ergonomie-Woche <span style="font-size: 12px">· Vorschlag</span></span></div>
+      <div style="display: flex; gap: 12px; padding: 12px 16px"><span style="width: 44px; font-size: 12px; font-weight: 600; color: #45464F">Dez</span><span style="font-size: 14px; color: #45464F">noch offen</span></div>
+    </div>
+  </aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

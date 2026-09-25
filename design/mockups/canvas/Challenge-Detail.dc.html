@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Challenge: Meilenstein-Route und Beitrag erfassen</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#FCFCFF;color:#1A1B21}
+a{color:#2A45C9}a:hover{color:#05157A}
+
+.ch-stack > *{animation:ch-rise 320ms cubic-bezier(.2,.7,.2,1) both}
+.ch-stack > :nth-child(2){animation-delay:50ms}.ch-stack > :nth-child(3){animation-delay:100ms}.ch-stack > :nth-child(4){animation-delay:150ms}.ch-stack > :nth-child(5){animation-delay:200ms}.ch-stack > :nth-child(6){animation-delay:250ms}.ch-stack > :nth-child(7){animation-delay:300ms}.ch-stack > :nth-child(8){animation-delay:350ms}.ch-stack > :nth-child(9){animation-delay:400ms}.ch-stack > :nth-child(10){animation-delay:450ms}
+.ch-fill{animation:ch-fill 900ms cubic-bezier(.2,.7,.2,1) 200ms both}
+.ch-ring{animation:ch-ring 1000ms cubic-bezier(.2,.7,.2,1) 250ms both}
+.ch-num{animation:ch-num 600ms cubic-bezier(.2,.7,.2,1) 500ms both}
+.ch-next{animation:ch-pip 2400ms ease-in-out 1400ms infinite}
+.ch-pop{animation:ch-pop 520ms cubic-bezier(.2,.9,.3,1.15) 100ms both}
+.ch-glow{animation:ch-glow 1000ms ease-out 900ms both}
+button,a{transition:background-color 120ms ease,color 120ms ease,border-color 120ms ease,transform 120ms ease,box-shadow 120ms ease,filter 120ms ease}
+button:not(:disabled):hover,a:hover{filter:brightness(.97)}
+button:not(:disabled):active,a:active{transform:scale(.98)}
+label{transition:border-color 120ms ease,background-color 120ms ease}
+label:hover{border-color:#767780}
+@keyframes ch-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes ch-fill{from{width:0}}
+@keyframes ch-ring{from{stroke-dashoffset:var(--ch-len)}}
+@keyframes ch-num{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes ch-pip{0%,100%{box-shadow:0 0 0 0 rgba(228,103,10,.45)}50%{box-shadow:0 0 0 7px rgba(228,103,10,0)}}
+@keyframes ch-pop{from{opacity:0;transform:scale(.72)}to{opacity:1;transform:none}}
+@keyframes ch-glow{from{box-shadow:0 0 0 0 rgba(228,103,10,.55)}to{box-shadow:0 0 0 40px rgba(228,103,10,0)}}
+@media (prefers-reduced-motion:reduce){.ch-stack>*,.ch-fill,.ch-ring,.ch-num,.ch-next,.ch-pop,.ch-glow{animation:none}button,a,label{transition:none}}
+</style>
+</helmet>
+<div style="width: 390px; height: 1320px; box-sizing: border-box; background: #FCFCFF; display: flex; flex-direction: column; position: relative">
+  <div style="display: flex; align-items: center; gap: 4px; padding: 52px 8px 8px 8px">
+    <a href="Main.dc.html" aria-label="Zurück" style="width: 48px; height: 48px; border-radius: 999px; display: flex; align-items: center; justify-content: center; text-decoration: none">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1B21" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+    </a>
+    <div style="font-size: 14px; font-weight: 600; color: #45464F">Challenges</div>
+  </div>
+  <div class="ch-stack" style="display: flex; flex-direction: column; gap: 16px; padding: 0 16px 16px 16px">
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <div style="display: flex; align-items: center; gap: 8px">
+        <span style="padding: 3px 10px; border-radius: 999px; background: #B8F0EA; color: #00201D; font-size: 12px; font-weight: 600">Firmenziel</span>
+        <span style="padding: 3px 10px; border-radius: 999px; background: #F1F2F9; color: #45464F; font-size: 12px; font-weight: 600">Meilenstein-Route</span>
+      </div>
+      <h1 style="margin: 0; font-family: 'Inter Tight', Inter, sans-serif; font-size: 26px; line-height: 32px; font-weight: 700">Gemeinsam nach Bregenz</h1>
+      <div style="font-size: 14px; line-height: 20px; color: #45464F">1. bis 31. Oktober · noch 12 Tage · aktive Minuten, ganze Firma</div>
+    </div>
+    <div style="border-radius: 16px; background: #F1F2F9; padding: 16px; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; align-items: flex-end; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <div style="font-size: 12px; font-weight: 600; color: #45464F; text-transform: uppercase; letter-spacing: 0.06em">Gemeinsam geschafft</div>
+          <div class="ch-num" style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 40px; line-height: 44px; font-weight: 700; color: #E4670A; font-variant-numeric: tabular-nums">62 %</div>
+        </div>
+        <div style="flex-grow: 1"></div>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 2px">
+          <div style="font-size: 12px; color: #45464F">Stand vor 3 Min</div>
+          <div style="font-size: 14px; font-weight: 600">Nächster Halt: Salzburg</div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0" role="img" aria-label="Route von Wien nach Bregenz, 62 Prozent erreicht, Wien, St. Pölten und Linz passiert">
+        <div style="display: flex; align-items: center; gap: 12px; height: 44px">
+          <div style="width: 16px; height: 16px; border-radius: 999px; background: #E4670A; flex-shrink: 0"></div>
+          <div style="flex-grow: 1; font-size: 16px; font-weight: 600">Wien</div>
+          <div style="font-size: 12px; color: #45464F">Start · 1.10.</div>
+        </div>
+        <div style="margin-left: 7px; width: 2px; height: 16px; background: #E4670A"></div>
+        <div style="display: flex; align-items: center; gap: 12px; height: 44px">
+          <div style="width: 16px; height: 16px; border-radius: 999px; background: #E4670A; flex-shrink: 0"></div>
+          <div style="flex-grow: 1; font-size: 16px; font-weight: 600">St. Pölten</div>
+          <div style="font-size: 12px; color: #45464F">25 % · erreicht 8.10.</div>
+        </div>
+        <div style="margin-left: 7px; width: 2px; height: 16px; background: #E4670A"></div>
+        <div style="display: flex; align-items: center; gap: 12px; height: 44px">
+          <div style="width: 16px; height: 16px; border-radius: 999px; background: #E4670A; flex-shrink: 0"></div>
+          <div style="flex-grow: 1; font-size: 16px; font-weight: 600">Linz</div>
+          <div style="font-size: 12px; color: #45464F">50 % · erreicht 15.10.</div>
+        </div>
+        <div style="margin-left: 7px; width: 2px; height: 16px; background: linear-gradient(#E4670A 50%, #C6C6D0 50%)"></div>
+        <div style="display: flex; align-items: center; gap: 12px; height: 44px">
+          <div class="ch-next" style="width: 16px; height: 16px; border-radius: 999px; background: #FFFFFF; border: 3px solid #E4670A; box-sizing: border-box; flex-shrink: 0"></div>
+          <div style="flex-grow: 1; font-size: 16px; font-weight: 600">Salzburg</div>
+          <div style="font-size: 12px; color: #45464F">75 % · noch 13 %</div>
+        </div>
+        <div style="margin-left: 7px; width: 2px; height: 16px; background: #C6C6D0"></div>
+        <div style="display: flex; align-items: center; gap: 12px; height: 44px">
+          <div style="width: 16px; height: 16px; border-radius: 999px; background: #FFFFFF; border: 2px solid #C6C6D0; box-sizing: border-box; flex-shrink: 0"></div>
+          <div style="flex-grow: 1; font-size: 16px; font-weight: 600; color: #45464F">Bregenz</div>
+          <div style="font-size: 12px; color: #45464F">100 % · Gesundheitstag</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 12px; background: #B8F0EA; color: #00201D">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00201D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v8H4v-8"></path><path d="M2 7h20v5H2z"></path><path d="M12 7v13"></path><path d="M12 7c-2-3-6-3-6 0h6zm0 0c2-3 6-3 6 0h-6z"></path></svg>
+        <div style="font-size: 14px; line-height: 20px">Belohnung für alle: Gesundheitstag mit freiem Nachmittag am 14.10.</div>
+      </div>
+    </div>
+    <div style="border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; align-items: baseline; gap: 8px">
+        <div style="font-size: 18px; line-height: 24px; font-weight: 600">Beitrag erfassen</div>
+        <div style="flex-grow: 1"></div>
+        <div style="font-size: 12px; color: #45464F">Heute, 24.9.</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <label for="minuten" style="font-size: 14px; font-weight: 600; color: #45464F">Aktive Minuten</label>
+        <div style="display: flex; align-items: center; gap: 8px">
+          <button type="button" aria-label="Weniger" style="width: 48px; height: 48px; border-radius: 8px; border: 1px solid #C6C6D0; background: #FCFCFF; font-size: 22px; color: #2A45C9; cursor: pointer">−</button>
+          <input id="minuten" type="number" value="25" step="5" style="flex-grow: 1; min-width: 0; width: 0; height: 48px; box-sizing: border-box; border: 1px solid #767780; border-radius: 8px; text-align: center; font-family: 'Inter Tight', Inter, sans-serif; font-size: 28px; font-weight: 700; color: #1A1B21; background: #FFFFFF; font-variant-numeric: tabular-nums">
+          <button type="button" aria-label="Mehr" style="width: 48px; height: 48px; border-radius: 8px; border: 1px solid #C6C6D0; background: #FCFCFF; font-size: 22px; color: #2A45C9; cursor: pointer">+</button>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap">
+        <button type="button" style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid #C6C6D0; background: transparent; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; color: #1A1B21; cursor: pointer">15</button>
+        <button type="button" style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid #C6C6D0; background: transparent; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; color: #1A1B21; cursor: pointer">30</button>
+        <button type="button" style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid #C6C6D0; background: transparent; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; color: #1A1B21; cursor: pointer">45</button>
+        <button type="button" style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid #C6C6D0; background: transparent; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; color: #1A1B21; cursor: pointer">60</button>
+        <button type="button" style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid #C6C6D0; background: transparent; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; color: #1A1B21; cursor: pointer">Anderer Tag</button>
+      </div>
+      <div style="font-size: 12px; line-height: 16px; color: #45464F">Heute noch bis zu 95 Minuten anrechenbar. Bis drei Tage rückwirkend möglich.</div>
+      <button type="button" style="height: 52px; border-radius: 999px; border: none; background: #2A45C9; color: #FFFFFF; font-family: Inter, sans-serif; font-size: 16px; font-weight: 600; cursor: pointer">25 Minuten eintragen</button>
+    </div>
+    <div style="border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+      <div style="font-size: 16px; font-weight: 600">Dein Anteil</div>
+      <div style="display: flex; gap: 8px">
+        <div style="flex-grow: 1; padding: 12px; border-radius: 8px; background: #F1F2F9; display: flex; flex-direction: column; gap: 2px">
+          <div style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 28px; line-height: 32px; font-weight: 700; font-variant-numeric: tabular-nums">340</div>
+          <div style="font-size: 12px; color: #45464F">Minuten gesamt</div>
+        </div>
+        <div style="flex-grow: 1; padding: 12px; border-radius: 8px; background: #F1F2F9; display: flex; flex-direction: column; gap: 2px">
+          <div style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 28px; line-height: 32px; font-weight: 700; font-variant-numeric: tabular-nums">14</div>
+          <div style="font-size: 12px; color: #45464F">von 19 Tagen dabei</div>
+        </div>
+      </div>
+      <div style="font-size: 12px; line-height: 16px; color: #45464F">Nur du siehst diese Zahlen. Gegenüber anderen gilt deine Sichtbarkeit „Mein Team“.</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1320}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

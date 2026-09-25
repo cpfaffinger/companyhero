@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Ich: Tagesring, Serie, Abzeichen</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#FCFCFF;color:#1A1B21}
+a{color:#2A45C9}a:hover{color:#05157A}
+
+.ch-stack > *{animation:ch-rise 320ms cubic-bezier(.2,.7,.2,1) both}
+.ch-stack > :nth-child(2){animation-delay:50ms}.ch-stack > :nth-child(3){animation-delay:100ms}.ch-stack > :nth-child(4){animation-delay:150ms}.ch-stack > :nth-child(5){animation-delay:200ms}.ch-stack > :nth-child(6){animation-delay:250ms}.ch-stack > :nth-child(7){animation-delay:300ms}.ch-stack > :nth-child(8){animation-delay:350ms}.ch-stack > :nth-child(9){animation-delay:400ms}.ch-stack > :nth-child(10){animation-delay:450ms}
+.ch-fill{animation:ch-fill 900ms cubic-bezier(.2,.7,.2,1) 200ms both}
+.ch-ring{animation:ch-ring 1000ms cubic-bezier(.2,.7,.2,1) 250ms both}
+.ch-num{animation:ch-num 600ms cubic-bezier(.2,.7,.2,1) 500ms both}
+.ch-next{animation:ch-pip 2400ms ease-in-out 1400ms infinite}
+.ch-pop{animation:ch-pop 520ms cubic-bezier(.2,.9,.3,1.15) 100ms both}
+.ch-glow{animation:ch-glow 1000ms ease-out 900ms both}
+button,a{transition:background-color 120ms ease,color 120ms ease,border-color 120ms ease,transform 120ms ease,box-shadow 120ms ease,filter 120ms ease}
+button:not(:disabled):hover,a:hover{filter:brightness(.97)}
+button:not(:disabled):active,a:active{transform:scale(.98)}
+label{transition:border-color 120ms ease,background-color 120ms ease}
+label:hover{border-color:#767780}
+@keyframes ch-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes ch-fill{from{width:0}}
+@keyframes ch-ring{from{stroke-dashoffset:var(--ch-len)}}
+@keyframes ch-num{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes ch-pip{0%,100%{box-shadow:0 0 0 0 rgba(228,103,10,.45)}50%{box-shadow:0 0 0 7px rgba(228,103,10,0)}}
+@keyframes ch-pop{from{opacity:0;transform:scale(.72)}to{opacity:1;transform:none}}
+@keyframes ch-glow{from{box-shadow:0 0 0 0 rgba(228,103,10,.55)}to{box-shadow:0 0 0 40px rgba(228,103,10,0)}}
+@media (prefers-reduced-motion:reduce){.ch-stack>*,.ch-fill,.ch-ring,.ch-num,.ch-next,.ch-pop,.ch-glow{animation:none}button,a,label{transition:none}}
+</style>
+</helmet>
+<div style="width: 390px; height: 1060px; box-sizing: border-box; background: #FCFCFF; display: flex; flex-direction: column; position: relative">
+  <div style="display: flex; align-items: center; gap: 12px; padding: 56px 16px 12px 16px">
+    <h1 style="margin: 0; font-family: 'Inter Tight', Inter, sans-serif; font-size: 26px; line-height: 32px; font-weight: 700">Ich</h1>
+    <div style="flex-grow: 1"></div>
+    <button type="button" aria-label="Einstellungen" style="width: 48px; height: 48px; border-radius: 999px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1B21" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg>
+    </button>
+  </div>
+  <div class="ch-stack" style="display: flex; flex-direction: column; gap: 12px; padding: 0 16px 16px 16px">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <div style="width: 48px; height: 48px; border-radius: 999px; background: #DFE1FF; display: flex; align-items: center; justify-content: center; font-family: 'Inter Tight', Inter, sans-serif; font-size: 18px; font-weight: 700; color: #000F5C">C</div>
+      <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1">
+        <div style="font-size: 18px; line-height: 24px; font-weight: 600">Chris P.</div>
+        <div style="font-size: 14px; color: #45464F">Standort Graz · Schicht A · Stufe „Dabei“</div>
+      </div>
+    </div>
+    <button type="button" style="display: flex; align-items: center; gap: 10px; height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid #C6C6D0; background: #FFFFFF; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; color: #1A1B21; cursor: pointer; align-self: flex-start">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A1B21" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20a6.5 6.5 0 0 1 13 0"></path><circle cx="17" cy="9" r="3"></circle><path d="M16 15.5a5.5 5.5 0 0 1 5.5 4.5"></path></svg>
+      Sichtbar für: Mein Team
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg>
+    </button>
+    <div style="border-radius: 16px; background: #F1F2F9; padding: 16px; display: flex; gap: 16px; align-items: center">
+      <div class="ch-pop" style="position: relative; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; flex-shrink: 0" role="img" aria-label="Tagesziel: 2 von 2 Handlungen erledigt">
+        <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+          <circle cx="60" cy="60" r="52" fill="none" stroke="#FFDFC2" stroke-width="12"></circle>
+          <circle cx="60" cy="60" r="52" fill="none" stroke="#E4670A" stroke-width="12" stroke-linecap="round" class="ch-ring" style="--ch-len: 327" stroke-dasharray="327 327" stroke-dashoffset="0" transform="rotate(-90 60 60)"></circle>
+        </svg>
+        <div style="position: absolute; display: flex; flex-direction: column; align-items: center">
+          <div style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 28px; line-height: 32px; font-weight: 700; font-variant-numeric: tabular-nums">2/2</div>
+          <div style="font-size: 12px; color: #45464F">heute</div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+        <div style="font-size: 16px; line-height: 22px; font-weight: 600">Tagesziel erreicht</div>
+        <div style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: #FFDFC2; color: #331100; font-size: 14px; font-weight: 600; align-self: flex-start">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#E4670A" aria-hidden="true"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 1-3s0 3 2 3c2 0 0-5 2-10z"></path></svg>
+          23 Tage Serie
+        </div>
+        <div style="font-size: 12px; line-height: 16px; color: #45464F">Serienschutz für September noch verfügbar.</div>
+      </div>
+    </div>
+    <div style="border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: baseline">
+        <div style="font-size: 16px; font-weight: 600">Diese Woche</div>
+        <div style="flex-grow: 1"></div>
+        <div style="font-size: 12px; color: #45464F">5 aktive Tage</div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px" role="img" aria-label="Wochenstreifen: Montag bis Freitag erledigt, Samstag und Sonntag offen">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 36px; height: 36px; border-radius: 999px; background: #E4670A; border: 4px solid #E4670A; box-sizing: border-box"></div><span style="font-size: 12px; font-weight: 600; color: #45464F">Mo</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 36px; height: 36px; border-radius: 999px; background: #E4670A; border: 4px solid #E4670A; box-sizing: border-box"></div><span style="font-size: 12px; font-weight: 600; color: #45464F">Di</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 36px; height: 36px; border-radius: 999px; background: #E4670A; border: 4px solid #E4670A; box-sizing: border-box"></div><span style="font-size: 12px; font-weight: 600; color: #45464F">Mi</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 36px; height: 36px; border-radius: 999px; background: #E4670A; border: 4px solid #E4670A; box-sizing: border-box"></div><span style="font-size: 12px; font-weight: 600; color: #45464F">Do</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 36px; height: 36px; border-radius: 999px; background: #E4670A; border: 4px solid #E4670A; box-sizing: border-box"></div><span style="font-size: 12px; font-weight: 600; color: #1A1B21">Fr</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 36px; height: 36px; border-radius: 999px; background: #FFFFFF; border: 4px solid #FFDFC2; box-sizing: border-box"></div><span style="font-size: 12px; font-weight: 600; color: #45464F">Sa</span></div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 36px; height: 36px; border-radius: 999px; background: #FFFFFF; border: 4px solid #FFDFC2; box-sizing: border-box"></div><span style="font-size: 12px; font-weight: 600; color: #45464F">So</span></div>
+      </div>
+    </div>
+    <div style="border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: baseline">
+        <div style="font-size: 16px; font-weight: 600">Stufe</div>
+        <div style="flex-grow: 1"></div>
+        <div style="font-size: 12px; color: #45464F; font-variant-numeric: tabular-nums">640 Punkte</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px" role="img" aria-label="Stufe Dabei, 640 von 1.000 Punkten bis Dranbleiber">
+        <div style="height: 10px; border-radius: 999px; background: #DFE1FF; position: relative">
+          <div class="ch-fill" style="position: absolute; left: 0; top: 0; height: 10px; width: 64%; border-radius: 999px; background: #2A45C9"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 12px; color: #45464F">
+          <span style="font-weight: 600; color: #1A1B21">Dabei</span><span>Dranbleiber ab 1.000</span>
+        </div>
+      </div>
+    </div>
+    <div style="border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+      <div style="display: flex; align-items: baseline">
+        <div style="font-size: 16px; font-weight: 600">Abzeichen</div>
+        <div style="flex-grow: 1"></div>
+        <a href="Ich.dc.html" style="font-size: 14px; font-weight: 600; text-decoration: none">Alle</a>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center">
+          <div style="width: 64px; height: 64px; border-radius: 999px; background: #FFDFC2; display: flex; align-items: center; justify-content: center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#331100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18c3-8 7-11 16-12-1 9-4 13-12 16"></path><path d="M4 18l4-4"></path></svg></div>
+          <span style="font-size: 12px; line-height: 16px; font-weight: 600">Erster Tag</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center">
+          <div style="width: 64px; height: 64px; border-radius: 999px; background: #FFDFC2; display: flex; align-items: center; justify-content: center"><svg width="30" height="30" viewBox="0 0 24 24" fill="#E4670A" aria-hidden="true"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 1-3s0 3 2 3c2 0 0-5 2-10z"></path></svg></div>
+          <span style="font-size: 12px; line-height: 16px; font-weight: 600">7 Tage Serie</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center">
+          <div style="width: 64px; height: 64px; border-radius: 999px; background: #B8F0EA; display: flex; align-items: center; justify-content: center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00201D" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10"></path><path d="M10 20V4"></path><path d="M16 20v-8"></path><path d="M22 20H2"></path></svg></div>
+          <span style="font-size: 12px; line-height: 16px; font-weight: 600">Gruppenziel</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center">
+          <div style="position: relative; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center">
+            <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="none" stroke="#FFDFC2" stroke-width="5"></circle><circle cx="32" cy="32" r="29" fill="none" stroke="#E4670A" stroke-width="5" stroke-linecap="round" class="ch-ring" style="--ch-len: 140" stroke-dasharray="140 1000" transform="rotate(-90 32 32)"></circle></svg>
+            <span style="position: absolute; font-family: 'Inter Tight', Inter, sans-serif; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums">23/30</span>
+          </div>
+          <span style="font-size: 12px; line-height: 16px; font-weight: 600; color: #45464F">Nächstes: 30 Tage</span>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; border-radius: 12px; background: #FFFFFF; border: 1px solid #C6C6D0; overflow: hidden">
+      <a href="Ich.dc.html" style="display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 16px; text-decoration: none; color: #1A1B21; font-size: 16px; border-bottom: 1px solid #E9EAF2">Abwesenheit eintragen<span style="flex-grow: 1"></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#767780" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></a>
+      <a href="Ich.dc.html" style="display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 16px; text-decoration: none; color: #1A1B21; font-size: 16px; border-bottom: 1px solid #E9EAF2">Buddy verbinden<span style="flex-grow: 1"></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#767780" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></a>
+      <a href="Ich.dc.html" style="display: flex; align-items: center; gap: 12px; height: 52px; padding: 0 16px; text-decoration: none; color: #1A1B21; font-size: 16px">Meine Daten und Export<span style="flex-grow: 1"></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#767780" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></a>
+    </div>
+  </div>
+  <nav aria-label="Hauptnavigation" style="position: absolute; left: 0; right: 0; bottom: 0; height: 80px; border-top: 1px solid #C6C6D0; background: #F1F2F9; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 8px 0 16px 0; box-sizing: border-box">
+    <a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #45464F; font-size: 12px; font-weight: 600"><span style="display: flex; align-items: center; justify-content: center; width: 56px; height: 32px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"></path></svg></span>Start</a>
+    <a href="Challenge-Detail.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #45464F; font-size: 12px; font-weight: 600"><span style="display: flex; align-items: center; justify-content: center; width: 56px; height: 32px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l6-6 4 4 6-8"></path><path d="M16 10h4v4"></path></svg></span>Challenges</a>
+    <a href="Entdecken.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #45464F; font-size: 12px; font-weight: 600"><span style="display: flex; align-items: center; justify-content: center; width: 56px; height: 32px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M15.5 8.5l-2 5-5 2 2-5z"></path></svg></span>Entdecken</a>
+    <a href="Main.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #45464F; font-size: 12px; font-weight: 600"><span style="display: flex; align-items: center; justify-content: center; width: 56px; height: 32px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"></path><path d="M5 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16"></path><path d="M15 10h3a1 1 0 0 1 1 1v10"></path></svg></span>Firma</a>
+    <a href="Ich.dc.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #2A45C9; font-size: 12px; font-weight: 600"><span style="display: flex; align-items: center; justify-content: center; width: 56px; height: 32px; border-radius: 999px; background: #DFE1FF"><svg width="24" height="24" viewBox="0 0 24 24" fill="#2A45C9" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0z"></path></svg></span>Ich</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1060}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

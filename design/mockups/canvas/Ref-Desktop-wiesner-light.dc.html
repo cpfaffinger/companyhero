@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Referenzscreen Desktop: Wiesner hell</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Inter+Tight:wght@600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:#FCFCFF;color:#1A1B21}
+a{color:#9B1B3A}a:hover{color:#400012}
+.ch-stack > *{animation:ch-rise 320ms cubic-bezier(.2,.7,.2,1) both}
+.ch-stack > :nth-child(2){animation-delay:60ms}.ch-stack > :nth-child(3){animation-delay:120ms}.ch-stack > :nth-child(4){animation-delay:180ms}
+.ch-fill{animation:ch-fill 320ms cubic-bezier(.2,.7,.2,1) 200ms both}
+.ch-dialog{animation:ch-pop 200ms cubic-bezier(.2,.7,.2,1) 400ms both}
+.ch-scrim{animation:ch-fade 200ms ease 400ms both}
+button,a{transition:background-color 120ms ease,color 120ms ease,transform 120ms ease,filter 120ms ease}
+button:not(:disabled):hover,a:hover{filter:brightness(.97)}button:not(:disabled):active{transform:scale(.98)}
+*:focus-visible{outline:2px solid #9B1B3A;outline-offset:2px}
+@keyframes ch-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes ch-fill{from{width:0}}
+@keyframes ch-pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes ch-fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.ch-stack>*,.ch-fill,.ch-dialog,.ch-scrim{animation:none}button,a{transition:none}}
+</style>
+</helmet>
+<div style="width: 1280px; height: 960px; box-sizing: border-box; background: #FCFCFF; color: #1A1B21; display: flex; position: relative; overflow: hidden"><nav aria-label="Hauptnavigation" style="width: 240px; flex-shrink: 0; background: #F1F2F9; border-right: 1px solid #C6C6D0; display: flex; flex-direction: column; gap: 4px; padding: 20px 12px; box-sizing: border-box"><div style="display: flex; align-items: center; gap: 10px; padding: 4px 8px 16px 8px"><div style="width: 32px; height: 32px; border-radius: 8px; background: #9B1B3A; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-family: 'Inter Tight', Inter, sans-serif; font-weight: 700; font-size: 14px">W</div><span style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 18px; font-weight: 700">Wiesner Aktiv</span></div><a href="#" aria-current="false" style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 16px; border-radius: 999px; background: transparent; text-decoration: none; color: #45464F; font-size: 14px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"></path></svg>Start</a><a href="#" aria-current="page" style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 16px; border-radius: 999px; background: #FFD9DE; text-decoration: none; color: #9B1B3A; font-size: 14px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="#9B1B3A" stroke="#9B1B3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l6-6 4 4 6-8"></path><path d="M16 10h4v4"></path></svg>Challenges</a><a href="#" aria-current="false" style="display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 16px; border-radius: 999px; background: transparent; text-decoration: none; color: #45464F; font-size: 14px; font-weight: 600"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#45464F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0z"></path></svg>Ich</a></nav><main style="flex-grow: 1; display: flex; flex-direction: column; gap: 20px; padding: 32px 40px; box-sizing: border-box; min-width: 0"><h1 style="margin: 0; font-family: 'Inter Tight', Inter, sans-serif; font-size: 32px; line-height: 40px; font-weight: 700">Challenges</h1>
+<div class="ch-stack" style="display: flex; flex-direction: column; gap: 12px">
+  <div style="border-radius: 16px; background: #F1F2F9; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+      <span style="padding: 3px 10px; border-radius: 999px; background: #B8F0EA; color: #00201D; font-size: 12px; font-weight: 600">Firmenziel</span>
+      <span style="font-size: 12px; color: #45464F">noch 9 Tage</span>
+      <span style="flex-grow: 1"></span>
+      <span style="font-size: 12px; color: #45464F">Stand vor 4 Min</span>
+    </div>
+    <div style="display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap">
+      <div style="display: flex; flex-direction: column; gap: 2px; flex-grow: 1; min-width: 160px">
+        <div style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 26px; line-height: 1.2; font-weight: 600">Rad oder Fuß zur Arbeit</div>
+        <div style="font-size: 14px; line-height: 1.45; color: #45464F">Sammelziel · Häkchen · ganze Firma</div>
+      </div>
+      <div style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 40px; line-height: 44px; font-weight: 700; color: #B45309; font-variant-numeric: tabular-nums">48 %</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 6px" role="img" aria-label="48 Prozent des Firmenziels erreicht, nächster Meilenstein bei 50 Prozent">
+      <div style="position: relative; height: 14px; border-radius: 999px; background: #FFE0B0">
+        <div class="ch-fill" style="position: absolute; left: 0; top: 0; height: 14px; width: 48%; border-radius: 999px; background: #B45309"></div>
+        <div style="position: absolute; top: 2px; left: 25%; width: 10px; height: 10px; margin-left: -5px; border-radius: 999px; background: #F1F2F9; border: 2px solid #B45309; box-sizing: border-box"></div>
+        <div style="position: absolute; top: 2px; left: 50%; width: 10px; height: 10px; margin-left: -5px; border-radius: 999px; background: #F1F2F9; border: 2px solid #C6C6D0; box-sizing: border-box"></div>
+        <div style="position: absolute; top: 2px; left: 75%; width: 10px; height: 10px; margin-left: -5px; border-radius: 999px; background: #F1F2F9; border: 2px solid #C6C6D0; box-sizing: border-box"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px; color: #45464F"><span>Start</span><span>25 %</span><span style="font-weight: 600; color: #1A1B21">50 %</span><span>75 %</span><span>Ziel</span></div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+      <div style="font-size: 14px; line-height: 1.45; color: #45464F; flex-grow: 1">Dein Beitrag heute: <strong style="color: #1A1B21">noch offen</strong></div>
+      <button type="button" style="height: 48px; padding: 0 20px; border-radius: 999px; border: none; background: #9B1B3A; color: #FFFFFF; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4L19 6"></path></svg> Heute erledigt</button>
+    </div>
+  </div>
+  <form style="border-radius: 12px; background: #FCFCFF; border: 1px solid #C6C6D0; padding: 16px; display: flex; flex-direction: column; gap: 18px; margin: 0">
+    <div style="display: flex; align-items: baseline; gap: 8px"><div style="font-size: 18px; line-height: 1.3; font-weight: 600">Beitrag nachtragen</div><span style="flex-grow: 1"></span><div style="font-size: 12px; color: #45464F">bis 3 Tage rückwirkend</div></div>
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <div style="position: relative; height: 48px; border: 2px solid #B3261E; border-radius: 8px; padding: 0 14px; display: flex; align-items: center; background: #FCFCFF; box-sizing: border-box">
+        <label for="tag" style="position: absolute; top: -9px; left: 12px; padding: 0 4px; background: #FCFCFF; font-size: 12px; line-height: 16px; color: #B3261E">Tag</label>
+        <select id="tag" aria-invalid="true" aria-describedby="tag-hint" style="appearance: none; border: none; background: transparent; outline: none; flex-grow: 1; font-family: Inter, sans-serif; font-size: 16px; color: #1A1B21; padding: 0; cursor: pointer"><option>Heute</option><option>Gestern</option><option selected>Vorgestern</option></select>
+        <span style="color: #45464F; display: flex"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></span>
+      </div>
+      <div id="tag-hint" style="font-size: 12px; line-height: 16px; color: #B3261E; padding: 0 16px">Für diesen Tag hast du schon ein Häkchen gesetzt.</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <div style="position: relative; height: 48px; border: 2px solid #9B1B3A; border-radius: 8px; padding: 0 14px; display: flex; align-items: center; background: #FCFCFF; box-sizing: border-box">
+        <label for="notiz" style="position: absolute; top: -9px; left: 12px; padding: 0 4px; background: #FCFCFF; font-size: 12px; line-height: 16px; color: #9B1B3A">Notiz (nur für dich)</label>
+        <input id="notiz" type="text" value="Bis zum Bahnhof gegangen" style="border: none; background: transparent; outline: none; flex-grow: 1; min-width: 0; width: 0; font-family: Inter, sans-serif; font-size: 16px; color: #1A1B21; padding: 0">
+        <span aria-hidden="true" style="width: 2px; height: 22px; background: #9B1B3A; margin-left: 2px"></span>
+      </div>
+      <div style="font-size: 12px; line-height: 16px; color: #45464F; padding: 0 16px">Fokuszustand · 24 von 200 Zeichen</div>
+    </div>
+    <div style="display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap">
+      <button type="button" style="height: 48px; padding: 0 20px; border-radius: 999px; border: none; background: transparent; color: #9B1B3A; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer">Abbrechen</button>
+      <button type="submit" disabled style="height: 48px; padding: 0 24px; border-radius: 999px; border: none; background: #E9EAF2; color: #767780; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; cursor: not-allowed">Eintragen</button>
+    </div>
+  </form>
+</div>
+</main><aside style="width: 320px; flex-shrink: 0; border-left: 1px solid #C6C6D0; padding: 32px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px"><div style="font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #45464F">Dein Anteil</div><div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><div style="padding: 12px; border-radius: 8px; background: #F1F2F9"><div style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 28px; line-height: 32px; font-weight: 700; font-variant-numeric: tabular-nums">11</div><div style="font-size: 12px; color: #45464F">Häkchen gesetzt</div></div><div style="padding: 12px; border-radius: 8px; background: #F1F2F9"><div style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 28px; line-height: 32px; font-weight: 700; font-variant-numeric: tabular-nums">14</div><div style="font-size: 12px; color: #45464F">von 21 Tagen dabei</div></div></div><div style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: #FFE0B0; color: #3D2400; font-size: 14px; font-weight: 600; align-self: flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="#B45309" aria-hidden="true"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 1-3s0 3 2 3c2 0 0-5 2-10z"></path></svg>14 Tage Serie</div><div style="font-size: 12px; line-height: 16px; color: #45464F">Nur für dich sichtbar. Gegenüber anderen gilt „Mein Team“.</div></aside>
+<div class="ch-scrim" style="position: absolute; inset: 0; background: rgba(26,27,33,.45); display: flex; align-items: flex-end; justify-content: center; padding: 0 24px 40px 24px; z-index: 5">
+  <div class="ch-dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-t" style="width: 100%; max-width: 420px; box-sizing: border-box; background: #E9EAF2; color: #1A1B21; border-radius: 24px; padding: 24px 24px 32px 24px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 12px 32px rgba(0,0,0,.18)">
+    <div id="dlg-t" style="font-family: 'Inter Tight', Inter, sans-serif; font-size: 26px; line-height: 1.25; font-weight: 600">Beitrag von gestern löschen?</div>
+    <div style="font-size: 16px; line-height: 1.5; color: #45464F">Dein Häkchen von gestern wird entfernt. Der Kollektivstand wird neu berechnet. Verdiente Abzeichen bleiben.</div>
+    <div style="display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap">
+      <button type="button" style="height: 48px; padding: 0 20px; border-radius: 999px; border: none; background: transparent; color: #9B1B3A; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer">Abbrechen</button>
+      <button type="button" style="height: 48px; padding: 0 24px; border-radius: 999px; border: none; background: #9B1B3A; color: #FFFFFF; font-family: Inter, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer">Löschen</button>
+    </div>
+  </div>
+</div>
+</div></x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":960}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

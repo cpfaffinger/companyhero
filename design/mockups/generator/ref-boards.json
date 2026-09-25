@@ -1,0 +1,111 @@
+{
+ "boards": {
+  "Ref-Mobil-wiesner-light.dc.html": {
+   "x": 0,
+   "y": 2700,
+   "w": 390,
+   "h": 1000,
+   "title": "R1 · Wiesner · hell · Du",
+   "is_interactive": true
+  },
+  "Ref-Mobil-wiesner-dark.dc.html": {
+   "x": 470,
+   "y": 2700,
+   "w": 390,
+   "h": 1000,
+   "title": "R2 · Wiesner · dunkel",
+   "is_interactive": true
+  },
+  "Ref-Mobil-hoedl-light.dc.html": {
+   "x": 940,
+   "y": 2700,
+   "w": 390,
+   "h": 1000,
+   "title": "R3 · Hödl · hell · Sie",
+   "is_interactive": true
+  },
+  "Ref-Mobil-hoedl-dark.dc.html": {
+   "x": 1410,
+   "y": 2700,
+   "w": 390,
+   "h": 1000,
+   "title": "R4 · Hödl · dunkel",
+   "is_interactive": true
+  },
+  "Ref-Mobil-plattform-light.dc.html": {
+   "x": 1880,
+   "y": 2700,
+   "w": 390,
+   "h": 1000,
+   "title": "R5 · Plattform · hell",
+   "is_interactive": true
+  },
+  "Ref-Mobil-plattform-dark.dc.html": {
+   "x": 2350,
+   "y": 2700,
+   "w": 390,
+   "h": 1000,
+   "title": "R6 · Plattform · dunkel",
+   "is_interactive": true
+  },
+  "Ref-Mobil-wiesner-light-gross.dc.html": {
+   "x": 2820,
+   "y": 2700,
+   "w": 390,
+   "h": 1220,
+   "title": "R7 · Wiesner · Großflächenmodus",
+   "is_interactive": true
+  },
+  "Ref-Tablet-wiesner-light.dc.html": {
+   "x": 0,
+   "y": 4040,
+   "w": 800,
+   "h": 1000,
+   "title": "R8 · Tablet 800 · Wiesner hell",
+   "is_interactive": true
+  },
+  "Ref-Tablet-hoedl-dark.dc.html": {
+   "x": 880,
+   "y": 4040,
+   "w": 800,
+   "h": 1000,
+   "title": "R9 · Tablet 800 · Hödl dunkel",
+   "is_interactive": true
+  },
+  "Ref-Kiosk-wiesner.dc.html": {
+   "x": 1760,
+   "y": 4040,
+   "w": 1024,
+   "h": 768,
+   "title": "R10 · Kiosk 1024 · Großflächenmodus",
+   "is_interactive": true
+  },
+  "Ref-Desktop-wiesner-light.dc.html": {
+   "x": 0,
+   "y": 5160,
+   "w": 1280,
+   "h": 960,
+   "title": "R11 · Desktop 1280 · Wiesner hell",
+   "is_interactive": true
+  },
+  "Ref-Desktop-hoedl-dark.dc.html": {
+   "x": 1360,
+   "y": 5160,
+   "w": 1280,
+   "h": 960,
+   "title": "R12 · Desktop 1280 · Hödl dunkel",
+   "is_interactive": true
+  },
+  "Ref-Desktop-plattform-light.dc.html": {
+   "x": 2720,
+   "y": 5160,
+   "w": 1280,
+   "h": 960,
+   "title": "R13 · Desktop 1280 · Plattform hell",
+   "is_interactive": true
+  }
+ },
+ "Y1": 2700,
+ "Y2": 4040,
+ "Y3": 5160
+}
