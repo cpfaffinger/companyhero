@@ -109,7 +109,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Mandantenmodell:** gemeinsame Datenbank und gemeinsame Tabellen mit `tenant_id NOT NULL` auf jeder tenantbezogenen Zeile, zusammengesetzte Fremdschlüssel über `tenant_id`, Row Level Security mit transaktionslokalem Kontext. Ein späterer Wechsel einzelner Großkunden auf getrennte Datenbanken bleibt über den zentralen Datenzugriff möglich, wird aber nicht vorab gebaut.
 - **Begründung:** überwiegend relationale Daten, gemeinsame Transaktionen zwischen Modulen, ein Migrationspfad, geringe Betriebskosten für viele kleine Firmen.
 - **Folgen:** Geldbeträge und Tarife mit definierter Dezimalpräzision, keine binäre Gleitkommaarithmetik. Konfigurierbare Challenge-Regeln dürfen versioniertes JSONB verwenden; Mitgliedschaften, Buchungen, Beiträge und Rechnungspositionen bleiben strukturierte Tabellen.
-- **Nachweise:** siehe Abschnitt Nachweise der [Backendplanung](architektur-backend.md).
+- **Nachweise:** siehe Abschnitt Nachweise der [Backendplanung](architektur-backend.md). Nachweisstand: Nr. 1 bis 3 und 9 (Isolation zweier Tenants mit RLS und Laufzeitrechten, Kontext je Request und Job, Tenant-Admin ohne Einzelwerte, Modulschemata) technisch nachgewiesen am 25.09.2026 (`durchstich/abnahme/stufe-2.md`); Nr. 4 bis 8 und 10 folgen in den Stufen 3 bis 5, Nr. 10 ist mit Stufe 1 bereits erbracht.
 
 ## A-012 – Anwendungsarchitektur: modularer Monolith
 
@@ -118,7 +118,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Modulregeln:** Jedes Modul besitzt seine Tabellen und Schreiboperationen in einem eigenen Datenbankschema oder Namensraum. Andere Module greifen ausschließlich über öffentliche Anwendungsfunktionen oder Fachereignisse zu, nie über fremde Tabellen. Jedes Modul ist ein eigenes Projekt mit ausdrücklich erlaubten Abhängigkeiten; Architekturtests erzwingen die Abhängigkeitsrichtung. Innerhalb eines Moduls sind Schnittstelle, Anwendungsablauf, Fachregeln und Infrastruktur getrennt.
 - **Begründung:** häufige gemeinsame Transaktionen zwischen Modulen, kleines Team, ein Deploymentpfad. Modulare Grenzen halten den späteren Herauslösungspfad offen, ohne Netzwerkgrenzen vorwegzunehmen.
 - **Folgen:** kein Netzwerkdienst je Modul, kein allgemeines Repository-Framework, kein flächendeckendes Event Sourcing. Querschnitte erhalten benannte Eigentümer statt eigener Dienste.
-- **Nachweise:** Architekturtests grün, Modulbau ohne Zugriff auf fremde Schemata, Herauslösung eines Moduls im Durchstich als Trockenübung dokumentiert.
+- **Nachweise:** Architekturtests grün, Modulbau ohne Zugriff auf fremde Schemata, Herauslösung eines Moduls im Durchstich als Trockenübung dokumentiert. Technisch nachgewiesen am 25.09.2026 (`durchstich/abnahme/stufe-2.md`, Nachweise 13 bis 15 und Abschnitt 3).
 
 ## A-013 – Theme-Ableitung im Backend
 

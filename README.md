@@ -11,7 +11,7 @@ Die Umsetzung folgt dem [technischen Durchstich](concept/technischer-durchstich.
 | Stufe | Inhalt | Protokoll |
 |---|---|---|
 | 1 Fundament | Repository, CI, Compose, Images, Migrations-Container, OpenBao, Caddy, Beobachtung, Backup mit Wiederherstellung | [stufe-1.md](durchstich/abnahme/stufe-1.md) |
-| 2 Isolation | zwei Tenants, RLS mit Laufzeitrechten, Tenant-Kontext, Modulgrenzen | offen |
+| 2 Isolation | zwei Tenants, RLS mit Laufzeitrechten, Tenant-Kontext je Request und Job, Modulschemata, Sichtbarkeitsregel | [stufe-2.md](durchstich/abnahme/stufe-2.md) |
 | 3 Queue und Idempotenz | logische Queue, Outbox-Kopplung, Worker-Replikate, Vorgangskennung und Idempotenzschlüssel | offen |
 | 4 Zugang | Beitritt, Passkey, Wiederherstellungscode, Magic-Link, OIDC, Kiosk, Sitzungen, Austritt | offen |
 | 5 Vertrag und Oberfläche | OpenAPI-Client, Referenzscreen, Marken, Großflächenmodus, Ladebudget, Manifest | offen |
@@ -23,9 +23,9 @@ Die Umsetzung folgt dem [technischen Durchstich](concept/technischer-durchstich.
 
 | Pfad | Inhalt |
 |---|---|
-| `src/backend/` | .NET-10-Solution `CompanyHero.slnx`: `CompanyHero.Platform` (Querschnitte: Tenant-Kontext, Hosting, Konfiguration aus OpenBao), `CompanyHero.Modules.*` (ein Projekt je Domäne der [Domänenkarte](concept/domaenen-und-schnittmengen.md)), `CompanyHero.ModuleCatalog`, Hosts `CompanyHero.Api`, `CompanyHero.Worker`, `CompanyHero.Migrations` |
+| `src/backend/` | .NET-10-Solution `CompanyHero.slnx`: `CompanyHero.Platform` (Querschnitte: Tenant-Kontext je Request und Job, Kontexttransaktion mit RLS, Hosting, Konfiguration aus OpenBao), `CompanyHero.Modules.*` (ein Projekt je Domäne der [Domänenkarte](concept/domaenen-und-schnittmengen.md), innen `Domain`, `Application`, `Infrastructure`, `Api`; eigenes Schema und eigener DbContext), `CompanyHero.ModuleCatalog`, Hosts `CompanyHero.Api`, `CompanyHero.Worker`, `CompanyHero.Migrations` (alle Kontexte, RLS in Migrationen) |
 | `src/frontend/` | Angular-Workspace mit Material; Feature-Einstiege Mitglieder-App, Verwaltung und Kiosk aus einer Codebasis; Lint-Grenzen aus den [Integrationsregeln](concept/architektur-integrationsregeln.md) |
-| `tests/` | Architekturtests (Abhängigkeitsrichtung), Integrationstests gegen PostgreSQL 18 in Testcontainern mit denselben Rollen wie in Compose |
+| `tests/` | Fachtests ohne Infrastruktur, Architekturtests (Abhängigkeitsrichtung, Modulgrenzen), Integrationstests gegen PostgreSQL 18 in Testcontainern mit denselben Rollen wie in Compose |
 | `deploy/compose/plattform/` | Compose-Projekt Plattform: Caddy, API, Worker, Migrations-Container, PostgreSQL mit pgBackRest, Garage, OpenBao |
 | `deploy/compose/beobachtung/` | Compose-Projekt Beobachtung: OpenTelemetry Collector, Prometheus, Loki, Tempo, Grafana, Uptime Kuma |
 | `deploy/scripts/` | Geheimnisse anlegen, Deployment mit Rollback, Garage-Einrichtung, Betriebsnachweise, Wiederherstellungsübung |
