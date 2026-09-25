@@ -62,13 +62,24 @@ startfail() { log "Start fehlgeschlagen: $1"; "${COMPOSE[@]}" ps -a; "${COMPOSE[
 bash "$ROOT/deploy/scripts/bootstrap-secrets.sh" > /dev/null
 [ -f "$ENV_FILE" ] || cp "$PLATTFORM/.env.example" "$ENV_FILE"
 [ -f "$BEOBACHTUNG/.env" ] || cp "$BEOBACHTUNG/.env.example" "$BEOBACHTUNG/.env"
-sed -i "s#^CH_OPENBAO_AUTO_INIT=.*#CH_OPENBAO_AUTO_INIT=true#; s#^CH_HTTP_PORT=.*#CH_HTTP_PORT=${HTTP_PORT}#; s#^CH_HTTPS_PORT=.*#CH_HTTPS_PORT=${HTTPS_PORT}#" "$ENV_FILE"
+set_env() {
+  # In place schreiben statt sed -i (Umbenennung), weil synchronisierte Verzeichnisse Umbenennungen sperren können.
+  local key="$1" value="$2" content
+  content="$(awk -v k="$key" -v v="$value" 'BEGIN { done = 0 } index($0, k "=") == 1 { print k "=" v; done = 1; next } { print } END { if (!done) print k "=" v }' "$ENV_FILE")"
+  printf '%s\n' "$content" > "$ENV_FILE"
+}
 # Die Deploy-Tests verändern .env; der Ausgangsstand wird gesichert und am Ende wiederhergestellt.
 cp "$ENV_FILE" "$ENV_FILE.nachweise-vorher"
+set_env CH_OPENBAO_AUTO_INIT true
+set_env CH_HTTP_PORT "$HTTP_PORT"
+set_env CH_HTTPS_PORT "$HTTPS_PORT"
+IMAGES_INFO="${CH_IMAGE_APP:-lokal}, ${CH_IMAGE_MIGRATE:-lokal}, ${CH_IMAGE_WEB:-lokal}, ${CH_IMAGE_POSTGRES:-lokal}"
 for var in CH_IMAGE_APP CH_IMAGE_MIGRATE CH_IMAGE_WEB CH_IMAGE_POSTGRES; do
-  value="${!var:-$(grep "^${var}=" "$PLATTFORM/.env.example" | cut -d= -f2-)}"
-  sed -i "s#^${var}=.*#${var}=${value}#" "$ENV_FILE"
+  set_env "$var" "${!var:-$(grep "^${var}=" "$PLATTFORM/.env.example" | cut -d= -f2-)}"
 done
+# Ab hier gilt ausschließlich .env: exportierte Variablen hätten Vorrang vor der Datei und würden die Deploy-Tests
+# (Wechsel auf defekte Images über .env) unwirksam machen.
+unset CH_IMAGE_APP CH_IMAGE_MIGRATE CH_IMAGE_WEB CH_IMAGE_POSTGRES CH_HTTP_PORT CH_HTTPS_PORT
 
 log "Plattform starten"
 "${COMPOSE[@]}" up -d --no-build --wait --wait-timeout 300 || startfail plattform
@@ -180,7 +191,7 @@ check "Datenbank ohne Rollback" "platform.release enthält den Lauf 'kaputt' (Mi
   echo "# Betriebsnachweise in Compose $(date -u +%Y-%m-%d)"
   echo
   echo "**Nachweise:** Betrieb 9.4, 9.5, 9.7; A-029; A-032. **Zeitpunkt:** $(date -u +%FT%TZ) UTC. **Host:** $(hostname). **Umgebung:** gemäß A-107."
-  echo "**Images:** ${CH_IMAGE_APP:-lokal}, ${CH_IMAGE_MIGRATE:-lokal}, ${CH_IMAGE_WEB:-lokal}, ${CH_IMAGE_POSTGRES:-lokal}"
+  echo "**Images:** ${IMAGES_INFO}"
   echo
   echo "| Prüfung | Detail | Ergebnis |"
   echo "|---|---|---|"

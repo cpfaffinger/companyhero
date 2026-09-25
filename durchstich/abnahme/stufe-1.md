@@ -37,7 +37,7 @@ Die Protokolle der einzelnen Läufe (`compose-nachweise-*.md`, `wiederherstellun
 | Lauf | Umgebung | Ergebnis | Protokoll |
 |---|---|---|---|
 | Wiederherstellungsübung, lokal | WSL Debian 13, Docker CE 29, lokal gebaute Images | bestanden; RTO 15 s, RPO 2 s, 2 von 2 Fachzeilen, 1 von 1 Release-Zeilen | [wiederherstellung-lokal-20260925.md](laeufe/wiederherstellung-lokal-20260925.md) |
-| Betriebsnachweise in Compose, lokal | WSL Debian 13, Docker CE 29, lokal gebaute Images, Ports 8088/8443 | bestanden; 43 Prüfungen | [compose-nachweise-lokal-20260925.md](laeufe/compose-nachweise-lokal-20260925.md) |
+| Betriebsnachweise in Compose, lokal | WSL Debian 13, Docker CE 29, lokal gebaute Images, Ports 8088/8443 | bestanden; 39 Prüfungen | [compose-nachweise-lokal-20260925.md](laeufe/compose-nachweise-lokal-20260925.md) |
 | Wiederherstellungsübung, CI | GitHub-Actions-Runner (A-107), Images per Digest aus GHCR | siehe Abschnitt 4 | Artefakt `wiederherstellung` des CI-Laufs |
 | Betriebsnachweise in Compose, CI | GitHub-Actions-Runner (A-107), lokal geladene Images des Commits | siehe Abschnitt 4 | Artefakt `compose-nachweise` des CI-Laufs |
 
