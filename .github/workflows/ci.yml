@@ -75,7 +75,7 @@ jobs:
         run: npm run build
       - name: Ladebudget 180 KB komprimiert (K17)
         run: node scripts/ladebudget.mjs
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: frontend-dist
           path: src/frontend/dist/companyhero-frontend/browser
@@ -124,7 +124,7 @@ jobs:
           CH_IMAGE_WEB: ${{ env.IMAGE_PREFIX }}-web:${{ github.sha }}
           CH_IMAGE_POSTGRES: ${{ env.IMAGE_PREFIX }}-postgres:${{ github.sha }}
         run: bash deploy/scripts/compose-nachweise.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: always()
         with:
           name: compose-nachweise
@@ -172,7 +172,7 @@ jobs:
           cp deploy/compose/plattform/.env.example deploy/compose/plattform/.env
           docker pull -q "$CH_IMAGE_POSTGRES" && docker pull -q "$CH_IMAGE_MIGRATE"
           bash deploy/scripts/wiederherstellung.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: always()
         with:
           name: wiederherstellung

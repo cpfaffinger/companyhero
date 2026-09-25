@@ -1,0 +1,8 @@
+#!/bin/bash
+# Ersatz für das gosu-Binary des offiziellen PostgreSQL-Images (A-030: kritische Trivy-Funde blockieren das Release;
+# gosu bringt eine eigene Go-Laufzeit mit). Gleiche Aufrufform: gosu <benutzer> <kommando...>.
+# setpriv aus util-linux wechselt Benutzer, Gruppe und Zusatzgruppen und ersetzt den Prozess ohne Zwischenprozess.
+set -e
+user="$1"
+shift
+exec setpriv --reuid="$user" --regid="$user" --init-groups -- "$@"

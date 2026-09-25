@@ -3,9 +3,12 @@
 ARG POSTGRES_VERSION=18
 FROM postgres:${POSTGRES_VERSION}
 
+# gosu des Basis-Images bringt eine eigene Go-Laufzeit mit kritischen Funden mit (A-030: Trivy blockiert);
+# es wird entfernt und durch einen setpriv-Wrapper aus bin/ ersetzt, der dieselbe Aufrufform hat.
 RUN apt-get update \
  && apt-get install -y --no-install-recommends pgbackrest \
  && rm -rf /var/lib/apt/lists/* \
+ && rm -f /usr/local/bin/gosu \
  && mkdir -p /var/log/pgbackrest /var/lib/pgbackrest /var/spool/pgbackrest /etc/pgbackrest/conf.d \
  && chown -R postgres:postgres /var/log/pgbackrest /var/lib/pgbackrest /var/spool/pgbackrest /etc/pgbackrest
 
