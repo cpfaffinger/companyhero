@@ -3,7 +3,7 @@
 **Stufe:** 1 Fundament gemäß [technischer-durchstich.md](../../concept/technischer-durchstich.md), Abschnitt 3.
 **Nachweise aus:** Betrieb 9.1, 9.4, 9.5, 9.7; ergänzend Backend 9 (TDD, Testcontainer mit Laufzeitrechten), Integrationsregeln 6 (Lint-Grenzen ab Stufe 1), A-012 (Architekturtests), A-030 (Lieferkette).
 **Umgebung:** GitHub-Actions-Runner als frische Umgebung gemäß A-107; zusätzlich lokale Läufe unter WSL (Docker CE 29).
-**Stand:** wird mit dem grünen CI-Lauf abgeschlossen; siehe Abschnitt 4.
+**Stand:** abgenommen am 25.09.2026 mit dem grünen CI-Lauf 36158537656 (Abschnitt 4). Alle Nachweise dieser Stufe sind automatisierte Tests oder skriptgeführte Prüfungen in CI; manuelle Abnahmen waren nicht nötig.
 
 ## 1. Was Stufe 1 liefert
 
@@ -18,17 +18,17 @@
 
 | Nr. | Nachweis aus dem Konzept | Test oder Prüfung | Ergebnis | Lauf |
 |---|---|---|---|---|
-| 1 | Betrieb 9.1, A-031: Neuaufbau aus Images, Konfiguration und Backups innerhalb RTO 4 h, Datenstand innerhalb RPO 15 min | `deploy/scripts/wiederherstellung.sh`: Produktion mit Basissicherung und WAL-Archiv, Datenvolumes zerstört, Staging aus Repository wiederhergestellt, Zeilen geprüft, RTO und RPO gemessen | siehe Abschnitt 3 | CI-Job „Wiederherstellungsübung“ |
-| 2 | Betrieb 9.4: fehlerhafte Migration bricht vor dem Anwendungsstart ab, Produktion unverändert | Integrationstest `Fehlerhafte_Migration_bricht_ab_und_hinterlaesst_keinen_Teilzustand`; Compose-Nachweis: Migrations-Container gegen sabotierte Datenbank endet mit Fehler, `compose up api` startet die Anwendung nicht (`depends_on: service_completed_successfully`) | siehe Abschnitt 3 | CI-Jobs „Backend“, „Images“ |
-| 3 | Betrieb 9.4: Rollback auf vorherigen Digest ohne Datenbank-Rollback | `deploy/scripts/deploy.sh` mit einem Image, das nicht gesund wird: Gesundheitsprüfung scheitert, `.env.previous` wird zurückgespielt, Anwendung wieder gesund, Migrationsstand bleibt (Release-Zeile „kaputt“ vorhanden) | siehe Abschnitt 3 | CI-Job „Images“ |
-| 4 | Betrieb 9.5: Datenbank, Garage, OpenBao, Grafana von außen nicht erreichbar | `compose ps` zeigt nur `web` mit veröffentlichten Ports; TCP-Verbindungen zu 5432, 3900, 3903, 8200, 3000, 9090, 3100, 8080 scheitern | siehe Abschnitt 3 | CI-Job „Images“ |
-| 5 | Betrieb 9.7: Logs ohne Personenbezug | Integrationstest `Logs_enthalten_weder_Query_noch_Cookie_noch_Authorization`; Compose-Nachweis: Container-Logs von api, worker, web, postgres nach Anfragen mit E-Mail in der Query, Cookie und Authorization enthalten keinen der Werte; Caddy-Zugriffslog ohne Query, Cookie, Client-IP; Collector entfernt entsprechende Attribute | siehe Abschnitt 3 | CI-Jobs „Backend“, „Images“ |
+| 1 | Betrieb 9.1, A-031: Neuaufbau aus Images, Konfiguration und Backups innerhalb RTO 4 h, Datenstand innerhalb RPO 15 min | `deploy/scripts/wiederherstellung.sh`: Produktion mit Basissicherung und WAL-Archiv, Datenvolumes zerstört, Staging aus Repository wiederhergestellt, Zeilen geprüft, RTO und RPO gemessen | grün: RTO 7 s, RPO 2 s (CI), 15 s und 2 s (lokal) | CI-Job „Wiederherstellungsübung“ |
+| 2 | Betrieb 9.4: fehlerhafte Migration bricht vor dem Anwendungsstart ab, Produktion unverändert | Integrationstest `Fehlerhafte_Migration_bricht_ab_und_hinterlaesst_keinen_Teilzustand`; Compose-Nachweis: Migrations-Container gegen sabotierte Datenbank endet mit Fehler, `compose up api` startet die Anwendung nicht (`depends_on: service_completed_successfully`) | grün | CI-Jobs „Backend“, „Images“ |
+| 3 | Betrieb 9.4: Rollback auf vorherigen Digest ohne Datenbank-Rollback | `deploy/scripts/deploy.sh` mit einem Image, das nicht gesund wird: Gesundheitsprüfung scheitert, `.env.previous` wird zurückgespielt, Anwendung wieder gesund, Migrationsstand bleibt (Release-Zeile „kaputt“ vorhanden) | grün | CI-Job „Images“ |
+| 4 | Betrieb 9.5: Datenbank, Garage, OpenBao, Grafana von außen nicht erreichbar | `compose ps` zeigt nur `web` mit veröffentlichten Ports; TCP-Verbindungen zu 5432, 3900, 3903, 8200, 3000, 9090, 3100, 8080 scheitern | grün | CI-Job „Images“ |
+| 5 | Betrieb 9.7: Logs ohne Personenbezug | Integrationstest `Logs_enthalten_weder_Query_noch_Cookie_noch_Authorization`; Compose-Nachweis: Container-Logs von api, worker, web, postgres nach Anfragen mit E-Mail in der Query, Cookie und Authorization enthalten keinen der Werte; Caddy-Zugriffslog ohne Query, Cookie, Client-IP; Collector entfernt entsprechende Attribute | grün | CI-Jobs „Backend“, „Images“ |
 | 6 | Backend 5.1 Nr. 4: Laufzeitrolle ohne Besitz und ohne `BYPASSRLS`, Migrationen mit eigenem Zugang | Integrationstests `Laufzeitrolle_hat_weder_Superuser_noch_BypassRls_noch_Besitz`, `Laufzeitrolle_kann_Daten_lesen_und_schreiben_aber_keine_Objekte_anlegen`, `Migrationslauf_protokolliert_den_Release_Stand`, `Zweiter_Migrationslauf_ist_idempotent` | grün | CI-Job „Backend“ |
 | 7 | A-012, Domänenkarte 7: Architekturtests scheitern bei Projektreferenz außerhalb der erlaubten Richtung | `DependencyDirectionTests`: Matrix je Projekt, jedes Backendprojekt erfasst, kein Modul referenziert Hosts oder Katalog, `*.Domain` ohne EF Core und ASP.NET Core | grün (18 Tests) | CI-Job „Backend“ |
 | 8 | Integrationsregeln 6, A-076: Lint-Grenzen ab Stufe 1 | ESLint: Rohfarbe `'#9B1B3A'` in TypeScript, `FormsModule`, `chroma-js` jeweils abgelehnt (lokal geprüft); Stylelint: `color: #ff0000` abgelehnt, `.mat-*`, `::ng-deep`, `!important` verboten; `check-dependencies.mjs` prüft package.json; `check-generated-client.mjs` bereit für Stufe 5 | grün | CI-Job „Frontend“ |
 | 9 | K17: Ladebudget 180 KB komprimiert, gemessen | `scripts/ladebudget.mjs` am Produktionsbuild; Referenzscreen folgt in Stufe 5 | 58,9 KB gzip initial (Gerüst) | CI-Job „Frontend“ |
-| 10 | A-030: CI bei jedem Push, Trivy blockiert kritische Funde, Images mit Digest in GHCR | Workflow `ci.yml`; Trivy `--severity CRITICAL --exit-code 1`; Push mit Version und Digest | siehe Abschnitt 4 | CI-Lauf |
-| 11 | A-029: OpenBao liefert Anwendungsgeheimnisse, Transit vorhanden | `openbao-init` richtet KV `companyhero`, Transit `companyhero-transit`, Policy und Token ein; API liest `app/database` beim Start (Compose-Nachweis „Anwendung liest Geheimnis aus OpenBao“) | siehe Abschnitt 3 | CI-Job „Images“ |
+| 10 | A-030: CI bei jedem Push, Trivy blockiert kritische Funde, Images mit Digest in GHCR | Workflow `ci.yml`; Trivy `--severity CRITICAL --exit-code 1`; Push mit Version und Digest | grün; Trivy hat Lauf 36147650012 blockiert | CI-Lauf |
+| 11 | A-029: OpenBao liefert Anwendungsgeheimnisse, Transit vorhanden | `openbao-init` richtet KV `companyhero`, Transit `companyhero-transit`, Policy und Token ein; API liest `app/database` beim Start (Compose-Nachweis „Anwendung liest Geheimnis aus OpenBao“) | grün | CI-Job „Images“ |
 
 ## 3. Läufe
 
@@ -38,12 +38,22 @@ Die Protokolle der einzelnen Läufe (`compose-nachweise-*.md`, `wiederherstellun
 |---|---|---|---|
 | Wiederherstellungsübung, lokal | WSL Debian 13, Docker CE 29, lokal gebaute Images | bestanden; RTO 15 s, RPO 2 s, 2 von 2 Fachzeilen, 1 von 1 Release-Zeilen | [wiederherstellung-lokal-20260925.md](laeufe/wiederherstellung-lokal-20260925.md) |
 | Betriebsnachweise in Compose, lokal | WSL Debian 13, Docker CE 29, lokal gebaute Images, Ports 8088/8443 | bestanden; 39 Prüfungen | [compose-nachweise-lokal-20260925.md](laeufe/compose-nachweise-lokal-20260925.md) |
-| Wiederherstellungsübung, CI | GitHub-Actions-Runner (A-107), Images per Digest aus GHCR | siehe Abschnitt 4 | Artefakt `wiederherstellung` des CI-Laufs |
-| Betriebsnachweise in Compose, CI | GitHub-Actions-Runner (A-107), lokal geladene Images des Commits | siehe Abschnitt 4 | Artefakt `compose-nachweise` des CI-Laufs |
+| Wiederherstellungsübung, CI | GitHub-Actions-Runner (A-107), Images per Digest aus GHCR | bestanden; RTO 7 s, RPO 2 s, 2 von 2 Fachzeilen, 1 von 1 Release-Zeilen | [wiederherstellung-ci-36158537656.md](laeufe/wiederherstellung-ci-36158537656.md) |
+| Betriebsnachweise in Compose, CI | GitHub-Actions-Runner (A-107), lokal geladene Images des Commits, Ports 80/443 | bestanden; 39 Prüfungen, 0 Fehler | [compose-nachweise-ci-36158537656.md](laeufe/compose-nachweise-ci-36158537656.md) |
+
+Die Prüfungen der Betriebsnachweise (jeweils ok): App-Shell und API unter einer Origin, Version-Endpunkt, HSTS, CSP ohne Fremdhosts, HTTP-Umleitung 308, Geheimnis aus OpenBao, Transit- und KV-Engine, Collector, Grafana, Loki, Tempo und Prometheus bereit, nur `web` mit veröffentlichten Ports, neun interne Ports von außen nicht erreichbar, vier Logstichproben ohne Query, Cookie und Authorization, Caddy-Zugriffslog ohne Query, Client-IP und Cookie, fehlerhafte Migration mit Fehler und ohne Teilzustand, Deploy mit fehlerhafter Migration bricht ab und lässt Konfiguration und Produktion unverändert, Deploy eines nicht gesunden Images scheitert, Rollback stellt den vorherigen Digest wieder her, Anwendung danach gesund, Datenbank ohne Rollback.
 
 ## 4. CI-Lauf
 
-_Wird nach dem ersten grünen CI-Lauf ergänzt._
+| Feld | Wert |
+|---|---|
+| Lauf | [36158537656](https://github.com/cpfaffinger/companyhero/actions/runs/36158537656), Workflow `CI`, Push auf `master`, 25.09.2026 |
+| Commit | `Nachweisskript: exportierte Image-Variablen nach dem Schreiben der .env aufheben` (Kopf der Commit-Folge f632f1b, 47370fc, gosu-Ersatz, secrets-init, Nachweisskript) |
+| Jobs | Backend 42 s grün (28 Tests: 18 Architektur, 10 Integration); Frontend 28 s grün (Lint, Stylelint, Abhängigkeiten, generierter Client, Vitest, Produktionsbuild, Ladebudget 58,9 KB gzip); Images, Trivy, Betriebsnachweise, Push 5 min 28 s grün; Wiederherstellungsübung 1 min 23 s grün |
+| Images (Digest) | `companyhero-app@sha256:f69bbf1b…52e3dd8`, `companyhero-migrate@sha256:afa9bed9…4e075bf`, `companyhero-web@sha256:7c414690…ed6a8dd5`, `companyhero-postgres@sha256:31d1870e…dec19a8d` in `ghcr.io/cpfaffinger/` |
+| Trivy | keine kritischen Funde; der vorherige Lauf 36147650012 wurde durch den kritischen Fund CVE-2025-68121 im `gosu` des PostgreSQL-Basis-Images blockiert (Nachweis A-030 „kritischer Trivy-Fund blockiert das Release“), behoben durch Ersatz von `gosu` |
+
+Ergebnis je Nachweis aus Abschnitt 2: Nr. 1 bis 11 grün in diesem Lauf. Nr. 9 (Ladebudget) ist am Gerüst gemessen; die Messung am Referenzscreen folgt in Stufe 5.
 
 ## 5. Roter Ausgangspunkt (TDD, Backend 9)
 

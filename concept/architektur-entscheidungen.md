@@ -247,7 +247,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Hosting stellt der Betreiber selbst bereit; Vorgabe an die Umgebung sind Linux-Hosts in der EU, Objektspeicher an zweitem Standort und Zwei-Faktor an allen Verwaltungskonten. Einstieg mit einem Produktivhost, einem Staging-Host und einem Beobachtungshost unter Docker Compose. Übergang zu k3s mit replizierter PostgreSQL erst bei Vertrag über 99,5 %, Last über Planungslast oder Kapazitätsgrenze; Compose-Definitionen bleiben eins zu eins übertragbar. Nur 443 und 80 öffentlich; SSH mit Schlüssel und festgelegten Quelladressen; Container ohne Root und ohne Docker-Socket; Server in UTC, Tenant-Standardzeitzone Europe/Vienna. Drei Umgebungen mit denselben Images; Staging nie mit Produktionsdaten.
 - **Begründung:** kleines Team, wenige Komponenten, keine Orchestrierung ohne Bedarf.
-- **Nachweise:** externer Zugriff auf interne Dienste scheitert; Staging-Aufbau aus derselben Definition.
+- **Nachweise:** externer Zugriff auf interne Dienste scheitert; Staging-Aufbau aus derselben Definition. Nachweisstand: beide in Compose auf dem CI-Runner nachgewiesen am 25.09.2026 (Stufe 1, A-107); Wiederholung auf den Hosts des Betreibers steht aus.
 
 ## A-029 – Plattformkomponenten
 
@@ -263,7 +263,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** GitHub mit privatem Repository; Arbeit direkt auf `master` ohne Branch-Schutz und ohne Pull-Request-Pflicht; GitHub Actions bei jedem Push auf `master` für Build, Prüfungen, Tests in Testcontainern, Architekturtests, Lint-Grenzen, Ladebudget, Dependabot und Trivy; GitHub Container Registry mit Digest-Pins und wöchentlichem Neubau; Deployment per SSH mit Migrations-Container vor dem Anwendungsstart, Gesundheitsprüfung und Rollback auf vorherigen Digest; Migrationen vorwärtskompatibel; Staging vor Produktion mit ausdrücklicher Freigabe.
 - **Begründung:** GitHub-Runner liefern Docker für Testcontainers ohne eigene Runner; ein kleines Team arbeitet ohne Verzweigungsaufwand direkt auf `master`.
 - **Folgen:** CI läuft nach jedem Push; ein Deployment auf Staging oder Produktion setzt einen grünen CI-Lauf des betreffenden Commits voraus; ein roter Lauf auf `master` wird als Nächstes repariert; manuelle Hosteingriffe werden binnen einer Woche in Code überführt.
-- **Nachweise:** fehlerhafte Migration bricht vor Anwendungsstart ab; Rollback ohne Datenbank-Rollback; kritischer Trivy-Fund blockiert das Release.
+- **Nachweise:** fehlerhafte Migration bricht vor Anwendungsstart ab; Rollback ohne Datenbank-Rollback; kritischer Trivy-Fund blockiert das Release. **Technisch nachgewiesen** am 25.09.2026, Stufe 1 ([Protokoll](../durchstich/abnahme/stufe-1.md)).
 
 ## A-031 – Backups und Wiederherstellung
 
@@ -271,7 +271,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** PostgreSQL täglich Basissicherung und WAL alle 5 Minuten über pgBackRest; Garage täglich inkrementell; OpenBao-Snapshots täglich und nach Rotation; Konfiguration im Repository; Host-Snapshots täglich. Alles verschlüsselt an einen zweiten Standort. Aufbewahrung höchstens 35 Tage. Backup-Schlüssel in OpenBao und offline. Vierteljährliche Wiederherstellungsübung auf Staging mit Protokoll; erste Übung im Durchstich. Ausbleibendes Backup ist eine Störung.
 - **Begründung:** RPO und RTO aus A-027; Löschwirkung in Backups aus A-024.
 - **Folgen:** Löschläufe werden nach jeder Wiederherstellung erneut ausgeführt.
-- **Nachweise:** Neuaufbau innerhalb der RTO; gelöschte Daten nach 35 Tagen in keinem Backup.
+- **Nachweise:** Neuaufbau innerhalb der RTO; gelöschte Daten nach 35 Tagen in keinem Backup. Nachweisstand: Neuaufbau innerhalb der RTO technisch nachgewiesen am 25.09.2026 in der Umgebung nach A-107 (Stufe 1); Löschwirkung in Backups offen bis zur Einführung der Löschläufe.
 
 ## A-032 – Domains, E-Mail und Push
 
