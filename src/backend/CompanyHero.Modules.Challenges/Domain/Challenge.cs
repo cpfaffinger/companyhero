@@ -1,0 +1,71 @@
+using CompanyHero.Platform.Tenancy;
+
+namespace CompanyHero.Modules.Challenges.Domain;
+
+/// <summary>Erfassungsart der Challenge (Challenges 2.1, A-038): im Durchstich Häkchen und Zahl.</summary>
+public enum ChallengeMetric
+{
+    /// <summary>Häkchen: genau ein Beitrag mit Wert 1 je Erfassung.</summary>
+    Checkmark = 1,
+
+    /// <summary>Zahl: positiver Wert mit bis zu vier Nachkommastellen.</summary>
+    Count = 2,
+}
+
+/// <summary>Lebenszyklus (Challenges 4.1, A-040); der Durchstich legt Challenges direkt laufend an.</summary>
+public enum ChallengeState
+{
+    Draft = 1,
+    Planned = 2,
+    Running = 3,
+    Ended = 4,
+    Archived = 5,
+}
+
+/// <summary>Challenge eines Tenants mit Sammelziel (Challenges 2, A-038).</summary>
+public sealed class Challenge : ITenantOwned
+{
+    private Challenge(TenantId tenantId, Guid id, string title, ChallengeMetric metric, ChallengeState state, DateTimeOffset startsAt, DateTimeOffset endsAt, DateTimeOffset createdAt)
+    {
+        TenantId = tenantId;
+        Id = id;
+        Title = title;
+        Metric = metric;
+        State = state;
+        StartsAt = startsAt;
+        EndsAt = endsAt;
+        CreatedAt = createdAt;
+    }
+
+    public TenantId TenantId { get; }
+
+    public Guid Id { get; }
+
+    public string Title { get; private set; }
+
+    public ChallengeMetric Metric { get; }
+
+    public ChallengeState State { get; private set; }
+
+    public DateTimeOffset StartsAt { get; }
+
+    public DateTimeOffset EndsAt { get; }
+
+    public DateTimeOffset CreatedAt { get; }
+
+    /// <summary>Nachfrist: 48 Stunden nach Ende werden Beiträge mit Erfassungszeitpunkt im Zeitraum noch angenommen (Challenges 3, A-039).</summary>
+    public static TimeSpan GracePeriod { get; } = TimeSpan.FromHours(48);
+
+    public DateTimeOffset AcceptsContributionsUntil => EndsAt.Add(GracePeriod);
+
+    public static Challenge StartRunning(TenantId tenantId, string title, ChallengeMetric metric, DateTimeOffset startsAt, DateTimeOffset endsAt, DateTimeOffset now)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(title);
+        if (endsAt <= startsAt)
+        {
+            throw new ArgumentException("Das Ende liegt nach dem Beginn.", nameof(endsAt));
+        }
+
+        return new Challenge(tenantId, Guid.CreateVersion7(), title.Trim(), metric, ChallengeState.Running, startsAt.ToUniversalTime(), endsAt.ToUniversalTime(), now.ToUniversalTime());
+    }
+}

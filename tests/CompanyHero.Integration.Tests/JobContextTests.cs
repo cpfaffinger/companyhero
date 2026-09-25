@@ -1,4 +1,5 @@
 using CompanyHero.Modules.Identity.Infrastructure;
+using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +30,7 @@ public sealed class JobContextTests(PostgresFixture pg)
             {
                 Assert.Same(sp.GetRequiredService<ITenantContextAccessor>().Current, sp.GetRequiredService<ITenantContextAccessor>().Require());
                 var db = sp.GetRequiredService<IdentityDbContext>();
-                await using var tx = await db.Database.BeginTransactionAsync(ct);
+                await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
                 var tenants = await db.Persons.Select(p => p.TenantId).Distinct().ToListAsync(ct);
                 Assert.Equal([tenant], tenants);
                 return await db.Persons.CountAsync(ct);

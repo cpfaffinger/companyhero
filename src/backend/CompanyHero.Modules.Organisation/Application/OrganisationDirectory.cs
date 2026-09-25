@@ -1,16 +1,17 @@
 using CompanyHero.Modules.Organisation.Domain;
 using CompanyHero.Modules.Organisation.Infrastructure;
+using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.EntityFrameworkCore;
 
 namespace CompanyHero.Modules.Organisation.Application;
 
-internal sealed class OrganisationDirectory(OrganisationDbContext db, ITenantContextAccessor context, TimeProvider clock) : IOrganisationDirectory
+internal sealed class OrganisationDirectory(OrganisationDbContext db, IContextTransaction transaction, ITenantContextAccessor context, TimeProvider clock) : IOrganisationDirectory
 {
     public async Task<Guid> EnsureOperatorAsync(string displayName, CancellationToken cancellationToken)
     {
         RequirePlatform();
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         var existing = await db.Organisations.SingleOrDefaultAsync(o => o.Type == OrganisationType.Operator, cancellationToken);
         if (existing is not null)
         {
@@ -27,7 +28,7 @@ internal sealed class OrganisationDirectory(OrganisationDbContext db, ITenantCon
     public async Task<TenantId> CreateTenantAsync(string displayName, Guid parentId, CancellationToken cancellationToken)
     {
         RequirePlatform();
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         var parent = await db.Organisations.SingleOrDefaultAsync(o => o.Id == parentId, cancellationToken)
             ?? throw new OrganisationHierarchyException("Übergeordnete Organisation nicht gefunden.");
         var tenant = Domain.Organisation.CreateTenant(displayName, parent, clock.GetUtcNow());
@@ -40,7 +41,7 @@ internal sealed class OrganisationDirectory(OrganisationDbContext db, ITenantCon
     public async Task AddMemberAsync(PersonId personId, CancellationToken cancellationToken)
     {
         var tenantId = context.Require().RequireTenant();
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         db.Memberships.Add(Membership.Join(tenantId, personId, clock.GetUtcNow()));
         await db.SaveChangesAsync(cancellationToken);
         await tx.CommitAsync(cancellationToken);
@@ -49,7 +50,7 @@ internal sealed class OrganisationDirectory(OrganisationDbContext db, ITenantCon
     public async Task AssignRoleAsync(PersonId personId, string role, CancellationToken cancellationToken)
     {
         var tenantId = context.Require().RequireTenant();
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         var membership = await db.Memberships.Include(m => m.Roles)
             .SingleOrDefaultAsync(m => m.TenantId == tenantId && m.PersonId == personId, cancellationToken)
             ?? throw new InvalidOperationException("Rolle nur für Mitglieder des Tenants.");
@@ -68,7 +69,7 @@ internal sealed class OrganisationDirectory(OrganisationDbContext db, ITenantCon
     public async Task<IReadOnlySet<string>> GetRolesAsync(PersonId personId, CancellationToken cancellationToken)
     {
         var tenantId = context.Require().RequireTenant();
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         var roles = await db.RoleAssignments
             .Where(r => r.TenantId == tenantId && r.PersonId == personId)
             .Select(r => r.Role)
@@ -79,7 +80,7 @@ internal sealed class OrganisationDirectory(OrganisationDbContext db, ITenantCon
     public async Task<IReadOnlyList<MemberRecord>> ListMembersAsync(CancellationToken cancellationToken)
     {
         var tenantId = context.Require().RequireTenant();
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         var members = await db.Memberships.Include(m => m.Roles)
             .Where(m => m.TenantId == tenantId && m.State == MembershipState.Active)
             .OrderBy(m => m.PersonId)
@@ -90,7 +91,7 @@ internal sealed class OrganisationDirectory(OrganisationDbContext db, ITenantCon
     public async Task<(string DisplayName, OrganisationState State)?> GetCurrentTenantAsync(CancellationToken cancellationToken)
     {
         var tenantId = context.Require().RequireTenant();
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         var tenant = await db.Organisations.SingleOrDefaultAsync(o => o.Id == tenantId.Value, cancellationToken);
         return tenant is null ? null : (tenant.DisplayName, tenant.State);
     }
@@ -105,11 +106,11 @@ internal sealed class OrganisationDirectory(OrganisationDbContext db, ITenantCon
 }
 
 /// <summary>Mitgliedschaftsprüfung je Request (Backend 5.1 Nr. 1): aktives Mitglied eines aktiven Tenants, Rollen aus dem Katalog.</summary>
-internal sealed class MembershipVerification(OrganisationDbContext db) : IMembershipVerification
+internal sealed class MembershipVerification(OrganisationDbContext db, IContextTransaction transaction) : IMembershipVerification
 {
     public async Task<MembershipVerdict> VerifyAsync(TenantId tenantId, PersonId personId, CancellationToken cancellationToken)
     {
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         var tenant = await db.Organisations.SingleOrDefaultAsync(o => o.Id == tenantId.Value, cancellationToken);
         if (tenant is null || !tenant.GrantsMemberAccess)
         {

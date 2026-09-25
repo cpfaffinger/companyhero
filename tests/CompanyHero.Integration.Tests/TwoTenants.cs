@@ -14,6 +14,8 @@ namespace CompanyHero.Integration.Tests;
 /// Synthetische Testdaten (Backend 9, Durchstich 4): zwei Tenants mit mehreren Rollen und persönlichen Aktivitäten,
 /// angelegt über die öffentlichen Anwendungsfunktionen der Module, je Tenant in eigenem Kontext. Keine echten Personen.
 /// </summary>
+public sealed record ScratchTenant(TenantId Id, PersonId Admin, PersonId Manager, PersonId MemberA, PersonId MemberB);
+
 public sealed record TwoTenants(
     Guid OperatorId,
     TenantId WiesnerId,
@@ -66,6 +68,23 @@ public sealed record TwoTenants(
         }, ct);
 
         return new TwoTenants(operatorId, wiesner, hoedl, w.admin, w.manager, w.bea, w.cem, h.admin, h.mia);
+    }
+
+    /// <summary>Ein eigener aktiver Tenant mit Tenant-Admin, Programm-Manager und zwei Mitgliedern für Tests, die Daten schreiben.</summary>
+    public static async Task<ScratchTenant> SeedScratchAsync(IServiceProvider services, string displayName, Guid operatorId)
+    {
+        var scopes = services.GetRequiredService<ITenantScopeFactory>();
+        var ct = CancellationToken.None;
+        var tenant = await scopes.RunAsync(TenantContext.ForPlatform(), (sp, c) =>
+            sp.GetRequiredService<IOrganisationDirectory>().CreateTenantAsync(displayName, operatorId, c), ct);
+        return await scopes.RunAsync(TenantContext.ForTenant(tenant), async (sp, c) =>
+        {
+            var admin = await JoinAsync(sp, "Admin", VisibilityLevel.Company, [Role.Member, Role.TenantAdmin], c);
+            var manager = await JoinAsync(sp, "Manager", VisibilityLevel.Company, [Role.Member, Role.ProgrammeManager], c);
+            var a = await JoinAsync(sp, "Mitglied A", VisibilityLevel.Company, [Role.Member], c);
+            var b = await JoinAsync(sp, "Mitglied B", VisibilityLevel.OnlyMe, [Role.Member], c);
+            return new ScratchTenant(tenant, admin, manager, a, b);
+        }, ct);
     }
 
     private static async Task<PersonId> JoinAsync(IServiceProvider sp, string displayName, VisibilityLevel level, string[] roles, CancellationToken ct)

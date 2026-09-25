@@ -1,4 +1,6 @@
 using CompanyHero.Migrations;
+using CompanyHero.Modules.Challenges.Domain;
+using CompanyHero.Platform.Events;
 using CompanyHero.Modules.Organisation.Application;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.AspNetCore.Authentication;
@@ -78,6 +80,8 @@ public sealed class PostgresFixture : IAsyncLifetime
             b.ConfigureServices(services =>
             {
                 services.Replace(ServiceDescriptor.Singleton<TimeProvider>(Clock));
+                // Testabonnent eines fremden Moduls (Backend 6.4): die API reiht je Ereignis den Job ein, der Worker-Host verarbeitet ihn.
+                services.AddSingleton(new EventSubscription(ChallengeEventTypes.ContributionRecorded, SubscriberJobHandler.JobType));
                 services.AddAuthentication(TestSessionHandler.SchemeName)
                     .AddScheme<AuthenticationSchemeOptions, TestSessionHandler>(TestSessionHandler.SchemeName, _ => { });
             });
@@ -90,6 +94,10 @@ public sealed class PostgresFixture : IAsyncLifetime
         return await scopes.RunAsync(TenantContext.ForPlatform(), (sp, ct) =>
             sp.GetRequiredService<IOrganisationDirectory>().CreateTenantAsync(displayName, Tenants.OperatorId, ct), cancellationToken);
     }
+
+    /// <summary>Ein eigener aktiver Tenant mit Rollen und Mitgliedern; die beiden Stamm-Tenants bleiben unverändert.</summary>
+    public Task<ScratchTenant> CreateScratchTenantWithMembersAsync(string displayName) =>
+        TwoTenants.SeedScratchAsync(Api.Services, displayName, Tenants.OperatorId);
 
     public async ValueTask InitializeAsync()
     {

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using Npgsql;
 
 namespace CompanyHero.Platform.Data;
 
@@ -16,11 +17,11 @@ public static class ModuleDbContextExtensions
 
     /// <summary>
     /// Registriert den DbContext eines Moduls: eigenes Schema, eigene Migrationshistorie, kurzlebig und ungepoolt (Backend 5.2),
-    /// mit den Interceptoren der Plattforminfrastruktur (Kontext beim Transaktionsstart, Transaktionspflicht,
-    /// Schemagrenze, Tenant-Eigentum). Der Modulname des Schemas muss in <see cref="ModuleSchemas.All"/> stehen.
+    /// auf der Verbindung des Scopes mit den Interceptoren der Plattforminfrastruktur (Kontexttransaktion als einzige
+    /// Transaktion, Schemagrenze, Tenant-Eigentum). Der Modulname des Schemas muss in <see cref="ModuleSchemas.All"/> stehen.
     /// </summary>
     public static IServiceCollection AddModuleDbContext<TContext>(this IServiceCollection services, string schema)
-        where TContext : DbContext
+        where TContext : ModuleDbContext
     {
         ArgumentNullException.ThrowIfNull(services);
         if (!ModuleSchemas.All.Contains(schema, StringComparer.Ordinal))
@@ -35,19 +36,26 @@ public static class ModuleDbContextExtensions
         services.AddDbContext<TContext>((sp, options) =>
         {
             var data = sp.GetRequiredService<IOptions<PlatformDataOptions>>().Value;
-            options.UseNpgsql(data.ConnectionString, npgsql =>
+            void Configure(Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.NpgsqlDbContextOptionsBuilder npgsql)
             {
                 npgsql.MigrationsAssembly(MigrationsAssembly);
                 npgsql.MigrationsHistoryTable(HistoryTable, schema);
-            });
+            }
 
             if (data.EnforceTenantContext)
             {
-                var accessor = sp.GetRequiredService<ITenantContextAccessor>();
+                // Verbindung des Scopes: alle Modulkontexte teilen sie, die Kontexttransaktion trägt sie.
+                var transaction = sp.GetRequiredService<ContextTransaction>();
+                options.UseNpgsql(transaction.Connection, Configure);
                 options.AddInterceptors(
-                    new TenantContextTransactionInterceptor(accessor),
-                    new ModuleCommandInterceptor(schema),
-                    new TenantOwnershipInterceptor(accessor));
+                    new TenantContextTransactionInterceptor(),
+                    new ModuleCommandInterceptor(schema, transaction),
+                    new TenantOwnershipInterceptor(sp.GetRequiredService<ITenantContextAccessor>()));
+            }
+            else
+            {
+                // Migrationslauf: Migrationsrolle, eigene Verbindung, keine Kontextdurchsetzung.
+                options.UseNpgsql(data.ConnectionString, Configure);
             }
         });
 

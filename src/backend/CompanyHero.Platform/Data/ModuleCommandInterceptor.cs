@@ -8,18 +8,20 @@ namespace CompanyHero.Platform.Data;
 
 /// <summary>
 /// Zwei Regeln für jeden Befehl eines Modulkontexts:
-/// 1. Datenzugriff nur innerhalb der Kontexttransaktion (Domänenkarte 3). Ein Befehl ohne Transaktion wird abgelehnt,
+/// 1. Datenzugriff nur innerhalb der Kontexttransaktion (Domänenkarte 3). Ein Befehl außerhalb wird abgelehnt,
 ///    weil der Kontext dann nicht gesetzt wäre; das gilt für Lesen, Exporte und Jobs gleichermaßen (Backend 5.2).
 /// 2. Kein Modul liest oder schreibt Tabellen eines anderen Schemas (Domänenkarte 1). Auch Raw SQL nicht.
 /// </summary>
 internal sealed class ModuleCommandInterceptor : DbCommandInterceptor
 {
     private readonly string _schema;
+    private readonly IContextTransaction _transaction;
     private readonly Regex _foreignSchema;
 
-    public ModuleCommandInterceptor(string schema)
+    public ModuleCommandInterceptor(string schema, IContextTransaction transaction)
     {
         _schema = schema;
+        _transaction = transaction;
         var foreign = ModuleSchemas.All.Where(s => !string.Equals(s, schema, StringComparison.Ordinal)).Select(Regex.Escape);
         _foreignSchema = new Regex($@"(?<![\w.])""?(?:{string.Join("|", foreign)})""?\.", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
     }
@@ -62,7 +64,7 @@ internal sealed class ModuleCommandInterceptor : DbCommandInterceptor
 
     private void Check(DbCommand command)
     {
-        if (command.Transaction is null)
+        if (!_transaction.IsActive)
         {
             throw new TenantContextMissingException(
                 $"Datenzugriff des Schemas '{_schema}' außerhalb der Kontexttransaktion abgelehnt (Backend 5.2).");

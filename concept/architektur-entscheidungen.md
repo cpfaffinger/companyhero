@@ -1,7 +1,7 @@
 # CompanyHero – Entscheidungsregister
 
 **Stand:** 25.09.2026  
-**Status:** A-001 bis A-107 angenommen durch Christopher. Dokumentierte Entscheidungen; technisch nachgewiesene Nachweise tragen den Zusatz „technisch nachgewiesen“ mit Datum und Verweis auf das Abnahmeprotokoll unter `durchstich/abnahme/`.
+**Status:** A-001 bis A-108 angenommen durch Christopher. Dokumentierte Entscheidungen; technisch nachgewiesene Nachweise tragen den Zusatz „technisch nachgewiesen“ mit Datum und Verweis auf das Abnahmeprotokoll unter `durchstich/abnahme/`.
 
 Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetzung: [Backend](architektur-backend.md), [Frontend](architektur-frontend.md), [Zuständigkeiten und Integrationsregeln](architektur-integrationsregeln.md), [Domänen und Schnittmengen](domaenen-und-schnittmengen.md), [Zugang und Identität](zugang-und-identitaet.md), [Datenschutz und Nachweis](datenschutz-und-nachweis.md), [Betrieb](betrieb.md), [Organisation und Mandanten](organisation-und-mandanten.md), [Challenges](challenges.md), [Fortschritt](fortschritt.md), [Feed und Inhalte](feed-und-inhalte.md), [Benachrichtigungen](benachrichtigungen.md), [Entitlements](entitlements.md), [Metering und Abrechnung](metering-und-abrechnung.md), [Marke und Theme](marke-und-theme.md), [Workshops und Events](workshops-und-events.md), [Arena](arena.md), [Wearable-Vault](wearable-vault.md), [Onboarding und Rollout](onboarding-und-rollout.md), [Verwaltung und Konsolen](verwaltung-und-konsolen.md), [Inhaltsmodule](inhaltsmodule.md), [Mehrsprachigkeit](mehrsprachigkeit.md), [Verzeichnis und Netzwerk](verzeichnis-und-netzwerk.md), [Technischer Durchstich](technischer-durchstich.md). Jede Entscheidung steht hier in ihrer gültigen Form. Wird eine Entscheidung geändert, wird der Eintrag ersetzt und die betroffenen Dateien werden gemeinsam angepasst.
 
@@ -45,7 +45,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Vorgänge:** Vor dem Absenden eines Beitrags reserviert das Backend eine Vorgangskennung, gebunden an Tenant und Person. Wiederholungen nutzen dieselbe Kennung; gleiche Kennung mit abweichendem Inhalt wird abgelehnt. Speicherung und Idempotenznachweis sind atomar. Eine verlorene Antwort bedeutet „Bestätigung ausstehend“.
 - **Wiederaufnahme:** Nach erneuter Anmeldung derselben Person sind offene Vorgänge serverseitig auffindbar; ihr Zustand wird vor erneuter Erfassung geklärt. Ein terminal abgebrochener Vorgang nimmt keinen verspäteten Beitrag mehr an.
 - **Sitzungsende:** Persönliche Eingaben und Kennungen liegen nur im Sitzungsspeicher und werden beim Ende der Personensitzung entfernt; bestätigte Servervorgänge bleiben erhalten. Eine folgende Person sieht nichts aus der vorherigen Sitzung.
-- **Nachweise:** Commit mit verlorener Antwort, erneute Anmeldung, verspäteter Request, parallele Wiederholung, Auto-Logout, Personenwechsel, Widerruf des Gerätegeheimnisses.
+- **Nachweise:** Commit mit verlorener Antwort, erneute Anmeldung, verspäteter Request, parallele Wiederholung, Auto-Logout, Personenwechsel, Widerruf des Gerätegeheimnisses. Nachweisstand: Vorgangskennung mit verlorener Antwort, verspätetem Request nach Abbruch, paralleler Wiederholung und Bindung an Tenant und Person technisch nachgewiesen am 25.09.2026 (`durchstich/abnahme/stufe-3.md`); Sitzungsteile (Auto-Logout, Personenwechsel, Widerruf) folgen in Stufe 4.
 
 ## A-006 – Jobverarbeitung: logische Queue in PostgreSQL
 
@@ -57,8 +57,8 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Fairness:** Begrenzte Parallelität je Tenant und eine Beanspruchungsreihenfolge, die Tenants abwechselnd bedient, verhindern die Verdrängung kleiner Mandanten. Zeitgesteuerte Aufgaben werden über einen datenbankseitigen Sperrmechanismus gegen Doppelausführung geschützt.
 - **Fachereignisse:** Ereignisse zwischen Modulen werden als tenantbezogene Ereigniszeilen gespeichert; die Zustellung an andere Module erfolgt als Job. Module abonnieren Ereignisse, nicht Tabellen anderer Module.
 - **Erweiterungspfad:** Ein externer Broker wird nur eingeführt, wenn gemessener Durchsatz oder eine erforderliche Integration es verlangt. Der Wechsel betrifft dann ausschließlich den Transport hinter der Queue-Schnittstelle, nicht die Modulverträge.
-- **Werkzeug:** Eine gepflegte PostgreSQL-basierte .NET-Jobbibliothek wird bevorzugt, sofern sie Leases, Retries, Dead-Letter, Tenant-Fairness und die transaktionale Einreihung abbildet; andernfalls eine bewusst kleine eigene Umsetzung auf `SKIP LOCKED`. Die Wahl wird im technischen Durchstich getroffen.
-- **Nachweise:** parallele Worker ohne Doppelwirkung, Absturz vor und nach Commit, abgelaufener Lease, falsche Tenant-Job-Zuordnung, Replay, Lastspitzen und Fairness über mehrere Tenants.
+- **Werkzeug:** eigene, bewusst kleine Umsetzung auf `SKIP LOCKED` in der Plattforminfrastruktur; Prüfung der Bibliotheken und Begründung in A-108.
+- **Nachweise:** parallele Worker ohne Doppelwirkung, Absturz vor und nach Commit, abgelaufener Lease, falsche Tenant-Job-Zuordnung, Replay, Lastspitzen und Fairness über mehrere Tenants. Nachweisstand: atomare Kopplung, Kontext je Job, parallele Worker ohne Doppelwirkung, geordnetes Beenden, abgelaufener Lease, verlorener Lease, Dead-Letter mit Replay, Fairness über zwei Tenants, zeitgesteuerte Aufgabe ohne Doppelausführung technisch nachgewiesen am 25.09.2026 (`durchstich/abnahme/stufe-3.md`); Lastspitzen mit dem Lasttest der Abschlusskriterien (A-106).
 
 ## A-007 – Sitzung und Anmeldung
 
@@ -92,7 +92,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Zwei Idempotenzregime, ein Namensraum:** Für Online-Vorgänge mit Vorschau, insbesondere am Kiosk, reserviert das Backend eine **Vorgangskennung**. Für offline erfasste Beiträge erzeugt der Client einen **Idempotenzschlüssel** als zeitlich sortierbare eindeutige Kennung. Beide werden serverseitig im selben Eindeutigkeitsraum je Tenant und Person geführt. Gleiche Kennung mit abweichendem Inhalt wird abgelehnt. Der Vertrag benennt je Endpunkt, welches Regime gilt.
 - **Folgen:** DTO-Serializer und Schema beschreiben dieselbe Darstellung. `strict` und `strictTemplates` sind verbindlich. Generierter Code wird nicht manuell geändert. Ältere installierte PWAs werden bei Vertragsänderungen berücksichtigt: additive Änderungen bevorzugt, inkompatible Änderungen mit Übergang oder Versionierung.
 - **Offen:** Clientgenerator und fachliche Rundungsregeln je Domäne.
-- **Nachweise:** echte API-Antworten durch den generierten Client prüfen; Präzision, Null/fehlend/Nullzahl, große Ganzzahlen, Datumswerte, beide Idempotenzregime und inkompatible Änderungen.
+- **Nachweise:** echte API-Antworten durch den generierten Client prüfen; Präzision, Null/fehlend/Nullzahl, große Ganzzahlen, Datumswerte, beide Idempotenzregime und inkompatible Änderungen. Nachweisstand: beide Idempotenzregime in einem Namensraum je Tenant und Person serverseitig technisch nachgewiesen am 25.09.2026 (`durchstich/abnahme/stufe-3.md`); Prüfung durch den generierten Client folgt in Stufe 5.
 
 ## A-010 – Entscheidungsführung
 
@@ -811,13 +811,21 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Folgen:** In Produktion bleiben Entsiegelung durch zwei Personen und Offsite-S3 am zweiten Standort unverändert (A-029, A-031). Erste Wiederherstellungsübung und Lasttest werden nach Bereitstellung der Hosts auf echtem Staging wiederholt; die Protokolle vermerken die Umgebung. Betriebsnachweise 9.3 (Alarme innerhalb von 5 Minuten bei Komponentenausfall) und 9.8 (Zertifikatserneuerung) setzen die Hosts voraus und bleiben bis dahin offen.
 - **Nachweise:** Protokolle unter `durchstich/abnahme/` nennen Umgebung, Images und CI-Lauf; die Wiederherstellungsübung läuft bei jedem Push auf `master` und schreibt RTO und RPO.
 
+## A-108 – Jobbibliothek: eigene Umsetzung auf `SKIP LOCKED`
+
+- **Status:** angenommen, 25.09.2026; technisch nachgewiesen am 25.09.2026 (`durchstich/abnahme/stufe-3.md`).
+- **Umfang:** Die logische Queue aus A-006 ist eine eigene Umsetzung in der Plattforminfrastruktur (`CompanyHero.Platform.Jobs`) ohne zusätzliche Bibliothek: Tabellen `platform.job` und `platform.job_schedule`, Einreihung nur in der laufenden Kontexttransaktion, Beanspruchung mit `FOR UPDATE SKIP LOCKED` und Lease, Bestätigung des Jobs in derselben Transaktion wie seine Wirkung mit Lease-Token aus Worker und Versuchszähler, Wiederholung mit verdoppelter Wartezeit bis zu einem Maximum, Dead-Letter mit protokolliertem Replay im Plattformkontext, Fairness durch begrenzte gleichzeitige Jobs je Tenant und Reihenfolge „je Tenant der älteste Job, zuerst der am längsten nicht bediente Tenant“, zeitgesteuerte Aufgaben mit Zeilensperre, Metriken `companyhero.jobs.*`. Fachereignisse liegen in der Ereignistabelle des veröffentlichenden Moduls; Abonnenten erhalten die Ereigniskennung als Job und lesen über dessen Schnittstelle. Es gibt keinen Broker, keinen Dispatcher-Prozess und kein LISTEN/NOTIFY; Worker fragen im Poll-Intervall ab.
+- **Begründung:** Geprüft am 25.09.2026 gegen die Anforderungen aus A-006 (transaktionale Einreihung in der Transaktion des Fachvorgangs, Leases, Retries, Dead-Letter, Tenant-Fairness, Plattformtabelle ohne Nutzdaten): Hangfire mit Hangfire.PostgreSql 1.21.1 reiht über eigene Storage-Verbindung ein, nicht in der Transaktion des Fachvorgangs, und kennt keine Tenant-Fairness; Quartz.NET 4.1.1 ist ein Scheduler mit PostgreSQL-Jobstore, ohne Outbox-Kopplung, Dead-Letter oder Fairness; Wolverine (JasperFx, Releases 2026) bietet Outbox und dauerhafte Zustellung, bringt aber ein Messaging-Framework mit eigenem Modell, eigener Codegenerierung und kommerziellem Supportmodell und keine Fairness je Tenant; MassTransit v9 (SQL-Transport auf PostgreSQL) ist seit 2026 kommerziell lizenziert. Keine Bibliothek erfüllt die Anforderungen ohne Umgehung; die eigene Umsetzung umfasst wenige hundert Zeilen SQL und C#, verwendet nur Npgsql und bleibt hinter der Queue-Schnittstelle austauschbar (A-006 Erweiterungspfad).
+- **Folgen:** keine zusätzliche Abhängigkeit; Versionen bleiben die von Npgsql und EF Core (`durchstich/versionen.md`). Erfolgreiche Jobs bleiben zur Nachvollziehbarkeit in der Tabelle; ein Aufräumlauf als zeitgesteuerte Aufgabe folgt mit dem Fachpfad. Die Wartezeit auf neue Jobs ist das Poll-Intervall (Voreinstellung 500 ms); LISTEN/NOTIFY wird erst bei gemessenem Bedarf ergänzt.
+- **Nachweise:** Integrationstests `JobQueueTests` und `ContributionIdempotencyTests` (`durchstich/abnahme/stufe-3.md`).
+
 ## Noch zu entscheidende Produktwahlen
 
 Diese Punkte sind keine offenen Architekturfragen, sondern Produktauswahlen innerhalb der beschlossenen Architektur. Sie werden im technischen Durchstich festgelegt:
 
 | Punkt | Wo entschieden |
 |---|---|
-| Jobbibliothek oder eigene Umsetzung auf `SKIP LOCKED` | Durchstich |
+| Jobbibliothek oder eigene Umsetzung auf `SKIP LOCKED` | entschieden: A-108 |
 | OpenAPI-Clientgenerator | Durchstich |
 | Bibliothek für die Theme-Ableitung | Durchstich |
 | Bibliotheken für OIDC-Middleware und WebAuthn | Durchstich |

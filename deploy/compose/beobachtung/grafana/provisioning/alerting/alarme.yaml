@@ -1,6 +1,6 @@
 # Pflicht-Alarme (Betrieb 3.2): Fehlerquote über 2 % für 5 Minuten, Job-Alter über 15 Minuten, fehlgeschlagenes Backup,
 # Speicher über 80 %, Zertifikat unter 14 Tagen. Zustellung per E-Mail an die Bereitschaftsadresse (Kontaktpunkt unten).
-# Job- und Backup-Metriken entstehen in Stufe 3 beziehungsweise mit dem Backup-Exporter; ihre Regeln sind vorbereitet.
+# Job-Metriken liefert der Worker seit Stufe 3 (companyhero_jobs_*); Backup-Metriken entstehen mit dem Backup-Exporter, ihre Regel ist vorbereitet.
 apiVersion: 1
 contactPoints:
   - orgId: 1
@@ -85,6 +85,27 @@ groups:
               type: threshold
               expression: A
               conditions: [{ evaluator: { type: gt, params: [900] } }]
+              refId: C
+      - uid: job-dead-letter
+        title: Jobs im Dead-Letter-Status
+        condition: C
+        for: 1m
+        labels: { severity: warning }
+        annotations: { summary: "Mindestens ein Job hat alle Versuche verbraucht; Replay ist eine Operator-Aktion (A-006, A-108)" }
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus
+            model:
+              expr: max(companyhero_jobs_dead_letter)
+              instant: true
+              refId: A
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              type: threshold
+              expression: A
+              conditions: [{ evaluator: { type: gt, params: [0] } }]
               refId: C
       - uid: backup-fehlt
         title: Kein erfolgreiches Backup in 26 Stunden

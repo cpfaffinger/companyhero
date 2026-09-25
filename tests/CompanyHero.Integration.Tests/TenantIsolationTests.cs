@@ -1,6 +1,7 @@
 using CompanyHero.Modules.Identity.Domain;
 using CompanyHero.Modules.Identity.Infrastructure;
 using CompanyHero.Modules.Organisation.Infrastructure;
+using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -30,14 +31,14 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
         var wiesner = await Scopes.RunAsync(TenantContext.ForTenant(pg.Tenants.WiesnerId), async (sp, ct) =>
         {
             var db = sp.GetRequiredService<IdentityDbContext>();
-            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
             return await db.Persons.Select(p => p.TenantId).ToListAsync(ct);
         }, Ct);
 
         var hoedl = await Scopes.RunAsync(TenantContext.ForTenant(pg.Tenants.HoedlId), async (sp, ct) =>
         {
             var db = sp.GetRequiredService<IdentityDbContext>();
-            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
             return await db.Persons.Select(p => p.TenantId).ToListAsync(ct);
         }, Ct);
 
@@ -53,7 +54,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
         var (all, filtered) = await Scopes.RunAsync(TenantContext.ForTenant(pg.Tenants.WiesnerId), async (sp, ct) =>
         {
             var db = sp.GetRequiredService<IdentityDbContext>();
-            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
             var all = await db.Database.SqlQueryRaw<Guid>("select tenant_id as \"Value\" from identity.person").ToListAsync(ct);
             var filtered = await db.Database
                 .SqlQueryRaw<Guid>("select id as \"Value\" from identity.person where tenant_id = {0}", pg.Tenants.HoedlId.Value)
@@ -74,7 +75,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
             var db = sp.GetRequiredService<IdentityDbContext>();
 
             // Anwendungsebene: Entität eines anderen Tenants im Kontext von Wiesner.
-            await using (var tx = await db.Database.BeginTransactionAsync(ct))
+            await using (var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct))
             {
                 db.Persons.Add(Person.Create(pg.Tenants.HoedlId, "Eindringling", pg.Clock.GetUtcNow()));
                 await Assert.ThrowsAsync<TenantMismatchException>(() => db.SaveChangesAsync(ct));
@@ -82,7 +83,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
             }
 
             // Datenbankebene: Raw SQL an der Anwendung vorbei; Row Level Security lehnt ab.
-            await using (var tx = await db.Database.BeginTransactionAsync(ct))
+            await using (var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct))
             {
                 var ex = await Assert.ThrowsAsync<PostgresException>(() => db.Database.ExecuteSqlRawAsync(
                     "insert into identity.person (tenant_id, id, display_name, created_at) values ({0}, {1}, 'Eindringling', now())",
@@ -102,7 +103,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
         var (updated, deleted) = await Scopes.RunAsync(TenantContext.ForTenant(pg.Tenants.WiesnerId), async (sp, ct) =>
         {
             var db = sp.GetRequiredService<IdentityDbContext>();
-            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
             var updated = await db.Database.ExecuteSqlRawAsync(
                 "update identity.person set display_name = display_name || '!' where tenant_id = {0}", [pg.Tenants.HoedlId.Value], ct);
             var deleted = await db.Database.ExecuteSqlRawAsync(
@@ -124,7 +125,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
             var db = sp.GetRequiredService<OrganisationDbContext>();
 
             // Rolle im Tenant Wiesner für eine Person aus Hödl: (tenant_id, person_id) existiert dort nicht als Mitgliedschaft.
-            await using (var tx = await db.Database.BeginTransactionAsync(ct))
+            await using (var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct))
             {
                 var ex = await Assert.ThrowsAsync<PostgresException>(() => db.Database.ExecuteSqlRawAsync(
                     "insert into organisation.role_assignment (tenant_id, id, person_id, role, assigned_at) values ({0}, {1}, {2}, 'member', now())",
@@ -134,7 +135,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
             }
 
             // Rolle mit fremder tenant_id: Row Level Security lehnt ab, bevor der Fremdschlüssel geprüft wird.
-            await using (var tx = await db.Database.BeginTransactionAsync(ct))
+            await using (var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct))
             {
                 var ex = await Assert.ThrowsAsync<PostgresException>(() => db.Database.ExecuteSqlRawAsync(
                     "insert into organisation.role_assignment (tenant_id, id, person_id, role, assigned_at) values ({0}, {1}, {2}, 'tenant_admin', now())",
@@ -144,7 +145,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
             }
 
             // Navigation über die Beziehung liefert nur Rollen des eigenen Tenants.
-            await using (var tx = await db.Database.BeginTransactionAsync(ct))
+            await using (var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct))
             {
                 var memberships = await db.Memberships.Include(m => m.Roles).ToListAsync(ct);
                 Assert.Equal(TwoTenants.WiesnerMembers, memberships.Count);
@@ -161,7 +162,8 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
         {
             var db = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
             await Assert.ThrowsAsync<TenantContextMissingException>(() => db.Persons.ToListAsync(Ct));
-            await Assert.ThrowsAsync<TenantContextMissingException>(async () => await db.Database.BeginTransactionAsync(Ct));
+            await Assert.ThrowsAsync<TenantContextMissingException>(async () => await scope.ServiceProvider.GetRequiredService<IContextTransaction>().BeginAsync(Ct));
+            await Assert.ThrowsAsync<InvalidOperationException>(async () => await db.Database.BeginTransactionAsync(Ct));
         }
 
         // Datenbankebene: Laufzeitrolle ohne set_config sieht nichts und schreibt nichts.
@@ -198,7 +200,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
         var wiesner = await scopes.RunAsync(TenantContext.ForTenant(pg.Tenants.WiesnerId), async (sp, ct) =>
         {
             var db = sp.GetRequiredService<IdentityDbContext>();
-            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
             var setting = await db.Database.SqlQueryRaw<string>("select current_setting('app.tenant_id', true) as \"Value\"").SingleAsync(ct);
             Assert.Equal(pg.Tenants.WiesnerId.ToString(), setting);
             var count = await db.Persons.CountAsync(ct);
@@ -220,7 +222,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
         var hoedl = await scopes.RunAsync(TenantContext.ForTenant(pg.Tenants.HoedlId), async (sp, ct) =>
         {
             var db = sp.GetRequiredService<IdentityDbContext>();
-            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
             return await db.Persons.Select(p => p.TenantId).ToListAsync(ct);
         }, Ct);
         Assert.Equal(TwoTenants.HoedlMembers, hoedl.Count);
@@ -235,7 +237,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
             var db = sp.GetRequiredService<IdentityDbContext>();
             var name = $"Rollback {Guid.NewGuid():N}";
 
-            await using (var tx = await db.Database.BeginTransactionAsync(ct))
+            await using (var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct))
             {
                 db.Persons.Add(Person.Create(pg.Tenants.WiesnerId, name, pg.Clock.GetUtcNow()));
                 await db.SaveChangesAsync(ct);
@@ -243,7 +245,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
             }
 
             db.ChangeTracker.Clear();
-            await using (var tx = await db.Database.BeginTransactionAsync(ct))
+            await using (var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct))
             {
                 var setting = await db.Database.SqlQueryRaw<string>("select current_setting('app.tenant_id', true) as \"Value\"").SingleAsync(ct);
                 Assert.Equal(pg.Tenants.WiesnerId.ToString(), setting);
@@ -267,7 +269,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
             await strategy.ExecuteAsync(async () =>
             {
                 attempts++;
-                await using var tx = await db.Database.BeginTransactionAsync(ct);
+                await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
                 var setting = await db.Database.SqlQueryRaw<string>("select current_setting('app.tenant_id', true) as \"Value\"").SingleAsync(ct);
                 Assert.Equal(scratch.ToString(), setting);
 
@@ -283,7 +285,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
                 await tx.CommitAsync(ct);
             });
 
-            await using (var tx = await db.Database.BeginTransactionAsync(ct))
+            await using (var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct))
             {
                 Assert.Equal(1, await db.Persons.CountAsync(p => p.DisplayName == name, ct));
             }
@@ -296,7 +298,7 @@ public sealed class TenantIsolationTests(PostgresFixture pg)
         Scopes.RunAsync(TenantContext.ForTenant(tenant), async (sp, ct) =>
         {
             var db = sp.GetRequiredService<IdentityDbContext>();
-            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
             return await db.Persons.CountAsync(ct);
         }, Ct);
 

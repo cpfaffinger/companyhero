@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CompanyHero.Modules.Progress.Infrastructure;
 
 /// <summary>Schema <c>progress</c>: Aktivitätsereignisse; Punkte, Serien, Abzeichen und Stufen folgen mit dem Fachpfad.</summary>
-public sealed class ProgressDbContext(DbContextOptions<ProgressDbContext> options) : DbContext(options)
+public sealed class ProgressDbContext(DbContextOptions<ProgressDbContext> options) : ModuleDbContext(options)
 {
     public DbSet<ActivityEvent> ActivityEvents => Set<ActivityEvent>();
 

@@ -1,4 +1,10 @@
+using CompanyHero.Modules.Challenges.Api;
+using CompanyHero.Modules.Challenges.Application;
+using CompanyHero.Modules.Challenges.Infrastructure;
+using CompanyHero.Platform.Data;
+using CompanyHero.Platform.Jobs;
 using CompanyHero.Platform.Modules;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,5 +18,12 @@ public sealed class ChallengesModule : IModule
 
     public void AddModule(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddModuleDbContext<ChallengesDbContext>(ModuleSchemas.Challenges);
+        services.AddScoped<IChallengeCatalog, ChallengeCatalog>();
+        services.AddScoped<IContributionService, ContributionService>();
+        services.AddScoped<IChallengeEvents, ChallengeEvents>();
+        services.AddJobHandler<CollectiveRecalculateHandler>();
     }
+
+    public void MapEndpoints(IEndpointRouteBuilder endpoints) => ChallengeEndpoints.Map(endpoints);
 }

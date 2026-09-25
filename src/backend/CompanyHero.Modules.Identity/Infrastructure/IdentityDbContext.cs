@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CompanyHero.Modules.Identity.Infrastructure;
 
 /// <summary>Schema <c>identity</c>: Personen; Anmeldewege, Sitzungen und Codes folgen in Stufe 4.</summary>
-public sealed class IdentityDbContext(DbContextOptions<IdentityDbContext> options) : DbContext(options)
+public sealed class IdentityDbContext(DbContextOptions<IdentityDbContext> options) : ModuleDbContext(options)
 {
     public DbSet<Person> Persons => Set<Person>();
 

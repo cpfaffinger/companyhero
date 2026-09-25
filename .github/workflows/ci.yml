@@ -45,7 +45,7 @@ jobs:
       - name: EF-Migrationen sind vollständig (jeder Kontext ohne ausstehende Modelländerungen)
         run: |
           dotnet tool restore
-          for ctx in PlatformDbContext OrganisationDbContext IdentityDbContext PrivacyDbContext ProgressDbContext; do
+          for ctx in PlatformDbContext OrganisationDbContext IdentityDbContext PrivacyDbContext ProgressDbContext ChallengesDbContext MeteringDbContext; do
             dotnet ef migrations has-pending-model-changes \
               --project src/backend/CompanyHero.Migrations --startup-project src/backend/CompanyHero.Migrations \
               --context "$ctx" --no-build --configuration Release

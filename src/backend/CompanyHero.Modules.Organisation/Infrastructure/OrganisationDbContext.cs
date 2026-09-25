@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CompanyHero.Modules.Organisation.Infrastructure;
 
 /// <summary>Schema <c>organisation</c>: Organisationen (Plattformdaten), Mitgliedschaften und Rollenzuweisungen (tenantbezogen, RLS).</summary>
-public sealed class OrganisationDbContext(DbContextOptions<OrganisationDbContext> options) : DbContext(options)
+public sealed class OrganisationDbContext(DbContextOptions<OrganisationDbContext> options) : ModuleDbContext(options)
 {
     public DbSet<Domain.Organisation> Organisations => Set<Domain.Organisation>();
 

@@ -16,6 +16,7 @@ Konfigurationsdateien; diese Liste dokumentiert sie an einem Ort. Änderungen la
 | Testcontainers.PostgreSql | 4.15.0 | `Directory.Packages.props` |
 | NetArchTest.Rules | 1.3.2 | `Directory.Packages.props` |
 | dotnet-ef | 10.0.12 | `.config/dotnet-tools.json` |
+| Jobbibliothek | keine; eigene Umsetzung auf `SKIP LOCKED` mit Npgsql (A-108) | `src/backend/CompanyHero.Platform/Jobs/` |
 | Analyseregeln | `latest-recommended`, Warnungen als Fehler, Ausnahmen in `.editorconfig` | `Directory.Build.props` |
 
 ## Frontend

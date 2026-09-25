@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CompanyHero.Modules.Privacy.Infrastructure;
 
 /// <summary>Schema <c>privacy</c>: Sichtbarkeitseinstellungen; Zustimmungs- und Prüfprotokoll folgen mit dem Fachpfad.</summary>
-public sealed class PrivacyDbContext(DbContextOptions<PrivacyDbContext> options) : DbContext(options)
+public sealed class PrivacyDbContext(DbContextOptions<PrivacyDbContext> options) : ModuleDbContext(options)
 {
     public DbSet<VisibilitySetting> VisibilitySettings => Set<VisibilitySetting>();
 

@@ -1,4 +1,6 @@
+using CompanyHero.Modules.Challenges.Infrastructure;
 using CompanyHero.Modules.Identity.Infrastructure;
+using CompanyHero.Modules.Metering.Infrastructure;
 using CompanyHero.Modules.Organisation.Infrastructure;
 using CompanyHero.Modules.Privacy.Infrastructure;
 using CompanyHero.Modules.Progress.Infrastructure;
@@ -41,4 +43,14 @@ internal sealed class PrivacyDbContextFactory : IDesignTimeDbContextFactory<Priv
 internal sealed class ProgressDbContextFactory : IDesignTimeDbContextFactory<ProgressDbContext>
 {
     public ProgressDbContext CreateDbContext(string[] args) => new(DesignTime.Options<ProgressDbContext>(ModuleSchemas.Progress));
+}
+
+internal sealed class ChallengesDbContextFactory : IDesignTimeDbContextFactory<ChallengesDbContext>
+{
+    public ChallengesDbContext CreateDbContext(string[] args) => new(DesignTime.Options<ChallengesDbContext>(ModuleSchemas.Challenges));
+}
+
+internal sealed class MeteringDbContextFactory : IDesignTimeDbContextFactory<MeteringDbContext>
+{
+    public MeteringDbContext CreateDbContext(string[] args) => new(DesignTime.Options<MeteringDbContext>(ModuleSchemas.Metering));
 }

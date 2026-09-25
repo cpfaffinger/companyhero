@@ -1,4 +1,6 @@
 using CompanyHero.Platform.Data;
+using CompanyHero.Platform.Events;
+using CompanyHero.Platform.Jobs;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Npgsql;
 
 namespace CompanyHero.Platform.Hosting;
 
@@ -43,7 +46,14 @@ public static class PlatformDataExtensions
         services.TryAddScoped<ITenantContextAccessor>(sp => sp.GetRequiredService<TenantContextAccessor>());
         services.TryAddSingleton<ITenantScopeFactory, TenantScopeFactory>();
 
-        services.AddDbContext<PlatformDbContext>(o => o.UseNpgsql(options.ConnectionString));
+        // Ein Verbindungspool je Prozess; die Kontexttransaktion eines Scopes leiht sich daraus genau eine Verbindung (Backend 5.2).
+        services.TryAddSingleton(_ => new NpgsqlDataSourceBuilder(options.ConnectionString).Build());
+        services.TryAddScoped<ContextTransaction>();
+        services.TryAddScoped<IContextTransaction>(sp => sp.GetRequiredService<ContextTransaction>());
+
+        services.AddDbContext<PlatformDbContext>((sp, o) => o.UseNpgsql(sp.GetRequiredService<NpgsqlDataSource>()));
+        services.AddJobQueue();
+        services.AddDomainEvents();
         services.AddHealthChecks().AddCheck<DatabaseHealthCheck>("database", tags: [ReadyTag]);
         return services;
     }

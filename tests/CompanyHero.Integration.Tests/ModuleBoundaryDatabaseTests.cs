@@ -1,6 +1,7 @@
 using CompanyHero.Modules.Identity.Infrastructure;
 using CompanyHero.Modules.Organisation.Infrastructure;
 using CompanyHero.Platform.Modules;
+using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,7 +47,7 @@ public sealed class ModuleBoundaryDatabaseTests(PostgresFixture pg)
         }
 
         Assert.Equal(
-            ["identity.person", "organisation.membership", "organisation.organisation", "organisation.role_assignment", "privacy.visibility_setting", "progress.activity_event"],
+            ["challenges.challenge", "challenges.collective_state", "challenges.contribution", "challenges.contribution_key", "challenges.domain_event", "identity.person", "metering.ledger_event", "organisation.membership", "organisation.organisation", "organisation.role_assignment", "privacy.visibility_setting", "progress.activity_event"],
             tables);
     }
 
@@ -90,7 +91,7 @@ public sealed class ModuleBoundaryDatabaseTests(PostgresFixture pg)
         await scopes.RunAsync(TenantContext.ForTenant(pg.Tenants.WiesnerId), async (sp, ct) =>
         {
             var identity = sp.GetRequiredService<IdentityDbContext>();
-            await using var tx = await identity.Database.BeginTransactionAsync(ct);
+            await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
 
             await Assert.ThrowsAsync<SchemaBoundaryViolationException>(() =>
                 identity.Database.SqlQueryRaw<int>("select count(*)::int as \"Value\" from organisation.membership").ToListAsync(ct));
@@ -110,12 +111,12 @@ public sealed class ModuleBoundaryDatabaseTests(PostgresFixture pg)
         var (organisations, memberships, persons) = await scopes.RunAsync(TenantContext.ForPlatform(), async (sp, ct) =>
         {
             var organisation = sp.GetRequiredService<OrganisationDbContext>();
-            await using var tx = await organisation.Database.BeginTransactionAsync(ct);
+            await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
             var organisations = await organisation.Organisations.CountAsync(ct);
             var memberships = await organisation.Memberships.CountAsync(ct);
 
             var identity = sp.GetRequiredService<IdentityDbContext>();
-            await using var tx2 = await identity.Database.BeginTransactionAsync(ct);
+            await using var tx2 = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
             var persons = await identity.Persons.CountAsync(ct);
             return (organisations, memberships, persons);
         }, Ct);
@@ -132,7 +133,7 @@ public sealed class ModuleBoundaryDatabaseTests(PostgresFixture pg)
         var visible = await scopes.RunAsync(TenantContext.ForTenant(pg.Tenants.HoedlId), async (sp, ct) =>
         {
             var db = sp.GetRequiredService<OrganisationDbContext>();
-            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
             return await db.Organisations.Select(o => o.Id).ToListAsync(ct);
         }, Ct);
 

@@ -1,12 +1,13 @@
 using CompanyHero.Modules.Organisation.Domain;
 using CompanyHero.Modules.Privacy.Domain;
 using CompanyHero.Modules.Privacy.Infrastructure;
+using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.EntityFrameworkCore;
 
 namespace CompanyHero.Modules.Privacy.Application;
 
-internal sealed class VisibilityRuleService(PrivacyDbContext db, ITenantContextAccessor context) : IVisibilityRule
+internal sealed class VisibilityRuleService(PrivacyDbContext db, IContextTransaction transaction, ITenantContextAccessor context) : IVisibilityRule
 {
     public async Task<bool> MayReadIndividualValuesAsync(PersonId subject, CancellationToken cancellationToken)
     {
@@ -15,7 +16,7 @@ internal sealed class VisibilityRuleService(PrivacyDbContext db, ITenantContextA
         var reader = current.RequirePerson();
         var employerRole = current.Roles.Any(Role.IsEmployerRole);
 
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         var level = await db.VisibilitySettings
             .Where(v => v.TenantId == tenantId && v.PersonId == subject)
             .Select(v => (VisibilityLevel?)v.Level)
@@ -27,12 +28,12 @@ internal sealed class VisibilityRuleService(PrivacyDbContext db, ITenantContextA
     }
 }
 
-internal sealed class VisibilityChoice(PrivacyDbContext db, ITenantContextAccessor context, TimeProvider clock) : IVisibilityChoice
+internal sealed class VisibilityChoice(PrivacyDbContext db, IContextTransaction transaction, ITenantContextAccessor context, TimeProvider clock) : IVisibilityChoice
 {
     public async Task ChooseAsync(PersonId personId, VisibilityLevel level, CancellationToken cancellationToken)
     {
         var tenantId = context.Require().RequireTenant();
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         var existing = await db.VisibilitySettings.SingleOrDefaultAsync(v => v.TenantId == tenantId && v.PersonId == personId, cancellationToken);
         if (existing is null)
         {
@@ -50,7 +51,7 @@ internal sealed class VisibilityChoice(PrivacyDbContext db, ITenantContextAccess
     public async Task<VisibilityLevel?> GetAsync(PersonId personId, CancellationToken cancellationToken)
     {
         var tenantId = context.Require().RequireTenant();
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         return await db.VisibilitySettings
             .Where(v => v.TenantId == tenantId && v.PersonId == personId)
             .Select(v => (VisibilityLevel?)v.Level)

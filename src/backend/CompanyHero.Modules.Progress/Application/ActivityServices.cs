@@ -1,6 +1,7 @@
 using CompanyHero.Modules.Privacy.Application;
 using CompanyHero.Modules.Progress.Domain;
 using CompanyHero.Modules.Progress.Infrastructure;
+using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,12 +24,12 @@ public interface IPersonalActivityQuery
     Task<IReadOnlyList<ActivityRecord>?> GetForPersonAsync(PersonId subject, CancellationToken cancellationToken);
 }
 
-internal sealed class ActivityRecorder(ProgressDbContext db, ITenantContextAccessor context) : IActivityRecorder
+internal sealed class ActivityRecorder(ProgressDbContext db, IContextTransaction transaction, ITenantContextAccessor context) : IActivityRecorder
 {
     public async Task<Guid> RecordAsync(PersonId personId, string kind, ActivitySource source, DateTimeOffset occurredAt, CancellationToken cancellationToken)
     {
         var tenantId = context.Require().RequireTenant();
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         var activity = ActivityEvent.Record(tenantId, personId, kind, source, occurredAt);
         db.ActivityEvents.Add(activity);
         await db.SaveChangesAsync(cancellationToken);
@@ -37,7 +38,7 @@ internal sealed class ActivityRecorder(ProgressDbContext db, ITenantContextAcces
     }
 }
 
-internal sealed class PersonalActivityQuery(ProgressDbContext db, ITenantContextAccessor context, IVisibilityRule visibility) : IPersonalActivityQuery
+internal sealed class PersonalActivityQuery(ProgressDbContext db, IContextTransaction transaction, ITenantContextAccessor context, IVisibilityRule visibility) : IPersonalActivityQuery
 {
     public async Task<IReadOnlyList<ActivityRecord>?> GetForPersonAsync(PersonId subject, CancellationToken cancellationToken)
     {
@@ -47,7 +48,7 @@ internal sealed class PersonalActivityQuery(ProgressDbContext db, ITenantContext
             return null;
         }
 
-        await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var tx = await transaction.BeginAsync(cancellationToken);
         return await db.ActivityEvents
             .Where(e => e.TenantId == tenantId && e.PersonId == subject)
             .OrderBy(e => e.OccurredAt)

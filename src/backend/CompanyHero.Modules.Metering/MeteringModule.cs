@@ -1,3 +1,7 @@
+using CompanyHero.Modules.Metering.Application;
+using CompanyHero.Modules.Metering.Infrastructure;
+using CompanyHero.Platform.Data;
+using CompanyHero.Platform.Metering;
 using CompanyHero.Platform.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,5 +16,9 @@ public sealed class MeteringModule : IModule
 
     public void AddModule(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddModuleDbContext<MeteringDbContext>(ModuleSchemas.Metering);
+        // Querschnitt der Plattform, Eigentümer Metering (Domänenkarte 3): alle Domänen emittieren über IMeteringEmitter.
+        services.AddScoped<IMeteringEmitter, MeteringEmitter>();
+        services.AddScoped<IMeteringLedger, MeteringLedger>();
     }
 }

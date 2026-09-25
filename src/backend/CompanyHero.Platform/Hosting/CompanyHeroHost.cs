@@ -79,6 +79,7 @@ public static class CompanyHeroHost
             m.AddHttpClientInstrumentation();
             m.AddRuntimeInstrumentation();
             m.AddNpgsqlInstrumentation();
+            m.AddMeter(CompanyHero.Platform.Jobs.JobMetrics.MeterName);
             if (otlpEndpoint is not null)
             {
                 m.AddOtlpExporter();
