@@ -1,0 +1,16 @@
+.ch-shell {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+}
+
+.ch-shell__title {
+  margin: 0;
+  font: 700 26px/32px "Inter Tight Variable", "Inter Variable", system-ui, sans-serif;
+}
+
+.ch-shell__hint {
+  margin: 0;
+  font: 400 16px/24px "Inter Variable", system-ui, sans-serif;
+  color: var(--ch-on-surface-variant);
+}

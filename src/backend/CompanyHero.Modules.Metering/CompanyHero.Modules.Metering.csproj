@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><Description>Metering und Abrechnung (A-069 bis A-075); Fachdomänen nur über Ereignisse.</Description></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../CompanyHero.Platform/CompanyHero.Platform.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Privacy/CompanyHero.Modules.Privacy.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Organisation/CompanyHero.Modules.Organisation.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Entitlements/CompanyHero.Modules.Entitlements.csproj" />
+  </ItemGroup>
+</Project>

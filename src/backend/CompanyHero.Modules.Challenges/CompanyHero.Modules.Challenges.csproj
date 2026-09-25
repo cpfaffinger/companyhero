@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><Description>Challenges (A-038 bis A-043).</Description></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../CompanyHero.Platform/CompanyHero.Platform.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Progress/CompanyHero.Modules.Progress.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Privacy/CompanyHero.Modules.Privacy.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Organisation/CompanyHero.Modules.Organisation.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Entitlements/CompanyHero.Modules.Entitlements.csproj" />
+  </ItemGroup>
+</Project>

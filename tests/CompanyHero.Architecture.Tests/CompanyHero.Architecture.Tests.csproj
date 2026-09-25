@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="NetArchTest.Rules" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/backend/CompanyHero.ModuleCatalog/CompanyHero.ModuleCatalog.csproj" />
+  </ItemGroup>
+</Project>

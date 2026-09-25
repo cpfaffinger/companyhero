@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Einzige Stelle, die alle Module kennt. Wird nur von den Hosts referenziert (Backend 3.1).</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../CompanyHero.Platform/CompanyHero.Platform.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Identity/CompanyHero.Modules.Identity.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Organisation/CompanyHero.Modules.Organisation.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Branding/CompanyHero.Modules.Branding.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Entitlements/CompanyHero.Modules.Entitlements.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Privacy/CompanyHero.Modules.Privacy.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Progress/CompanyHero.Modules.Progress.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Challenges/CompanyHero.Modules.Challenges.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Feed/CompanyHero.Modules.Feed.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Notifications/CompanyHero.Modules.Notifications.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Metering/CompanyHero.Modules.Metering.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><Description>Marke und Theme (A-013, A-076 bis A-081).</Description></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../CompanyHero.Platform/CompanyHero.Platform.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Organisation/CompanyHero.Modules.Organisation.csproj" />
+  </ItemGroup>
+</Project>

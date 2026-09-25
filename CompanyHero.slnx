@@ -1,0 +1,25 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/backend/CompanyHero.Platform/CompanyHero.Platform.csproj" />
+    <Project Path="src/backend/CompanyHero.ModuleCatalog/CompanyHero.ModuleCatalog.csproj" />
+    <Project Path="src/backend/CompanyHero.Api/CompanyHero.Api.csproj" />
+    <Project Path="src/backend/CompanyHero.Worker/CompanyHero.Worker.csproj" />
+    <Project Path="src/backend/CompanyHero.Migrations/CompanyHero.Migrations.csproj" />
+  </Folder>
+  <Folder Name="/src/modules/">
+    <Project Path="src/backend/CompanyHero.Modules.Organisation/CompanyHero.Modules.Organisation.csproj" />
+    <Project Path="src/backend/CompanyHero.Modules.Identity/CompanyHero.Modules.Identity.csproj" />
+    <Project Path="src/backend/CompanyHero.Modules.Entitlements/CompanyHero.Modules.Entitlements.csproj" />
+    <Project Path="src/backend/CompanyHero.Modules.Branding/CompanyHero.Modules.Branding.csproj" />
+    <Project Path="src/backend/CompanyHero.Modules.Privacy/CompanyHero.Modules.Privacy.csproj" />
+    <Project Path="src/backend/CompanyHero.Modules.Progress/CompanyHero.Modules.Progress.csproj" />
+    <Project Path="src/backend/CompanyHero.Modules.Challenges/CompanyHero.Modules.Challenges.csproj" />
+    <Project Path="src/backend/CompanyHero.Modules.Feed/CompanyHero.Modules.Feed.csproj" />
+    <Project Path="src/backend/CompanyHero.Modules.Notifications/CompanyHero.Modules.Notifications.csproj" />
+    <Project Path="src/backend/CompanyHero.Modules.Metering/CompanyHero.Modules.Metering.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CompanyHero.Architecture.Tests/CompanyHero.Architecture.Tests.csproj" />
+    <Project Path="tests/CompanyHero.Integration.Tests/CompanyHero.Integration.Tests.csproj" />
+  </Folder>
+</Solution>

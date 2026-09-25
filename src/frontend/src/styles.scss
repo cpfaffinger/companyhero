@@ -1,0 +1,19 @@
+// Globale Basis (K03): Dokument, Box-Sizing, Grundschrift, Hintergrund. Keine Regeln für Buttons oder Inputs.
+// Farben ausschließlich über --ch-* Rollen aus dem Backend-Tokensatz (A-013, K01); Rohfarben scheitern am Lint.
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  font: 400 16px/24px "Inter Variable", system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  background: var(--ch-surface);
+  color: var(--ch-on-surface);
+}

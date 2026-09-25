@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><Description>Organisation und Mandanten (A-033 bis A-037).</Description></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../CompanyHero.Platform/CompanyHero.Platform.csproj" />
+  </ItemGroup>
+</Project>

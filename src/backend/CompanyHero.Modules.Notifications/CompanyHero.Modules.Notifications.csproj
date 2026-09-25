@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><Description>Benachrichtigungen (A-058 bis A-063); Challenges und Feed nur über Ereignisse.</Description></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../CompanyHero.Platform/CompanyHero.Platform.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Progress/CompanyHero.Modules.Progress.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Privacy/CompanyHero.Modules.Privacy.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Organisation/CompanyHero.Modules.Organisation.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Branding/CompanyHero.Modules.Branding.csproj" />
+  </ItemGroup>
+</Project>

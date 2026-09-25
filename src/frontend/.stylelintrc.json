@@ -1,0 +1,81 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss"
+  ],
+  "ignoreFiles": [
+    "dist/**",
+    "node_modules/**",
+    ".angular/**"
+  ],
+  "rules": {
+    "color-no-hex": [
+      true,
+      {
+        "message": "Keine Rohfarben in Komponenten; nur --ch-* Rollen aus dem Backend-Tokensatz (A-076, K01)."
+      }
+    ],
+    "color-named": [
+      "never",
+      {
+        "message": "Keine benannten Farben; nur --ch-* Rollen (A-076)."
+      }
+    ],
+    "function-disallowed-list": [
+      [
+        "rgb",
+        "rgba",
+        "hsl",
+        "hsla",
+        "hwb",
+        "lab",
+        "lch",
+        "oklab",
+        "oklch",
+        "color",
+        "color-mix",
+        "lighten",
+        "darken",
+        "mix",
+        "adjust-hue",
+        "saturate",
+        "desaturate"
+      ],
+      {
+        "message": "Keine Farbberechnung im Frontend; die Ableitung liegt im Backend (A-013, K06)."
+      }
+    ],
+    "selector-disallowed-list": [
+      [
+        "/\\.mat-/",
+        "/\\.mdc-/",
+        "/::ng-deep/",
+        "/\\/deep\\//",
+        "/>>>/"
+      ],
+      {
+        "message": "Keine Selektoren auf private Material-Strukturen und kein ::ng-deep (K02)."
+      }
+    ],
+    "declaration-no-important": [
+      true,
+      {
+        "message": "Kein !important als Reparaturstrategie (K02)."
+      }
+    ],
+    "scss/load-no-partial-leading-underscore": null,
+    "selector-class-pattern": null,
+    "custom-property-pattern": "^(ch|mat|mdc)-[a-z0-9-]+$",
+    "no-descending-specificity": null
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/libs/theme/**/*.scss",
+        "src/styles.scss"
+      ],
+      "rules": {
+        "selector-disallowed-list": null
+      }
+    }
+  ]
+}

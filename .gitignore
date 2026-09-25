@@ -8,3 +8,22 @@ concept-entwurf-v0.1/
 desktop.ini
 Thumbs.db
 .DS_Store
+
+# Build- und Werkzeugausgaben
+bin/
+obj/
+node_modules/
+dist/
+.angular/
+TestResults/
+*.user
+.vs/
+.idea/
+*.swp
+playwright-report/
+test-results/
+
+# Lokale Geheimnisse und Laufzeitdaten der Compose-Projekte
+deploy/compose/**/secrets/
+deploy/compose/**/.env
+deploy/compose/**/data/

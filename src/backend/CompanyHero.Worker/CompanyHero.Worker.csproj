@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <Description>Worker-Prozess: Jobs, Fachereignisse, zeitgesteuerte Aufgaben (A-006). Gleiches Image wie die API, anderer Einstiegspunkt.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../CompanyHero.Platform/CompanyHero.Platform.csproj" />
+    <ProjectReference Include="../CompanyHero.ModuleCatalog/CompanyHero.ModuleCatalog.csproj" />
+  </ItemGroup>
+</Project>
