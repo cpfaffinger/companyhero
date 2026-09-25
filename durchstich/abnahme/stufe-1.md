@@ -10,7 +10,7 @@
 - Backend-Solution auf .NET 10 (`CompanyHero.slnx`): Plattforminfrastruktur, zehn Modulprojekte entlang der Domänenkarte, Modulkatalog, Hosts API und Worker aus einem Image, Migrations-Container mit eigener Datenbankrolle.
 - Datenbankrollen: `ch_migrator` besitzt Schemata und führt Migrationen aus; `ch_app` (Laufzeit) ohne Superuser, ohne `BYPASSRLS`, ohne `CREATE`, nur Datenrechte auf den Modulschemata. Dasselbe Init-Skript in Compose und in den Testcontainern.
 - Angular-22-Workspace mit Material, `strict` und `strictTemplates`, Lint-Grenzen aus den Integrationsregeln als ESLint-, Stylelint- und Abhängigkeitsprüfung, Ladebudget-Messung komprimiert.
-- Compose-Projekte `plattform` und `beobachtung`, Caddy mit HSTS und CSP, OpenBao mit KV und Transit, Garage, pgBackRest mit WAL-Archivierung, Grafana mit Pflicht-Dashboard und Alarmen.
+- Compose-Projekte `plattform` und `beobachtung`, Caddy mit HSTS und CSP, OpenBao mit KV und Transit, Garage, pgBackRest mit WAL-Archivierung, Grafana mit Pflicht-Dashboard und Alarmen. Alle Laufzeit-Container ohne Root; Docker-Secrets bleiben auf dem Host für den Deploy-Benutzer lesbar und werden von einem einmaligen Verteilungslauf (`secrets-init`) mit passendem Besitzer in das Laufzeitvolume gelegt. Das PostgreSQL-Image ersetzt `gosu` durch einen `setpriv`-Wrapper, weil Trivy das mitgelieferte Go-Binary als kritisch meldet (CVE-2025-68121).
 - CI mit Build, Tests in Testcontainern, Architekturtests, Lint, Trivy, Betriebsnachweisen in Compose, Wiederherstellungsübung, Push nach GHCR mit Digest; wöchentlicher Neubau; Dependabot.
 - Register: A-107 (Durchstich-Umgebungen ohne bereitgestellte Hosts). Versionen: [versionen.md](../versionen.md).
 
@@ -36,8 +36,8 @@ Die Protokolle der einzelnen Läufe (`compose-nachweise-*.md`, `wiederherstellun
 
 | Lauf | Umgebung | Ergebnis | Protokoll |
 |---|---|---|---|
-| Wiederherstellungsübung, lokal | WSL Debian 13, Docker CE 29, lokal gebaute Images | bestanden; RTO 21 s, RPO 0 s, 2 von 2 Fachzeilen, 1 von 1 Release-Zeilen | [wiederherstellung-lokal-20260925.md](laeufe/wiederherstellung-lokal-20260925.md) |
-| Betriebsnachweise in Compose, lokal | WSL Debian 13, Docker CE 29, lokal gebaute Images, Ports 8088/8443 | bestanden; 41 Prüfungen | [compose-nachweise-lokal-20260925.md](laeufe/compose-nachweise-lokal-20260925.md) |
+| Wiederherstellungsübung, lokal | WSL Debian 13, Docker CE 29, lokal gebaute Images | bestanden; RTO 15 s, RPO 2 s, 2 von 2 Fachzeilen, 1 von 1 Release-Zeilen | [wiederherstellung-lokal-20260925.md](laeufe/wiederherstellung-lokal-20260925.md) |
+| Betriebsnachweise in Compose, lokal | WSL Debian 13, Docker CE 29, lokal gebaute Images, Ports 8088/8443 | bestanden; 43 Prüfungen | [compose-nachweise-lokal-20260925.md](laeufe/compose-nachweise-lokal-20260925.md) |
 | Wiederherstellungsübung, CI | GitHub-Actions-Runner (A-107), Images per Digest aus GHCR | siehe Abschnitt 4 | Artefakt `wiederherstellung` des CI-Laufs |
 | Betriebsnachweise in Compose, CI | GitHub-Actions-Runner (A-107), lokal geladene Images des Commits | siehe Abschnitt 4 | Artefakt `compose-nachweise` des CI-Laufs |
 

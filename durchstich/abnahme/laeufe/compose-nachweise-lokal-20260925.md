@@ -1,6 +1,6 @@
 # Betriebsnachweise in Compose 2026-09-25
 
-**Nachweise:** Betrieb 9.4, 9.5, 9.7; A-029; A-032. **Zeitpunkt:** 2026-09-25T14:24:03Z UTC. **Host:** pulse-pc3. **Umgebung:** gemäß A-107.
+**Nachweise:** Betrieb 9.4, 9.5, 9.7; A-029; A-032. **Zeitpunkt:** 2026-09-25T15:58:14Z UTC. **Host:** pulse-pc3. **Umgebung:** gemäß A-107.
 **Images:** lokal, lokal, lokal, lokal
 
 | Prüfung | Detail | Ergebnis |
@@ -15,7 +15,7 @@
 | Transit-Engine vorhanden | companyhero-transit/ in der Liste der Secret-Engines | ok |
 | KV-Engine vorhanden | companyhero/ (kv v2) in der Liste der Secret-Engines | ok |
 | Beobachtung: Collector gesund | health_check-Erweiterung antwortet (Versuch 1) | ok |
-| Beobachtung: Grafana gesund | GET /api/health liefert database ok (Versuch 2) | ok |
+| Beobachtung: Grafana gesund | GET /api/health liefert database ok (Versuch 4) | ok |
 | Beobachtung: Loki bereit | GET /ready (Versuch 4) | ok |
 | Beobachtung: Tempo bereit | GET /ready (Versuch 1) | ok |
 | Beobachtung: Prometheus bereit | GET /-/ready (Versuch 1) | ok |

@@ -19,12 +19,10 @@ RELEASE="$1"; APP="$2"; MIGRATE="$3"; WEB="$4"; POSTGRES="$5"
 log() { printf '[deploy %s] %s\n' "$(date -u +%FT%TZ)" "$*"; }
 
 set_image() {
-  local key="$1" value="$2"
-  if grep -q "^${key}=" "$ENV_FILE"; then
-    sed -i "s#^${key}=.*#${key}=${value}#" "$ENV_FILE"
-  else
-    printf '%s=%s\n' "$key" "$value" >> "$ENV_FILE"
-  fi
+  # Schreibt die Datei in place statt per Umbenennung (sed -i), weil synchronisierte Verzeichnisse Umbenennungen sperren können.
+  local key="$1" value="$2" content
+  content="$(awk -v k="$key" -v v="$value" 'BEGIN { done = 0 } index($0, k "=") == 1 { print k "=" v; done = 1; next } { print } END { if (!done) print k "=" v }' "$ENV_FILE")"
+  printf '%s\n' "$content" > "$ENV_FILE"
 }
 
 healthy() {

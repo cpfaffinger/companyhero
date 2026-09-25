@@ -1,6 +1,8 @@
 # Compose-Projekt "plattform" (Betrieb 2.2): Caddy, API, Worker, Migrations-Container, PostgreSQL mit pgBackRest,
 # Garage, OpenBao. Dieselbe Definition für lokal, Staging und Produktion; Unterschiede kommen aus .env und secrets/.
 # Nur Caddy veröffentlicht Ports (A-028, Betrieb 2.4). Beobachtung ist ein eigenes Projekt im Netz companyhero-beobachtung.
+# Geheimnisse: Docker-Secrets sind auf dem Host nur für den Deploy-Benutzer lesbar; secrets-init verteilt sie im
+# Laufzeitvolume /run/companyhero an die Container ohne Root (Betrieb 3.1, A-028).
 name: companyhero
 
 x-app: &app
@@ -99,19 +101,35 @@ services:
     environment:
       CH_DB_HOST: postgres
       CH_DB_NAME: ${CH_DB_NAME:-companyhero}
-      CH_MIGRATOR_PASSWORD_FILE: /run/secrets/db_migrator_password
+      CH_MIGRATOR_PASSWORD_FILE: /run/companyhero/migrate/db_migrator_password
       CH_RELEASE_VERSION: ${CH_RELEASE_VERSION:-local}
       CH_IMAGE_DIGEST: ${CH_IMAGE_DIGEST:-}
       TZ: UTC
-    secrets: [db_migrator_password]
+    volumes:
+      - runtime:/run/companyhero:ro
     depends_on:
       postgres:
         condition: service_healthy
+      secrets-init:
+        condition: service_completed_successfully
     networks: [internal]
     read_only: true
     tmpfs: [/tmp]
     security_opt: [no-new-privileges:true]
     cap_drop: [ALL]
+    restart: "no"
+    logging: *logging
+
+  secrets-init:
+    image: openbao/openbao:2.7.0
+    # Einmaliger Verteilungslauf als Root; danach lesen die Dienste ihre Geheimnisse aus /run/companyhero.
+    user: "0:0"
+    entrypoint: ["/bin/sh", "/opt/companyhero/secrets-init.sh"]
+    volumes:
+      - ./secrets-init.sh:/opt/companyhero/secrets-init.sh:ro
+      - runtime:/run/companyhero
+    secrets: [postgres_superuser_password, db_migrator_password, db_app_password, backup_cipher_pass]
+    networks: [internal]
     restart: "no"
     logging: *logging
 
@@ -121,11 +139,11 @@ services:
       context: ./postgres
     entrypoint: ["ch-postgres-entrypoint.sh"]
     environment: &pg-env
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_superuser_password
-      CH_MIGRATOR_PASSWORD_FILE: /run/secrets/db_migrator_password
-      CH_APP_PASSWORD_FILE: /run/secrets/db_app_password
+      POSTGRES_PASSWORD_FILE: /run/companyhero/postgres/postgres_superuser_password
+      CH_MIGRATOR_PASSWORD_FILE: /run/companyhero/postgres/db_migrator_password
+      CH_APP_PASSWORD_FILE: /run/companyhero/postgres/db_app_password
       CH_DB_NAME: ${CH_DB_NAME:-companyhero}
-      CH_BACKUP_CIPHER_PASS_FILE: /run/secrets/backup_cipher_pass
+      CH_BACKUP_CIPHER_PASS_FILE: /run/companyhero/postgres/backup_cipher_pass
       PGBACKREST_STANZA: main
       TZ: UTC
     env_file:
@@ -133,12 +151,15 @@ services:
       - path: ./secrets/backup-repo.env
         required: false
     volumes: &pg-volumes
+      - runtime:/run/companyhero:ro
       - pgdata:/var/lib/postgresql
       - pg-socket:/var/run/postgresql
       - backup-repo:/var/lib/pgbackrest
       - pgbackrest-spool:/var/spool/pgbackrest
       - pgbackrest-log:/var/log/pgbackrest
-    secrets: &pg-secrets [postgres_superuser_password, db_migrator_password, db_app_password, backup_cipher_pass]
+    depends_on:
+      secrets-init:
+        condition: service_completed_successfully
     shm_size: 256m
     networks: [internal]
     security_opt: [no-new-privileges:true]
@@ -163,10 +184,11 @@ services:
       - path: ./secrets/backup-repo.env
         required: false
     volumes: *pg-volumes
-    secrets: *pg-secrets
     depends_on:
       postgres:
         condition: service_healthy
+      secrets-init:
+        condition: service_completed_successfully
     networks: [internal]
     security_opt: [no-new-privileges:true]
     cap_drop: [ALL]
@@ -232,6 +254,8 @@ services:
     depends_on:
       openbao:
         condition: service_healthy
+      secrets-init:
+        condition: service_completed_successfully
     networks: [internal]
     restart: "no"
     logging: *logging

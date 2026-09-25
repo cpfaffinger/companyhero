@@ -71,6 +71,8 @@ for v in pgdata pg-socket pgbackrest-spool pgbackrest-log; do docker volume rm -
 
 log "6/7 Staging aus Images, Konfiguration und Repository aufbauen"
 RESTORE_START_EPOCH="$(now_epoch)"
+# Geheimnisse für die frische Umgebung verteilen (Repository-Passwort), dann wiederherstellen.
+"${STAGING[@]}" run --rm --no-deps secrets-init > /dev/null
 "${STAGING[@]}" run --rm --no-deps --entrypoint ch-backup-env.sh backup \
   bash -c 'mkdir -p /var/lib/postgresql/18/docker && chmod 0700 /var/lib/postgresql/18/docker && pgbackrest --stanza=main --log-level-console=info restore'
 "${STAGING[@]}" up -d --wait postgres
