@@ -1,7 +1,7 @@
 # CompanyHero – Entscheidungsregister
 
 **Stand:** 26.09.2026  
-**Status:** A-001 bis A-111 angenommen durch Christopher. Dokumentierte Entscheidungen; technisch nachgewiesene Nachweise tragen den Zusatz „technisch nachgewiesen“ mit Datum und Verweis auf das Abnahmeprotokoll unter `durchstich/abnahme/`.
+**Status:** A-001 bis A-112 angenommen durch Christopher. Dokumentierte Entscheidungen; technisch nachgewiesene Nachweise tragen den Zusatz „technisch nachgewiesen“ mit Datum und Verweis auf das Abnahmeprotokoll unter `durchstich/abnahme/`.
 
 Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetzung: [Backend](architektur-backend.md), [Frontend](architektur-frontend.md), [Zuständigkeiten und Integrationsregeln](architektur-integrationsregeln.md), [Domänen und Schnittmengen](domaenen-und-schnittmengen.md), [Zugang und Identität](zugang-und-identitaet.md), [Datenschutz und Nachweis](datenschutz-und-nachweis.md), [Betrieb](betrieb.md), [Organisation und Mandanten](organisation-und-mandanten.md), [Challenges](challenges.md), [Fortschritt](fortschritt.md), [Feed und Inhalte](feed-und-inhalte.md), [Benachrichtigungen](benachrichtigungen.md), [Entitlements](entitlements.md), [Metering und Abrechnung](metering-und-abrechnung.md), [Marke und Theme](marke-und-theme.md), [Workshops und Events](workshops-und-events.md), [Arena](arena.md), [Wearable-Vault](wearable-vault.md), [Onboarding und Rollout](onboarding-und-rollout.md), [Verwaltung und Konsolen](verwaltung-und-konsolen.md), [Inhaltsmodule](inhaltsmodule.md), [Mehrsprachigkeit](mehrsprachigkeit.md), [Verzeichnis und Netzwerk](verzeichnis-und-netzwerk.md), [Technischer Durchstich](technischer-durchstich.md). Jede Entscheidung steht hier in ihrer gültigen Form. Wird eine Entscheidung geändert, wird der Eintrag ersetzt und die betroffenen Dateien werden gemeinsam angepasst.
 
@@ -200,7 +200,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Drei Stufen: Nur für mich, Mein Team, Ganze Firma. Ausdrückliche Wahl beim Beitritt aus drei gleichrangigen Kacheln ohne Voreinstellung. Stufe dauerhaft sichtbar und mit einer Berührung änderbar, Wirkung sofort und rückwirkend. Arena-Einzelsichtbarkeit als separate Zustimmung der Person plus Freigabe des Tenant-Admins. Buddy-Paar als einzige Ausnahme von „die restriktivere Einstellung gewinnt“. Foto-Belege höchstens teamsichtbar. Tenant-Admin sieht eine Mitgliederliste ohne Aktivitätsdaten.
 - **Begründung:** keine Voreinstellung vermeidet Nudging-Kritik bei gleichem Aufwand; zentrale Leseregel statt Filterlogik je Feature.
 - **Folgen:** Jede lesende Domäne verwendet die zentrale Sichtbarkeitsprüfung.
-- **Nachweise:** Person mit „Nur für mich“ in keiner Anzeige; Buddy-Widerruf sofort wirksam; Arena-Einzelwert nur bei doppelter Zustimmung.
+- **Nachweise:** Person mit „Nur für mich“ in keiner Anzeige; Buddy-Widerruf sofort wirksam; Arena-Einzelwert nur bei doppelter Zustimmung. Nachweisstand: Sichtbarkeitskreis (Presence) für Anzeigename und Beiträge im Feed einschließlich rückwirkender Wirkung eines Stufenwechsels und Zustimmungsprotokoll technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-023 – Aggregation und k-Anonymität
 
@@ -208,7 +208,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Aggregate nur ab fünf Personen mit Beitrag. Auswertungsgruppen sind ausschließlich Tenant-Gruppen je Dimension und der ganze Tenant; keine Kombination zweier Dimensionen; Zeiträume nur Challenge-Zeitraum, Kalenderwoche, Kalendermonat. Gruppenumbau löst keine Differenzbildung aus. Ranglisten zusätzlich erst ab 40 Prozent Beteiligung der aktivierten Personen der Gruppe. Arena erhält nur Pro-Kopf-Wert auf Sollstärke, Größenklasse, Name, Logo, Zeitpunkt.
 - **Begründung:** Schutz vor Rückrechnung einzelner Beiträge und vor Erkennbarkeit schwacher Beteiligung.
 - **Folgen:** Exporte und Verwaltungsansichten verwenden dieselbe Prüfung wie die App; Sollstärke steuert nie Sichtbarkeit.
-- **Nachweise:** vier Beitragende ergeben keine Ausgabe, fünf schon; Gruppenumbau ohne Differenz; Rangliste erst bei beiden Schwellen.
+- **Nachweise:** vier Beitragende ergeben keine Ausgabe, fünf schon; Gruppenumbau ohne Differenz; Rangliste erst bei beiden Schwellen. Nachweisstand: Kollektivstand und Beteiligung unter fünf Personen ohne Zahlen, Sammelkarte erst ab fünf technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-024 – Fristen, Löschung und Austritt
 
@@ -216,7 +216,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Fristen je Datenkategorie gemäß [Datenschutz und Nachweis](datenschutz-und-nachweis.md), Abschnitt 5, darunter 24 Monate Aktivitätsdetail, 90 Tage Wearable-Rohdaten, 12 Monate Stimmungs- und Ergonomiedaten, 3 Jahre Zustimmungs- und Prüfprotokoll, 7 Jahre Metering, höchstens 35 Tage Backups. Austritt: Zugang sofort, Löschung binnen 30 Tagen, Kollektivanteile anonym, Zustimmungsprotokoll mit nicht rückführbarer Kennung. Verwaiste Personen nach 24 Monaten ohne Anmeldung und Handlung automatisch ausgetreten. Modulkündigung 90 Tage Lesbarkeit, Tenant-Kündigung Löschung nach 90 Tagen mit Schlüsselvernichtung.
 - **Begründung:** Datenminimierung mit Erhalt von Jahresvergleichen; Löschung muss Backups erreichen; verwaiste Konten dürfen nicht dauerhaft bestehen.
 - **Folgen:** Backup-Aufbewahrung ist gemäß A-031 auf höchstens 35 Tage begrenzt; Wiederherstellung führt Löschläufe erneut aus.
-- **Nachweise:** Austrittsdaten nach 30 Tagen nicht auffindbar, nach 35 Tagen auch in Backups nicht; Kollektivsummen unverändert.
+- **Nachweise:** Austrittsdaten nach 30 Tagen nicht auffindbar, nach 35 Tagen auch in Backups nicht; Kollektivsummen unverändert. Nachweisstand: Austritt mit Löschfolgen in allen Domänen (Zugang, Fortschritt, Feed, Benachrichtigungen; Beiträge anonym in Summen), Sicherheitsprotokoll 12 Monate, abgelaufene Sitzungen, Links, Codes und Fehlversuche als Aufräumlauf, verwaiste Personen nach 24 Monaten erkannt technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-025 – Nachweis, Auskunft und Zugriff
 
@@ -224,7 +224,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Unveränderliches Zustimmungsprotokoll je Person; append-only Prüfprotokoll aller Konfigurations-, Rollen- und Zugangsänderungen mit Klarnamen der Funktionsrolle; Einsichtsrolle liest Regeln, Module, tenantweite Quote ab fünf und Prüfprotokoll, nie Personen; Selbstexport jeder Person maschinenlesbar und lesbar; Tenant-Export ohne Mitgliederdaten; Operator-Support nur mit Vorgangsnummer, 24 Stunden, protokolliert, nie Vault oder Einzelwerte; gepflegte Nachweisdokumente.
 - **Begründung:** Nachweisbarkeit ersetzt Vertrauensappelle gegenüber Betriebsrat und Datenschutzbeauftragtem.
 - **Folgen:** Protokollschnittstelle wird von allen Domänen verwendet; Support-Zugriffe sind für die Einsichtsrolle sichtbar.
-- **Nachweise:** Export vollständig und frei von Fremddaten; Support-Zugriff im Protokoll; Einsichtsrolle ohne Personenzugriff.
+- **Nachweise:** Export vollständig und frei von Fremddaten; Support-Zugriff im Protokoll; Einsichtsrolle ohne Personenzugriff. Nachweisstand: maschinenlesbarer Selbstexport aller Domänen nur auf dem eigenen Gerät technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-026 – Technische Schutzmaßnahmen
 
@@ -232,7 +232,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Personendaten ausschließlich in der EU; CDN nur für anonyme Assets. Verschlüsselung im Ruhezustand und TLS 1.3. Feldverschlüsselung mit Datenschlüssel je Tenant in getrenntem Geheimnisspeicher für Stimmungs-, Ergonomie-, Wiederherstellungs- und Vault-Daten. Signierte kurzlebige Medien-URLs. Strikte Content-Security-Policy ohne Fremdhosts; selbst ausgelieferte Schriften und Icons. Keine Personendaten in URLs, Push oder Fehlerberichten. Uploads neu kodiert, Metadaten entfernt, virengeprüft. Logs ohne Personenbezug, keine externen Telemetriedienste. Nie Produktionsdaten in Staging. Bedrohungsmodellierung je Domäne; Isolationstest aller Routen in CI mit Antwort „nicht gefunden“.
 - **Begründung:** Vault-Prinzip und Betriebsratsfähigkeit vertragen keine fremde Telemetrie und keine Fremdhosts; Schlüsselvernichtung macht Löschung sofort wirksam.
 - **Folgen:** Geheimnisspeicher, Objektspeicher und Beobachtung sind in A-029 unter diesen Vorgaben festgelegt: OpenBao, Garage, OpenTelemetry mit Prometheus, Loki, Tempo und Grafana.
-- **Nachweise:** CSP-Verstöße in CI erkannt; Foto ohne Metadaten; Datenbankzugriff ohne Schlüssel liefert keine lesbaren Stimmungsdaten; Isolationstest grün.
+- **Nachweise:** CSP-Verstöße in CI erkannt; Foto ohne Metadaten; Datenbankzugriff ohne Schlüssel liefert keine lesbaren Stimmungsdaten; Isolationstest grün. Nachweisstand: keine Personendaten in Push-Nutzlasten, Betreffs und Zustellprotokollen technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-027 – Betriebsziele
 
@@ -279,14 +279,14 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Eine Plattform-Origin für App, Verwaltung, Kiosk, Operator-Konsole und API; keine tenant-eigenen Domains; eigene Staging-Origin; die Plattformdomain ist Konfiguration und keine Vorbedingung. TLS über ACME mit HSTS. E-Mail als konfigurierbarer Kanal auf Plattform- und Tenant-Ebene mit den Transporten SMTP (mit oder ohne TLS, mit oder ohne Authentifizierung), Amazon SES, SendGrid und Mailgun; Zugangsdaten in OpenBao; Testnachricht vor Aktivierung; Tracking deaktiviert; SPF, DKIM und DMARC je Absenderdomain; einstellbarer Rückfall auf Plattformversand bei Tenant-Fehler. Web Push über VAPID mit verschlüsselter Nutzlast, die nur eine Referenz enthält. Kein Status-Portal zum Start.
 - **Begründung:** eine Origin hält Cookie-Sitzung, CSRF-Schutz, OIDC-Redirects und Service Worker einfach (A-007); Tenants sollen unter eigener Absenderdomain und mit eigener Mailinfrastruktur versenden können.
 - **Folgen:** Ein plattformweit konfigurierter Anbieter ist Unterauftragsverarbeiter des Betreibers; ein vom Tenant konfigurierter Transport ist Auftragsverarbeiter des Tenants. Details in [Betrieb](betrieb.md), Abschnitt 6.
-- **Nachweise:** Versand über alle fünf Transportvarianten mit bestandenem SPF/DKIM/DMARC; Rückfall; Push ohne Inhalt in der Nutzlast.
+- **Nachweise:** Versand über alle fünf Transportvarianten mit bestandenem SPF/DKIM/DMARC; Rückfall; Push ohne Inhalt in der Nutzlast. Nachweisstand: SMTP-Transport über `System.Net.Mail` mit Zugangsdaten aus OpenBao (`app/notifications`), VAPID-Schlüssel ebenda technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`) (Transport in Tests ersetzt).
 
 ## A-033 – Organisationsmodell und Tenant-Lebenszyklus
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Eine Entität `organisation` mit Typ und optionaler Elternbeziehung; höchstens Operator → Partner → Tenant; genau eine Operator-Organisation als Heimat der Operator-Personen; keine Sub-Partner; Standorte, Abteilungen und Schichten sind Gruppen im Tenant. Stammdaten je Organisation einschließlich Rechnungsanschrift, Zeitzone (Europe/Vienna) und Standardsprache (de-AT) beim Tenant. Zustände Eingerichtet, Aktiv, Gesperrt, Gekündigt, Gelöscht; Sperre durch Operator oder Partner mit Grund; Kündigung durch Tenant-Admin, Partner oder Operator zum Monatsende; 90 Tage Lesezugriff, dann Löschung nach A-024. Anlage ausschließlich durch Operator-Admin oder Partner-Admin mit erstem Tenant-Admin-Rollencode; keine Selbstregistrierung von Firmen, keine öffentliche Registrierungsroute.
 - **Begründung:** ein Personen-, Sitzungs- und Rollenmodell für alle Ebenen; flache Hierarchie hält Vererbung und Berechtigungen prüfbar; vertriebsgeführte Anlage passt zu individueller Preisgestaltung und Verkauf an Firmenvertreter.
-- **Nachweise:** vierte Ebene abgelehnt; Sperre und Entsperrung ohne Datenverlust; Kündigung mit 90 Tagen Lesezugriff und Löschung.
+- **Nachweise:** vierte Ebene abgelehnt; Sperre und Entsperrung ohne Datenverlust; Kündigung mit 90 Tagen Lesezugriff und Löschung. Nachweisstand: Sperre und Entsperrung ohne Datenverlust, Kündigung zum Monatsende in der Tenant-Zeitzone mit 90 Tagen Lesezugriff für Tenant-Admin und Einsichtsrolle (Schreiben abgelehnt) und Löschung der Mitgliedschaften nach der Frist durch den Lauf technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); vierte Ebene abgelehnt bereits mit Stufe 2.
 
 ## A-034 – Gruppen und Sollstärken
 
@@ -294,14 +294,14 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Bis zu drei frei benannte Dimensionen mit flachen Gruppenlisten; eine Gruppe je Dimension je Person, selbst gewählt und selbst änderbar; Gruppen werden archiviert, nicht gelöscht; Zusammenlegen mit Protokoll. Sollstärke je Tenant und je Gruppe mit Stichtagshistorie, überall als Schätzgröße ausgewiesen, nie sichtbarkeitssteuernd; vierteljährliche Erinnerung; Warnung unter fünf. CSV-Import für Gruppen und Sollstärken; kein Personenimport.
 - **Begründung:** flache Gruppen verhindern kleine Blätter unter der Mindestzahl und Differenzbildung zwischen Ebenen; Stichtagshistorie hält vergangene Quoten stabil.
 - **Folgen:** Auswertungsgruppen sind ausschließlich diese Gruppen und der ganze Tenant (A-023).
-- **Nachweise:** Archivierung verlangt Neuwahl; Sollstärke-Änderung lässt vergangene Quoten unverändert.
+- **Nachweise:** Archivierung verlangt Neuwahl; Sollstärke-Änderung lässt vergangene Quoten unverändert. Nachweisstand: drei Dimensionen mit Standardnamen, Gruppen mit Sollstärke je Stichtag und Warnung unter fünf, archivierte Gruppe nicht wählbar (Neuwahl), Sollstärke mit Stichtag ohne Änderung vergangener Werte technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-035 – Mitgliedschaft
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Zustände Aktiv, Ausgetreten, Entfernt; kein Sperrzustand für Mitglieder; keine Obergrenze je Tenant. Tenant-Admin sieht Anzeigename, Gruppen, Rollen, Beitrittsdatum und kann Rollen entziehen, Mitglieder entfernen und Rollencodes ausstellen; er kann weder Anzeigename, Gruppen noch Sichtbarkeit einer Person ändern und keine Einzelperson anschreiben. Beiträge bleiben der Gruppe zum Beitragszeitpunkt zugeordnet.
 - **Begründung:** Werkzeuge gegen Missbrauch ohne Werkzeuge gegen Personen; stabile vergangene Kollektivstände.
-- **Nachweise:** Entfernen wirkt wie Austritt und steht im Protokoll; Gruppenwechsel verändert vergangene Stände nicht.
+- **Nachweise:** Entfernen wirkt wie Austritt und steht im Protokoll; Gruppenwechsel verändert vergangene Stände nicht. Nachweisstand: Gruppenwahl je Dimension im Beitritt (auch am Kiosk) und jederzeit änderbar, Gruppen am Beitrag zum Zeitpunkt der Erfassung, Entfernen durch den Tenant-Admin mit Löschfolgen wie Austritt technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-036 – Rollenkatalog und Rechte
 
@@ -309,7 +309,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Neun Rollen: Operator-Admin, Operator-Support, Partner-Admin, Tenant-Admin, Programm-Manager, Redakteur, Einsichtsrolle, Gesundheitsbotschafter (gruppengebunden), Mitglied. Rechtematrix gemäß [Organisation und Mandanten](organisation-und-mandanten.md), Abschnitt 4.2. Mehrere Rollen je Person möglich; mindestens ein Tenant-Admin je aktivem Tenant; Operator- und Partner-Rollen wirken nur über ihre Konsolen, nie innerhalb eines Tenants. Botschafter: nur eigene Gruppen, nur freigegebene Vorlagen, Quote ab fünf, keine Mitgliederliste.
 - **Begründung:** klare Trennung zwischen Betreiben, Verkaufen, Verwalten, Programm machen und Teilnehmen; die Kernregel gegen Einzelwerte bleibt in jeder Zelle erhalten.
 - **Folgen:** Wer Partner- oder Operator-Rolle und Mitgliedschaft in einem Tenant will, braucht getrennte Login-Identitäten.
-- **Nachweise:** jede „–“-Zelle wird über API und Oberfläche abgelehnt; letzter Tenant-Admin kann seine Rolle nicht abgeben.
+- **Nachweise:** jede „–“-Zelle wird über API und Oberfläche abgelehnt; letzter Tenant-Admin kann seine Rolle nicht abgeben. Nachweisstand: Rechtematrix der Verwaltungsrouten (Challenge-Verwaltung, Kickoff, vorzeitiges Ende, Tenant-Schalter, Beteiligung, Aushang, Zeitzone, Gruppen, Mitglied entfernen) über die API mit „–“-Zellen als 403 technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); letzter Tenant-Admin folgt mit der Verwaltungskonsole.
 
 ## A-037 – Partner-Ebene
 
@@ -324,21 +324,21 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Eine Challenge ist eine Komposition aus sieben Achsen (Zeitform, Metrik, Erfassung, Normalisierung, Aggregation, Wettbewerbsform, Sichtbarkeit) und drei Blöcken (Fairness, Beitritt, Belohnung). Sammelziel ist die voreingestellte Form. Metrikkatalog mit frei definierbaren Metriken; Körperbild-Metriken existieren nicht; Schlaf nur binär. Aggregation ausschließlich entlang der Gruppendimensionen und des Tenants, keine Ad-hoc-Teams. Belohnungen kollektiv als Abzeichen oder Tenant-Belohnung mit Freitext und Zielbedingung; nie Geld oder Einzelgutscheine. Sensible Gewohnheiten als eigene Kategorie mit erzwungener Sichtbarkeit „Nur ich“, ohne Teilnehmerzahl, Feed und Aggregate. Texte je Sprache mit Pflicht in der Standardsprache des Tenants.
 - **Begründung:** Aus einer Engine entstehen alle Formate; Kooperation als Standard schützt Beteiligung; feste Auswertungsgruppen schützen die Mindestzahl.
 - **Folgen:** Wizard blockiert pro Kopf ohne Sollstärke und zeigt Wirkungshinweise bei Rangliste und Duell. Details in [Challenges](challenges.md), Abschnitt 2.
-- **Nachweise:** alle sieben Formen aus den Achsen konfigurierbar; sensible Kategorie ohne Aggregate.
+- **Nachweise:** alle sieben Formen aus den Achsen konfigurierbar; sensible Kategorie ohne Aggregate. Nachweisstand: Kickoff-Challenge aus den Achsen (Sammelziel, Häkchen, ganze Firma, nächster Montag, vier Wochen, Ziel aus Sollstärke) mit Wizard, Vorschau als Pflicht und Planen technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); die übrigen Formen folgen mit der Vorlagenbibliothek.
 
 ## A-039 – Erfassung und Korrektur
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Erfassungszeitpunkt in Tenant-Zeitzone; Rückdatierung bis drei Kalendertage für Häkchen, Zahl und Dauer, nie Zukunft; Tagesdeckel kappt und zeigt an; Plausibilitätsgrenze 25.000 Schritte je Tag für automatische Quellen; Nachfrist 48 Stunden nach Ende für Beiträge mit Zeitpunkt im Zeitraum; Korrektur und Löschung eigener Beiträge bis Ende der Nachfrist als Gegenbuchung, Abzeichen bleiben; Kiosk ohne Foto und ohne Korrektur; bei manueller und automatischer Erfassung derselben Metrik am selben Tag gilt der höhere Wert bis zum Deckel. Jeder Beitrag erzeugt in einer Transaktion Beitrag, Fachereignis, ein pauschales Aktivitätsereignis und Folgejobs; das Metering-Ereignis `challenge.participant_day` entsteht beim ersten Beitrag einer Person am Tag; die sensible Kategorie erzeugt keine Challenge-Metriken.
 - **Begründung:** Vergessen darf nicht bestrafen, Manipulation darf sich nicht lohnen, Offline-Nutzung am letzten Tag darf nichts verlieren.
-- **Nachweise:** Deckel, Rückdatierung, Doppelübertragung, Nachfrist und Korrektur gemäß [Challenges](challenges.md), Abschnitt 9.
+- **Nachweise:** Deckel, Rückdatierung, Doppelübertragung, Nachfrist und Korrektur gemäß [Challenges](challenges.md), Abschnitt 9. Nachweisstand: Beiträge in der Nachfrist angenommen und nach ihrem Ende abgelehnt, Korrektur als Gegenbuchung genau einmal bis zum Ende der Nachfrist mit sinkendem Kollektivstand und bleibendem Meilenstein technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); Rückdatierung, Deckel und Doppelübertragung bereits mit Stufe 3.
 
 ## A-040 – Lebenszyklus, Kadenz und Zuständigkeit
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Zustände Entwurf, Geplant, Laufend, Nachfrist, Beendet, Archiviert; Vorschau vor dem Planen Pflicht; Achsen nach Start unveränderbar, Texte änderbar; vorzeitiges Ende mit Begründung im Protokoll. Programm-Manager legt tenantweit an, gibt Vorlagen frei, setzt Kadenz und markiert Belohnungen als eingelöst; Botschafter legen für eigene Gruppen aus freigegebenen Vorlagen an; Mitglieder legen keine Challenges an, können Vorlagen vorschlagen. Keine Vorlage innerhalb von 12 Monaten wiederholt, Warnung übersteuerbar mit Protokoll. Kickoff-Challenge beim Einrichten vorbelegt.
 - **Begründung:** Kadenz braucht eine verantwortliche Rolle; unveränderbare Achsen schützen die Fairness laufender Wertungen.
-- **Nachweise:** Achsenänderung nach Start abgelehnt; Wiederholungswarnung und Protokoll.
+- **Nachweise:** Achsenänderung nach Start abgelehnt; Wiederholungswarnung und Protokoll. Nachweisstand: Entwurf → Geplant → Laufend → Nachfrist → Beendet → Archiviert zeitgesteuert durch den Worker, vorzeitiges Ende nur durch den Programm-Manager mit Begründung, Texte änderbar technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-041 – Vorlagenbibliothek
 
@@ -352,7 +352,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Kollektivstände ereignisgetrieben mit Altersanzeige; Ranglisten als Snapshot alle 15 Minuten und am Ende der Nachfrist, nie live; pro Kopf auf Sollstärke der Gruppe zum Challenge-Start; relative Verbesserung mit sieben Tagen Baseline und Wertung ab Tag acht, ohne Baseline keine Verbesserungswertung; binäre Zielerreichung je Tag; Aufgabenraster und Staffel gemäß Export. Anzeige nach A-022 und A-023: unter fünf oder unter 40 Prozent Kollektivfortschritt statt Rangliste, keine Nullwerte, Meilensteine als genau ein Feed-Ereignis. Arena-Projektion nur Pro-Kopf-Wert auf Tenant-Sollstärke, Größenklasse, Zeitpunkt; unter fünf nur „nimmt teil“.
 - **Begründung:** Snapshots verhindern Rückschlüsse aus Einzelbewegungen; Sollstärke-Bezug belohnt Beteiligung statt Nichtaktivierung.
-- **Nachweise:** Schwellen, Baseline, Sollstärke-Stichtag und Projektion gemäß [Challenges](challenges.md), Abschnitt 9.
+- **Nachweise:** Schwellen, Baseline, Sollstärke-Stichtag und Projektion gemäß [Challenges](challenges.md), Abschnitt 9. Nachweisstand: Kollektivstand per Job mit Meilensteinen 25/50/75/100 genau einmal, Prozentwert unter fünf Beitragenden ohne Summen (A-023) technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); keine Rangliste im Durchstich.
 
 ## A-043 – Buddy-System
 
@@ -366,49 +366,49 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Jede Handlung erzeugt genau ein Aktivitätsereignis; Korrekturen erzeugen Gegenereignisse. 10 Punkte je gewerteter Handlung unabhängig von Art und Messwert; höchstens 10 gewertete Handlungen je Tag; Deckel je Art (Check-in 1, Challenge-Beiträge 3, Inhalte 3, gelesene Beiträge 2, Anerkennungen 3, Feed-Beiträge 1, Veranstaltungsbesuch 1, automatische Tageswerte 1 je Metrik). Saldo verfällt nie, nie negativ, nicht einlösbar. Automatische Tageswerte aus dem Vault ergeben höchstens eine Handlung je Metrik und Tag und zählen nicht als „aktives Mitglied“.
 - **Begründung:** Aktivitätsgleichheit als Rechenregel statt Absichtserklärung; Deckel gegen Ausreißer und Manipulation.
-- **Nachweise:** Deckel gesamt und je Art; Gegenereignis reduziert Saldo bis null; automatischer Tageswert ohne Abrechnungswirkung.
+- **Nachweise:** Deckel gesamt und je Art; Gegenereignis reduziert Saldo bis null; automatischer Tageswert ohne Abrechnungswirkung. Nachweisstand: zehn Punkte je Handlung mit Deckel gesamt und je Art, Gegenereignis senkt den Saldo bis null, aktiver Tag und Monat als Metering ohne Personenbezug technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-045 – Serie und Abwesenheit
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Serie als zusammenhängende Tage mit gewerteter Handlung in Tenant-Zeitzone; Serienschutz einmal je Kalendermonat, automatisch; Serienbruch senkt nie Stufe, Abzeichen oder Rang; Neuberechnung bei Korrektur. Abwesenheit „von–bis“ ohne Grund, rückwirkend bis drei Tage, höchstens acht Wochen je Eintrag; pausiert Serie, unterdrückt alle Benachrichtigungskategorien außer Konto und Sicherheit sowie Plattform (A-060); für niemanden sichtbar außer als pausierte Serie für den Buddy.
 - **Begründung:** Krankenstand oder Urlaub dürfen keine Serie zerstören und keine Gesundheitsinformation hinterlassen.
-- **Nachweise:** Pause ohne Bruch; kein Grund gespeichert; Signale unterdrückt.
+- **Nachweise:** Pause ohne Bruch; kein Grund gespeichert; Signale unterdrückt. Nachweisstand: Serie mit einem überbrückten Tag je Monat und Neuberechnung nach Korrektur technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); Abwesenheit folgt.
 
 ## A-046 – Abzeichen
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Plattformkatalog des Operators mit rund 30 Abzeichen in fünf Kategorien (Einstieg, Dranbleiben, Gemeinsam, Vielfalt, Saison); keine Tenant- oder Partnerabzeichen. Regeln nur über Handlungen, Tage und Kollektivereignisse, nie über Messwerte. Verleihung ereignisgetrieben, je Person einmal, nie entzogen. Sichtbar: verdiente plus genau ein nächstes je Kategorie. Erstes Abzeichen im Beitritt. Feed-Ereignisse nach Sichtbarkeitsstufe; Sammelereignisse ab fünf Personen.
 - **Begründung:** kein grauer Friedhof; verdiente Anerkennung bleibt; einheitliche Gestaltung über alle Tenants.
-- **Nachweise:** höchstens fünf offene Kacheln; Abzeichen bleibt nach Korrektur; Sammelereignis erst ab fünf.
+- **Nachweise:** höchstens fünf offene Kacheln; Abzeichen bleibt nach Korrektur; Sammelereignis erst ab fünf. Nachweisstand: Katalog mit genau einem nächsten Abzeichen je Kategorie, erstes Abzeichen sofort, Abzeichen bleibt nach Korrektur, Sammelkarte erst ab fünf Personen technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-047 – Stufen
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Fünf Stufen bei 0, 300, 1.000, 3.000 und 10.000 kumulierten Punkten; Namen Neu dabei, Dabei, Dranbleiber, Vorbild, Urgestein, je Tenant umbenennbar; Stufen schalten nichts frei und sinken nie.
 - **Begründung:** Beständigkeit statt Leistung; keine Inhalte hinter Verhaltensbedingungen.
-- **Nachweise:** Stufe bleibt bei Saldo unter Schwelle; keine Freischaltung an Stufen gebunden.
+- **Nachweise:** Stufe bleibt bei Saldo unter Schwelle; keine Freischaltung an Stufen gebunden. Nachweisstand: Schwellen 300/1000/3000/10000, Stufe sinkt nie, Bezeichnung aus der Marke technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-048 – Check-in, persönliche Anzeigen und Signale
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Täglicher Check-in mit drei Kacheln (Bewegt, Pause gemacht, Erholt), Mehrfachauswahl, ein Tap, kein Rating, auch am Kiosk. Persönliches Tagesziel 1 bis 3 Handlungen. Tagesring, Wochenstreifen, Monatsraster, Punkteverlauf erst ab 14 Tagen Daten, Serien-Chip; alles nur für die Person, Buddy sieht Serie und Tagesring. Wochenrückblick privat, Jahresrückblick privat und teilbar, beide ohne Vergleiche. Inaktivitätssignale nach 7, 30 und 60 Tagen als interne Ereignisse an Benachrichtigungen, nie sichtbar, nie ausgewertet, nicht während Abwesenheit. Aufbewahrung nach A-024 mit Monatsaggregaten.
 - **Begründung:** Der Kern erzeugt eigenen Fortschritt ohne Modul; Anzeigen ohne Nullwerte; Inaktivität bleibt unsichtbar.
-- **Nachweise:** Check-in am Kiosk; Punkteverlauf erst ab 14 Tagen; Signale unterdrückt bei Abwesenheit; Aggregate nach 24 Monaten.
+- **Nachweise:** Check-in am Kiosk; Punkteverlauf erst ab 14 Tagen; Signale unterdrückt bei Abwesenheit; Aggregate nach 24 Monaten. Nachweisstand: Check-in einmal je Tag mit drei Kacheln, auch am Kiosk, persönliche Anzeigen ohne Vergleiche, Beteiligung erst ab fünf Personen und nur für Funktionsrollen, Zeitzone des Tenants technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-049 – Feed-Modell
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Ereignis-Stream aus vier Quellen mit Priorität System-Ereignisse, kuratierte Inhalte, Tenant-Beiträge, Mitglieder-Beiträge; fünf Kartentypen mit festem Layout; Startseite mit Kopfkarte, Check-in-Karte, höchstens zwei angehefteten Tenant-Beiträgen für höchstens sieben Tage und chronologischem Stream ohne Interaktionsgewichtung; Geltungsbereich je Eintrag (Tenant, Gruppen, Arena); Mitglieder-Beiträge höchstens im Kreis der eigenen Sichtbarkeitsstufe, mit „Nur für mich“ kein Beitrag; Verdichtung gleichartiger System-Ereignisse, Sammelkarten ab fünf Personen, höchstens acht System-Karten und zwei Inhaltskarten je Tag; Abfrage mit ETag alle 60 Sekunden, Feed nur online; Einträge 12 Monate im Stream.
 - **Begründung:** Der Feed ist die Oberfläche aller Module und darf nie leer sein; chronologische Ordnung ohne Beliebtheitsgewichtung verhindert Vergleichsspiralen.
-- **Nachweise:** kein leerer Feed bei neuem Tenant; Reichweite nach Sichtbarkeitsstufe rückwirkend; Sammelkarte ab fünf; ETag ohne Nutzdaten.
+- **Nachweise:** kein leerer Feed bei neuem Tenant; Reichweite nach Sichtbarkeitsstufe rückwirkend; Sammelkarte ab fünf; ETag ohne Nutzdaten. Nachweisstand: kein leerer Feed (Kopfkarte, Check-in, Startkarte), Reichweite nach Sichtbarkeitsstufe rückwirkend, Sammelkarte ab fünf, Deckel acht System-Karten je Tag, ETag ohne Nutzdaten technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-050 – Beiträge, Kommentare und Anerkennung
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Tenant-Beiträge durch Programm-Manager, Redakteur und Botschafter (eigene Gruppen) mit Text bis 2.000 Zeichen, bis zu 4 Bildern oder einem Dokument, Termin oder Link, Zeitsteuerung, Ablauf, Anheftung, Tonalitätsvorschlägen. Mitglieder-Beiträge tenantweit einschaltbar (Voreinstellung ein), Text bis 1.000 Zeichen, bis zu 4 Bilder, optional verknüpfte eigene Handlung mit wählbarer Messwertanzeige, höchstens 5 je Tag. Kommentare eine Ebene tief bis 500 Zeichen, tenantweit und je Beitrag abschaltbar, nur mit mindestens „Mein Team“; keine Kommentare auf Inhaltsobjekten. Anerkennung ohne Zähler, sichtbar dass und von wem nach Sichtbarkeit; Geben ist Handlung mit Deckel 3; Erhalten erzeugt nur eine tägliche Zusammenfassung.
 - **Begründung:** Kundeninteraktion findet hier statt; Kommentare mit Werkzeugen statt Verzicht; keine Beliebtheitsmetriken.
-- **Nachweise:** Reichweite, Kommentarschalter, Anerkennung ohne Zahl, Ratenbegrenzung.
+- **Nachweise:** Reichweite, Kommentarschalter, Anerkennung ohne Zahl, Ratenbegrenzung. Nachweisstand: Mitglieder-Beitrag bis 1.000 Zeichen im Kreis der Sichtbarkeitsstufe, mit „Nur für mich“ abgelehnt mit Erklärung, fünf je Tag, nie am Kiosk technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); Kommentare und Anerkennung folgen.
 
 ## A-051 – Moderation und Meldungen
 
@@ -465,42 +465,42 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Fünf Kanäle: In-App als immer aktive Grundlage mit Benachrichtigungszentrum, Web Push, E-Mail, Aushang als PDF, Kalender als ICS. Kein SMS, keine Chat-Integrationen, keine nativen Push-Dienste außerhalb des Web-Standards. Tenant schaltet je Kanal und Kategorie ein oder aus; Ausschalten pausiert sofort und erhält Abonnements und Einstellungen; Einschalten wirkt sofort ohne neue Berechtigung; Schalter im Prüfprotokoll. Der Kiosk zeigt keine persönlichen Benachrichtigungen.
 - **Begründung:** Optionalität je Tenant ohne Verlust der Reichweite beim Wiedereinschalten; Feed bleibt Ereignis-Stream, Benachrichtigungen sind an Personen gerichtet.
-- **Nachweise:** Pausieren ohne Zustellung, Wiedereinschalten ohne Prompt, Protokolleintrag.
+- **Nachweise:** Pausieren ohne Zustellung, Wiedereinschalten ohne Prompt, Protokolleintrag. Nachweisstand: Tenant-Schalter je Kanal pausiert ohne Zustellung, Abonnements bleiben, Wiedereinschalten ohne neuen Prompt, Eintrag im Prüfprotokoll technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## A-059 – Web Push
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Push-API und Notifications-API im Angular-Service-Worker mit VAPID-Schlüsselpaar der Plattform in OpenBao und geplanter Rotation; kein Fremd-SDK. Nutzlast verschlüsselt mit ausschließlich Referenz, Kategorie und Ziel; Auflösung über die API mit Sitzung, ohne Sitzung neutrale Anzeige mit Produktnamen. TTL, Dringlichkeit und Sammelschlüssel je Kategorie und Bezug. Abonnement erst nach App-eigenem Erklärungsschritt und Button, auf iOS nach Installation; automatisches Abonnieren durch den Service Worker und Erneuerung bei `pushsubscriptionchange`; Prüfung bei jedem App-Start; 404 oder 410 löschen, fünf Fehler pausieren das Abonnement. Geräteliste je Person; Löschung bei Abmeldung aus allen Sitzungen und Austritt; Kiosk abonniert nie.
 - **Begründung:** Standardkonformer Push ohne Drittanbieter erfüllt A-026; Erklärungsschritt vor dem Browser-Prompt sichert die Zustimmungsquote.
-- **Nachweise:** Prompt erst nach Button, Erneuerung ohne Nutzeraktion, Nutzlast ohne Inhalt, Löschung bei 410.
+- **Nachweise:** Prompt erst nach Button, Erneuerung ohne Nutzeraktion, Nutzlast ohne Inhalt, Löschung bei 410. Nachweisstand: VAPID (ES256) mit Schlüssel aus OpenBao, Nutzlast nach RFC 8291 nur mit Kennung, Kategorie und Ziel, 410 löscht das Abonnement, Erneuerung über den eigenen Service Worker, Kiosk abonniert nie technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); Produktwahl A-112.
 
 ## A-060 – Kategorien, Regelwerk und Zusammenspiel mit Beiträgen
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Zwölf Kategorien mit Standardwerten je Kanal, darunter Veranstaltungen für M9, gemäß [Benachrichtigungen](benachrichtigungen.md), Abschnitt 4.1; Konto und Sicherheit sowie Plattform nicht abschaltbar. Regeln: Sichtbarkeitsprüfung für Empfänger und genannte Personen; höchstens drei Push je Person und Tag außer Erinnerungen und Konto; drei Ankündigungen je Woche tenantweit, eine je Woche und Gruppe für Botschafter; ein Inhalte-Push je Tag; Ruhezeit tenantweit 20:00 bis 07:00, persönlich nur erweiterbar, Zurückhaltung und Verdichtung um 07:00; Verdichtung gleicher Bezüge in 30 Minuten; tägliche Zusammenfassung für Kommentare und Anerkennungen; Abwesenheit unterdrückt alles außer Konto und Plattform; Idempotenz je Ereignis, Person und Kanal; Texte in Tonalität und Sprache ohne Rückstand, Vergleich oder Nichtteilnahme. Tenant-Beiträge lösen Push nur mit Markierung „Ankündigung“ aus; Mitglieder-Beiträge nie an Dritte; Autoren sehen die erwartete Reichweite je Kanal ab fünf.
 - **Begründung:** Benachrichtigungen müssen Feed und Beiträge tragen, nicht übertönen; Kontingente und Ruhezeiten sind Teil des Modells.
-- **Nachweise:** Kontingente, Ruhezeit, Verdichtung, Abwesenheit, Sichtbarkeit ohne Namen, Ankündigungsmarkierung.
+- **Nachweise:** Kontingente, Ruhezeit, Verdichtung, Abwesenheit, Sichtbarkeit ohne Namen, Ankündigungsmarkierung. Nachweisstand: Kontingent drei Push je Person und Tag (Rest In-App), Ruhezeit hält bis zu ihrem Ende in der Tenant-Zeitzone zurück, Deduplikation je Ereignis, Person und Kanal technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); Verdichtung, Abwesenheit und Ankündigungen folgen.
 
 ## A-061 – Persönliche Einstellungen und Erinnerungen
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Je Kategorie Push ein/aus und E-Mail sofort, täglich, wöchentlich oder aus; In-App immer aktiv; Geräteliste; persönliche Ruhezeit nur erweiterbar; bis zu vier Erinnerungsfenster je Tag mit Wochentagen, optionalem Text und Kanal Push oder Kalender, ohne Zahlen zum eigenen Stand; Sprache; alles je Person und Tenant, im Export, bei Austritt gelöscht. Onboarding schlägt ein Zeitfenster vor und setzt nichts ohne Zustimmung.
 - **Begründung:** Erinnerungen wirken nur, wenn die Person sie selbst gesetzt hat.
-- **Nachweise:** Erinnerung zur gewählten Zeit trotz Ruhezeit; Onboarding ohne stillschweigende Aktivierung.
+- **Nachweise:** Erinnerung zur gewählten Zeit trotz Ruhezeit; Onboarding ohne stillschweigende Aktivierung. Nachweisstand: persönliche Schalter je Kategorie für Push und E-Mail, Geräte einzeln abmeldbar, erweiterte Ruhezeit technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); Erinnerungsfenster folgen.
 
 ## A-062 – E-Mail, Aushang und Kalender
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** E-Mail sofort oder als tägliche und wöchentliche Zusammenfassung außerhalb der Ruhezeit; Ein-Klick-Abmeldung je Kategorie außer Konto; kein Tracking; Transport nach A-032; drei Unzustellbarkeiten pausieren E-Mail für die Person. Wöchentlicher Aushang-Zettel je Tenant oder Gruppe und Ankündigungs-Aushang aus Tenant-Beitrag als A4-PDF mit Tokensatz, ohne Personenbezug, ohne Quote unter fünf, erzeugt vom Worker, Vorlage nicht frei gestaltbar. ICS-Export für Erinnerungen und Termine ohne Personendaten Dritter.
 - **Begründung:** Belegschaften ohne Gerät erreichen die Plattform nur am Aushang; E-Mail ohne Tracking bleibt betriebsratsfähig.
-- **Nachweise:** Aushang ohne Personendaten; Abmeldung sofort wirksam; kein Pixel.
+- **Nachweise:** Aushang ohne Personendaten; Abmeldung sofort wirksam; kein Pixel. Nachweisstand: E-Mail ohne Tracking mit Ein-Klick-Abmeldung je Kategorie (signiertes Token, sofort wirksam), Konto-Mail ohne Abmeldelink, Aushang als PDF mit identischen Tokenfarben, Kollektivstand und Beitrittscode ohne Personendaten technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); QR-Code und Kalender folgen.
 
 ## A-063 – Zustellpipeline, Status und Auswertung
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Fachereignis → Regelwerk im Worker → In-App-Eintrag immer plus Kanaljobs mit Idempotenzschlüssel → Zustellstatus ohne Inhalt 30 Tage → Lesestatus geräteübergreifend; Einträge 90 Tage; Zentrum online. Auswertung für Programm-Manager und Tenant-Admin je Kategorie und Woche (gesendet, zugestellt, geöffnet, Anteil mit aktivem Push und installierter App) nur ab fünf Personen; Einsichtsrolle sieht Kanäle, Kategorien, Schalter und Kontingente; Operator Fehlerquoten plattformweit; keine Personenlisten. Push-Dienste der Browserhersteller als Empfänger technisch notwendiger Daten im Auftragsverarbeitungsvertrag; Endpunkte werden wie Zugangsdaten behandelt; signierte, zeitlich begrenzte Einstellungslinks; Löschung bei Austritt.
 - **Begründung:** eine Pipeline für alle Kanäle mit garantierter Einmaligkeit; Wirkungsdaten ohne Personenbezug.
-- **Nachweise:** wiederholter Job ohne Doppelzustellung; Aggregate erst ab fünf; Löschung bei Austritt.
+- **Nachweise:** wiederholter Job ohne Doppelzustellung; Aggregate erst ab fünf; Löschung bei Austritt. Nachweisstand: Pipeline aus Fachereignissen mit In-App-Eintrag je Empfänger und Zustelljob je Kanal, wiederholter Job ohne Doppelzustellung, Löschung bei Austritt, Zähler ohne Personenbezug technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); Auswertung ab fünf folgt.
 
 ## A-064 – Modulkatalog und Kern
 
@@ -842,6 +842,14 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Begründung:** Geprüft am 26.09.2026 gegen A-007 (etablierte Middleware für Signatur, Issuer, Audience, State, Nonce; Callback und Codeaustausch im Backend; keine Tokens im Browser), A-015 (tenant-eigene Anbieter im Self-Service mit Discovery-Validierung, Anbieter zur Laufzeit zu- und abschaltbar) und A-026 (keine Fremdhosts, keine Telemetrie, EU-Betrieb): die OpenIdConnect-Middleware ist Teil von ASP.NET Core 10 (kein weiteres Paket, dieselbe Wartung wie das Framework) und erlaubt über `IAuthenticationSchemeProvider` und `IOptionsMonitor` die Registrierung je Anbieter zur Laufzeit; Duende.IdentityModel 8.1.0 liefert nur Protokollbausteine (Discovery, Token-Endpunkte) ohne Redirect-Middleware und hätte den Ablauf selbst nachgebaut; OpenIddict.Client 7.7.1 ist ein vollständiger Client-Stack mit eigenem Speicher- und Konfigurationsmodell und mehr Oberfläche als für den Login nötig. Für WebAuthn ist Fido2NetLib die einzige aktiv gepflegte, framework-unabhängige .NET-Bibliothek mit vollständiger Attestations- und Assertionsprüfung; die Passkey-Unterstützung von ASP.NET Core Identity in .NET 10 ist an den Identity-Benutzerspeicher (`IdentityUser`, `UserManager`) gebunden, den CompanyHero nicht verwendet, weil Person, Rollen und Mitgliedschaft in eigenen Modulen liegen (A-012, A-014). Beide Bibliotheken laufen ohne externe Dienste.
 - **Folgen:** Plattformanbieter werden über Konfiguration (Geheimnisse in OpenBao) gepflegt, tenant-eigene Anbieter über `POST /api/access/providers` mit frischer Anmeldung; Redirect-Ziele sind ausschließlich Pfade der Plattform-Origin (`Identity:PublicOrigin`), die zugleich Relying-Party-ID der Passkeys ist. Versionen in `durchstich/versionen.md`. Ein Wechsel der Bibliotheken bleibt hinter `IExternalLoginFlow` und `IPasskeyService` lokal.
 - **Nachweise:** `OidcLoginTests`, `AccessJoinTests`, `RoleCodeTests`, `SessionTests`, `AccessRulesTests`; Playwright mit virtuellem Authenticator (`durchstich/abnahme/stufe-4.md`).
+
+## A-112 – Web Push und E-Mail ohne Fremdbibliothek: VAPID und RFC 8291 mit .NET-Kryptografie, SMTP über System.Net.Mail, eigener PDF-Schreiber für den Aushang
+
+- **Entscheidung:** Web Push wird ohne Bibliothek umgesetzt: VAPID-JWT (ES256) mit `ECDsa`, Nutzlastverschlüsselung nach RFC 8291 (`aes128gcm`) mit `ECDiffieHellman`, `HKDF` und `AesGcm` aus .NET 10; der Transport zum Push-Dienst läuft über `HttpClient`. E-Mail geht über `System.Net.Mail.SmtpClient` mit STARTTLS; der Aushang entsteht mit einem eigenen minimalen PDF-Schreiber (PDF 1.4, Helvetica, Farben aus dem Tokensatz).
+- **Begründung:** Die Verfahren sind in .NET vollständig vorhanden, die Nutzlast ist klein und fest (`{ id, kategorie, ziel }`), eine Bibliothek brächte eine weitere Lieferkette ohne fachlichen Gewinn (A-030). Für PDF genügt ein Zettel aus Rechtecken und Text; ein Layoutpaket folgt erst mit Bildern im Aushang.
+- **Konsequenzen:** Verschlüsselung und Signatur sind mit Fachtests (Ver- und Entschlüsselung, Signaturprüfung) und Integrationstests (entschlüsselte Nutzlast am Fake-Push-Dienst) belegt; Tests ersetzen Push- und Mail-Transport. Der QR-Code im Aushang und ein Bildlayout folgen mit der Medienverarbeitung.
+- **Alternativen:** WebPush-Bibliotheken (abgelehnt: zusätzliche Abhängigkeit für wenige Zeilen Standardkryptografie); MailKit (abgelehnt, solange nur einfacher SMTP-Versand mit STARTTLS gebraucht wird); QuestPDF (abgelehnt für einen Textzettel).
+- **Nachweise:** Nutzlast am Fake-Push-Dienst entschlüsselt enthält nur Kennung, Kategorie und Ziel; VAPID-Signatur prüfbar; E-Mail ohne Pixel mit Abmeldelink; PDF mit Tokenfarben ohne Personendaten. Nachweisstand: technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
 ## Noch zu entscheidende Produktwahlen
 

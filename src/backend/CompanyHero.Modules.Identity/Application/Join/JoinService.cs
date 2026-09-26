@@ -19,8 +19,11 @@ namespace CompanyHero.Modules.Identity.Application.Join;
 /// <summary>Anmeldewege, die der Tenant Beitretenden anbietet (Zugang 3.4), plus Anbieter mit Anzeigenamen.</summary>
 public sealed record JoinWays(bool Passkey, bool MagicLink, bool Kiosk, IReadOnlyList<ProviderRecord> Providers, IReadOnlyList<string> ForcedProviderKeys);
 
-/// <summary>Tenant-Vorschau beim Beitritt: nur Name (Logo über Marke) und Wege (Zugang 2.1).</summary>
-public sealed record JoinPreview(TenantId TenantId, string TenantName, JoinWays Ways);
+/// <summary>Gruppen einer Dimension zur Wahl beim Beitritt (Zugang 2.2 Schritt 4, Organisation 2.1); nur wählbare Gruppen.</summary>
+public sealed record JoinDimension(Guid DimensionId, string Name, IReadOnlyList<(Guid GroupId, string Name)> Groups);
+
+/// <summary>Tenant-Vorschau beim Beitritt: nur Name (Logo über Marke), Wege und wählbare Gruppen (Zugang 2.1, 2.2).</summary>
+public sealed record JoinPreview(TenantId TenantId, string TenantName, JoinWays Ways, IReadOnlyList<JoinDimension> Dimensions);
 
 /// <summary>Passkey-Antwort des Browsers mit dem Zustand der Zeremonie.</summary>
 public sealed record PasskeyAnswer(string State, JsonElement Credential, string? DeviceName);
@@ -38,7 +41,8 @@ public sealed record JoinCommand(
     ExternalIdentity? External,
     string? KioskPin,
     string? RealName = null,
-    string? Role = null);
+    string? Role = null,
+    IReadOnlyDictionary<Guid, Guid>? Groups = null);
 
 /// <summary>Ergebnis: Person, Kiosk-Kennung, einmalig angezeigter Wiederherstellungscode, Sitzung (nicht am Kiosk).</summary>
 public sealed record JoinResult(TenantId TenantId, PersonId PersonId, string KioskId, string? RecoveryCode, IssuedSession? Session);
@@ -239,7 +243,7 @@ internal sealed class JoinService(ITenantScopeFactory scopes, IPasskeyService pa
             db.Persons.Add(person);
 
             var organisations = sp.GetRequiredService<IOrganisationDirectory>();
-            await organisations.AddMemberAsync(person.Id, ct);
+            await organisations.AddMemberAsync(person.Id, ct, command.Groups);
             await organisations.AssignRoleAsync(person.Id, Role.Member, ct);
             if (command.Role is { } assigned && assigned != Role.Member)
             {
@@ -392,6 +396,12 @@ internal sealed class JoinService(ITenantScopeFactory scopes, IPasskeyService pa
 
         var policy = await WayQueries.PolicyAsync(db, tenantId, now, ct);
         var available = await sp.GetRequiredService<IProviderCatalog>().ListForTenantAsync(tenantId, ct);
-        return new JoinPreview(tenantId, tenant.Value.DisplayName, new JoinWays(policy.PasskeyEnabled, policy.MagicLinkEnabled, policy.KioskJoinAllowed, available, policy.ForcedProviderKeys));
+        // Gruppenwahl (Zugang 2.2 Schritt 4): wählbare Gruppen je aktiver Dimension, gelesen im Kontext des Tenants.
+        var dimensions = await sp.GetRequiredService<ITenantScopeFactory>().RunAsync(TenantContext.ForTenant(tenantId), async (inner, c) =>
+        {
+            var list = await inner.GetRequiredService<IOrganisationDirectory>().ListDimensionsAsync(false, c);
+            return list.Where(d => d.Active).Select(d => new JoinDimension(d.DimensionId, d.Name, d.Groups.Where(g => !g.Archived).Select(g => (g.GroupId, g.Name)).ToList())).ToList();
+        }, ct);
+        return new JoinPreview(tenantId, tenant.Value.DisplayName, new JoinWays(policy.PasskeyEnabled, policy.MagicLinkEnabled, policy.KioskJoinAllowed, available, policy.ForcedProviderKeys), dimensions);
     }
 }

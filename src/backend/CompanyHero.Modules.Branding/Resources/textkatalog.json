@@ -3554,5 +3554,1797 @@
       "du": "Fertig",
       "sie": "Fertig"
     }
+  },
+  "feed.challengeGestartet": {
+    "sachlich": {
+      "du": "Die Challenge „{titel}“ hat begonnen.",
+      "sie": "Die Challenge „{titel}“ hat begonnen."
+    },
+    "freundlich": {
+      "du": "„{titel}“ ist gestartet, jedes Häkchen zählt.",
+      "sie": "„{titel}“ ist gestartet, jedes Häkchen zählt."
+    },
+    "motivierend": {
+      "du": "„{titel}“ läuft, sei dabei!",
+      "sie": "„{titel}“ läuft, seien Sie dabei!"
+    }
+  },
+  "feed.meilenstein": {
+    "sachlich": {
+      "du": "„{titel}“: {prozent} Prozent des Firmenziels erreicht.",
+      "sie": "„{titel}“: {prozent} Prozent des Firmenziels erreicht."
+    },
+    "freundlich": {
+      "du": "Gemeinsam geschafft: {prozent} Prozent bei „{titel}“.",
+      "sie": "Gemeinsam geschafft: {prozent} Prozent bei „{titel}“."
+    },
+    "motivierend": {
+      "du": "{prozent} Prozent bei „{titel}“, weiter so!",
+      "sie": "{prozent} Prozent bei „{titel}“, weiter so!"
+    }
+  },
+  "feed.challengeBeendet": {
+    "sachlich": {
+      "du": "„{titel}“ ist beendet: {prozent} Prozent des Firmenziels.",
+      "sie": "„{titel}“ ist beendet: {prozent} Prozent des Firmenziels."
+    },
+    "freundlich": {
+      "du": "„{titel}“ ist zu Ende, gemeinsam {prozent} Prozent erreicht.",
+      "sie": "„{titel}“ ist zu Ende, gemeinsam {prozent} Prozent erreicht."
+    },
+    "motivierend": {
+      "du": "„{titel}“ ist geschafft: {prozent} Prozent gemeinsam!",
+      "sie": "„{titel}“ ist geschafft: {prozent} Prozent gemeinsam!"
+    }
+  },
+  "feed.abzeichenVerdient": {
+    "sachlich": {
+      "du": "Abzeichen verdient.",
+      "sie": "Abzeichen verdient."
+    },
+    "freundlich": {
+      "du": "Ein neues Abzeichen ist da.",
+      "sie": "Ein neues Abzeichen ist da."
+    },
+    "motivierend": {
+      "du": "Neues Abzeichen, stark!",
+      "sie": "Neues Abzeichen, stark!"
+    }
+  },
+  "feed.abzeichenSammel": {
+    "sachlich": {
+      "du": "Heute haben {anzahl} Personen ein Abzeichen verdient.",
+      "sie": "Heute haben {anzahl} Personen ein Abzeichen verdient."
+    },
+    "freundlich": {
+      "du": "{anzahl} Personen haben heute ein Abzeichen verdient.",
+      "sie": "{anzahl} Personen haben heute ein Abzeichen verdient."
+    },
+    "motivierend": {
+      "du": "{anzahl} Personen mit neuem Abzeichen heute!",
+      "sie": "{anzahl} Personen mit neuem Abzeichen heute!"
+    }
+  },
+  "feed.stufeErreicht": {
+    "sachlich": {
+      "du": "Stufe {stufe} erreicht.",
+      "sie": "Stufe {stufe} erreicht."
+    },
+    "freundlich": {
+      "du": "Stufe {stufe} ist erreicht.",
+      "sie": "Stufe {stufe} ist erreicht."
+    },
+    "motivierend": {
+      "du": "Stufe {stufe} erreicht, weiter geht's!",
+      "sie": "Stufe {stufe} erreicht, weiter geht's!"
+    }
+  },
+  "feed.checkin": {
+    "sachlich": {
+      "du": "Check-in gemacht.",
+      "sie": "Check-in gemacht."
+    },
+    "freundlich": {
+      "du": "Heute eingecheckt.",
+      "sie": "Heute eingecheckt."
+    },
+    "motivierend": {
+      "du": "Eingecheckt, der Tag zählt!",
+      "sie": "Eingecheckt, der Tag zählt!"
+    }
+  },
+  "feed.tageszusammenfassung": {
+    "sachlich": {
+      "du": "{anzahl} weitere Ereignisse an diesem Tag.",
+      "sie": "{anzahl} weitere Ereignisse an diesem Tag."
+    },
+    "freundlich": {
+      "du": "Und {anzahl} weitere Ereignisse an diesem Tag.",
+      "sie": "Und {anzahl} weitere Ereignisse an diesem Tag."
+    },
+    "motivierend": {
+      "du": "Dazu {anzahl} weitere Ereignisse an diesem Tag!",
+      "sie": "Dazu {anzahl} weitere Ereignisse an diesem Tag!"
+    }
+  },
+  "feed.mitgliedsbeitrag": {
+    "sachlich": {
+      "du": "Beitrag",
+      "sie": "Beitrag"
+    },
+    "freundlich": {
+      "du": "Beitrag",
+      "sie": "Beitrag"
+    },
+    "motivierend": {
+      "du": "Beitrag",
+      "sie": "Beitrag"
+    }
+  },
+  "feed.kopf.tagesziel": {
+    "sachlich": {
+      "du": "Tagesziel: {heute} von {ziel} Handlungen.",
+      "sie": "Tagesziel: {heute} von {ziel} Handlungen."
+    },
+    "freundlich": {
+      "du": "Dein Tagesziel: {heute} von {ziel} Handlungen.",
+      "sie": "Ihr Tagesziel: {heute} von {ziel} Handlungen."
+    },
+    "motivierend": {
+      "du": "Tagesziel: {heute} von {ziel}, du schaffst das!",
+      "sie": "Tagesziel: {heute} von {ziel}, Sie schaffen das!"
+    }
+  },
+  "feed.checkinKarte": {
+    "sachlich": {
+      "du": "Check-in für heute",
+      "sie": "Check-in für heute"
+    },
+    "freundlich": {
+      "du": "Wie geht es dir heute?",
+      "sie": "Wie geht es Ihnen heute?"
+    },
+    "motivierend": {
+      "du": "Dein Check-in für heute wartet!",
+      "sie": "Ihr Check-in für heute wartet!"
+    }
+  },
+  "feed.beitragSchreiben": {
+    "sachlich": {
+      "du": "Beitrag schreiben",
+      "sie": "Beitrag schreiben"
+    },
+    "freundlich": {
+      "du": "Beitrag schreiben",
+      "sie": "Beitrag schreiben"
+    },
+    "motivierend": {
+      "du": "Beitrag schreiben",
+      "sie": "Beitrag schreiben"
+    }
+  },
+  "feed.nurFuerMich": {
+    "sachlich": {
+      "du": "Mit „Nur für mich“ ist kein Beitrag möglich. Die Sichtbarkeitsstufe lässt sich unter „Ich“ ändern.",
+      "sie": "Mit „Nur für mich“ ist kein Beitrag möglich. Die Sichtbarkeitsstufe lässt sich unter „Ich“ ändern."
+    },
+    "freundlich": {
+      "du": "Mit „Nur für mich“ kannst du keinen Beitrag schreiben. Du kannst deine Sichtbarkeit jederzeit unter „Ich“ ändern.",
+      "sie": "Mit „Nur für mich“ können Sie keinen Beitrag schreiben. Sie können Ihre Sichtbarkeit jederzeit unter „Ich“ ändern."
+    },
+    "motivierend": {
+      "du": "Mit „Nur für mich“ bleibt dein Beitrag privat. Ändere deine Sichtbarkeit unter „Ich“, wenn du magst!",
+      "sie": "Mit „Nur für mich“ bleibt Ihr Beitrag privat. Ändern Sie Ihre Sichtbarkeit unter „Ich“, wenn Sie mögen!"
+    }
+  },
+  "feed.leer": {
+    "sachlich": {
+      "du": "Noch keine Einträge.",
+      "sie": "Noch keine Einträge."
+    },
+    "freundlich": {
+      "du": "Hier erscheinen bald Ereignisse aus deinem Unternehmen.",
+      "sie": "Hier erscheinen bald Ereignisse aus Ihrem Unternehmen."
+    },
+    "motivierend": {
+      "du": "Gleich geht es hier los!",
+      "sie": "Gleich geht es hier los!"
+    }
+  },
+  "feed.neueEintraege": {
+    "sachlich": {
+      "du": "Neue Einträge",
+      "sie": "Neue Einträge"
+    },
+    "freundlich": {
+      "du": "Neue Einträge",
+      "sie": "Neue Einträge"
+    },
+    "motivierend": {
+      "du": "Neue Einträge!",
+      "sie": "Neue Einträge!"
+    }
+  },
+  "feed.beitragGesendet": {
+    "sachlich": {
+      "du": "Beitrag veröffentlicht.",
+      "sie": "Beitrag veröffentlicht."
+    },
+    "freundlich": {
+      "du": "Dein Beitrag ist online.",
+      "sie": "Ihr Beitrag ist online."
+    },
+    "motivierend": {
+      "du": "Dein Beitrag ist online!",
+      "sie": "Ihr Beitrag ist online!"
+    }
+  },
+  "feed.tageslimit": {
+    "sachlich": {
+      "du": "Höchstens fünf Beiträge je Tag.",
+      "sie": "Höchstens fünf Beiträge je Tag."
+    },
+    "freundlich": {
+      "du": "Fünf Beiträge je Tag sind das Maximum.",
+      "sie": "Fünf Beiträge je Tag sind das Maximum."
+    },
+    "motivierend": {
+      "du": "Fünf Beiträge je Tag sind das Maximum, morgen geht es weiter!",
+      "sie": "Fünf Beiträge je Tag sind das Maximum, morgen geht es weiter!"
+    }
+  },
+  "benachrichtigung.challengeGestartet": {
+    "sachlich": {
+      "du": "Die Challenge „{titel}“ hat begonnen.",
+      "sie": "Die Challenge „{titel}“ hat begonnen."
+    },
+    "freundlich": {
+      "du": "„{titel}“ ist gestartet. Mach mit.",
+      "sie": "„{titel}“ ist gestartet. Machen Sie mit."
+    },
+    "motivierend": {
+      "du": "„{titel}“ läuft, jetzt mitmachen!",
+      "sie": "„{titel}“ läuft, jetzt mitmachen!"
+    }
+  },
+  "benachrichtigung.meilenstein": {
+    "sachlich": {
+      "du": "„{titel}“: {prozent} Prozent des Firmenziels erreicht.",
+      "sie": "„{titel}“: {prozent} Prozent des Firmenziels erreicht."
+    },
+    "freundlich": {
+      "du": "Gemeinsam {prozent} Prozent bei „{titel}“ erreicht.",
+      "sie": "Gemeinsam {prozent} Prozent bei „{titel}“ erreicht."
+    },
+    "motivierend": {
+      "du": "{prozent} Prozent bei „{titel}“, weiter so!",
+      "sie": "{prozent} Prozent bei „{titel}“, weiter so!"
+    }
+  },
+  "benachrichtigung.challengeBeendet": {
+    "sachlich": {
+      "du": "„{titel}“ ist beendet: {prozent} Prozent des Firmenziels.",
+      "sie": "„{titel}“ ist beendet: {prozent} Prozent des Firmenziels."
+    },
+    "freundlich": {
+      "du": "„{titel}“ ist zu Ende: gemeinsam {prozent} Prozent.",
+      "sie": "„{titel}“ ist zu Ende: gemeinsam {prozent} Prozent."
+    },
+    "motivierend": {
+      "du": "„{titel}“ geschafft: {prozent} Prozent gemeinsam!",
+      "sie": "„{titel}“ geschafft: {prozent} Prozent gemeinsam!"
+    }
+  },
+  "benachrichtigung.abzeichen": {
+    "sachlich": {
+      "du": "Ein neues Abzeichen ist verfügbar.",
+      "sie": "Ein neues Abzeichen ist verfügbar."
+    },
+    "freundlich": {
+      "du": "Du hast ein neues Abzeichen.",
+      "sie": "Sie haben ein neues Abzeichen."
+    },
+    "motivierend": {
+      "du": "Neues Abzeichen für dich!",
+      "sie": "Neues Abzeichen für Sie!"
+    }
+  },
+  "benachrichtigung.stufe": {
+    "sachlich": {
+      "du": "Stufe {stufe} erreicht.",
+      "sie": "Stufe {stufe} erreicht."
+    },
+    "freundlich": {
+      "du": "Du hast Stufe {stufe} erreicht.",
+      "sie": "Sie haben Stufe {stufe} erreicht."
+    },
+    "motivierend": {
+      "du": "Stufe {stufe} erreicht, weiter geht's!",
+      "sie": "Stufe {stufe} erreicht, weiter geht's!"
+    }
+  },
+  "benachrichtigung.leer": {
+    "sachlich": {
+      "du": "Keine Benachrichtigungen.",
+      "sie": "Keine Benachrichtigungen."
+    },
+    "freundlich": {
+      "du": "Zurzeit gibt es nichts Neues.",
+      "sie": "Zurzeit gibt es nichts Neues."
+    },
+    "motivierend": {
+      "du": "Alles gelesen, nichts Neues!",
+      "sie": "Alles gelesen, nichts Neues!"
+    }
+  },
+  "benachrichtigung.alleGelesen": {
+    "sachlich": {
+      "du": "Alle gelesen",
+      "sie": "Alle gelesen"
+    },
+    "freundlich": {
+      "du": "Alle gelesen",
+      "sie": "Alle gelesen"
+    },
+    "motivierend": {
+      "du": "Alle gelesen",
+      "sie": "Alle gelesen"
+    }
+  },
+  "benachrichtigung.einstellungen": {
+    "sachlich": {
+      "du": "Benachrichtigungen",
+      "sie": "Benachrichtigungen"
+    },
+    "freundlich": {
+      "du": "Benachrichtigungen",
+      "sie": "Benachrichtigungen"
+    },
+    "motivierend": {
+      "du": "Benachrichtigungen",
+      "sie": "Benachrichtigungen"
+    }
+  },
+  "benachrichtigung.pushEinschalten": {
+    "sachlich": {
+      "du": "Benachrichtigungen einschalten",
+      "sie": "Benachrichtigungen einschalten"
+    },
+    "freundlich": {
+      "du": "Benachrichtigungen einschalten",
+      "sie": "Benachrichtigungen einschalten"
+    },
+    "motivierend": {
+      "du": "Benachrichtigungen einschalten",
+      "sie": "Benachrichtigungen einschalten"
+    }
+  },
+  "benachrichtigung.pushAktiv": {
+    "sachlich": {
+      "du": "Push ist auf diesem Gerät aktiv.",
+      "sie": "Push ist auf diesem Gerät aktiv."
+    },
+    "freundlich": {
+      "du": "Push ist auf diesem Gerät eingeschaltet.",
+      "sie": "Push ist auf diesem Gerät eingeschaltet."
+    },
+    "motivierend": {
+      "du": "Push ist auf diesem Gerät an!",
+      "sie": "Push ist auf diesem Gerät an!"
+    }
+  },
+  "benachrichtigung.pushNichtVerfuegbar": {
+    "sachlich": {
+      "du": "Push ist auf diesem Gerät nicht verfügbar.",
+      "sie": "Push ist auf diesem Gerät nicht verfügbar."
+    },
+    "freundlich": {
+      "du": "Push steht auf diesem Gerät nicht zur Verfügung.",
+      "sie": "Push steht auf diesem Gerät nicht zur Verfügung."
+    },
+    "motivierend": {
+      "du": "Push gibt es auf diesem Gerät leider nicht.",
+      "sie": "Push gibt es auf diesem Gerät leider nicht."
+    }
+  },
+  "benachrichtigung.vomUnternehmenPausiert": {
+    "sachlich": {
+      "du": "Vom Unternehmen derzeit pausiert",
+      "sie": "Vom Unternehmen derzeit pausiert"
+    },
+    "freundlich": {
+      "du": "Vom Unternehmen derzeit pausiert",
+      "sie": "Vom Unternehmen derzeit pausiert"
+    },
+    "motivierend": {
+      "du": "Vom Unternehmen derzeit pausiert",
+      "sie": "Vom Unternehmen derzeit pausiert"
+    }
+  },
+  "benachrichtigung.kategorieChallenge": {
+    "sachlich": {
+      "du": "Challenge",
+      "sie": "Challenge"
+    },
+    "freundlich": {
+      "du": "Challenge",
+      "sie": "Challenge"
+    },
+    "motivierend": {
+      "du": "Challenge",
+      "sie": "Challenge"
+    }
+  },
+  "benachrichtigung.kategorieFortschritt": {
+    "sachlich": {
+      "du": "Fortschritt",
+      "sie": "Fortschritt"
+    },
+    "freundlich": {
+      "du": "Fortschritt",
+      "sie": "Fortschritt"
+    },
+    "motivierend": {
+      "du": "Fortschritt",
+      "sie": "Fortschritt"
+    }
+  },
+  "benachrichtigung.push": {
+    "sachlich": {
+      "du": "Push",
+      "sie": "Push"
+    },
+    "freundlich": {
+      "du": "Push",
+      "sie": "Push"
+    },
+    "motivierend": {
+      "du": "Push",
+      "sie": "Push"
+    }
+  },
+  "benachrichtigung.email": {
+    "sachlich": {
+      "du": "E-Mail",
+      "sie": "E-Mail"
+    },
+    "freundlich": {
+      "du": "E-Mail",
+      "sie": "E-Mail"
+    },
+    "motivierend": {
+      "du": "E-Mail",
+      "sie": "E-Mail"
+    }
+  },
+  "benachrichtigung.geraete": {
+    "sachlich": {
+      "du": "Geräte",
+      "sie": "Geräte"
+    },
+    "freundlich": {
+      "du": "Geräte",
+      "sie": "Geräte"
+    },
+    "motivierend": {
+      "du": "Geräte",
+      "sie": "Geräte"
+    }
+  },
+  "benachrichtigung.geraetAbmelden": {
+    "sachlich": {
+      "du": "Abmelden",
+      "sie": "Abmelden"
+    },
+    "freundlich": {
+      "du": "Abmelden",
+      "sie": "Abmelden"
+    },
+    "motivierend": {
+      "du": "Abmelden",
+      "sie": "Abmelden"
+    }
+  },
+  "benachrichtigung.ruhezeit": {
+    "sachlich": {
+      "du": "Ruhezeit",
+      "sie": "Ruhezeit"
+    },
+    "freundlich": {
+      "du": "Ruhezeit",
+      "sie": "Ruhezeit"
+    },
+    "motivierend": {
+      "du": "Ruhezeit",
+      "sie": "Ruhezeit"
+    }
+  },
+  "benachrichtigung.gespeichert": {
+    "sachlich": {
+      "du": "Einstellungen gespeichert.",
+      "sie": "Einstellungen gespeichert."
+    },
+    "freundlich": {
+      "du": "Deine Einstellungen sind gespeichert.",
+      "sie": "Ihre Einstellungen sind gespeichert."
+    },
+    "motivierend": {
+      "du": "Gespeichert!",
+      "sie": "Gespeichert!"
+    }
+  },
+  "benachrichtigung.abgemeldet": {
+    "sachlich": {
+      "du": "E-Mail für diese Kategorie ist abgemeldet.",
+      "sie": "E-Mail für diese Kategorie ist abgemeldet."
+    },
+    "freundlich": {
+      "du": "Du bekommst für diese Kategorie keine E-Mails mehr.",
+      "sie": "Sie bekommen für diese Kategorie keine E-Mails mehr."
+    },
+    "motivierend": {
+      "du": "Erledigt, keine E-Mails mehr für diese Kategorie!",
+      "sie": "Erledigt, keine E-Mails mehr für diese Kategorie!"
+    }
+  },
+  "mail.anrede": {
+    "sachlich": {
+      "du": "Guten Tag {name},",
+      "sie": "Guten Tag {name},"
+    },
+    "freundlich": {
+      "du": "Hallo {name},",
+      "sie": "Guten Tag {name},"
+    },
+    "motivierend": {
+      "du": "Hallo {name}!",
+      "sie": "Guten Tag {name}!"
+    }
+  },
+  "mail.anredeOhneName": {
+    "sachlich": {
+      "du": "Guten Tag,",
+      "sie": "Guten Tag,"
+    },
+    "freundlich": {
+      "du": "Hallo,",
+      "sie": "Guten Tag,"
+    },
+    "motivierend": {
+      "du": "Hallo!",
+      "sie": "Guten Tag!"
+    }
+  },
+  "mail.abschluss": {
+    "sachlich": {
+      "du": "Diese Nachricht wurde automatisch erzeugt.",
+      "sie": "Diese Nachricht wurde automatisch erzeugt."
+    },
+    "freundlich": {
+      "du": "Diese Nachricht wurde automatisch erzeugt.",
+      "sie": "Diese Nachricht wurde automatisch erzeugt."
+    },
+    "motivierend": {
+      "du": "Diese Nachricht wurde automatisch erzeugt.",
+      "sie": "Diese Nachricht wurde automatisch erzeugt."
+    }
+  },
+  "mail.betreff": {
+    "sachlich": {
+      "du": "{produktname}: Neuigkeit",
+      "sie": "{produktname}: Neuigkeit"
+    },
+    "freundlich": {
+      "du": "{produktname}: Es gibt Neues",
+      "sie": "{produktname}: Es gibt Neues"
+    },
+    "motivierend": {
+      "du": "{produktname}: Es gibt Neues!",
+      "sie": "{produktname}: Es gibt Neues!"
+    }
+  },
+  "mail.oeffnen": {
+    "sachlich": {
+      "du": "In der App öffnen: {link}",
+      "sie": "In der App öffnen: {link}"
+    },
+    "freundlich": {
+      "du": "Öffne es in der App: {link}",
+      "sie": "Öffnen Sie es in der App: {link}"
+    },
+    "motivierend": {
+      "du": "Gleich in der App öffnen: {link}",
+      "sie": "Gleich in der App öffnen: {link}"
+    }
+  },
+  "mail.einstellungen": {
+    "sachlich": {
+      "du": "Einstellungen: {link}",
+      "sie": "Einstellungen: {link}"
+    },
+    "freundlich": {
+      "du": "Einstellungen: {link}",
+      "sie": "Einstellungen: {link}"
+    },
+    "motivierend": {
+      "du": "Einstellungen: {link}",
+      "sie": "Einstellungen: {link}"
+    }
+  },
+  "mail.abmelden": {
+    "sachlich": {
+      "du": "Keine E-Mails mehr zu dieser Kategorie: {link}",
+      "sie": "Keine E-Mails mehr zu dieser Kategorie: {link}"
+    },
+    "freundlich": {
+      "du": "Keine E-Mails mehr zu dieser Kategorie: {link}",
+      "sie": "Keine E-Mails mehr zu dieser Kategorie: {link}"
+    },
+    "motivierend": {
+      "du": "Keine E-Mails mehr zu dieser Kategorie: {link}",
+      "sie": "Keine E-Mails mehr zu dieser Kategorie: {link}"
+    }
+  },
+  "konto.magicLink.betreff": {
+    "sachlich": {
+      "du": "Anmeldung",
+      "sie": "Anmeldung"
+    },
+    "freundlich": {
+      "du": "Anmeldung",
+      "sie": "Anmeldung"
+    },
+    "motivierend": {
+      "du": "Anmeldung",
+      "sie": "Anmeldung"
+    }
+  },
+  "konto.magicLink.text": {
+    "sachlich": {
+      "du": "Der Anmeldelink ist 15 Minuten gültig: {link}",
+      "sie": "Der Anmeldelink ist 15 Minuten gültig: {link}"
+    },
+    "freundlich": {
+      "du": "Hier ist dein Anmeldelink, er gilt 15 Minuten: {link}",
+      "sie": "Hier ist Ihr Anmeldelink, er gilt 15 Minuten: {link}"
+    },
+    "motivierend": {
+      "du": "Dein Anmeldelink, 15 Minuten gültig: {link}",
+      "sie": "Ihr Anmeldelink, 15 Minuten gültig: {link}"
+    }
+  },
+  "konto.rollencode.betreff": {
+    "sachlich": {
+      "du": "Rollencode",
+      "sie": "Rollencode"
+    },
+    "freundlich": {
+      "du": "Rollencode",
+      "sie": "Rollencode"
+    },
+    "motivierend": {
+      "du": "Rollencode",
+      "sie": "Rollencode"
+    }
+  },
+  "konto.rollencode.text": {
+    "sachlich": {
+      "du": "Der Rollencode lautet: {link}",
+      "sie": "Der Rollencode lautet: {link}"
+    },
+    "freundlich": {
+      "du": "Dein Rollencode lautet: {link}",
+      "sie": "Ihr Rollencode lautet: {link}"
+    },
+    "motivierend": {
+      "du": "Dein Rollencode: {link}",
+      "sie": "Ihr Rollencode: {link}"
+    }
+  },
+  "aushang.woche": {
+    "sachlich": {
+      "du": "Woche {woche}",
+      "sie": "Woche {woche}"
+    },
+    "freundlich": {
+      "du": "Woche {woche}",
+      "sie": "Woche {woche}"
+    },
+    "motivierend": {
+      "du": "Woche {woche}",
+      "sie": "Woche {woche}"
+    }
+  },
+  "aushang.titel": {
+    "sachlich": {
+      "du": "Gemeinsam unterwegs",
+      "sie": "Gemeinsam unterwegs"
+    },
+    "freundlich": {
+      "du": "Gemeinsam unterwegs",
+      "sie": "Gemeinsam unterwegs"
+    },
+    "motivierend": {
+      "du": "Gemeinsam unterwegs!",
+      "sie": "Gemeinsam unterwegs!"
+    }
+  },
+  "aushang.keineChallenge": {
+    "sachlich": {
+      "du": "Zurzeit läuft keine Challenge.",
+      "sie": "Zurzeit läuft keine Challenge."
+    },
+    "freundlich": {
+      "du": "Die nächste Challenge kommt bald.",
+      "sie": "Die nächste Challenge kommt bald."
+    },
+    "motivierend": {
+      "du": "Die nächste Challenge kommt bald!",
+      "sie": "Die nächste Challenge kommt bald!"
+    }
+  },
+  "aushang.stand": {
+    "sachlich": {
+      "du": "Mindestens {prozent} Prozent des Firmenziels erreicht",
+      "sie": "Mindestens {prozent} Prozent des Firmenziels erreicht"
+    },
+    "freundlich": {
+      "du": "Mindestens {prozent} Prozent des Firmenziels erreicht",
+      "sie": "Mindestens {prozent} Prozent des Firmenziels erreicht"
+    },
+    "motivierend": {
+      "du": "Mindestens {prozent} Prozent des Firmenziels erreicht",
+      "sie": "Mindestens {prozent} Prozent des Firmenziels erreicht"
+    }
+  },
+  "aushang.naechsterMeilenstein": {
+    "sachlich": {
+      "du": "Nächster Meilenstein: {prozent} Prozent",
+      "sie": "Nächster Meilenstein: {prozent} Prozent"
+    },
+    "freundlich": {
+      "du": "Nächster Meilenstein: {prozent} Prozent",
+      "sie": "Nächster Meilenstein: {prozent} Prozent"
+    },
+    "motivierend": {
+      "du": "Nächster Meilenstein: {prozent} Prozent",
+      "sie": "Nächster Meilenstein: {prozent} Prozent"
+    }
+  },
+  "aushang.beitritt": {
+    "sachlich": {
+      "du": "Mitmachen mit diesem Code",
+      "sie": "Mitmachen mit diesem Code"
+    },
+    "freundlich": {
+      "du": "Mach mit: Code eingeben",
+      "sie": "Machen Sie mit: Code eingeben"
+    },
+    "motivierend": {
+      "du": "Jetzt mitmachen!",
+      "sie": "Jetzt mitmachen!"
+    }
+  },
+  "aushang.fusszeile": {
+    "sachlich": {
+      "du": "Ohne Personendaten. Der Stand zeigt das gemeinsame Ziel, nie einzelne Personen.",
+      "sie": "Ohne Personendaten. Der Stand zeigt das gemeinsame Ziel, nie einzelne Personen."
+    },
+    "freundlich": {
+      "du": "Ohne Personendaten. Der Stand zeigt das gemeinsame Ziel, nie einzelne Personen.",
+      "sie": "Ohne Personendaten. Der Stand zeigt das gemeinsame Ziel, nie einzelne Personen."
+    },
+    "motivierend": {
+      "du": "Ohne Personendaten. Der Stand zeigt das gemeinsame Ziel, nie einzelne Personen.",
+      "sie": "Ohne Personendaten. Der Stand zeigt das gemeinsame Ziel, nie einzelne Personen."
+    }
+  },
+  "feed.heute": {
+    "sachlich": {
+      "du": "Heute",
+      "sie": "Heute"
+    },
+    "freundlich": {
+      "du": "Heute",
+      "sie": "Heute"
+    },
+    "motivierend": {
+      "du": "Heute",
+      "sie": "Heute"
+    }
+  },
+  "feed.oeffnen": {
+    "sachlich": {
+      "du": "Öffnen",
+      "sie": "Öffnen"
+    },
+    "freundlich": {
+      "du": "Öffnen",
+      "sie": "Öffnen"
+    },
+    "motivierend": {
+      "du": "Öffnen",
+      "sie": "Öffnen"
+    }
+  },
+  "feed.beitragLoeschen": {
+    "sachlich": {
+      "du": "Beitrag löschen",
+      "sie": "Beitrag löschen"
+    },
+    "freundlich": {
+      "du": "Beitrag löschen",
+      "sie": "Beitrag löschen"
+    },
+    "motivierend": {
+      "du": "Beitrag löschen",
+      "sie": "Beitrag löschen"
+    }
+  },
+  "feed.senden": {
+    "sachlich": {
+      "du": "Senden",
+      "sie": "Senden"
+    },
+    "freundlich": {
+      "du": "Senden",
+      "sie": "Senden"
+    },
+    "motivierend": {
+      "du": "Senden",
+      "sie": "Senden"
+    }
+  },
+  "feed.sichtbarkeitAendern": {
+    "sachlich": {
+      "du": "Sichtbarkeit ändern",
+      "sie": "Sichtbarkeit ändern"
+    },
+    "freundlich": {
+      "du": "Sichtbarkeit ändern",
+      "sie": "Sichtbarkeit ändern"
+    },
+    "motivierend": {
+      "du": "Sichtbarkeit ändern",
+      "sie": "Sichtbarkeit ändern"
+    }
+  },
+  "checkin.bewegt": {
+    "sachlich": {
+      "du": "Bewegt",
+      "sie": "Bewegt"
+    },
+    "freundlich": {
+      "du": "Bewegt",
+      "sie": "Bewegt"
+    },
+    "motivierend": {
+      "du": "Bewegt",
+      "sie": "Bewegt"
+    }
+  },
+  "checkin.pause": {
+    "sachlich": {
+      "du": "Pause gemacht",
+      "sie": "Pause gemacht"
+    },
+    "freundlich": {
+      "du": "Pause gemacht",
+      "sie": "Pause gemacht"
+    },
+    "motivierend": {
+      "du": "Pause gemacht",
+      "sie": "Pause gemacht"
+    }
+  },
+  "checkin.erholt": {
+    "sachlich": {
+      "du": "Erholt",
+      "sie": "Erholt"
+    },
+    "freundlich": {
+      "du": "Erholt",
+      "sie": "Erholt"
+    },
+    "motivierend": {
+      "du": "Erholt",
+      "sie": "Erholt"
+    }
+  },
+  "checkin.senden": {
+    "sachlich": {
+      "du": "Check-in",
+      "sie": "Check-in"
+    },
+    "freundlich": {
+      "du": "Check-in",
+      "sie": "Check-in"
+    },
+    "motivierend": {
+      "du": "Check-in",
+      "sie": "Check-in"
+    }
+  },
+  "checkin.danke": {
+    "sachlich": {
+      "du": "Check-in gespeichert.",
+      "sie": "Check-in gespeichert."
+    },
+    "freundlich": {
+      "du": "Danke für deinen Check-in.",
+      "sie": "Danke für Ihren Check-in."
+    },
+    "motivierend": {
+      "du": "Check-in geschafft, der Tag zählt!",
+      "sie": "Check-in geschafft, der Tag zählt!"
+    }
+  },
+  "sichtbarkeit.rueckwirkend": {
+    "sachlich": {
+      "du": "Die Stufe wirkt sofort und rückwirkend auf alle Anzeigen.",
+      "sie": "Die Stufe wirkt sofort und rückwirkend auf alle Anzeigen."
+    },
+    "freundlich": {
+      "du": "Deine Stufe wirkt sofort und rückwirkend auf alle Anzeigen.",
+      "sie": "Ihre Stufe wirkt sofort und rückwirkend auf alle Anzeigen."
+    },
+    "motivierend": {
+      "du": "Deine Stufe wirkt sofort und rückwirkend, du entscheidest!",
+      "sie": "Ihre Stufe wirkt sofort und rückwirkend, Sie entscheiden!"
+    }
+  },
+  "ich.fortschritt.titel": {
+    "sachlich": {
+      "du": "Mein Fortschritt",
+      "sie": "Mein Fortschritt"
+    },
+    "freundlich": {
+      "du": "Mein Fortschritt",
+      "sie": "Mein Fortschritt"
+    },
+    "motivierend": {
+      "du": "Mein Fortschritt",
+      "sie": "Mein Fortschritt"
+    }
+  },
+  "ich.fortschritt.punkte": {
+    "sachlich": {
+      "du": "Punkte",
+      "sie": "Punkte"
+    },
+    "freundlich": {
+      "du": "Punkte",
+      "sie": "Punkte"
+    },
+    "motivierend": {
+      "du": "Punkte",
+      "sie": "Punkte"
+    }
+  },
+  "ich.fortschritt.stufe": {
+    "sachlich": {
+      "du": "Stufe",
+      "sie": "Stufe"
+    },
+    "freundlich": {
+      "du": "Stufe",
+      "sie": "Stufe"
+    },
+    "motivierend": {
+      "du": "Stufe",
+      "sie": "Stufe"
+    }
+  },
+  "ich.fortschritt.serie": {
+    "sachlich": {
+      "du": "Serie",
+      "sie": "Serie"
+    },
+    "freundlich": {
+      "du": "Serie",
+      "sie": "Serie"
+    },
+    "motivierend": {
+      "du": "Serie",
+      "sie": "Serie"
+    }
+  },
+  "ich.fortschritt.heute": {
+    "sachlich": {
+      "du": "Heute {heute} von {ziel} Handlungen.",
+      "sie": "Heute {heute} von {ziel} Handlungen."
+    },
+    "freundlich": {
+      "du": "Heute {heute} von {ziel} Handlungen, dein Tempo.",
+      "sie": "Heute {heute} von {ziel} Handlungen, Ihr Tempo."
+    },
+    "motivierend": {
+      "du": "Heute {heute} von {ziel} Handlungen, weiter so!",
+      "sie": "Heute {heute} von {ziel} Handlungen, weiter so!"
+    }
+  },
+  "ich.fortschritt.tagesziel": {
+    "sachlich": {
+      "du": "Tagesziel",
+      "sie": "Tagesziel"
+    },
+    "freundlich": {
+      "du": "Tagesziel",
+      "sie": "Tagesziel"
+    },
+    "motivierend": {
+      "du": "Tagesziel",
+      "sie": "Tagesziel"
+    }
+  },
+  "ich.fortschritt.abzeichen": {
+    "sachlich": {
+      "du": "Abzeichen",
+      "sie": "Abzeichen"
+    },
+    "freundlich": {
+      "du": "Abzeichen",
+      "sie": "Abzeichen"
+    },
+    "motivierend": {
+      "du": "Abzeichen",
+      "sie": "Abzeichen"
+    }
+  },
+  "ich.gruppen.titel": {
+    "sachlich": {
+      "du": "Meine Gruppen",
+      "sie": "Meine Gruppen"
+    },
+    "freundlich": {
+      "du": "Meine Gruppen",
+      "sie": "Meine Gruppen"
+    },
+    "motivierend": {
+      "du": "Meine Gruppen",
+      "sie": "Meine Gruppen"
+    }
+  },
+  "ich.gruppen.hinweis": {
+    "sachlich": {
+      "du": "Je Dimension eine Gruppe; jederzeit änderbar.",
+      "sie": "Je Dimension eine Gruppe; jederzeit änderbar."
+    },
+    "freundlich": {
+      "du": "Wähle je Dimension eine Gruppe, du kannst sie jederzeit ändern.",
+      "sie": "Wählen Sie je Dimension eine Gruppe, Sie können sie jederzeit ändern."
+    },
+    "motivierend": {
+      "du": "Wähle je Dimension deine Gruppe, du kannst sie jederzeit ändern!",
+      "sie": "Wählen Sie je Dimension Ihre Gruppe, Sie können sie jederzeit ändern!"
+    }
+  },
+  "ich.gruppen.keine": {
+    "sachlich": {
+      "du": "Keine Gruppe",
+      "sie": "Keine Gruppe"
+    },
+    "freundlich": {
+      "du": "Keine Gruppe",
+      "sie": "Keine Gruppe"
+    },
+    "motivierend": {
+      "du": "Keine Gruppe",
+      "sie": "Keine Gruppe"
+    }
+  },
+  "ich.auskunft.titel": {
+    "sachlich": {
+      "du": "Meine Daten",
+      "sie": "Meine Daten"
+    },
+    "freundlich": {
+      "du": "Meine Daten",
+      "sie": "Meine Daten"
+    },
+    "motivierend": {
+      "du": "Meine Daten",
+      "sie": "Meine Daten"
+    }
+  },
+  "ich.auskunft.hinweis": {
+    "sachlich": {
+      "du": "Der Export enthält alle Daten mit Personenbezug als Datei.",
+      "sie": "Der Export enthält alle Daten mit Personenbezug als Datei."
+    },
+    "freundlich": {
+      "du": "Du bekommst alle Daten mit Bezug zu dir als Datei.",
+      "sie": "Sie bekommen alle Daten mit Bezug zu Ihnen als Datei."
+    },
+    "motivierend": {
+      "du": "Alle deine Daten als Datei, jederzeit!",
+      "sie": "Alle Ihre Daten als Datei, jederzeit!"
+    }
+  },
+  "ich.auskunft.export": {
+    "sachlich": {
+      "du": "Daten herunterladen",
+      "sie": "Daten herunterladen"
+    },
+    "freundlich": {
+      "du": "Daten herunterladen",
+      "sie": "Daten herunterladen"
+    },
+    "motivierend": {
+      "du": "Daten herunterladen",
+      "sie": "Daten herunterladen"
+    }
+  },
+  "benachrichtigung.ungelesen": {
+    "sachlich": {
+      "du": "{n} ungelesen",
+      "sie": "{n} ungelesen"
+    },
+    "freundlich": {
+      "du": "{n} ungelesen",
+      "sie": "{n} ungelesen"
+    },
+    "motivierend": {
+      "du": "{n} ungelesen",
+      "sie": "{n} ungelesen"
+    }
+  },
+  "benachrichtigung.pushErklaerung": {
+    "sachlich": {
+      "du": "Push meldet Start, Meilensteine und Abzeichen auf diesem Gerät.",
+      "sie": "Push meldet Start, Meilensteine und Abzeichen auf diesem Gerät."
+    },
+    "freundlich": {
+      "du": "Push meldet dir Start, Meilensteine und Abzeichen auf diesem Gerät.",
+      "sie": "Push meldet Ihnen Start, Meilensteine und Abzeichen auf diesem Gerät."
+    },
+    "motivierend": {
+      "du": "Push bringt dir Start, Meilensteine und Abzeichen direkt aufs Gerät!",
+      "sie": "Push bringt Ihnen Start, Meilensteine und Abzeichen direkt aufs Gerät!"
+    }
+  },
+  "benachrichtigung.pushVerweigert": {
+    "sachlich": {
+      "du": "Der Browser hat die Berechtigung verweigert; sie lässt sich in den Browser-Einstellungen ändern.",
+      "sie": "Der Browser hat die Berechtigung verweigert; sie lässt sich in den Browser-Einstellungen ändern."
+    },
+    "freundlich": {
+      "du": "Dein Browser hat die Berechtigung verweigert; du kannst sie in den Browser-Einstellungen ändern.",
+      "sie": "Ihr Browser hat die Berechtigung verweigert; Sie können sie in den Browser-Einstellungen ändern."
+    },
+    "motivierend": {
+      "du": "Dein Browser sagt noch Nein; in den Browser-Einstellungen kannst du das ändern.",
+      "sie": "Ihr Browser sagt noch Nein; in den Browser-Einstellungen können Sie das ändern."
+    }
+  },
+  "verwaltung.challenges": {
+    "sachlich": {
+      "du": "Challenges verwalten",
+      "sie": "Challenges verwalten"
+    },
+    "freundlich": {
+      "du": "Challenges verwalten",
+      "sie": "Challenges verwalten"
+    },
+    "motivierend": {
+      "du": "Challenges verwalten",
+      "sie": "Challenges verwalten"
+    }
+  },
+  "verwaltung.challenges.kickoff": {
+    "sachlich": {
+      "du": "Kickoff-Challenge",
+      "sie": "Kickoff-Challenge"
+    },
+    "freundlich": {
+      "du": "Kickoff-Challenge",
+      "sie": "Kickoff-Challenge"
+    },
+    "motivierend": {
+      "du": "Kickoff-Challenge",
+      "sie": "Kickoff-Challenge"
+    }
+  },
+  "verwaltung.challenges.kickoffHinweis": {
+    "sachlich": {
+      "du": "Vorbelegt: Sammelziel mit Häkchen, ganze Firma, Start am kommenden Montag, vier Wochen.",
+      "sie": "Vorbelegt: Sammelziel mit Häkchen, ganze Firma, Start am kommenden Montag, vier Wochen."
+    },
+    "freundlich": {
+      "du": "Vorbelegt: Sammelziel mit Häkchen, ganze Firma, Start am kommenden Montag, vier Wochen.",
+      "sie": "Vorbelegt: Sammelziel mit Häkchen, ganze Firma, Start am kommenden Montag, vier Wochen."
+    },
+    "motivierend": {
+      "du": "Vorbelegt: Sammelziel mit Häkchen, ganze Firma, Start am kommenden Montag, vier Wochen.",
+      "sie": "Vorbelegt: Sammelziel mit Häkchen, ganze Firma, Start am kommenden Montag, vier Wochen."
+    }
+  },
+  "verwaltung.challenges.kickoffAnlegen": {
+    "sachlich": {
+      "du": "Kickoff-Entwurf anlegen",
+      "sie": "Kickoff-Entwurf anlegen"
+    },
+    "freundlich": {
+      "du": "Kickoff-Entwurf anlegen",
+      "sie": "Kickoff-Entwurf anlegen"
+    },
+    "motivierend": {
+      "du": "Kickoff-Entwurf anlegen",
+      "sie": "Kickoff-Entwurf anlegen"
+    }
+  },
+  "verwaltung.challenges.wizard": {
+    "sachlich": {
+      "du": "Neue Challenge",
+      "sie": "Neue Challenge"
+    },
+    "freundlich": {
+      "du": "Neue Challenge",
+      "sie": "Neue Challenge"
+    },
+    "motivierend": {
+      "du": "Neue Challenge",
+      "sie": "Neue Challenge"
+    }
+  },
+  "verwaltung.challenges.wizardHinweis": {
+    "sachlich": {
+      "du": "Titel, Erfassungsart, Ziel und Zeitraum; danach Vorschau und Planen.",
+      "sie": "Titel, Erfassungsart, Ziel und Zeitraum; danach Vorschau und Planen."
+    },
+    "freundlich": {
+      "du": "Titel, Erfassungsart, Ziel und Zeitraum; danach Vorschau und Planen.",
+      "sie": "Titel, Erfassungsart, Ziel und Zeitraum; danach Vorschau und Planen."
+    },
+    "motivierend": {
+      "du": "Titel, Erfassungsart, Ziel und Zeitraum; danach Vorschau und Planen.",
+      "sie": "Titel, Erfassungsart, Ziel und Zeitraum; danach Vorschau und Planen."
+    }
+  },
+  "verwaltung.challenges.titel": {
+    "sachlich": {
+      "du": "Titel",
+      "sie": "Titel"
+    },
+    "freundlich": {
+      "du": "Titel",
+      "sie": "Titel"
+    },
+    "motivierend": {
+      "du": "Titel",
+      "sie": "Titel"
+    }
+  },
+  "verwaltung.challenges.titelPflicht": {
+    "sachlich": {
+      "du": "Titel ist Pflicht.",
+      "sie": "Titel ist Pflicht."
+    },
+    "freundlich": {
+      "du": "Titel ist Pflicht.",
+      "sie": "Titel ist Pflicht."
+    },
+    "motivierend": {
+      "du": "Titel ist Pflicht.",
+      "sie": "Titel ist Pflicht."
+    }
+  },
+  "verwaltung.challenges.beschreibung": {
+    "sachlich": {
+      "du": "Beschreibung",
+      "sie": "Beschreibung"
+    },
+    "freundlich": {
+      "du": "Beschreibung",
+      "sie": "Beschreibung"
+    },
+    "motivierend": {
+      "du": "Beschreibung",
+      "sie": "Beschreibung"
+    }
+  },
+  "verwaltung.challenges.erfassungsart": {
+    "sachlich": {
+      "du": "Erfassungsart",
+      "sie": "Erfassungsart"
+    },
+    "freundlich": {
+      "du": "Erfassungsart",
+      "sie": "Erfassungsart"
+    },
+    "motivierend": {
+      "du": "Erfassungsart",
+      "sie": "Erfassungsart"
+    }
+  },
+  "verwaltung.challenges.haekchen": {
+    "sachlich": {
+      "du": "Häkchen",
+      "sie": "Häkchen"
+    },
+    "freundlich": {
+      "du": "Häkchen",
+      "sie": "Häkchen"
+    },
+    "motivierend": {
+      "du": "Häkchen",
+      "sie": "Häkchen"
+    }
+  },
+  "verwaltung.challenges.zahl": {
+    "sachlich": {
+      "du": "Zahl",
+      "sie": "Zahl"
+    },
+    "freundlich": {
+      "du": "Zahl",
+      "sie": "Zahl"
+    },
+    "motivierend": {
+      "du": "Zahl",
+      "sie": "Zahl"
+    }
+  },
+  "verwaltung.challenges.ziel": {
+    "sachlich": {
+      "du": "Sammelziel",
+      "sie": "Sammelziel"
+    },
+    "freundlich": {
+      "du": "Sammelziel",
+      "sie": "Sammelziel"
+    },
+    "motivierend": {
+      "du": "Sammelziel",
+      "sie": "Sammelziel"
+    }
+  },
+  "verwaltung.challenges.zielPflicht": {
+    "sachlich": {
+      "du": "Sammelziel als Zahl.",
+      "sie": "Sammelziel als Zahl."
+    },
+    "freundlich": {
+      "du": "Sammelziel als Zahl.",
+      "sie": "Sammelziel als Zahl."
+    },
+    "motivierend": {
+      "du": "Sammelziel als Zahl.",
+      "sie": "Sammelziel als Zahl."
+    }
+  },
+  "verwaltung.challenges.beginn": {
+    "sachlich": {
+      "du": "Beginn",
+      "sie": "Beginn"
+    },
+    "freundlich": {
+      "du": "Beginn",
+      "sie": "Beginn"
+    },
+    "motivierend": {
+      "du": "Beginn",
+      "sie": "Beginn"
+    }
+  },
+  "verwaltung.challenges.ende": {
+    "sachlich": {
+      "du": "Ende",
+      "sie": "Ende"
+    },
+    "freundlich": {
+      "du": "Ende",
+      "sie": "Ende"
+    },
+    "motivierend": {
+      "du": "Ende",
+      "sie": "Ende"
+    }
+  },
+  "verwaltung.challenges.entwurfAnlegen": {
+    "sachlich": {
+      "du": "Entwurf anlegen",
+      "sie": "Entwurf anlegen"
+    },
+    "freundlich": {
+      "du": "Entwurf anlegen",
+      "sie": "Entwurf anlegen"
+    },
+    "motivierend": {
+      "du": "Entwurf anlegen",
+      "sie": "Entwurf anlegen"
+    }
+  },
+  "verwaltung.challenges.vorschau": {
+    "sachlich": {
+      "du": "Vorschau",
+      "sie": "Vorschau"
+    },
+    "freundlich": {
+      "du": "Vorschau",
+      "sie": "Vorschau"
+    },
+    "motivierend": {
+      "du": "Vorschau",
+      "sie": "Vorschau"
+    }
+  },
+  "verwaltung.challenges.vorschauPflicht": {
+    "sachlich": {
+      "du": "Die Vorschau ist Pflicht vor dem Planen.",
+      "sie": "Die Vorschau ist Pflicht vor dem Planen."
+    },
+    "freundlich": {
+      "du": "Die Vorschau ist Pflicht vor dem Planen.",
+      "sie": "Die Vorschau ist Pflicht vor dem Planen."
+    },
+    "motivierend": {
+      "du": "Die Vorschau ist Pflicht vor dem Planen.",
+      "sie": "Die Vorschau ist Pflicht vor dem Planen."
+    }
+  },
+  "verwaltung.challenges.keineBerechtigung": {
+    "sachlich": {
+      "du": "Nur Programm-Manager und Tenant-Admin verwalten Challenges.",
+      "sie": "Nur Programm-Manager und Tenant-Admin verwalten Challenges."
+    },
+    "freundlich": {
+      "du": "Nur Programm-Manager und Tenant-Admin verwalten Challenges.",
+      "sie": "Nur Programm-Manager und Tenant-Admin verwalten Challenges."
+    },
+    "motivierend": {
+      "du": "Nur Programm-Manager und Tenant-Admin verwalten Challenges.",
+      "sie": "Nur Programm-Manager und Tenant-Admin verwalten Challenges."
+    }
+  },
+  "verwaltung.challenges.planen": {
+    "sachlich": {
+      "du": "Planen",
+      "sie": "Planen"
+    },
+    "freundlich": {
+      "du": "Planen",
+      "sie": "Planen"
+    },
+    "motivierend": {
+      "du": "Planen",
+      "sie": "Planen"
+    }
+  },
+  "verwaltung.challenges.alle": {
+    "sachlich": {
+      "du": "Alle Challenges",
+      "sie": "Alle Challenges"
+    },
+    "freundlich": {
+      "du": "Alle Challenges",
+      "sie": "Alle Challenges"
+    },
+    "motivierend": {
+      "du": "Alle Challenges",
+      "sie": "Alle Challenges"
+    }
+  },
+  "verwaltung.challenges.zustand": {
+    "sachlich": {
+      "du": "Zustand",
+      "sie": "Zustand"
+    },
+    "freundlich": {
+      "du": "Zustand",
+      "sie": "Zustand"
+    },
+    "motivierend": {
+      "du": "Zustand",
+      "sie": "Zustand"
+    }
+  },
+  "verwaltung.challenges.zustand.draft": {
+    "sachlich": {
+      "du": "Entwurf",
+      "sie": "Entwurf"
+    },
+    "freundlich": {
+      "du": "Entwurf",
+      "sie": "Entwurf"
+    },
+    "motivierend": {
+      "du": "Entwurf",
+      "sie": "Entwurf"
+    }
+  },
+  "verwaltung.challenges.zustand.planned": {
+    "sachlich": {
+      "du": "Geplant",
+      "sie": "Geplant"
+    },
+    "freundlich": {
+      "du": "Geplant",
+      "sie": "Geplant"
+    },
+    "motivierend": {
+      "du": "Geplant",
+      "sie": "Geplant"
+    }
+  },
+  "verwaltung.challenges.zustand.running": {
+    "sachlich": {
+      "du": "Laufend",
+      "sie": "Laufend"
+    },
+    "freundlich": {
+      "du": "Laufend",
+      "sie": "Laufend"
+    },
+    "motivierend": {
+      "du": "Laufend",
+      "sie": "Laufend"
+    }
+  },
+  "verwaltung.challenges.zustand.grace": {
+    "sachlich": {
+      "du": "Nachfrist",
+      "sie": "Nachfrist"
+    },
+    "freundlich": {
+      "du": "Nachfrist",
+      "sie": "Nachfrist"
+    },
+    "motivierend": {
+      "du": "Nachfrist",
+      "sie": "Nachfrist"
+    }
+  },
+  "verwaltung.challenges.zustand.ended": {
+    "sachlich": {
+      "du": "Beendet",
+      "sie": "Beendet"
+    },
+    "freundlich": {
+      "du": "Beendet",
+      "sie": "Beendet"
+    },
+    "motivierend": {
+      "du": "Beendet",
+      "sie": "Beendet"
+    }
+  },
+  "verwaltung.challenges.zustand.archived": {
+    "sachlich": {
+      "du": "Archiviert",
+      "sie": "Archiviert"
+    },
+    "freundlich": {
+      "du": "Archiviert",
+      "sie": "Archiviert"
+    },
+    "motivierend": {
+      "du": "Archiviert",
+      "sie": "Archiviert"
+    }
+  },
+  "verwaltung.challenges.beenden": {
+    "sachlich": {
+      "du": "Vorzeitig beenden",
+      "sie": "Vorzeitig beenden"
+    },
+    "freundlich": {
+      "du": "Vorzeitig beenden",
+      "sie": "Vorzeitig beenden"
+    },
+    "motivierend": {
+      "du": "Vorzeitig beenden",
+      "sie": "Vorzeitig beenden"
+    }
+  },
+  "verwaltung.challenges.begruendung": {
+    "sachlich": {
+      "du": "Begründung",
+      "sie": "Begründung"
+    },
+    "freundlich": {
+      "du": "Begründung",
+      "sie": "Begründung"
+    },
+    "motivierend": {
+      "du": "Begründung",
+      "sie": "Begründung"
+    }
+  },
+  "verwaltung.challenges.begruendungPflicht": {
+    "sachlich": {
+      "du": "Begründung ist Pflicht.",
+      "sie": "Begründung ist Pflicht."
+    },
+    "freundlich": {
+      "du": "Begründung ist Pflicht.",
+      "sie": "Begründung ist Pflicht."
+    },
+    "motivierend": {
+      "du": "Begründung ist Pflicht.",
+      "sie": "Begründung ist Pflicht."
+    }
+  },
+  "zugang.beitritt.gruppen": {
+    "sachlich": {
+      "du": "Gruppen (optional)",
+      "sie": "Gruppen (optional)"
+    },
+    "freundlich": {
+      "du": "Deine Gruppen (optional)",
+      "sie": "Ihre Gruppen (optional)"
+    },
+    "motivierend": {
+      "du": "Deine Gruppen (optional)",
+      "sie": "Ihre Gruppen (optional)"
+    }
+  },
+  "zugang.beitritt.gruppenHinweis": {
+    "sachlich": {
+      "du": "Je Dimension eine Gruppe; später jederzeit änderbar.",
+      "sie": "Je Dimension eine Gruppe; später jederzeit änderbar."
+    },
+    "freundlich": {
+      "du": "Wähle je Dimension eine Gruppe, später kannst du sie jederzeit ändern.",
+      "sie": "Wählen Sie je Dimension eine Gruppe, später können Sie sie jederzeit ändern."
+    },
+    "motivierend": {
+      "du": "Wähle je Dimension eine Gruppe, später kannst du sie jederzeit ändern!",
+      "sie": "Wählen Sie je Dimension eine Gruppe, später können Sie sie jederzeit ändern!"
+    }
+  },
+  "zugang.beitritt.keineGruppe": {
+    "sachlich": {
+      "du": "Keine Angabe",
+      "sie": "Keine Angabe"
+    },
+    "freundlich": {
+      "du": "Keine Angabe",
+      "sie": "Keine Angabe"
+    },
+    "motivierend": {
+      "du": "Keine Angabe",
+      "sie": "Keine Angabe"
+    }
+  },
+  "abzeichen.einstieg.ersterTag": {
+    "sachlich": {
+      "du": "Erster Tag",
+      "sie": "Erster Tag"
+    },
+    "freundlich": {
+      "du": "Erster Tag",
+      "sie": "Erster Tag"
+    },
+    "motivierend": {
+      "du": "Erster Tag",
+      "sie": "Erster Tag"
+    }
+  },
+  "abzeichen.einstieg.ersteUebung": {
+    "sachlich": {
+      "du": "Erste Handlung",
+      "sie": "Erste Handlung"
+    },
+    "freundlich": {
+      "du": "Erste Handlung",
+      "sie": "Erste Handlung"
+    },
+    "motivierend": {
+      "du": "Erste Handlung",
+      "sie": "Erste Handlung"
+    }
+  },
+  "abzeichen.einstieg.ersteGruppe": {
+    "sachlich": {
+      "du": "In einer Gruppe",
+      "sie": "In einer Gruppe"
+    },
+    "freundlich": {
+      "du": "In einer Gruppe",
+      "sie": "In einer Gruppe"
+    },
+    "motivierend": {
+      "du": "In einer Gruppe",
+      "sie": "In einer Gruppe"
+    }
+  },
+  "abzeichen.dranbleiben.serie7": {
+    "sachlich": {
+      "du": "7 Tage in Serie",
+      "sie": "7 Tage in Serie"
+    },
+    "freundlich": {
+      "du": "7 Tage in Serie",
+      "sie": "7 Tage in Serie"
+    },
+    "motivierend": {
+      "du": "7 Tage in Serie",
+      "sie": "7 Tage in Serie"
+    }
+  },
+  "abzeichen.dranbleiben.serie30": {
+    "sachlich": {
+      "du": "30 Tage in Serie",
+      "sie": "30 Tage in Serie"
+    },
+    "freundlich": {
+      "du": "30 Tage in Serie",
+      "sie": "30 Tage in Serie"
+    },
+    "motivierend": {
+      "du": "30 Tage in Serie",
+      "sie": "30 Tage in Serie"
+    }
+  },
+  "abzeichen.dranbleiben.serie100": {
+    "sachlich": {
+      "du": "100 Tage in Serie",
+      "sie": "100 Tage in Serie"
+    },
+    "freundlich": {
+      "du": "100 Tage in Serie",
+      "sie": "100 Tage in Serie"
+    },
+    "motivierend": {
+      "du": "100 Tage in Serie",
+      "sie": "100 Tage in Serie"
+    }
+  },
+  "abzeichen.gemeinsam.firmenziel": {
+    "sachlich": {
+      "du": "Firmenziel erreicht",
+      "sie": "Firmenziel erreicht"
+    },
+    "freundlich": {
+      "du": "Firmenziel erreicht",
+      "sie": "Firmenziel erreicht"
+    },
+    "motivierend": {
+      "du": "Firmenziel erreicht",
+      "sie": "Firmenziel erreicht"
+    }
+  },
+  "abzeichen.gemeinsam.anerkennung10": {
+    "sachlich": {
+      "du": "10-mal Anerkennung gegeben",
+      "sie": "10-mal Anerkennung gegeben"
+    },
+    "freundlich": {
+      "du": "10-mal Anerkennung gegeben",
+      "sie": "10-mal Anerkennung gegeben"
+    },
+    "motivierend": {
+      "du": "10-mal Anerkennung gegeben",
+      "sie": "10-mal Anerkennung gegeben"
+    }
+  },
+  "abzeichen.vielfalt.fuenfArten": {
+    "sachlich": {
+      "du": "Fünf Arten von Handlungen",
+      "sie": "Fünf Arten von Handlungen"
+    },
+    "freundlich": {
+      "du": "Fünf Arten von Handlungen",
+      "sie": "Fünf Arten von Handlungen"
+    },
+    "motivierend": {
+      "du": "Fünf Arten von Handlungen",
+      "sie": "Fünf Arten von Handlungen"
+    }
+  },
+  "fehler.Unbekannt": {
+    "sachlich": {
+      "du": "Das hat nicht geklappt.",
+      "sie": "Das hat nicht geklappt."
+    },
+    "freundlich": {
+      "du": "Das hat leider nicht geklappt.",
+      "sie": "Das hat leider nicht geklappt."
+    },
+    "motivierend": {
+      "du": "Das hat noch nicht geklappt, versuch es gleich noch einmal!",
+      "sie": "Das hat noch nicht geklappt, versuchen Sie es gleich noch einmal!"
+    }
   }
 }

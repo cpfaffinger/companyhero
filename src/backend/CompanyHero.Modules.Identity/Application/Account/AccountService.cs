@@ -5,7 +5,6 @@ using CompanyHero.Modules.Identity.Application.Providers;
 using CompanyHero.Modules.Identity.Application.Sessions;
 using CompanyHero.Modules.Identity.Domain;
 using CompanyHero.Modules.Identity.Infrastructure;
-using CompanyHero.Modules.Organisation.Application;
 using CompanyHero.Platform.Audit;
 using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Tenancy;
@@ -56,8 +55,7 @@ internal sealed class AccountService(
     IPasskeyService passkeys,
     IProviderCatalog providers,
     ISessionService sessions,
-    IOrganisationDirectory organisations,
-    IAuditLog audit,
+    IPersonLifecycle lifecycle,
     ISecurityLog security,
     TimeProvider clock) : IAccountService
 {
@@ -229,24 +227,8 @@ internal sealed class AccountService(
 
     public async Task LeaveAsync(CancellationToken cancellationToken)
     {
-        var (tenantId, personId) = RequirePerson();
-        await using var tx = await transaction.BeginAsync(cancellationToken);
-        var now = clock.GetUtcNow();
-        var person = await db.Persons.SingleAsync(p => p.TenantId == tenantId && p.Id == personId, cancellationToken);
-        person.Leave(now);
-        db.Passkeys.RemoveRange(db.Passkeys.Where(p => p.TenantId == tenantId && p.PersonId == personId));
-        db.EmailLogins.RemoveRange(db.EmailLogins.Where(e => e.TenantId == tenantId && e.PersonId == personId));
-        db.ExternalLogins.RemoveRange(db.ExternalLogins.Where(e => e.TenantId == tenantId && e.PersonId == personId));
-        db.RecoveryCodes.RemoveRange(db.RecoveryCodes.Where(r => r.TenantId == tenantId && r.PersonId == personId));
-        db.KioskCredentials.RemoveRange(db.KioskCredentials.Where(k => k.TenantId == tenantId && k.PersonId == personId));
-        db.IdentityIndex.RemoveRange(db.IdentityIndex.Where(i => i.TenantId == tenantId && i.PersonId == personId));
-        db.MagicLinks.RemoveRange(db.MagicLinks.Where(m => m.TenantId == tenantId && m.PersonId == personId));
-        db.TransferLinks.RemoveRange(db.TransferLinks.Where(t => t.TenantId == tenantId && t.PersonId == personId));
-        await db.SaveChangesAsync(cancellationToken);
-        await sessions.RevokeAllForPersonAsync(personId, cancellationToken);
-        await organisations.LeaveAsync(personId, cancellationToken);
-        await audit.RecordAsync(new AuditEntry("access.person.left", null, null), cancellationToken);
-        await tx.CommitAsync(cancellationToken);
+        var (_, personId) = RequirePerson();
+        await lifecycle.EndMembershipAsync(personId, MembershipEndReason.Left, cancellationToken);
     }
 
     /// <summary>Die Kiosk-Kennung entsteht mit dem Beitritt (Zugang 2.2); Personen aus älteren Beständen erhalten sie beim ersten Aufruf.</summary>

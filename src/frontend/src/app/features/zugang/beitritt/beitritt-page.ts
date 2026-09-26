@@ -7,17 +7,18 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatError, MatFormField, MatHint, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
+import { MatOption, MatSelect } from '@angular/material/select';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ZugangApi, type JoinPreview, type JoinResponse, type ZugangFehler } from '../../../../libs/data-access/zugang/zugang.api';
 import { webAuthnVerfuegbar } from '../../../../libs/data-access/zugang/webauthn';
 import { TextService } from '../../../../libs/theme/text.service';
-import { beitrittForm, VISIBILITIES } from './beitritt-form';
+import { beitrittForm, groupChoices, VISIBILITIES } from './beitritt-form';
 
 @Component({
   selector: 'ch-beitritt-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, MatButton, MatFormField, MatLabel, MatError, MatHint, MatInput, MatRadioGroup, MatRadioButton],
+  imports: [ReactiveFormsModule, MatButton, MatFormField, MatLabel, MatError, MatHint, MatInput, MatRadioGroup, MatRadioButton, MatSelect, MatOption],
   templateUrl: './beitritt-page.html',
   styleUrl: './beitritt-page.scss',
 })
@@ -97,6 +98,7 @@ export class BeitrittPage {
       visibility: v.visibility!,
       email: weg === 'email' ? v.email.trim() : null,
       kioskPin: v.kioskPin ? v.kioskPin : null,
+      groups: groupChoices(v.groups),
     };
     this.busy.set(true);
     this.fehler.set(null);
@@ -134,6 +136,12 @@ export class BeitrittPage {
       .subscribe({
         next: (preview) => {
           this.preview.set(preview);
+          // Gruppenwahl je Dimension des Tenants (Organisation 2.1): optional, ohne Voreinstellung.
+          for (const dimension of preview.dimensions) {
+            if (!this.form.controls.groups.contains(dimension.dimensionId)) {
+              this.form.controls.groups.addControl(dimension.dimensionId, new FormControl<string | null>(null));
+            }
+          }
           if (preview.pendingExternal) {
             this.form.controls.weg.setValue('extern');
           } else if (!preview.ways.passkey || !this.passkeyMoeglich) {

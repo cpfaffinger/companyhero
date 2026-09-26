@@ -33,6 +33,10 @@ namespace CompanyHero.Migrations.Migrations.Progress
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<DateOnly>("Day")
+                        .HasColumnType("date")
+                        .HasColumnName("day");
+
                     b.Property<string>("Kind")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -47,15 +51,169 @@ namespace CompanyHero.Migrations.Migrations.Progress
                         .HasColumnType("uuid")
                         .HasColumnName("person_id");
 
+                    b.Property<int>("Points")
+                        .HasColumnType("integer")
+                        .HasColumnName("points");
+
+                    b.Property<Guid?>("ReversalOf")
+                        .HasColumnType("uuid")
+                        .HasColumnName("reversal_of");
+
+                    b.Property<bool>("Reversed")
+                        .HasColumnType("boolean")
+                        .HasColumnName("reversed");
+
                     b.Property<short>("Source")
                         .HasColumnType("smallint")
                         .HasColumnName("source");
 
                     b.HasKey("TenantId", "Id");
 
+                    b.HasIndex("TenantId", "PersonId", "Day");
+
                     b.HasIndex("TenantId", "PersonId", "OccurredAt");
 
                     b.ToTable("activity_event", "progress");
+                });
+
+            modelBuilder.Entity("CompanyHero.Modules.Progress.Domain.BadgeAward", b =>
+                {
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("person_id");
+
+                    b.Property<string>("BadgeKey")
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)")
+                        .HasColumnName("badge_key");
+
+                    b.Property<DateTimeOffset>("AwardedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("awarded_at");
+
+                    b.HasKey("TenantId", "PersonId", "BadgeKey");
+
+                    b.HasIndex("TenantId", "AwardedAt");
+
+                    b.ToTable("badge_award", "progress");
+                });
+
+            modelBuilder.Entity("CompanyHero.Modules.Progress.Domain.CheckIn", b =>
+                {
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("person_id");
+
+                    b.Property<DateOnly>("Day")
+                        .HasColumnType("date")
+                        .HasColumnName("day");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("activity_id");
+
+                    b.Property<DateTimeOffset>("RecordedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("recorded_at");
+
+                    b.Property<short>("Tiles")
+                        .HasColumnType("smallint")
+                        .HasColumnName("tiles");
+
+                    b.HasKey("TenantId", "PersonId", "Day");
+
+                    b.ToTable("check_in", "progress");
+                });
+
+            modelBuilder.Entity("CompanyHero.Modules.Progress.Domain.PersonProgress", b =>
+                {
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("person_id");
+
+                    b.Property<int>("CurrentStreak")
+                        .HasColumnType("integer")
+                        .HasColumnName("current_streak");
+
+                    b.Property<int>("DailyGoal")
+                        .HasColumnType("integer")
+                        .HasColumnName("daily_goal");
+
+                    b.Property<DateOnly?>("LastActiveDay")
+                        .HasColumnType("date")
+                        .HasColumnName("last_active_day");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("integer")
+                        .HasColumnName("level");
+
+                    b.Property<int>("LongestStreak")
+                        .HasColumnType("integer")
+                        .HasColumnName("longest_streak");
+
+                    b.Property<int>("PointsBalance")
+                        .HasColumnType("integer")
+                        .HasColumnName("points_balance");
+
+                    b.Property<DateOnly?>("ProtectionUsedIn")
+                        .HasColumnType("date")
+                        .HasColumnName("protection_used_in");
+
+                    b.HasKey("TenantId", "PersonId");
+
+                    b.ToTable("person_progress", "progress");
+                });
+
+            modelBuilder.Entity("CompanyHero.Modules.Progress.Domain.ProgressEvent", b =>
+                {
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid?>("CausedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("caused_by");
+
+                    b.Property<DateTimeOffset>("OccurredAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("occurred_at");
+
+                    b.Property<string>("Payload")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("payload");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("type");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("integer")
+                        .HasColumnName("version");
+
+                    b.HasKey("TenantId", "Id");
+
+                    b.HasIndex("TenantId", "Type", "OccurredAt");
+
+                    b.ToTable("domain_event", "progress");
                 });
 #pragma warning restore 612, 618
         }

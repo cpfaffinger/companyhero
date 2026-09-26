@@ -368,6 +368,93 @@
         }
       }
     },
+    "/api/me/visibility": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetMyVisibility",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisibilityResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ChangeMyVisibility",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisibilityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/me/consents": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListMyConsents",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConsentResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/export": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ExportMyData",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JsonObject"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/persons/{personId}/activities": {
       "get": {
         "tags": [
@@ -405,22 +492,19 @@
         }
       }
     },
-    "/api/challenges": {
+    "/api/me/progress": {
       "get": {
         "tags": [
           "CompanyHero.Api"
         ],
-        "operationId": "ListRunningChallenges",
+        "operationId": "GetMyProgress",
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ChallengeCardResponse"
-                  }
+                  "$ref": "#/components/schemas/PersonalProgressResponse"
                 }
               }
             }
@@ -428,72 +512,50 @@
         }
       }
     },
-    "/api/challenges/{challengeId}/contribution-operations": {
-      "post": {
+    "/api/me/progress/daily-goal": {
+      "put": {
         "tags": [
           "CompanyHero.Api"
         ],
-        "operationId": "ReserveContributionOperation",
-        "parameters": [
-          {
-            "name": "challengeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OperationResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found"
-          }
-        }
-      }
-    },
-    "/api/challenges/{challengeId}/contributions": {
-      "post": {
-        "tags": [
-          "CompanyHero.Api"
-        ],
-        "operationId": "SubmitContribution",
-        "parameters": [
-          {
-            "name": "challengeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
+        "operationId": "SetMyDailyGoal",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContributionRequest"
+                "$ref": "#/components/schemas/DailyGoalRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/check-in": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "CheckIn",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckInRequest"
               }
             }
           },
@@ -505,7 +567,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContributionResponse"
+                  "$ref": "#/components/schemas/CheckInResponse"
                 }
               }
             }
@@ -515,7 +577,110 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ContributionResponse"
+                  "$ref": "#/components/schemas/CheckInResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/progress/participation": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetParticipation",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParticipationResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/api/feed": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetFeed",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedResponse"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not Modified"
+          }
+        }
+      }
+    },
+    "/api/feed/posts": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "CreateFeedPost",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedPostRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeedPostResponse"
                 }
               }
             }
@@ -530,36 +695,6 @@
               }
             }
           },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Conflict",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "410": {
-            "description": "Gone",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
           "422": {
             "description": "Unprocessable Entity",
             "content": {
@@ -570,21 +705,28 @@
               }
             }
           },
-          "404": {
-            "description": "Not Found"
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/challenges/{challengeId}/collective": {
-      "get": {
+    "/api/feed/posts/{entryId}": {
+      "delete": {
         "tags": [
           "CompanyHero.Api"
         ],
-        "operationId": "GetChallengeCollective",
+        "operationId": "DeleteFeedPost",
         "parameters": [
           {
-            "name": "challengeId",
+            "name": "entryId",
             "in": "path",
             "required": true,
             "schema": {
@@ -594,12 +736,689 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/notifications/vapid": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetVapidKey",
+        "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CollectiveResponse"
+                  "$ref": "#/components/schemas/VapidResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notifications": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListNotifications",
+        "parameters": [
+          {
+            "name": "unreadOnly",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificationResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notifications/{entryId}/read": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "MarkNotificationRead",
+        "parameters": [
+          {
+            "name": "entryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/notifications/read-all": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "MarkAllNotificationsRead",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/me/notifications": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetMyNotificationSettings",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonNotificationSettingsResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "UpdateMyNotificationSettings",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonNotificationSettingsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonNotificationSettingsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/notifications/subscriptions": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListPushSubscriptions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PushSubscriptionResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "CreatePushSubscription",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PushSubscriptionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PushSubscriptionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/notifications/subscriptions/{subscriptionId}": {
+      "delete": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "DeletePushSubscription",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/notifications/tenant": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetTenantNotificationSettings",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantNotificationSettingsResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "UpdateTenantNotificationSettings",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TenantNotificationSettingsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantNotificationSettingsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notifications/unsubscribe": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "UnsubscribeByToken",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnsubscribeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/notifications/aushang": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RenderAushang",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AushangResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetAushang",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/organisation/tenant": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetTenant",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "UpdateTenantSettings",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TenantSettingsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/organisation/tenant/terminate": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "TerminateTenant",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/organisation/tenant/headcount": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "SetTenantHeadcount",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeadcountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/organisation/dimensions": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListDimensions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DimensionResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/organisation/dimensions/{dimensionId}": {
+      "put": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "UpdateDimension",
+        "parameters": [
+          {
+            "name": "dimensionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DimensionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/organisation/dimensions/{dimensionId}/groups": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "CreateGroup",
+        "parameters": [
+          {
+            "name": "dimensionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGroupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/organisation/groups/{groupId}/archive": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ArchiveGroup",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/organisation/groups/{groupId}/headcount": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "SetGroupHeadcount",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HeadcountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/me/groups": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetMyGroups",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupChoiceResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ChooseMyGroup",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupChoiceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
                 }
               }
             }
@@ -623,6 +1442,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1825,6 +2654,50 @@
         }
       }
     },
+    "/api/access/members/{personId}/remove": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RemoveMember",
+        "parameters": [
+          {
+            "name": "personId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/access/role-codes": {
       "post": {
         "tags": [
@@ -2211,6 +3084,591 @@
           }
         }
       }
+    },
+    "/api/challenges": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListRunningChallenges",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChallengeCardResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "CreateChallengeDraft",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeDraftRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeCardResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenges/manage": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListAllChallenges",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChallengeCardResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenges/kickoff": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "CreateKickoffChallenge",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeCardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetChallenge",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeCardResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/preview": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "PreviewChallenge",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeCardResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/plan": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "PlanChallenge",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/end": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "EndChallengeEarly",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EndChallengeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/texts": {
+      "put": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "UpdateChallengeTexts",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChallengeTextsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/contribution-operations": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ReserveContributionOperation",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/contributions": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "SubmitContribution",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContributionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContributionResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContributionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Gone",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/contributions/mine": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListMyContributions",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OwnContributionResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/contributions/{contributionId}/reverse": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ReverseContribution",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "contributionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReversalResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/collective": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetChallengeCollective",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectiveResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2266,7 +3724,9 @@
         "required": [
           "id",
           "kind",
-          "occurredAt"
+          "occurredAt",
+          "points",
+          "reversed"
         ],
         "type": "object",
         "properties": {
@@ -2279,6 +3739,13 @@
           "occurredAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "points": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reversed": {
+            "type": "boolean"
           }
         }
       },
@@ -2336,6 +3803,62 @@
           }
         }
       },
+      "AushangResponse": {
+        "required": [
+          "id",
+          "week",
+          "generatedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "week": {
+            "type": "string"
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "BadgeCategoryDto": {
+        "enum": [
+          "einstieg",
+          "dranbleiben",
+          "gemeinsam",
+          "vielfalt",
+          "saison"
+        ]
+      },
+      "BadgeResponse": {
+        "required": [
+          "key",
+          "category",
+          "textKey",
+          "awardedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/BadgeCategoryDto"
+          },
+          "textKey": {
+            "type": "string"
+          },
+          "awardedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
       "BezeichnungenDto": {
         "required": [
           "punkte",
@@ -2362,13 +3885,18 @@
         "required": [
           "challengeId",
           "title",
+          "description",
           "metric",
           "target",
+          "state",
+          "visibility",
           "startsAt",
           "endsAt",
           "collective",
           "percent",
-          "contributedToday"
+          "contributedToday",
+          "previewed",
+          "templateKey"
         ],
         "type": "object",
         "properties": {
@@ -2378,11 +3906,23 @@
           "title": {
             "type": "string"
           },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
           "metric": {
             "$ref": "#/components/schemas/ChallengeMetricDto"
           },
           "target": {
             "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/ChallengeStateDto"
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/ChallengeVisibilityDto"
           },
           "startsAt": {
             "type": "string",
@@ -2408,6 +3948,55 @@
           },
           "contributedToday": {
             "type": "boolean"
+          },
+          "previewed": {
+            "type": "boolean"
+          },
+          "templateKey": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ChallengeDraftRequest": {
+        "required": [
+          "title",
+          "description",
+          "metric",
+          "target",
+          "startsAt",
+          "endsAt",
+          "visibility"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "metric": {
+            "$ref": "#/components/schemas/ChallengeMetricDto"
+          },
+          "target": {
+            "type": "string"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/ChallengeVisibilityDto"
           }
         }
       },
@@ -2415,6 +4004,73 @@
         "enum": [
           "checkmark",
           "count"
+        ]
+      },
+      "ChallengeStateDto": {
+        "enum": [
+          "draft",
+          "planned",
+          "running",
+          "grace",
+          "ended",
+          "archived"
+        ]
+      },
+      "ChallengeTextsRequest": {
+        "required": [
+          "title",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ChallengeVisibilityDto": {
+        "enum": [
+          "only_me",
+          "team",
+          "company"
+        ]
+      },
+      "CheckInRequest": {
+        "required": [
+          "tiles"
+        ],
+        "type": "object",
+        "properties": {
+          "tiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CheckInTileDto"
+            }
+          }
+        }
+      },
+      "CheckInResponse": {
+        "required": [
+          "outcome"
+        ],
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "type": "string"
+          }
+        }
+      },
+      "CheckInTileDto": {
+        "enum": [
+          "moved",
+          "paused",
+          "rested"
         ]
       },
       "CollectiveResponse": {
@@ -2428,14 +4084,23 @@
         "type": "object",
         "properties": {
           "total": {
-            "type": "string"
+            "type": [
+              "null",
+              "string"
+            ]
           },
           "contributionCount": {
-            "type": "integer",
+            "type": [
+              "null",
+              "integer"
+            ],
             "format": "int32"
           },
           "contributorCount": {
-            "type": "integer",
+            "type": [
+              "null",
+              "integer"
+            ],
             "format": "int32"
           },
           "updatedAt": {
@@ -2467,6 +4132,37 @@
             "type": "string"
           },
           "clientSecret": {
+            "type": "string"
+          }
+        }
+      },
+      "ConsentResponse": {
+        "required": [
+          "entryId",
+          "occurredAt",
+          "kind",
+          "previous",
+          "next"
+        ],
+        "type": "object",
+        "properties": {
+          "entryId": {
+            "type": "string"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "previous": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "next": {
             "type": "string"
           }
         }
@@ -2532,6 +4228,25 @@
           }
         }
       },
+      "CreateGroupRequest": {
+        "required": [
+          "name",
+          "headcount"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "headcount": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          }
+        }
+      },
       "CreateJoinCodeRequest": {
         "required": [
           "usageLimit",
@@ -2566,6 +4281,75 @@
           }
         }
       },
+      "CreatedResponse": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "DailyGoalRequest": {
+        "required": [
+          "goal"
+        ],
+        "type": "object",
+        "properties": {
+          "goal": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "DimensionRequest": {
+        "required": [
+          "name",
+          "active"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DimensionResponse": {
+        "required": [
+          "dimensionId",
+          "name",
+          "position",
+          "active",
+          "groups"
+        ],
+        "type": "object",
+        "properties": {
+          "dimensionId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GroupResponse"
+            }
+          }
+        }
+      },
       "EmailRequest": {
         "required": [
           "email"
@@ -2573,6 +4357,17 @@
         "type": "object",
         "properties": {
           "email": {
+            "type": "string"
+          }
+        }
+      },
+      "EndChallengeRequest": {
+        "required": [
+          "reason"
+        ],
+        "type": "object",
+        "properties": {
+          "reason": {
             "type": "string"
           }
         }
@@ -2601,6 +4396,271 @@
           },
           "grund": {
             "type": "string"
+          }
+        }
+      },
+      "FeedCardResponse": {
+        "required": [
+          "id",
+          "kind",
+          "occurredAt",
+          "day",
+          "textKey",
+          "params",
+          "person",
+          "reference",
+          "body",
+          "mine"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "day": {
+            "type": "string"
+          },
+          "textKey": {
+            "type": "string"
+          },
+          "params": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "person": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/FeedPersonResponse"
+              }
+            ]
+          },
+          "reference": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/FeedReferenceResponse"
+              }
+            ]
+          },
+          "body": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "mine": {
+            "type": "boolean"
+          }
+        }
+      },
+      "FeedPersonResponse": {
+        "required": [
+          "personId",
+          "displayName"
+        ],
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "FeedPostRequest": {
+        "required": [
+          "body"
+        ],
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "string"
+          }
+        }
+      },
+      "FeedPostResponse": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "FeedReferenceResponse": {
+        "required": [
+          "kind",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "id": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "FeedResponse": {
+        "required": [
+          "head",
+          "checkInDue",
+          "cards"
+        ],
+        "type": "object",
+        "properties": {
+          "head": {
+            "$ref": "#/components/schemas/HeadCardResponse"
+          },
+          "checkInDue": {
+            "type": "boolean"
+          },
+          "cards": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeedCardResponse"
+            }
+          }
+        }
+      },
+      "GroupChoiceRequest": {
+        "required": [
+          "dimensionId",
+          "groupId"
+        ],
+        "type": "object",
+        "properties": {
+          "dimensionId": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "GroupChoiceResponse": {
+        "required": [
+          "dimensionId",
+          "groupId",
+          "rechoice"
+        ],
+        "type": "object",
+        "properties": {
+          "dimensionId": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "rechoice": {
+            "type": "boolean"
+          }
+        }
+      },
+      "GroupResponse": {
+        "required": [
+          "groupId",
+          "name",
+          "archived",
+          "headcount",
+          "headcountWarning"
+        ],
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "archived": {
+            "type": "boolean"
+          },
+          "headcount": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "headcountWarning": {
+            "type": "boolean"
+          }
+        }
+      },
+      "HeadCardResponse": {
+        "required": [
+          "kind",
+          "challenge",
+          "dailyGoal",
+          "todayActions"
+        ],
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "challenge": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/ChallengeCardResponse"
+              }
+            ]
+          },
+          "dailyGoal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "todayActions": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "HeadcountRequest": {
+        "required": [
+          "effectiveFrom",
+          "count"
+        ],
+        "type": "object",
+        "properties": {
+          "effectiveFrom": {
+            "type": "string",
+            "format": "date"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -2720,6 +4780,58 @@
           }
         }
       },
+      "JoinDimensionResponse": {
+        "required": [
+          "dimensionId",
+          "name",
+          "groups"
+        ],
+        "type": "object",
+        "properties": {
+          "dimensionId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JoinGroupResponse"
+            }
+          }
+        }
+      },
+      "JoinGroupChoiceRequest": {
+        "required": [
+          "dimensionId",
+          "groupId"
+        ],
+        "type": "object",
+        "properties": {
+          "dimensionId": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": "string"
+          }
+        }
+      },
+      "JoinGroupResponse": {
+        "required": [
+          "groupId",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "groupId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
       "JoinPasskeyOptionsRequest": {
         "required": [
           "displayName"
@@ -2737,7 +4849,8 @@
           "tenantName",
           "ways",
           "pendingExternal",
-          "role"
+          "role",
+          "dimensions"
         ],
         "type": "object",
         "properties": {
@@ -2765,6 +4878,12 @@
               "null",
               "string"
             ]
+          },
+          "dimensions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JoinDimensionResponse"
+            }
           }
         }
       },
@@ -2775,7 +4894,8 @@
           "passkey",
           "email",
           "useExternal",
-          "kioskPin"
+          "kioskPin",
+          "groups"
         ],
         "type": "object",
         "properties": {
@@ -2809,6 +4929,15 @@
               "null",
               "string"
             ]
+          },
+          "groups": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/JoinGroupChoiceRequest"
+            }
           }
         }
       },
@@ -2883,6 +5012,9 @@
         }
       },
       "JsonElement": {},
+      "JsonObject": {
+        "type": "object"
+      },
       "KioskDeviceAdminResponse": {
         "required": [
           "deviceId",
@@ -2975,7 +5107,8 @@
         "required": [
           "displayName",
           "visibility",
-          "pin"
+          "pin",
+          "groups"
         ],
         "type": "object",
         "properties": {
@@ -2987,6 +5120,15 @@
           },
           "pin": {
             "type": "string"
+          },
+          "groups": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/JoinGroupChoiceRequest"
+            }
           }
         }
       },
@@ -3294,7 +5436,8 @@
           "personId",
           "displayName",
           "roles",
-          "joinedAt"
+          "joinedAt",
+          "groups"
         ],
         "type": "object",
         "properties": {
@@ -3313,6 +5456,61 @@
           "joinedAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "NotificationCategoryDto": {
+        "enum": [
+          "challenge",
+          "progress"
+        ]
+      },
+      "NotificationResponse": {
+        "required": [
+          "id",
+          "category",
+          "textKey",
+          "params",
+          "target",
+          "occurredAt",
+          "readAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/NotificationCategoryDto"
+          },
+          "textKey": {
+            "type": "string"
+          },
+          "params": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "target": {
+            "type": "string"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "readAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
           }
         }
       },
@@ -3324,6 +5522,84 @@
         "properties": {
           "operationId": {
             "type": "string"
+          }
+        }
+      },
+      "OwnContributionResponse": {
+        "required": [
+          "contributionId",
+          "value",
+          "recordedAt",
+          "channel",
+          "reversed",
+          "isReversal"
+        ],
+        "type": "object",
+        "properties": {
+          "contributionId": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "reversed": {
+            "type": "boolean"
+          },
+          "isReversal": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ParticipationResponse": {
+        "required": [
+          "period",
+          "groupId",
+          "available",
+          "activePersons",
+          "headcount",
+          "percent"
+        ],
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "activePersons": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "headcount": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "percent": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
           }
         }
       },
@@ -3404,6 +5680,143 @@
           },
           "displayName": {
             "type": "string"
+          }
+        }
+      },
+      "PersonNotificationSettingsRequest": {
+        "required": [
+          "pushChallenge",
+          "pushProgress",
+          "emailChallenge",
+          "emailProgress",
+          "quietStart",
+          "quietEnd"
+        ],
+        "type": "object",
+        "properties": {
+          "pushChallenge": {
+            "type": "boolean"
+          },
+          "pushProgress": {
+            "type": "boolean"
+          },
+          "emailChallenge": {
+            "type": "boolean"
+          },
+          "emailProgress": {
+            "type": "boolean"
+          },
+          "quietStart": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "quietEnd": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "PersonNotificationSettingsResponse": {
+        "required": [
+          "pushChallenge",
+          "pushProgress",
+          "emailChallenge",
+          "emailProgress",
+          "quietStart",
+          "quietEnd",
+          "emailPaused",
+          "tenant"
+        ],
+        "type": "object",
+        "properties": {
+          "pushChallenge": {
+            "type": "boolean"
+          },
+          "pushProgress": {
+            "type": "boolean"
+          },
+          "emailChallenge": {
+            "type": "boolean"
+          },
+          "emailProgress": {
+            "type": "boolean"
+          },
+          "quietStart": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "quietEnd": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "emailPaused": {
+            "type": "boolean"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/TenantNotificationSettingsResponse"
+          }
+        }
+      },
+      "PersonalProgressResponse": {
+        "required": [
+          "points",
+          "level",
+          "currentStreak",
+          "longestStreak",
+          "dailyGoal",
+          "todayActions",
+          "checkedInToday",
+          "earned",
+          "next"
+        ],
+        "type": "object",
+        "properties": {
+          "points": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "level": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentStreak": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "longestStreak": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dailyGoal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "todayActions": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "checkedInToday": {
+            "type": "boolean"
+          },
+          "earned": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BadgeResponse"
+            }
+          },
+          "next": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BadgeResponse"
+            }
           }
         }
       },
@@ -3524,6 +5937,64 @@
           }
         }
       },
+      "PushSubscriptionRequest": {
+        "required": [
+          "endpoint",
+          "p256dh",
+          "auth",
+          "deviceLabel"
+        ],
+        "type": "object",
+        "properties": {
+          "endpoint": {
+            "type": "string"
+          },
+          "p256dh": {
+            "type": "string"
+          },
+          "auth": {
+            "type": "string"
+          },
+          "deviceLabel": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "PushSubscriptionResponse": {
+        "required": [
+          "id",
+          "deviceLabel",
+          "createdAt",
+          "lastSuccessAt",
+          "paused"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "deviceLabel": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastSuccessAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "paused": {
+            "type": "boolean"
+          }
+        }
+      },
       "RecoveryCodeResponse": {
         "required": [
           "code"
@@ -3561,6 +6032,17 @@
               "null",
               "string"
             ]
+          }
+        }
+      },
+      "ReversalResponse": {
+        "required": [
+          "outcome"
+        ],
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "type": "string"
           }
         }
       },
@@ -3726,6 +6208,60 @@
           }
         }
       },
+      "TenantNotificationSettingsRequest": {
+        "required": [
+          "pushEnabled",
+          "emailEnabled",
+          "aushangEnabled",
+          "quietStart",
+          "quietEnd"
+        ],
+        "type": "object",
+        "properties": {
+          "pushEnabled": {
+            "type": "boolean"
+          },
+          "emailEnabled": {
+            "type": "boolean"
+          },
+          "aushangEnabled": {
+            "type": "boolean"
+          },
+          "quietStart": {
+            "type": "string"
+          },
+          "quietEnd": {
+            "type": "string"
+          }
+        }
+      },
+      "TenantNotificationSettingsResponse": {
+        "required": [
+          "pushEnabled",
+          "emailEnabled",
+          "aushangEnabled",
+          "quietStart",
+          "quietEnd"
+        ],
+        "type": "object",
+        "properties": {
+          "pushEnabled": {
+            "type": "boolean"
+          },
+          "emailEnabled": {
+            "type": "boolean"
+          },
+          "aushangEnabled": {
+            "type": "boolean"
+          },
+          "quietStart": {
+            "type": "string"
+          },
+          "quietEnd": {
+            "type": "string"
+          }
+        }
+      },
       "TenantProviderResponse": {
         "required": [
           "providerId",
@@ -3766,6 +6302,71 @@
               "string"
             ],
             "format": "date-time"
+          }
+        }
+      },
+      "TenantResponse": {
+        "required": [
+          "tenantId",
+          "displayName",
+          "state",
+          "timeZone",
+          "headcount",
+          "terminationEffectiveAt",
+          "readOnlyUntil",
+          "suspensionReason"
+        ],
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "timeZone": {
+            "type": "string"
+          },
+          "headcount": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "terminationEffectiveAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "readOnlyUntil": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "suspensionReason": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "TenantSettingsRequest": {
+        "required": [
+          "timeZone"
+        ],
+        "type": "object",
+        "properties": {
+          "timeZone": {
+            "type": "string"
           }
         }
       },
@@ -3982,6 +6583,35 @@
           }
         }
       },
+      "UnsubscribeResponse": {
+        "required": [
+          "category"
+        ],
+        "type": "object",
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/NotificationCategoryDto"
+          }
+        }
+      },
+      "VapidResponse": {
+        "required": [
+          "available",
+          "publicKey"
+        ],
+        "type": "object",
+        "properties": {
+          "available": {
+            "type": "boolean"
+          },
+          "publicKey": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
       "VersionResponse": {
         "required": [
           "version"
@@ -3999,6 +6629,40 @@
           "team",
           "company"
         ]
+      },
+      "VisibilityLevelDto": {
+        "enum": [
+          "only_me",
+          "team",
+          "company"
+        ]
+      },
+      "VisibilityRequest": {
+        "required": [
+          "level"
+        ],
+        "type": "object",
+        "properties": {
+          "level": {
+            "$ref": "#/components/schemas/VisibilityLevelDto"
+          }
+        }
+      },
+      "VisibilityResponse": {
+        "required": [
+          "level",
+          "chosenAt"
+        ],
+        "type": "object",
+        "properties": {
+          "level": {
+            "$ref": "#/components/schemas/VisibilityLevelDto"
+          },
+          "chosenAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
       },
       "WebManifest": {
         "required": [

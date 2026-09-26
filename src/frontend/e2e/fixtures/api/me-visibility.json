@@ -1,0 +1,8 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "level": "company",
+    "chosenAt": "0001-01-01T00:00:00+00:00"
+  }
+}

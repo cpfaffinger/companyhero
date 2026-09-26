@@ -144,7 +144,7 @@ public sealed class SessionTests(PostgresFixture pg) : IAsyncLifetime
         var code = (await joinCode.Content.ReadFromJsonAsync<JoinCodeResponse>(Ct))!.Code;
         using var authenticator = new SoftwareAuthenticator();
         var ceremony = await browser.PostJsonAsync<PasskeyCeremonyResponse>($"/api/join/{code}/passkey-options", new JoinPasskeyOptionsRequest("Cookiekind"), Ct);
-        using var joined = await browser.PostAsync($"/api/join/{code}", new JoinRequest("Cookiekind", VisibilityDto.Company, new PasskeyAnswerRequest(ceremony.State, authenticator.CreateAttestation(ceremony.Options), null), null, false, null), Ct);
+        using var joined = await browser.PostAsync($"/api/join/{code}", new JoinRequest("Cookiekind", VisibilityDto.Company, new PasskeyAnswerRequest(ceremony.State, authenticator.CreateAttestation(ceremony.Options), null), null, false, null, null), Ct);
         Assert.Equal(HttpStatusCode.Created, joined.StatusCode);
         var setCookies = joined.Headers.GetValues("Set-Cookie").ToList();
         var sessionCookie = setCookies.Single(c => c.StartsWith(SessionCookies.Session + "=", StringComparison.Ordinal));

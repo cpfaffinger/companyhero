@@ -1,0 +1,20 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "pushChallenge": true,
+    "pushProgress": true,
+    "emailChallenge": false,
+    "emailProgress": false,
+    "quietStart": null,
+    "quietEnd": null,
+    "emailPaused": false,
+    "tenant": {
+      "pushEnabled": true,
+      "emailEnabled": true,
+      "aushangEnabled": true,
+      "quietStart": "20:00",
+      "quietEnd": "07:00"
+    }
+  }
+}

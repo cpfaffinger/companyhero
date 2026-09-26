@@ -57,6 +57,13 @@ public interface IAccessAdministration
     Task<bool> DisableProviderAsync(Guid id, CancellationToken cancellationToken);
 }
 
+/// <summary>Beitrittslink des Tenants ohne Rollenprüfung für Aushang und Kiosk-Anzeige (Zugang 2.1): der Code steht ohnehin auf dem Zettel.</summary>
+public interface IJoinLinks
+{
+    /// <summary>Der jüngste gültige, nicht widerrufene Beitrittscode des Tenants oder <c>null</c>.</summary>
+    Task<JoinCodeRecord?> GetCurrentAsync(CancellationToken cancellationToken);
+}
+
 internal sealed class AccessAdministration(
     IdentityDbContext db,
     IContextTransaction transaction,
@@ -68,8 +75,18 @@ internal sealed class AccessAdministration(
     IAuditLog audit,
     IAccountMailSender mail,
     IOptions<IdentityOptions> options,
-    TimeProvider clock) : IAccessAdministration
+    TimeProvider clock) : IAccessAdministration, IJoinLinks
 {
+    public async Task<JoinCodeRecord?> GetCurrentAsync(CancellationToken cancellationToken)
+    {
+        var tenantId = context.Require().RequireTenant();
+        var now = clock.GetUtcNow();
+        await using var tx = await transaction.BeginAsync(cancellationToken);
+        var codes = await db.JoinCodes.AsNoTracking().Where(j => j.TenantId == tenantId).OrderByDescending(j => j.Id).ToListAsync(cancellationToken);
+        await tx.CommitAsync(cancellationToken);
+        return codes.Select(ToRecord).FirstOrDefault(c => c.RevokedAt is null && c.ExpiresAt > now && (c.UsageLimit is null || c.UsedCount < c.UsageLimit));
+    }
+
     public async Task<IReadOnlyList<JoinCodeRecord>> ListJoinCodesAsync(CancellationToken cancellationToken)
     {
         var tenantId = RequireRole(Role.TenantAdmin, Role.ProgrammeManager);

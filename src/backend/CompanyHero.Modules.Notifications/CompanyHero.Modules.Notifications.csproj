@@ -5,6 +5,7 @@
     <ProjectReference Include="../CompanyHero.Modules.Progress/CompanyHero.Modules.Progress.csproj" />
     <ProjectReference Include="../CompanyHero.Modules.Privacy/CompanyHero.Modules.Privacy.csproj" />
     <ProjectReference Include="../CompanyHero.Modules.Organisation/CompanyHero.Modules.Organisation.csproj" />
+    <ProjectReference Include="../CompanyHero.Modules.Identity/CompanyHero.Modules.Identity.csproj" />
     <ProjectReference Include="../CompanyHero.Modules.Branding/CompanyHero.Modules.Branding.csproj" />
   </ItemGroup>
 </Project>

@@ -76,8 +76,8 @@ public sealed class OpenApiContractTests(PostgresFixture pg)
             }
         }
 
-        // Binärantworten und Weiterleitungen (OIDC-Start) tragen kein JSON-Schema.
-        string[] untypedAllowed = ["/api/branding/tenants/{tenantId}/icons/{name}", "/api/auth/oidc/{key}/start"];
+        // Binärantworten (Icons, Aushang-PDF) und Weiterleitungen (OIDC-Start) tragen kein JSON-Schema.
+        string[] untypedAllowed = ["/api/branding/tenants/{tenantId}/icons/{name}", "/api/auth/oidc/{key}/start", "/api/notifications/aushang"];
         foreach (var (path, item) in document["paths"]!.AsObject())
         {
             foreach (var (method, operation) in item!.AsObject())

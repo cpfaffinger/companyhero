@@ -3,8 +3,8 @@
   "contentType": "application/json",
   "body": {
     "kind": "member",
-    "tenantId": "01a0de15-1908-7486-b068-37d9ab0d4d83",
-    "personId": "01a0de15-193a-7333-b031-4ee7c211a72b",
+    "tenantId": "01a0def2-4fb9-70eb-991e-eddbdbd2e107",
+    "personId": "01a0def2-4fe2-7c84-b925-120c5b7a8b2c",
     "authenticatedAt": "2026-09-25T08:08:00+00:00",
     "slidingUntil": "2026-10-25T08:08:00+00:00",
     "absoluteUntil": "2027-03-24T08:08:00+00:00",

@@ -68,6 +68,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/access/members/{personId}/remove": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["RemoveMember"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/access/policy": {
         parameters: {
             query?: never;
@@ -493,6 +509,22 @@ export interface paths {
         };
         get: operations["ListRunningChallenges"];
         put?: never;
+        post: operations["CreateChallengeDraft"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/challenges/{challengeId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetChallenge"];
+        put?: never;
         post?: never;
         delete?: never;
         options?: never;
@@ -543,6 +575,182 @@ export interface paths {
         put?: never;
         post: operations["SubmitContribution"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/challenges/{challengeId}/contributions/{contributionId}/reverse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["ReverseContribution"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/challenges/{challengeId}/contributions/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListMyContributions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/challenges/{challengeId}/end": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["EndChallengeEarly"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/challenges/{challengeId}/plan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["PlanChallenge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/challenges/{challengeId}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["PreviewChallenge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/challenges/{challengeId}/texts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["UpdateChallengeTexts"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/challenges/kickoff": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CreateKickoffChallenge"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/challenges/manage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListAllChallenges"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/feed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetFeed"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/feed/posts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CreateFeedPost"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/feed/posts/{entryId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["DeleteFeedPost"];
         options?: never;
         head?: never;
         patch?: never;
@@ -756,6 +964,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/me/check-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CheckIn"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/consents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListMyConsents"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/me/email": {
         parameters: {
             query?: never;
@@ -772,6 +1012,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/me/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ExportMyData"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetMyGroups"];
+        put: operations["ChooseMyGroup"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/me/leave": {
         parameters: {
             query?: never;
@@ -783,6 +1055,54 @@ export interface paths {
         put?: never;
         post: operations["LeaveTenant"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetMyNotificationSettings"];
+        put: operations["UpdateMyNotificationSettings"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/notifications/subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListPushSubscriptions"];
+        put?: never;
+        post: operations["CreatePushSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/notifications/subscriptions/{subscriptionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["DeletePushSubscription"];
         options?: never;
         head?: never;
         patch?: never;
@@ -836,6 +1156,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/me/progress": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetMyProgress"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/me/progress/daily-goal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["SetMyDailyGoal"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/me/providers/{linkId}": {
         parameters: {
             query?: never;
@@ -868,6 +1220,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/me/visibility": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetMyVisibility"];
+        put: operations["ChangeMyVisibility"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/members": {
         parameters: {
             query?: never;
@@ -884,6 +1252,246 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListNotifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/{entryId}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["MarkNotificationRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/aushang": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetAushang"];
+        put?: never;
+        post: operations["RenderAushang"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["MarkAllNotificationsRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/tenant": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetTenantNotificationSettings"];
+        put: operations["UpdateTenantNotificationSettings"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/unsubscribe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UnsubscribeByToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/vapid": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetVapidKey"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organisation/dimensions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListDimensions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organisation/dimensions/{dimensionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["UpdateDimension"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organisation/dimensions/{dimensionId}/groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CreateGroup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organisation/groups/{groupId}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["ArchiveGroup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organisation/groups/{groupId}/headcount": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["SetGroupHeadcount"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organisation/tenant": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetTenant"];
+        put: operations["UpdateTenantSettings"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organisation/tenant/headcount": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["SetTenantHeadcount"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/organisation/tenant/terminate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TerminateTenant"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/persons/{personId}/activities": {
         parameters: {
             query?: never;
@@ -892,6 +1500,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["GetPersonActivities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/progress/participation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetParticipation"];
         put?: never;
         post?: never;
         delete?: never;
@@ -934,6 +1558,9 @@ export interface components {
             kind: string;
             /** Format: date-time */
             occurredAt: string;
+            /** Format: int32 */
+            points: number;
+            reversed: boolean;
         };
         /** @enum {unknown} */
         AnredeDto: "du" | "sie";
@@ -947,6 +1574,21 @@ export interface components {
             occurredAt: string;
             subjectRef: null | string;
         };
+        AushangResponse: {
+            /** Format: date-time */
+            generatedAt: string;
+            id: string;
+            week: string;
+        };
+        /** @enum {unknown} */
+        BadgeCategoryDto: "einstieg" | "dranbleiben" | "gemeinsam" | "vielfalt" | "saison";
+        BadgeResponse: {
+            /** Format: date-time */
+            awardedAt: null | string;
+            category: components["schemas"]["BadgeCategoryDto"];
+            key: string;
+            textKey: string;
+        };
         BezeichnungenDto: {
             punkte: string;
             serie: string;
@@ -956,26 +1598,58 @@ export interface components {
             challengeId: string;
             collective: null | components["schemas"]["CollectiveResponse"];
             contributedToday: boolean;
+            description: null | string;
             /** Format: date-time */
             endsAt: string;
             metric: components["schemas"]["ChallengeMetricDto"];
             /** Format: int32 */
             percent: number;
+            previewed: boolean;
+            /** Format: date-time */
+            startsAt: string;
+            state: components["schemas"]["ChallengeStateDto"];
+            target: string;
+            templateKey: null | string;
+            title: string;
+            visibility: components["schemas"]["ChallengeVisibilityDto"];
+        };
+        ChallengeDraftRequest: {
+            description: null | string;
+            /** Format: date-time */
+            endsAt: string;
+            metric: components["schemas"]["ChallengeMetricDto"];
             /** Format: date-time */
             startsAt: string;
             target: string;
             title: string;
+            visibility: components["schemas"]["ChallengeVisibilityDto"];
         };
         /** @enum {unknown} */
         ChallengeMetricDto: "checkmark" | "count";
+        /** @enum {unknown} */
+        ChallengeStateDto: "draft" | "planned" | "running" | "grace" | "ended" | "archived";
+        ChallengeTextsRequest: {
+            description: null | string;
+            title: string;
+        };
+        /** @enum {unknown} */
+        ChallengeVisibilityDto: "only_me" | "team" | "company";
+        CheckInRequest: {
+            tiles: components["schemas"]["CheckInTileDto"][];
+        };
+        CheckInResponse: {
+            outcome: string;
+        };
+        /** @enum {unknown} */
+        CheckInTileDto: "moved" | "paused" | "rested";
         CollectiveResponse: {
             /** Format: int32 */
-            contributionCount: number;
+            contributionCount: null | number;
             /** Format: int32 */
-            contributorCount: number;
+            contributorCount: null | number;
             /** Format: int32 */
             percent: number;
-            total: string;
+            total: null | string;
             /** Format: date-time */
             updatedAt: string;
         };
@@ -984,6 +1658,14 @@ export interface components {
             clientSecret: string;
             displayName: string;
             issuer: string;
+        };
+        ConsentResponse: {
+            entryId: string;
+            kind: string;
+            next: string;
+            /** Format: date-time */
+            occurredAt: string;
+            previous: null | string;
         };
         ContributionRequest: {
             channel: string;
@@ -1001,6 +1683,14 @@ export interface components {
             /** Format: int32 */
             count: number;
         };
+        CreatedResponse: {
+            id: string;
+        };
+        CreateGroupRequest: {
+            /** Format: int32 */
+            headcount: null | number;
+            name: string;
+        };
         CreateJoinCodeRequest: {
             /** Format: int32 */
             usageLimit: null | number;
@@ -1010,8 +1700,27 @@ export interface components {
         CreateKioskDeviceRequest: {
             name: string;
         };
+        DailyGoalRequest: {
+            /** Format: int32 */
+            goal: number;
+        };
+        DimensionRequest: {
+            active: boolean;
+            name: string;
+        };
+        DimensionResponse: {
+            active: boolean;
+            dimensionId: string;
+            groups: components["schemas"]["GroupResponse"][];
+            name: string;
+            /** Format: int32 */
+            position: number;
+        };
         EmailRequest: {
             email: string;
+        };
+        EndChallengeRequest: {
+            reason: string;
         };
         ErsetzungDto: {
             angefordert: string;
@@ -1019,6 +1728,71 @@ export interface components {
             grund: string;
             modus: components["schemas"]["ThemeModeDto"];
             rolle: string;
+        };
+        FeedCardResponse: {
+            body: null | string;
+            day: string;
+            id: string;
+            kind: string;
+            mine: boolean;
+            /** Format: date-time */
+            occurredAt: string;
+            params: {
+                [key: string]: string;
+            };
+            person: null | components["schemas"]["FeedPersonResponse"];
+            reference: null | components["schemas"]["FeedReferenceResponse"];
+            textKey: string;
+        };
+        FeedPersonResponse: {
+            displayName: string;
+            personId: string;
+        };
+        FeedPostRequest: {
+            body: string;
+        };
+        FeedPostResponse: {
+            id: string;
+        };
+        FeedReferenceResponse: {
+            id: null | string;
+            kind: string;
+        };
+        FeedResponse: {
+            cards: components["schemas"]["FeedCardResponse"][];
+            checkInDue: boolean;
+            head: components["schemas"]["HeadCardResponse"];
+        };
+        GroupChoiceRequest: {
+            dimensionId: string;
+            groupId: null | string;
+        };
+        GroupChoiceResponse: {
+            dimensionId: string;
+            groupId: null | string;
+            rechoice: boolean;
+        };
+        GroupResponse: {
+            archived: boolean;
+            groupId: string;
+            /** Format: int32 */
+            headcount: null | number;
+            headcountWarning: boolean;
+            name: string;
+        };
+        HeadCardResponse: {
+            challenge: null | components["schemas"]["ChallengeCardResponse"];
+            /** Format: int32 */
+            dailyGoal: number;
+            kind: string;
+            /** Format: int32 */
+            todayActions: number;
+        };
+        HeadcountRequest: {
+            /** Format: int32 */
+            count: number;
+            /** Format: date */
+            effectiveFrom: string;
         };
         HttpValidationProblemDetails: {
             detail?: null | string;
@@ -1050,10 +1824,24 @@ export interface components {
             /** Format: int32 */
             usedCount: number;
         };
+        JoinDimensionResponse: {
+            dimensionId: string;
+            groups: components["schemas"]["JoinGroupResponse"][];
+            name: string;
+        };
+        JoinGroupChoiceRequest: {
+            dimensionId: string;
+            groupId: string;
+        };
+        JoinGroupResponse: {
+            groupId: string;
+            name: string;
+        };
         JoinPasskeyOptionsRequest: {
             displayName: string;
         };
         JoinPreviewResponse: {
+            dimensions: components["schemas"]["JoinDimensionResponse"][];
             pendingExternal: null | components["schemas"]["PendingExternalResponse"];
             role: null | string;
             tenantId: string;
@@ -1063,6 +1851,7 @@ export interface components {
         JoinRequest: {
             displayName: string;
             email: null | string;
+            groups: null | components["schemas"]["JoinGroupChoiceRequest"][];
             kioskPin: null | string;
             passkey: null | components["schemas"]["PasskeyAnswerRequest"];
             useExternal: boolean;
@@ -1083,6 +1872,7 @@ export interface components {
             providers: components["schemas"]["ProviderResponse"][];
         };
         JsonElement: unknown;
+        JsonObject: Record<string, unknown>;
         KioskDeviceAdminResponse: {
             /** Format: date-time */
             createdAt: string;
@@ -1109,6 +1899,7 @@ export interface components {
         };
         KioskJoinRequest: {
             displayName: string;
+            groups: null | components["schemas"]["JoinGroupChoiceRequest"][];
             pin: string;
             visibility: components["schemas"]["VisibilityDto"];
         };
@@ -1184,6 +1975,7 @@ export interface components {
         };
         MemberResponse: {
             displayName: string;
+            groups: string[];
             /** Format: date-time */
             joinedAt: string;
             personId: string;
@@ -1196,8 +1988,43 @@ export interface components {
             tenantId: string;
             tenantName: string;
         };
+        /** @enum {unknown} */
+        NotificationCategoryDto: "challenge" | "progress";
+        NotificationResponse: {
+            category: components["schemas"]["NotificationCategoryDto"];
+            id: string;
+            /** Format: date-time */
+            occurredAt: string;
+            params: {
+                [key: string]: string;
+            };
+            /** Format: date-time */
+            readAt: null | string;
+            target: string;
+            textKey: string;
+        };
         OperationResponse: {
             operationId: string;
+        };
+        OwnContributionResponse: {
+            channel: string;
+            contributionId: string;
+            isReversal: boolean;
+            /** Format: date-time */
+            recordedAt: string;
+            reversed: boolean;
+            value: string;
+        };
+        ParticipationResponse: {
+            /** Format: int32 */
+            activePersons: null | number;
+            available: boolean;
+            groupId: null | string;
+            /** Format: int32 */
+            headcount: null | number;
+            /** Format: int32 */
+            percent: null | number;
+            period: string;
         };
         PasskeyAnswerRequest: {
             credential: components["schemas"]["JsonElement"];
@@ -1219,6 +2046,41 @@ export interface components {
         PendingExternalResponse: {
             displayName: string;
             providerKey: string;
+        };
+        PersonalProgressResponse: {
+            checkedInToday: boolean;
+            /** Format: int32 */
+            currentStreak: number;
+            /** Format: int32 */
+            dailyGoal: number;
+            earned: components["schemas"]["BadgeResponse"][];
+            /** Format: int32 */
+            level: number;
+            /** Format: int32 */
+            longestStreak: number;
+            next: components["schemas"]["BadgeResponse"][];
+            /** Format: int32 */
+            points: number;
+            /** Format: int32 */
+            todayActions: number;
+        };
+        PersonNotificationSettingsRequest: {
+            emailChallenge: boolean;
+            emailProgress: boolean;
+            pushChallenge: boolean;
+            pushProgress: boolean;
+            quietEnd: null | string;
+            quietStart: null | string;
+        };
+        PersonNotificationSettingsResponse: {
+            emailChallenge: boolean;
+            emailPaused: boolean;
+            emailProgress: boolean;
+            pushChallenge: boolean;
+            pushProgress: boolean;
+            quietEnd: null | string;
+            quietStart: null | string;
+            tenant: components["schemas"]["TenantNotificationSettingsResponse"];
         };
         PinRequest: {
             pin: string;
@@ -1253,6 +2115,21 @@ export interface components {
             displayName: string;
             key: string;
         };
+        PushSubscriptionRequest: {
+            auth: string;
+            deviceLabel: null | string;
+            endpoint: string;
+            p256dh: string;
+        };
+        PushSubscriptionResponse: {
+            /** Format: date-time */
+            createdAt: string;
+            deviceLabel: string;
+            id: string;
+            /** Format: date-time */
+            lastSuccessAt: null | string;
+            paused: boolean;
+        };
         RecoveryCodeResponse: {
             code: string;
         };
@@ -1262,6 +2139,9 @@ export interface components {
         RedeemRoleCodeRequest: {
             code: string;
             realName: null | string;
+        };
+        ReversalResponse: {
+            outcome: string;
         };
         RoleCodeResponse: {
             code: string;
@@ -1302,6 +2182,20 @@ export interface components {
             slidingUntil: null | string;
             tenantId: string;
         };
+        TenantNotificationSettingsRequest: {
+            aushangEnabled: boolean;
+            emailEnabled: boolean;
+            pushEnabled: boolean;
+            quietEnd: string;
+            quietStart: string;
+        };
+        TenantNotificationSettingsResponse: {
+            aushangEnabled: boolean;
+            emailEnabled: boolean;
+            pushEnabled: boolean;
+            quietEnd: string;
+            quietStart: string;
+        };
         TenantProviderResponse: {
             clientId: string;
             /** Format: date-time */
@@ -1312,6 +2206,22 @@ export interface components {
             providerId: string;
             /** Format: date-time */
             validatedAt: null | string;
+        };
+        TenantResponse: {
+            displayName: string;
+            /** Format: int32 */
+            headcount: null | number;
+            /** Format: date-time */
+            readOnlyUntil: null | string;
+            state: string;
+            suspensionReason: null | string;
+            tenantId: string;
+            /** Format: date-time */
+            terminationEffectiveAt: null | string;
+            timeZone: string;
+        };
+        TenantSettingsRequest: {
+            timeZone: string;
         };
         ThemeDocumentRequest: {
             akzent: null | string;
@@ -1373,11 +2283,28 @@ export interface components {
             expiresAt: string;
             url: string;
         };
+        UnsubscribeResponse: {
+            category: components["schemas"]["NotificationCategoryDto"];
+        };
+        VapidResponse: {
+            available: boolean;
+            publicKey: null | string;
+        };
         VersionResponse: {
             version: string;
         };
         /** @enum {unknown} */
         VisibilityDto: "only_me" | "team" | "company";
+        /** @enum {unknown} */
+        VisibilityLevelDto: "only_me" | "team" | "company";
+        VisibilityRequest: {
+            level: components["schemas"]["VisibilityLevelDto"];
+        };
+        VisibilityResponse: {
+            /** Format: date-time */
+            chosenAt: string;
+            level: components["schemas"]["VisibilityLevelDto"];
+        };
         WebManifest: {
             background_color: string;
             display: string;
@@ -1566,6 +2493,44 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    RemoveMember: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                personId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetails"];
+                };
             };
         };
     };
@@ -2124,6 +3089,15 @@ export interface operations {
                     "application/json": components["schemas"]["SessionResponse"];
                 };
             };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetails"];
+                };
+            };
         };
     };
     ConsumeTransfer: {
@@ -2405,6 +3379,68 @@ export interface operations {
             };
         };
     };
+    CreateChallengeDraft: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChallengeDraftRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChallengeCardResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+        };
+    };
+    GetChallenge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                challengeId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChallengeCardResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     GetChallengeCollective: {
         parameters: {
             query?: never;
@@ -2556,6 +3592,373 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetails"];
                 };
+            };
+        };
+    };
+    ReverseContribution: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                challengeId: string;
+                contributionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReversalResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    ListMyContributions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                challengeId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OwnContributionResponse"][];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    EndChallengeEarly: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                challengeId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EndChallengeRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    PlanChallenge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                challengeId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Conflict */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    PreviewChallenge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                challengeId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChallengeCardResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UpdateChallengeTexts: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                challengeId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChallengeTextsRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CreateKickoffChallenge: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChallengeCardResponse"];
+                };
+            };
+        };
+    };
+    ListAllChallenges: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChallengeCardResponse"][];
+                };
+            };
+        };
+    };
+    GetFeed: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FeedResponse"];
+                };
+            };
+            /** @description Not Modified */
+            304: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CreateFeedPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeedPostRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FeedPostResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            /** @description Too Many Requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    DeleteFeedPost: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entryId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -3066,6 +4469,68 @@ export interface operations {
             };
         };
     };
+    CheckIn: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CheckInRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CheckInResponse"];
+                };
+            };
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CheckInResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+        };
+    };
+    ListMyConsents: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConsentResponse"][];
+                };
+            };
+        };
+    };
     SetMyEmail: {
         parameters: {
             query?: never;
@@ -3124,6 +4589,84 @@ export interface operations {
             };
         };
     };
+    ExportMyData: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JsonObject"];
+                };
+            };
+        };
+    };
+    GetMyGroups: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GroupChoiceResponse"][];
+                };
+            };
+        };
+    };
+    ChooseMyGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GroupChoiceRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     LeaveTenant: {
         parameters: {
             query?: never;
@@ -3135,6 +4678,139 @@ export interface operations {
         responses: {
             /** @description No Content */
             204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    GetMyNotificationSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PersonNotificationSettingsResponse"];
+                };
+            };
+        };
+    };
+    UpdateMyNotificationSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PersonNotificationSettingsRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PersonNotificationSettingsResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+        };
+    };
+    ListPushSubscriptions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushSubscriptionResponse"][];
+                };
+            };
+        };
+    };
+    CreatePushSubscription: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PushSubscriptionRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PushSubscriptionResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+        };
+    };
+    DeletePushSubscription: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subscriptionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -3228,6 +4904,57 @@ export interface operations {
             };
         };
     };
+    GetMyProgress: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PersonalProgressResponse"];
+                };
+            };
+        };
+    };
+    SetMyDailyGoal: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DailyGoalRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+        };
+    };
     UnlinkMyProvider: {
         parameters: {
             query?: never;
@@ -3268,6 +4995,55 @@ export interface operations {
             };
         };
     };
+    GetMyVisibility: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VisibilityResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ChangeMyVisibility: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VisibilityRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     ListMembers: {
         parameters: {
             query?: never;
@@ -3288,6 +5064,462 @@ export interface operations {
             };
             /** @description Forbidden */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ListNotifications: {
+        parameters: {
+            query?: {
+                unreadOnly?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationResponse"][];
+                };
+            };
+        };
+    };
+    MarkNotificationRead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entryId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    GetAushang: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RenderAushang: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AushangResponse"];
+                };
+            };
+        };
+    };
+    MarkAllNotificationsRead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    GetTenantNotificationSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantNotificationSettingsResponse"];
+                };
+            };
+        };
+    };
+    UpdateTenantNotificationSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TenantNotificationSettingsRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantNotificationSettingsResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+        };
+    };
+    UnsubscribeByToken: {
+        parameters: {
+            query?: {
+                token?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnsubscribeResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    GetVapidKey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VapidResponse"];
+                };
+            };
+        };
+    };
+    ListDimensions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DimensionResponse"][];
+                };
+            };
+        };
+    };
+    UpdateDimension: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dimensionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DimensionRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CreateGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                dimensionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateGroupRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreatedResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ArchiveGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                groupId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    SetGroupHeadcount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                groupId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HeadcountRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    GetTenant: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TenantResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    UpdateTenantSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TenantSettingsRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+        };
+    };
+    SetTenantHeadcount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HeadcountRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    TerminateTenant: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -3317,6 +5549,36 @@ export interface operations {
             };
             /** @description Not Found */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    GetParticipation: {
+        parameters: {
+            query?: {
+                groupId?: string;
+                period?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ParticipationResponse"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };

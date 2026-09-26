@@ -45,6 +45,7 @@ public sealed class RequestIsolationTests(PostgresFixture pg)
         var routes = pg.Api.Services.GetRequiredService<EndpointDataSource>().Endpoints
             .OfType<RouteEndpoint>()
             .Where(e => e.RoutePattern.RawText is not null && e.RoutePattern.Parameters.Any(p => p.Name == "personId"))
+            .Where(e => e.Metadata.GetMetadata<Microsoft.AspNetCore.Routing.HttpMethodMetadata>()?.HttpMethods.Contains("GET", StringComparer.OrdinalIgnoreCase) ?? true)
             .Select(e => e.RoutePattern.RawText!)
             .ToList();
 

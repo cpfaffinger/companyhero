@@ -48,10 +48,15 @@ internal static class JoinEndpoints
                     return Results.Problem(statusCode: StatusCodes.Status422UnprocessableEntity, title: "Zugang abgelehnt", detail: "external_pending_missing");
                 }
 
+                if (!TryParseGroups(request.Groups, out var groups))
+                {
+                    return Results.ValidationProblem(new Dictionary<string, string[]> { ["groups"] = ["Höchstens eine Gruppe je Dimension, Kennungen als Strings."] });
+                }
+
                 var result = await joins.JoinAsync(new JoinCommand(
                     code, request.DisplayName, request.Visibility.ToChoice(),
                     request.Passkey is null ? null : new PasskeyAnswer(request.Passkey.State, request.Passkey.Credential, request.Passkey.DeviceName),
-                    request.Email, pending is null ? null : new ExternalIdentity(pending.ProviderKey, pending.SubjectHash), request.KioskPin), ct);
+                    request.Email, pending is null ? null : new ExternalIdentity(pending.ProviderKey, pending.SubjectHash), request.KioskPin, Groups: groups), ct);
                 if (pending is not null)
                 {
                     external.ClearPending(http.Response);
@@ -76,7 +81,12 @@ internal static class JoinEndpoints
                     return Results.NotFound();
                 }
 
-                var result = await joins.JoinAtKioskAsync(new JoinCommand(code, request.DisplayName, request.Visibility.ToChoice(), null, null, null, request.Pin), ct);
+                if (!TryParseGroups(request.Groups, out var groups))
+                {
+                    return Results.ValidationProblem(new Dictionary<string, string[]> { ["groups"] = ["Höchstens eine Gruppe je Dimension, Kennungen als Strings."] });
+                }
+
+                var result = await joins.JoinAtKioskAsync(new JoinCommand(code, request.DisplayName, request.Visibility.ToChoice(), null, null, null, request.Pin, Groups: groups), ct);
                 return Results.Created($"/api/kiosk/device", new JoinResponse(result.TenantId.ToString(), result.PersonId.ToString(), result.KioskId, result.RecoveryCode, null));
             })
             .RequireTenantContext().AllowKiosk(device: true)
@@ -136,6 +146,28 @@ internal static class JoinEndpoints
             .ProducesProblem(StatusCodes.Status422UnprocessableEntity);
     }
 
+    /// <summary>Gruppenwahl (Zugang 2.2 Schritt 4): je Dimension höchstens eine Gruppe; Kennungen als Strings (K13).</summary>
+    private static bool TryParseGroups(IReadOnlyList<JoinGroupChoiceRequest>? groups, out IReadOnlyDictionary<Guid, Guid>? parsed)
+    {
+        parsed = null;
+        if (groups is null || groups.Count == 0)
+        {
+            return true;
+        }
+
+        var result = new Dictionary<Guid, Guid>();
+        foreach (var choice in groups)
+        {
+            if (!Guid.TryParseExact(choice.DimensionId, "D", out var dimension) || !Guid.TryParseExact(choice.GroupId, "D", out var group) || !result.TryAdd(dimension, group))
+            {
+                return false;
+            }
+        }
+
+        parsed = result;
+        return true;
+    }
+
     private static async Task<JoinPreviewResponse> ToResponseAsync(JoinPreview preview, string? role, HttpRequest request, IExternalLoginFlow external, IProviderCatalog providers, CancellationToken ct)
     {
         var pending = external.ReadPending(request);
@@ -151,6 +183,7 @@ internal static class JoinEndpoints
             preview.TenantName,
             new JoinWaysResponse(preview.Ways.Passkey, preview.Ways.MagicLink, preview.Ways.Kiosk, preview.Ways.Providers.Select(p => new ProviderResponse(p.Key, p.DisplayName)).ToList(), preview.Ways.ForcedProviderKeys),
             pendingResponse,
-            role);
+            role,
+            preview.Dimensions.Select(d => new JoinDimensionResponse(d.DimensionId.ToString("D"), d.Name, d.Groups.Select(g => new JoinGroupResponse(g.GroupId.ToString("D"), g.Name)).ToList())).ToList());
     }
 }

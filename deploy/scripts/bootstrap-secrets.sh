@@ -28,6 +28,15 @@ gen "$DIR" db_app_password 24
 gen "$DIR" backup_cipher_pass 32
 gen "$DIR" garage_rpc_secret 32
 gen "$DIR" garage_admin_token 32
+# VAPID-Schlüsselpaar der Plattform für Web Push (A-059, Benachrichtigungen 3.1): privater Schlüssel als PEM, der öffentliche
+# wird zur Laufzeit abgeleitet; Rotation ist ein geplanter Vorgang (neuen Schlüssel erzeugen, Abonnements erneuern sich beim App-Start).
+if [ ! -s "$DIR/vapid_private_key" ]; then
+  openssl ecparam -name prime256v1 -genkey -noout | openssl pkcs8 -topk8 -nocrypt > "$DIR/vapid_private_key"
+  chmod 0600 "$DIR/vapid_private_key"
+  echo "erzeugt: vapid_private_key"
+fi
+# SMTP-Zugangsdaten des Betreibers (A-032): leer, bis der Transport konfiguriert ist; Host, Port und Absender stehen in .env.
+empty "$DIR" smtp_password
 # Platzhalter für Produktion; das Root-Token entsteht bei der manuellen Initialisierung von OpenBao durch zwei Personen.
 empty "$DIR" openbao_root_token
 

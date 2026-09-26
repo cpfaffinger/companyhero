@@ -3,9 +3,15 @@ namespace CompanyHero.Platform.Tenancy;
 /// <summary>
 /// Ergebnis der Mitgliedschaftsprüfung: Ist die Person aktives Mitglied eines aktiven Tenants, und welche Rollen hält sie?
 /// </summary>
-public sealed record MembershipVerdict(bool Active, IReadOnlySet<string> Roles)
+/// <param name="Active">Aktives Mitglied eines Tenants, der Zugang gewährt.</param>
+/// <param name="Roles">Rollen laut Rollenkatalog.</param>
+/// <param name="ReadOnly">Nach der Kündigung: nur lesender Zugriff für Tenant-Admin und Einsichtsrolle (Organisation 1.3).</param>
+/// <param name="DeniedReason">Neutraler Grund einer Ablehnung, etwa <c>tenant_suspended</c>; ohne Angabe „keine Mitgliedschaft“.</param>
+public sealed record MembershipVerdict(bool Active, IReadOnlySet<string> Roles, bool ReadOnly = false, string? DeniedReason = null)
 {
     public static MembershipVerdict Denied { get; } = new(false, new HashSet<string>(StringComparer.Ordinal));
+
+    public static MembershipVerdict DeniedBecause(string reason) => new(false, new HashSet<string>(StringComparer.Ordinal), false, reason);
 }
 
 /// <summary>

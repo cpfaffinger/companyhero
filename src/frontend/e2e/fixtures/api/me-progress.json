@@ -1,0 +1,53 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "points": 60,
+    "level": 1,
+    "currentStreak": 2,
+    "longestStreak": 2,
+    "dailyGoal": 1,
+    "todayActions": 2,
+    "checkedInToday": true,
+    "earned": [
+      {
+        "key": "einstieg.erster_tag",
+        "category": "einstieg",
+        "textKey": "abzeichen.einstieg.ersterTag",
+        "awardedAt": "2026-09-26T18:20:17.86393+00:00"
+      },
+      {
+        "key": "einstieg.erste_uebung",
+        "category": "einstieg",
+        "textKey": "abzeichen.einstieg.ersteUebung",
+        "awardedAt": "2026-09-26T18:20:17.86393+00:00"
+      },
+      {
+        "key": "vielfalt.fuenf_arten",
+        "category": "vielfalt",
+        "textKey": "abzeichen.vielfalt.fuenfArten",
+        "awardedAt": "2026-09-26T18:20:18.553344+00:00"
+      }
+    ],
+    "next": [
+      {
+        "key": "einstieg.erste_gruppe",
+        "category": "einstieg",
+        "textKey": "abzeichen.einstieg.ersteGruppe",
+        "awardedAt": null
+      },
+      {
+        "key": "dranbleiben.serie_7",
+        "category": "dranbleiben",
+        "textKey": "abzeichen.dranbleiben.serie7",
+        "awardedAt": null
+      },
+      {
+        "key": "gemeinsam.firmenziel",
+        "category": "gemeinsam",
+        "textKey": "abzeichen.gemeinsam.firmenziel",
+        "awardedAt": null
+      }
+    ]
+  }
+}

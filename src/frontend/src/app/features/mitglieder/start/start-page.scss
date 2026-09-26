@@ -1,0 +1,106 @@
+.ch-start {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+}
+
+.ch-start__kopf {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ch-space-3);
+  padding: var(--ch-space-4) 0;
+}
+
+.ch-start__titel {
+  flex-grow: 1;
+  font: 700 var(--ch-type-headline-m) / var(--ch-line-headline-m) var(--ch-font-display);
+}
+
+.ch-start__untertitel {
+  font: 600 var(--ch-type-title-m) / var(--ch-line-title-m) var(--ch-font-text);
+}
+
+.ch-start__tagesziel,
+.ch-start__checkin,
+.ch-start__post {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+  padding: var(--ch-space-4);
+  border-radius: var(--ch-radius-card);
+  border: 1px solid var(--ch-outline-variant);
+  background: var(--ch-surface);
+}
+
+.ch-start__tagesziel {
+  flex-direction: row;
+  align-items: center;
+  color: var(--ch-progress);
+}
+
+.ch-start__kacheln {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ch-touch-gap);
+}
+
+.ch-start__kachel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ch-space-2);
+  min-height: var(--ch-touch-target);
+  padding: var(--ch-space-3);
+  border-radius: var(--ch-radius-input);
+  border: 1px solid var(--ch-outline-variant);
+  background: var(--ch-surface-container);
+  color: var(--ch-on-surface);
+  font: inherit;
+  cursor: pointer;
+}
+
+.ch-start__kachel--aktiv {
+  background: var(--ch-primary-container);
+  color: var(--ch-on-primary-container);
+  border-color: var(--ch-primary);
+}
+
+.ch-start__erfolg {
+  padding: var(--ch-space-3) var(--ch-space-4);
+  border-radius: var(--ch-radius-card);
+  background: var(--ch-progress-container);
+  color: var(--ch-on-progress-container);
+  font-weight: 600;
+}
+
+.ch-start__post-feld {
+  width: 100%;
+}
+
+.ch-start__post-aktionen {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ch-touch-gap);
+}
+
+.ch-start__fehler {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ch-space-2);
+  color: var(--ch-error);
+}
+
+.ch-start__spacer {
+  flex-grow: 1;
+}
+
+.ch-start__tag {
+  margin-top: var(--ch-space-3);
+  font-size: var(--ch-type-label-m);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ch-on-surface-variant);
+}

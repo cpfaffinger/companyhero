@@ -1,0 +1,35 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": [
+    {
+      "dimensionId": "01a0def2-5192-7707-9704-244587329465",
+      "name": "Standort",
+      "position": 0,
+      "active": true,
+      "groups": [
+        {
+          "groupId": "01a0def2-5461-7118-9c16-d9ac383099f7",
+          "name": "Wien",
+          "archived": false,
+          "headcount": null,
+          "headcountWarning": false
+        }
+      ]
+    },
+    {
+      "dimensionId": "01a0def2-5192-7fbd-b6a7-b84b5613c174",
+      "name": "Abteilung",
+      "position": 1,
+      "active": true,
+      "groups": []
+    },
+    {
+      "dimensionId": "01a0def2-5192-7877-9d2c-a1477b5bc37f",
+      "name": "Schicht",
+      "position": 2,
+      "active": true,
+      "groups": []
+    }
+  ]
+}

@@ -45,9 +45,19 @@ public sealed class VisibilitySetting : ITenantOwned
     }
 }
 
+/// <summary>Wofür gelesen wird: individuelle Aktivitätswerte (Regel 1 gilt) oder Inhalte im Kreis der Sichtbarkeitsstufe (Feed, Anzeigename).</summary>
+public enum VisibilityPurpose
+{
+    /// <summary>Individuelle Aktivitäts- und Fortschrittswerte: Funktionsrollen des Arbeitgebers sehen sie nie (A-021 Regel 1).</summary>
+    IndividualValues = 1,
+
+    /// <summary>Anzeigename und Beiträge im Kreis, den die Person gewählt hat (Feed 2.4, Datenschutz 3.1).</summary>
+    Presence = 2,
+}
+
 /// <summary>
-/// Die zentrale Leseregel für individuelle Werte (Datenschutz 3.3, A-021, A-022). Reine Fachregel ohne Infrastruktur;
-/// alle lesenden Domänen verwenden sie über <c>IVisibilityRule</c>, es gibt keine Filterlogik je Feature.
+/// Die zentrale Leseregel für individuelle Werte und Sichtbarkeitskreise (Datenschutz 3.3, A-021, A-022). Reine Fachregel ohne
+/// Infrastruktur; alle lesenden Domänen verwenden sie über <c>IVisibilityRule</c>, es gibt keine Filterlogik je Feature.
 /// </summary>
 public static class VisibilityRule
 {
@@ -56,7 +66,10 @@ public static class VisibilityRule
     /// <param name="subject">Die Person, deren individuelle Werte gelesen werden sollen.</param>
     /// <param name="subjectLevel">Gewählte Stufe der betroffenen Person; <c>null</c>, wenn sie noch keine gewählt hat.</param>
     /// <param name="shareGroup">Teilen beide eine Gruppe (für „Mein Team“)?</param>
-    public static bool MayReadIndividualValues(PersonId reader, bool readerHoldsEmployerRole, PersonId subject, VisibilityLevel? subjectLevel, bool shareGroup)
+    public static bool MayReadIndividualValues(PersonId reader, bool readerHoldsEmployerRole, PersonId subject, VisibilityLevel? subjectLevel, bool shareGroup) =>
+        IsVisible(reader, readerHoldsEmployerRole, subject, subjectLevel, shareGroup, VisibilityPurpose.IndividualValues);
+
+    public static bool IsVisible(PersonId reader, bool readerHoldsEmployerRole, PersonId subject, VisibilityLevel? subjectLevel, bool shareGroup, VisibilityPurpose purpose)
     {
         // Eigene Daten sieht die Person immer (Datenschutz 6.4).
         if (reader == subject)
@@ -65,7 +78,7 @@ public static class VisibilityRule
         }
 
         // Regel 1: Kein Arbeitgeber sieht individuelle Aktivitätswerte, auch nicht der Tenant-Admin, unabhängig von der Stufe.
-        if (readerHoldsEmployerRole)
+        if (purpose == VisibilityPurpose.IndividualValues && readerHoldsEmployerRole)
         {
             return false;
         }
@@ -78,4 +91,22 @@ public static class VisibilityRule
             _ => false,
         };
     }
+}
+
+/// <summary>Mindestzahl und Ranglistenschwelle (Datenschutz 4, A-023): reine Fachregel für alle Aggregate mit Personenbezug.</summary>
+public static class AggregateRule
+{
+    /// <summary>Aggregate erst ab fünf Personen mit Beitrag; darunter nichts, nicht gerundet, nicht ungenau (A-021 Regel 2).</summary>
+    public const int MinimumPersons = 5;
+
+    /// <summary>Ranglisten zusätzlich erst ab 40 Prozent der aktivierten Personen (Datenschutz 4.3); im Durchstich gibt es keine Rangliste.</summary>
+    public const int RankingMinimumPercent = 40;
+
+    public static bool MayPublish(int personsWithContribution) => personsWithContribution >= MinimumPersons;
+
+    /// <summary>Sammelkarten und Sammelereignisse mit Personenbezug ebenfalls erst ab fünf (Feed 2.5, Fortschritt 4.2).</summary>
+    public static bool MayAggregatePersons(int persons) => persons >= MinimumPersons;
+
+    public static bool MayRenderRanking(int personsWithContribution, int activatedPersons) =>
+        MayPublish(personsWithContribution) && activatedPersons > 0 && personsWithContribution * 100 >= activatedPersons * RankingMinimumPercent;
 }

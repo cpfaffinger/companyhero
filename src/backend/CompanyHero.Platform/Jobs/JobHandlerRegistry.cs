@@ -45,7 +45,12 @@ public static class JobRegistrationExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
         services.TryAddScoped<THandler>();
-        services.AddSingleton(new JobHandlerRegistration(THandler.JobType, typeof(THandler)));
+        // Ein Handler darf mehrere Ereignistypen abonnieren (Backend 6.4); dieselbe Registrierung zählt nur einmal.
+        if (!services.Any(d => d.ImplementationInstance is JobHandlerRegistration r && r.JobType == THandler.JobType && r.HandlerType == typeof(THandler)))
+        {
+            services.AddSingleton(new JobHandlerRegistration(THandler.JobType, typeof(THandler)));
+        }
+
         return services;
     }
 

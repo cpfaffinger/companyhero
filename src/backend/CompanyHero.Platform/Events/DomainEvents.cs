@@ -46,6 +46,7 @@ public static class DomainEventExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
         services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+        services.AddScoped<IDomainEventReader, DomainEventReader>();
         return services;
     }
 

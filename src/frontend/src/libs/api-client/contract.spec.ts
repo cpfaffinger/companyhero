@@ -90,11 +90,13 @@ describe('Vertragsproben gegen den generierten Client (A-009, K13)', () => {
     expect(card.endsAt).toMatch(offsetDateTime);
     expect(Number.isInteger(card.percent)).toBe(true);
     expect(typeof card.contributedToday).toBe('boolean');
-    expect(card.collective?.total).toMatch(decimal4);
+    // Kollektivwerte erscheinen erst ab fünf Beitragenden (A-023): davor null, danach Dezimalstring und Ganzzahl.
+    expect(card.collective?.total === null || decimal4.test(card.collective?.total ?? '')).toBe(true);
 
     const c = sample<Schemas['CollectiveResponse']>(collective.body, ['total', 'contributionCount', 'contributorCount', 'updatedAt', 'percent']);
-    expect(c.total).toMatch(decimal4);
-    expect(Number.isInteger(c.contributionCount)).toBe(true);
+    expect(c.total === null || decimal4.test(c.total)).toBe(true);
+    expect(c.contributionCount === null || Number.isInteger(c.contributionCount)).toBe(true);
+    expect(Number.isInteger(c.percent)).toBe(true);
     expect(c.updatedAt).toMatch(offsetDateTime);
   });
 

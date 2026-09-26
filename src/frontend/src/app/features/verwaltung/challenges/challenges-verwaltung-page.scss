@@ -1,0 +1,74 @@
+.ch-cv {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-5);
+  padding-top: var(--ch-space-3);
+}
+
+.ch-cv__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+  align-items: flex-start;
+  padding: var(--ch-space-4);
+  border-radius: var(--ch-radius-sheet);
+  border: 1px solid var(--ch-outline-variant);
+}
+
+.ch-cv__title {
+  font: 600 var(--ch-type-title-m) / var(--ch-line-title-m) var(--ch-font-text);
+}
+
+.ch-cv__hint {
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-cv__status {
+  padding: var(--ch-space-3) var(--ch-space-4);
+  border-radius: var(--ch-radius-card);
+  background: var(--ch-surface-container-high);
+}
+
+.ch-cv__status--fehler {
+  background: var(--ch-error-container);
+  color: var(--ch-on-error-container);
+}
+
+.ch-cv__reihe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ch-space-3);
+  width: 100%;
+}
+
+.ch-cv__reihe mat-form-field {
+  flex: 1 1 200px;
+}
+
+.ch-cv__tabelle {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.ch-cv__tabelle th,
+.ch-cv__tabelle td {
+  padding: var(--ch-space-2) var(--ch-space-3);
+  border-bottom: 1px solid var(--ch-outline-variant);
+}
+
+.ch-cv__aktionen {
+  white-space: nowrap;
+}
+
+.ch-cv__ende {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ch-touch-gap);
+  width: 100%;
+}
+
+.ch-cv__ende-feld {
+  flex: 1 1 240px;
+}

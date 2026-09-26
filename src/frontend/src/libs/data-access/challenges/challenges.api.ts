@@ -11,6 +11,9 @@ export type ChallengeCard = components['schemas']['ChallengeCardResponse'];
 export type ContributionResponse = components['schemas']['ContributionResponse'];
 export type ContributionRequest = components['schemas']['ContributionRequest'];
 export type OperationResponse = components['schemas']['OperationResponse'];
+export type ChallengeDraftRequest = components['schemas']['ChallengeDraftRequest'];
+export type OwnContribution = components['schemas']['OwnContributionResponse'];
+export type ReversalOutcome = components['schemas']['ReversalResponse']['outcome'];
 
 /** Eingabe des Formulars „Beitrag nachtragen“ (K10: Typed Reactive Forms besitzen den Zustand, die Abbildung ist ausdrücklich). */
 export interface ContributionInput {
@@ -77,6 +80,48 @@ export class ChallengesApi {
   /** Beitrag am Kiosk: Häkchen heute, Kanal kiosk, reservierte Vorgangskennung statt Idempotenzschlüssel des Clients. */
   toKioskRequest(operationId: string, now: Date): ContributionRequest {
     return { value: '1', recordedAt: toOffsetIso(now), channel: 'kiosk', idempotencyKey: null, operationId };
+  }
+
+  /** Verwaltung (Challenges 4.2): alle Challenges einschließlich Entwürfen und Beendeten; Programm-Manager, Tenant-Admin, Einsichtsrolle. */
+  listAll(): Observable<ChallengeCard[]> {
+    return this.api.get('/api/challenges/manage');
+  }
+
+  /** Kickoff-Challenge (Challenges 4.3): vorbelegter Entwurf. */
+  kickoff(): Observable<ChallengeCard> {
+    return this.api.post('/api/challenges/kickoff', null);
+  }
+
+  /** Wizard (Challenges 4.1): Entwurf aus den Achsen; Sammelziel und ganze Firma sind gesetzt. */
+  createDraft(draft: ChallengeDraftRequest): Observable<ChallengeCard> {
+    return this.api.post('/api/challenges', draft);
+  }
+
+  /** Vorschau ist Pflicht vor „Planen“ (Challenges 4.1). */
+  preview(challengeId: string): Observable<ChallengeCard> {
+    return this.api.post('/api/challenges/{challengeId}/preview', null, { path: { challengeId } });
+  }
+
+  plan(challengeId: string): Observable<void> {
+    return this.api.post('/api/challenges/{challengeId}/plan', null, { path: { challengeId } }).pipe(map(() => undefined));
+  }
+
+  /** Vorzeitiges Ende mit Begründung; nur Programm-Manager (Challenges 4.1). */
+  endEarly(challengeId: string, reason: string): Observable<void> {
+    return this.api.post('/api/challenges/{challengeId}/end', { reason }, { path: { challengeId } }).pipe(map(() => undefined));
+  }
+
+  updateTexts(challengeId: string, title: string, description: string | null): Observable<void> {
+    return this.api.put('/api/challenges/{challengeId}/texts', { title, description }, { path: { challengeId } }).pipe(map(() => undefined));
+  }
+
+  /** Eigene Beiträge und Korrektur als Gegenbuchung (Challenges 3), nur auf dem eigenen Gerät. */
+  mine(challengeId: string): Observable<OwnContribution[]> {
+    return this.api.get('/api/challenges/{challengeId}/contributions/mine', { path: { challengeId } });
+  }
+
+  reverse(challengeId: string, contributionId: string): Observable<ReversalOutcome> {
+    return this.api.post('/api/challenges/{challengeId}/contributions/{contributionId}/reverse', null, { path: { challengeId, contributionId } }).pipe(map((r) => r.outcome));
   }
 
   submit(challengeId: string, request: ContributionRequest): Observable<ContributionResponse> {

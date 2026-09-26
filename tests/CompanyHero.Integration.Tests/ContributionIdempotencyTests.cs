@@ -211,10 +211,15 @@ public sealed class ContributionIdempotencyTests(PostgresFixture pg) : IAsyncLif
             Ct);
         await worker.StopAsync(Ct);
 
+        // Unter fünf Beitragenden liefert die API nur den Prozentwert (A-023); der berechnete Stand ist über die Anwendungsfunktion sichtbar.
         var collective = await bea.GetFromJsonAsync<CollectiveResponse>(Collective(challenge), Ct);
-        Assert.Equal("4.0000", collective!.Total);
-        Assert.Equal(3, collective.ContributionCount);
-        Assert.Equal(2, collective.ContributorCount);
+        Assert.Null(collective!.Total);
+        Assert.Null(collective.ContributionCount);
+        Assert.Null(collective.ContributorCount);
+        var computed = await Scopes.RunAsync(TenantContext.ForPerson(_w.Id, _w.MemberA, [Role.Member]), (sp, ct) => sp.GetRequiredService<IChallengeCatalog>().GetCollectiveAsync(challenge, ct), Ct);
+        Assert.Equal(4m, computed!.Total);
+        Assert.Equal(3, computed.ContributionCount);
+        Assert.Equal(2, computed.ContributorCount);
 
         // Abonnent aus einem fremden Modul hat je Ereignis genau einen Job erhalten und das Ereignis über die Schnittstelle gelesen.
         Assert.Equal(3, await SubscriberEffectsAsync(challenge));

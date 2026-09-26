@@ -49,10 +49,14 @@ public sealed class ModuleBoundaryDatabaseTests(PostgresFixture pg)
         Assert.Equal(
             [
                 "branding.tenant_theme", "challenges.challenge", "challenges.collective_state", "challenges.contribution", "challenges.contribution_key", "challenges.domain_event",
+                "feed.feed_entry",
                 "identity.email_login", "identity.external_login", "identity.external_provider", "identity.identity_index", "identity.join_code", "identity.kiosk_credential", "identity.kiosk_device",
                 "identity.kiosk_failed_attempt", "identity.login_policy", "identity.magic_link", "identity.passkey", "identity.person", "identity.recovery_code", "identity.role_code", "identity.session", "identity.transfer_link",
-                "metering.ledger_event", "organisation.membership", "organisation.organisation", "organisation.role_assignment",
-                "privacy.audit_entry", "privacy.security_event", "privacy.visibility_setting", "progress.activity_event",
+                "metering.ledger_event",
+                "notifications.aushang", "notifications.challenge_snapshot", "notifications.delivery", "notifications.notification_entry", "notifications.person_settings", "notifications.push_subscription", "notifications.tenant_settings",
+                "organisation.group_dimension", "organisation.group_membership", "organisation.headcount", "organisation.member_group", "organisation.membership", "organisation.organisation", "organisation.role_assignment",
+                "privacy.audit_entry", "privacy.consent_entry", "privacy.security_event", "privacy.visibility_setting",
+                "progress.activity_event", "progress.badge_award", "progress.check_in", "progress.domain_event", "progress.person_progress",
             ],
             tables);
     }

@@ -2,7 +2,7 @@
   "status": 200,
   "contentType": "application/json",
   "body": {
-    "tenantId": "01a0de15-1908-7486-b068-37d9ab0d4d83",
+    "tenantId": "01a0def2-4fb9-70eb-991e-eddbdbd2e107",
     "tenantName": "Wiesner Probe",
     "ways": {
       "passkey": true,
@@ -21,6 +21,28 @@
       "forcedProviderKeys": []
     },
     "pendingExternal": null,
-    "role": null
+    "role": null,
+    "dimensions": [
+      {
+        "dimensionId": "01a0def2-5192-7707-9704-244587329465",
+        "name": "Standort",
+        "groups": [
+          {
+            "groupId": "01a0def2-5461-7118-9c16-d9ac383099f7",
+            "name": "Wien"
+          }
+        ]
+      },
+      {
+        "dimensionId": "01a0def2-5192-7fbd-b6a7-b84b5613c174",
+        "name": "Abteilung",
+        "groups": []
+      },
+      {
+        "dimensionId": "01a0def2-5192-7877-9d2c-a1477b5bc37f",
+        "name": "Schicht",
+        "groups": []
+      }
+    ]
   }
 }

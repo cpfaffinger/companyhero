@@ -2,8 +2,8 @@
   "status": 200,
   "contentType": "application/json",
   "body": {
-    "tenantId": "01a0de15-1908-7486-b068-37d9ab0d4d83",
-    "deviceId": "01a0de15-2057-7329-b82e-d72724bad4d2",
+    "tenantId": "01a0def2-4fb9-70eb-991e-eddbdbd2e107",
+    "deviceId": "01a0def2-52dc-771c-af76-8d31b9c83eda",
     "name": "Eingang Halle 2",
     "idleSeconds": 60
   }

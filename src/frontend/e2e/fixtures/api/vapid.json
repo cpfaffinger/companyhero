@@ -1,0 +1,8 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "available": true,
+    "publicKey": "BEYKEtwaF4ZRZQVyGdYechqGvT3iLlARGtv8K1psts2l58ZqjmR8eD7NeTHa9TCyp3V-IN_PEyvEvG4PalIEnLU"
+  }
+}
