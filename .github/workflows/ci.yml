@@ -85,13 +85,13 @@ jobs:
         run: npx playwright test
         env:
           CH_SCREENSHOT_DIR: ${{ github.workspace }}/referenzscreen-screenshots
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: referenzscreen-screenshots
           path: referenzscreen-screenshots
           retention-days: 30
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-report
@@ -99,7 +99,7 @@ jobs:
             src/frontend/e2e-report
             src/frontend/e2e-results
           retention-days: 7
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         with:
           name: frontend-dist
           path: src/frontend/dist/companyhero-frontend/browser
@@ -148,7 +148,7 @@ jobs:
           CH_IMAGE_WEB: ${{ env.IMAGE_PREFIX }}-web:${{ github.sha }}
           CH_IMAGE_POSTGRES: ${{ env.IMAGE_PREFIX }}-postgres:${{ github.sha }}
         run: bash deploy/scripts/compose-nachweise.sh
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: compose-nachweise
@@ -196,7 +196,7 @@ jobs:
           cp deploy/compose/plattform/.env.example deploy/compose/plattform/.env
           docker pull -q "$CH_IMAGE_POSTGRES" && docker pull -q "$CH_IMAGE_MIGRATE"
           bash deploy/scripts/wiederherstellung.sh
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: wiederherstellung
