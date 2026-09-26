@@ -81,7 +81,7 @@ jobs:
         run: node scripts/ladebudget.mjs
       - name: Playwright-Browser
         run: npx playwright install --with-deps chromium
-      - name: Referenzscreen (Frontend 7, Integrationsregeln 6, Marke 9): Marken, Modi, Breiten, Tastatur, Großflächenmodus, Bewegung
+      - name: "Referenzscreen (Frontend 7, Integrationsregeln 6, Marke 9): Marken, Modi, Breiten, Tastatur, Großflächenmodus, Bewegung"
         run: npx playwright test
         env:
           CH_SCREENSHOT_DIR: ${{ github.workspace }}/referenzscreen-screenshots
