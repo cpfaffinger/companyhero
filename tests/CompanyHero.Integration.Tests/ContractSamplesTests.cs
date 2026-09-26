@@ -87,8 +87,28 @@ public sealed class ContractSamplesTests(PostgresFixture pg)
         await Stufe6.WaitForQueueAsync(pg, wiesner.Id, Ct);
         await feedWorker.StopAsync(Ct);
 
+        // Geld (Stufe 7): Tenant nur mit Kern für Navigation und Bündelvorschlag; Testphase und Kündigung an M3 des Probe-Tenants.
+        var core = await pg.CreateScratchTenantWithMembersAsync("Kern Probe");
+        await Stufe7.WithoutModulesAsync(pg, core.Id, Ct);
+        using var coreAdmin = Client(core.Id, core.Admin);
+        using var coreMember = Client(core.Id, core.MemberA);
+        var currentPeriod = TenantTimeZone.PeriodOf(pg.Clock.GetUtcNow());
+
         var samples = new Dictionary<string, HttpResponseMessage>(StringComparer.Ordinal)
         {
+            ["entitlements-me"] = await member.GetAsync("/api/entitlements/me", Ct),
+            ["entitlements-me-core"] = await coreMember.GetAsync("/api/entitlements/me", Ct),
+            ["entitlements-modules"] = await wiesnerAdmin.GetAsync("/api/entitlements/modules", Ct),
+            ["entitlements-book-suggested"] = await coreAdmin.PostAsync(new Uri("/api/entitlements/modules/M2/book", UriKind.Relative), null, Ct),
+            ["entitlements-bundle-booked"] = await coreAdmin.PostAsJsonAsync("/api/entitlements/bundles/book", new Modules.Entitlements.Api.BundleRequest(["M1", "M2"]), Ct),
+            ["entitlements-trial"] = await wiesnerAdmin.PostAsync(new Uri("/api/entitlements/modules/M3/trial", UriKind.Relative), null, Ct),
+            ["entitlements-cancel"] = await wiesnerAdmin.PostAsync(new Uri("/api/entitlements/modules/M3/cancel", UriKind.Relative), null, Ct),
+            ["entitlements-history"] = await wiesnerAdmin.GetAsync("/api/entitlements/history", Ct),
+            ["billing-preview"] = await wiesnerAdmin.GetAsync("/api/billing/preview", Ct),
+            ["billing-simulate"] = await wiesnerAdmin.GetAsync("/api/billing/preview/simulate?module=M5", Ct),
+            ["billing-usage"] = await wiesnerAdmin.GetAsync($"/api/billing/usage?period={currentPeriod}", Ct),
+            ["billing-metrics"] = await wiesnerAdmin.GetAsync("/api/billing/metrics", Ct),
+            ["billing-periods"] = await wiesnerAdmin.GetAsync("/api/billing/periods", Ct),
             ["feed"] = await member.GetAsync("/api/feed", Ct),
             ["feed-post-created"] = await member.PostAsJsonAsync("/api/feed/posts", new Modules.Feed.Api.FeedPostRequest("Zweiter Beitrag."), Ct),
             ["me-progress"] = await member.GetAsync("/api/me/progress", Ct),
@@ -128,6 +148,17 @@ public sealed class ContractSamplesTests(PostgresFixture pg)
             ["theme-rejected"] = await wiesnerAdmin.PutAsJsonAsync("/api/branding/theme", BrandingThemeTests.Wiesner with { Saatfarbe = "rot" }, Ct),
         };
 
+        // Rechnungsentwurf: September des Probe-Tenants versiegeln (Testuhr nach dem 3. Oktober 03:00 Wien), Entwurf lesen, Uhr zurück.
+        var invoiceId = await Stufe7.InvoiceIdAsync(pg, wiesner, Ct);
+        samples["billing-invoices"] = await wiesnerAdmin.GetAsync("/api/billing/invoices", Ct);
+        samples["billing-invoice"] = await wiesnerAdmin.GetAsync($"/api/billing/invoices/{invoiceId}", Ct);
+
+        Assert.Equal(HttpStatusCode.OK, samples["entitlements-me-core"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["entitlements-book-suggested"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["entitlements-bundle-booked"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["entitlements-trial"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["billing-preview"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["billing-invoice"].StatusCode);
         Assert.Equal(HttpStatusCode.Created, samples["contribution-created"].StatusCode);
         Assert.Equal(HttpStatusCode.OK, samples["feed"].StatusCode);
         Assert.Equal(HttpStatusCode.Created, samples["feed-post-created"].StatusCode);

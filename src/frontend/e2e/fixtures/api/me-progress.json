@@ -2,7 +2,7 @@
   "status": 200,
   "contentType": "application/json",
   "body": {
-    "points": 60,
+    "points": 70,
     "level": 1,
     "currentStreak": 2,
     "longestStreak": 2,
@@ -14,19 +14,19 @@
         "key": "einstieg.erster_tag",
         "category": "einstieg",
         "textKey": "abzeichen.einstieg.ersterTag",
-        "awardedAt": "2026-09-26T18:20:17.86393+00:00"
+        "awardedAt": "2026-09-26T19:47:31.444234+00:00"
       },
       {
         "key": "einstieg.erste_uebung",
         "category": "einstieg",
         "textKey": "abzeichen.einstieg.ersteUebung",
-        "awardedAt": "2026-09-26T18:20:17.86393+00:00"
+        "awardedAt": "2026-09-26T19:47:31.444234+00:00"
       },
       {
         "key": "vielfalt.fuenf_arten",
         "category": "vielfalt",
         "textKey": "abzeichen.vielfalt.fuenfArten",
-        "awardedAt": "2026-09-26T18:20:18.553344+00:00"
+        "awardedAt": "2026-09-26T19:47:33.624211+00:00"
       }
     ],
     "next": [

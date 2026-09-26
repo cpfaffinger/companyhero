@@ -1,0 +1,11 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "module": "M5",
+    "thisMonth": "0.00",
+    "nextMonth": "0.00",
+    "usageBasedMetrics": [],
+    "currency": "EUR"
+  }
+}

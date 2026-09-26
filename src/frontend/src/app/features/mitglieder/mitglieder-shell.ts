@@ -10,6 +10,7 @@ import { AppShell } from '../../../libs/ui/app-shell/app-shell';
 import { EmptyState } from '../../../libs/ui/empty-state/empty-state';
 import { BrandingApi } from '../../../libs/data-access/branding/branding.api';
 import { ApiClient } from '../../../libs/api-client/api-client';
+import { EntitlementsApi, toNavAreas, type NavArea } from '../../../libs/data-access/entitlements/entitlements.api';
 import { SessionStore } from '../../../libs/data-access/zugang/session.store';
 import { TextService } from '../../../libs/theme/text.service';
 import { ThemeService } from '../../../libs/theme/theme.service';
@@ -22,7 +23,7 @@ export const TENANT_PLACEHOLDER = '_';
   imports: [RouterOutlet, NgComponentOutlet, AppShell, EmptyState],
   template: `
     @if (state() === 'ready') {
-      <ch-app-shell [base]="base()" [title]="title()" [hasContext]="kontext() !== null">
+      <ch-app-shell [base]="base()" [title]="title()" [hasContext]="kontext() !== null" [items]="navItems()">
         <router-outlet />
         <ng-container chContext><ng-container *ngComponentOutlet="kontext()" /></ng-container>
       </ch-app-shell>
@@ -73,6 +74,10 @@ export class MitgliederShell {
   private readonly destroyRef = inject(DestroyRef);
   private readonly sessions = inject(SessionStore);
   private readonly api = inject(ApiClient);
+  private readonly entitlements = inject(EntitlementsApi);
+
+  /** Navigation ausschließlich aus aktiven Entitlements (Entitlements 5, A-064): Start und Ich immer, sonst nur gebuchte Bereiche; keine Platzhalter. */
+  readonly navItems = signal<NavArea[]>(toNavAreas(['start', 'ich']));
 
   readonly state = signal<'loading' | 'ready' | 'unauthenticated'>('loading');
   readonly tenantId = signal<string>(TENANT_PLACEHOLDER);
@@ -108,6 +113,8 @@ export class MitgliederShell {
           this.state.set('ready');
           // Sitzungsdaten für Offline-Freigabe und Sitzungsart (Zugang 5, 7); der Zugang selbst bleibt ein eigener Lazy-Einstieg (K17).
           this.api.get('/api/auth/session').pipe(takeUntilDestroyed(this.destroyRef)).subscribe({ next: (session) => this.sessions.set(session), error: () => undefined });
+          // Bereiche der Navigation aus den Entitlements des Tenants; eine Buchung wirkt beim nächsten Laden (Entitlements 4.2 Nr. 5).
+          this.entitlements.loadNavigation().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({ next: (n) => this.navItems.set(toNavAreas(n.areas)), error: () => undefined });
         },
         error: () => {
           // Anmeldeseite vor Tenant-Zuordnung in Plattformmarke (A-078); Texte aus dem öffentlichen Plattformkatalog.

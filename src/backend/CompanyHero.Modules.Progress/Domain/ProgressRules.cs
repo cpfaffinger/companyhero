@@ -15,6 +15,7 @@ public static class PointsRules
         ActivityKinds.ChallengeContribution => 3,
         ActivityKinds.RecognitionGiven => 3,
         ActivityKinds.FeedPost => 1,
+        ActivityKinds.Comment => 0,
         "content_completed" => 3,
         "post_read" => 2,
         "event_attended" => 1,

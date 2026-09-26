@@ -1,0 +1,100 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "period": "2026-09",
+    "sealed": false,
+    "metrics": [
+      {
+        "module": "Kern",
+        "metric": "kiosk.device_month",
+        "textKey": "metrik.kiosk_device_month",
+        "personal": false,
+        "total": "1.0000",
+        "rated": "1.0000",
+        "unrated": "0.0000",
+        "days": [
+          {
+            "day": "2026-09-25",
+            "quantity": "1.0000"
+          }
+        ]
+      },
+      {
+        "module": "Kern",
+        "metric": "member.active_day",
+        "textKey": "metrik.member_active_day",
+        "personal": true,
+        "total": "5.0000",
+        "rated": "5.0000",
+        "unrated": "0.0000",
+        "days": null
+      },
+      {
+        "module": "Kern",
+        "metric": "member.active_month",
+        "textKey": "metrik.member_active_month",
+        "personal": true,
+        "total": "2.0000",
+        "rated": "2.0000",
+        "unrated": "0.0000",
+        "days": null
+      },
+      {
+        "module": "Kern",
+        "metric": "member.joined",
+        "textKey": "metrik.member_joined",
+        "personal": false,
+        "total": "1.0000",
+        "rated": "1.0000",
+        "unrated": "0.0000",
+        "days": [
+          {
+            "day": "2026-09-25",
+            "quantity": "1.0000"
+          }
+        ]
+      },
+      {
+        "module": "M1",
+        "metric": "challenge.participant_day",
+        "textKey": "metrik.challenge_participant_day",
+        "personal": true,
+        "total": "3.0000",
+        "rated": "3.0000",
+        "unrated": "0.0000",
+        "days": null
+      },
+      {
+        "module": "M1",
+        "metric": "tenant.month",
+        "textKey": "metrik.tenant_month",
+        "personal": false,
+        "total": "0.2000",
+        "rated": "0.2000",
+        "unrated": "0.0000",
+        "days": [
+          {
+            "day": "2026-09-25",
+            "quantity": "0.2000"
+          }
+        ]
+      },
+      {
+        "module": "M3",
+        "metric": "module.trial_day",
+        "textKey": "metrik.module_trial_day",
+        "personal": false,
+        "total": "1.0000",
+        "rated": "0.0000",
+        "unrated": "1.0000",
+        "days": [
+          {
+            "day": "2026-09-25",
+            "quantity": "1.0000"
+          }
+        ]
+      }
+    ]
+  }
+}

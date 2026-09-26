@@ -1,0 +1,36 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": [
+    {
+      "id": "01a0df42-2b6c-7de4-93d1-abd4de21090a",
+      "module": "M1",
+      "occurredAt": "2026-09-25T08:08:00+00:00",
+      "fromState": null,
+      "toState": "active",
+      "actorRoles": "",
+      "source": "preset",
+      "reason": "preset"
+    },
+    {
+      "id": "01a0df42-3812-7dab-8e04-8c3c13c7d84e",
+      "module": "M3",
+      "occurredAt": "2026-09-25T08:08:00+00:00",
+      "fromState": "inactive",
+      "toState": "trial",
+      "actorRoles": "member,tenant_admin",
+      "source": "tenant_admin",
+      "reason": "trial_started"
+    },
+    {
+      "id": "01a0df42-3832-7a59-b058-1405f4066cca",
+      "module": "M3",
+      "occurredAt": "2026-09-25T08:08:00+00:00",
+      "fromState": "trial",
+      "toState": "trial",
+      "actorRoles": "member,tenant_admin",
+      "source": "tenant_admin",
+      "reason": "cancelled"
+    }
+  ]
+}

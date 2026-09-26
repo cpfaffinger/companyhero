@@ -17,6 +17,9 @@ public static class ActivityKinds
     public const string ChallengeContribution = "challenge_contribution";
     public const string RecognitionGiven = "recognition_given";
     public const string FeedPost = "feed_post";
+
+    /// <summary>Kommentare zählen nicht als Handlung (Fortschritt 2.3, Metering 3.2): keine Punkte, kein aktives Mitglied.</summary>
+    public const string Comment = "comment";
 }
 
 /// <summary>

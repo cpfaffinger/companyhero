@@ -3,6 +3,7 @@ using CompanyHero.Modules.Identity.Domain;
 using CompanyHero.Modules.Identity.Infrastructure;
 using CompanyHero.Platform.Audit;
 using CompanyHero.Platform.Data;
+using CompanyHero.Platform.Entitlements;
 using CompanyHero.Platform.Metering;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.Extensions.DependencyInjection;
@@ -66,12 +67,21 @@ internal sealed class KioskService(
     IAuditLog audit,
     ISecurityLog security,
     IOptions<IdentityOptions> options,
+    ITenantLimits limits,
     TimeProvider clock) : IKioskService
 {
     public async Task<(KioskDeviceRecord Device, string RegistrationCode)> CreateDeviceAsync(string name, CancellationToken cancellationToken)
     {
         var tenantId = context.Require().RequireTenant();
         await using var tx = await transaction.BeginAsync(cancellationToken);
+        // Grenzwert Kiosk-Geräte je Tenant (Entitlements 6.2, A-068): Betriebsschutz mit Hinweis, ohne Metering-Wirkung; der Operator ändert ihn.
+        var limit = await limits.GetAsync(TenantLimitNames.KioskDevices, cancellationToken);
+        var active = await db.KioskDevices.CountAsync(d => d.TenantId == tenantId && d.RevokedAt == null, cancellationToken);
+        if (active >= limit)
+        {
+            throw new AccessDeniedException("kiosk_device_limit", 422);
+        }
+
         var (device, code) = KioskDevice.Create(tenantId, name, clock.GetUtcNow());
         db.KioskDevices.Add(device);
         await db.SaveChangesAsync(cancellationToken);

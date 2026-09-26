@@ -1,6 +1,6 @@
 <a class="ch-skip-link" href="#ch-main" (click)="skipToMain($event)">{{ texts.t('allgemein.zumInhalt') }}</a>
 <div class="ch-shell" [class.ch-shell--context]="hasContext()">
-  <nav class="ch-shell__nav" [attr.aria-label]="texts.t('nav.start') + ', ' + texts.t('nav.challenges') + ', ' + texts.t('nav.ich')">
+  <nav class="ch-shell__nav" [attr.aria-label]="navLabel()">
     <div class="ch-shell__brand ch-shell__brand--nav">
       @if (platform()) {
         <svg class="ch-shell__mark" width="34" height="24" viewBox="0 0 28 20" aria-hidden="true">

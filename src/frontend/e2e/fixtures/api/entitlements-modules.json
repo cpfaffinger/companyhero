@@ -1,0 +1,142 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": [
+    {
+      "module": "M1",
+      "nameKey": "modul.m1",
+      "state": "active",
+      "activeFrom": "2026-09-25T08:08:00+00:00",
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [],
+      "privacyHintKey": "modul.m1.datenschutz"
+    },
+    {
+      "module": "M2",
+      "nameKey": "modul.m2",
+      "state": "inactive",
+      "activeFrom": null,
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [
+        "M1"
+      ],
+      "privacyHintKey": "modul.m2.datenschutz"
+    },
+    {
+      "module": "M3",
+      "nameKey": "modul.m3",
+      "state": "inactive",
+      "activeFrom": null,
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [],
+      "privacyHintKey": "modul.m3.datenschutz"
+    },
+    {
+      "module": "M4",
+      "nameKey": "modul.m4",
+      "state": "inactive",
+      "activeFrom": null,
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [],
+      "privacyHintKey": "modul.m4.datenschutz"
+    },
+    {
+      "module": "M5",
+      "nameKey": "modul.m5",
+      "state": "inactive",
+      "activeFrom": null,
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [],
+      "privacyHintKey": "modul.m5.datenschutz"
+    },
+    {
+      "module": "M6",
+      "nameKey": "modul.m6",
+      "state": "inactive",
+      "activeFrom": null,
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [],
+      "privacyHintKey": "modul.m6.datenschutz"
+    },
+    {
+      "module": "M7",
+      "nameKey": "modul.m7",
+      "state": "inactive",
+      "activeFrom": null,
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [],
+      "privacyHintKey": "modul.m7.datenschutz"
+    },
+    {
+      "module": "M8",
+      "nameKey": "modul.m8",
+      "state": "inactive",
+      "activeFrom": null,
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [],
+      "privacyHintKey": "modul.m8.datenschutz"
+    },
+    {
+      "module": "M9",
+      "nameKey": "modul.m9",
+      "state": "inactive",
+      "activeFrom": null,
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [
+        "M1"
+      ],
+      "privacyHintKey": "modul.m9.datenschutz"
+    },
+    {
+      "module": "M10",
+      "nameKey": "modul.m10",
+      "state": "inactive",
+      "activeFrom": null,
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [],
+      "privacyHintKey": "modul.m10.datenschutz"
+    },
+    {
+      "module": "M11",
+      "nameKey": "modul.m11",
+      "state": "inactive",
+      "activeFrom": null,
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [],
+      "privacyHintKey": "modul.m11.datenschutz"
+    },
+    {
+      "module": "M12",
+      "nameKey": "modul.m12",
+      "state": "inactive",
+      "activeFrom": null,
+      "activeUntil": null,
+      "trialUntil": null,
+      "trialAvailable": true,
+      "dependencies": [],
+      "privacyHintKey": "modul.m12.datenschutz"
+    }
+  ]
+}

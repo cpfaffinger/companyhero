@@ -1,0 +1,156 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "period": "2026-09",
+    "currency": "EUR",
+    "planName": "liste-2026",
+    "lines": [
+      {
+        "ruleKey": "m1.flat",
+        "model": "flat",
+        "module": "M1",
+        "metric": "tenant.month",
+        "quantity": "0.2000",
+        "unitPrice": "49.0000",
+        "calculation": "0.2 × 49",
+        "net": "9.80",
+        "tax": "1.96",
+        "rated": true
+      },
+      {
+        "ruleKey": "kern.active_member",
+        "model": "per_unit",
+        "module": "Kern",
+        "metric": "member.active_month",
+        "quantity": "2.0000",
+        "unitPrice": "2.5000",
+        "calculation": "2 × 2.5",
+        "net": "5.00",
+        "tax": "1.00",
+        "rated": true
+      },
+      {
+        "ruleKey": "kern.joined",
+        "model": "per_unit",
+        "module": "Kern",
+        "metric": "member.joined",
+        "quantity": "1.0000",
+        "unitPrice": "1.0000",
+        "calculation": "1 × 1",
+        "net": "1.00",
+        "tax": "0.20",
+        "rated": true
+      },
+      {
+        "ruleKey": "kern.kiosk",
+        "model": "per_unit",
+        "module": "Kern",
+        "metric": "kiosk.device_month",
+        "quantity": "1.0000",
+        "unitPrice": "5.0000",
+        "calculation": "1 × 5",
+        "net": "5.00",
+        "tax": "1.00",
+        "rated": true
+      },
+      {
+        "ruleKey": "m1.participant_day",
+        "model": "tiered",
+        "module": "M1",
+        "metric": "challenge.participant_day",
+        "quantity": "3.0000",
+        "unitPrice": null,
+        "calculation": "3 × 0.2",
+        "net": "0.60",
+        "tax": "0.12",
+        "rated": true
+      },
+      {
+        "ruleKey": "plan.min_max",
+        "model": "min_max",
+        "module": null,
+        "metric": null,
+        "quantity": "1.0000",
+        "unitPrice": null,
+        "calculation": "Mindestbetrag 30 − Zwischensumme 21.4",
+        "net": "8.60",
+        "tax": "1.72",
+        "rated": true
+      },
+      {
+        "ruleKey": "plan.pilotrabatt",
+        "model": "credit",
+        "module": null,
+        "metric": null,
+        "quantity": "1.0000",
+        "unitPrice": null,
+        "calculation": "10 % von 30",
+        "net": "-3.00",
+        "tax": "-0.60",
+        "rated": true
+      }
+    ],
+    "net": "27.00",
+    "tax": "5.40",
+    "gross": "32.40",
+    "wouldHaveBeen": "0.00",
+    "forecast": {
+      "net": "32.40",
+      "estimate": true,
+      "elapsedDays": 25,
+      "daysInMonth": 30
+    },
+    "definitions": [
+      {
+        "module": "M1",
+        "metric": "tenant.month",
+        "textKey": "metrik.tenant_month",
+        "personal": false,
+        "model": "flat"
+      },
+      {
+        "module": "M2",
+        "metric": "tenant.month",
+        "textKey": "metrik.tenant_month",
+        "personal": false,
+        "model": "flat"
+      },
+      {
+        "module": "M3",
+        "metric": "tenant.month",
+        "textKey": "metrik.tenant_month",
+        "personal": false,
+        "model": "flat"
+      },
+      {
+        "module": "Kern",
+        "metric": "member.active_month",
+        "textKey": "metrik.member_active_month",
+        "personal": true,
+        "model": "per_unit"
+      },
+      {
+        "module": "Kern",
+        "metric": "member.joined",
+        "textKey": "metrik.member_joined",
+        "personal": false,
+        "model": "per_unit"
+      },
+      {
+        "module": "Kern",
+        "metric": "kiosk.device_month",
+        "textKey": "metrik.kiosk_device_month",
+        "personal": false,
+        "model": "per_unit"
+      },
+      {
+        "module": "M1",
+        "metric": "challenge.participant_day",
+        "textKey": "metrik.challenge_participant_day",
+        "personal": true,
+        "model": "tiered"
+      }
+    ]
+  }
+}

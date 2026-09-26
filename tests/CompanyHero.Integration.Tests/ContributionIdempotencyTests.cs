@@ -288,13 +288,13 @@ public sealed class ContributionIdempotencyTests(PostgresFixture pg) : IAsyncLif
             return ledger.Count(e => e.SubjectRef == challenge.ToString("D") && e.IdempotencyKey.EndsWith(ContributionConstants.ParticipantDayMetric, StringComparison.Ordinal) && e.Quantity == 1m);
         }, Ct);
 
-        // Metering-Ereignisse tragen keinen Personenbezug; die Person wird über ihre Fachereignisse zugeordnet.
+        // Metering-Ereignisse tragen keinen Personenbezug; die Person wird über ihre Beiträge zugeordnet (Idempotenzschlüssel aus Fachereignis-ID und Metrik, Metering 2.1).
         var meteringForPerson = await Scopes.RunAsync(TenantContext.ForTenant(tenant), async (sp, ct) =>
         {
             await using var tx = await sp.GetRequiredService<IContextTransaction>().BeginAsync(ct);
-            var eventIds = await sp.GetRequiredService<ChallengesDbContext>().Events.Where(e => e.CausedBy == person).Select(e => e.Id).ToListAsync(ct);
+            var contributionIds = await sp.GetRequiredService<ChallengesDbContext>().Contributions.Where(c => c.ChallengeId == challenge && c.PersonId == person).Select(c => c.Id).ToListAsync(ct);
             var ledger = await sp.GetRequiredService<IMeteringLedger>().ListAsync(ContributionConstants.ParticipantDayMetric, ct);
-            return ledger.Count(e => eventIds.Any(id => e.IdempotencyKey.StartsWith(id.ToString("D"), StringComparison.Ordinal)));
+            return ledger.Count(e => e.Quantity > 0m && contributionIds.Any(id => e.IdempotencyKey.StartsWith(id.ToString("D"), StringComparison.Ordinal)));
         }, Ct);
 
         Assert.True(metering >= meteringForPerson);

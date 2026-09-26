@@ -5346,5 +5346,1377 @@
       "du": "Das hat noch nicht geklappt, versuch es gleich noch einmal!",
       "sie": "Das hat noch nicht geklappt, versuchen Sie es gleich noch einmal!"
     }
+  },
+  "nav.entdecken": {
+    "sachlich": {
+      "du": "Entdecken",
+      "sie": "Entdecken"
+    },
+    "freundlich": {
+      "du": "Entdecken",
+      "sie": "Entdecken"
+    },
+    "motivierend": {
+      "du": "Entdecken",
+      "sie": "Entdecken"
+    }
+  },
+  "nav.firma": {
+    "sachlich": {
+      "du": "Firma",
+      "sie": "Firma"
+    },
+    "freundlich": {
+      "du": "Firma",
+      "sie": "Firma"
+    },
+    "motivierend": {
+      "du": "Firma",
+      "sie": "Firma"
+    }
+  },
+  "verwaltung.abrechnung": {
+    "sachlich": {
+      "du": "Module und Kosten",
+      "sie": "Module und Kosten"
+    },
+    "freundlich": {
+      "du": "Module und Kosten",
+      "sie": "Module und Kosten"
+    },
+    "motivierend": {
+      "du": "Module und Kosten",
+      "sie": "Module und Kosten"
+    }
+  },
+  "verwaltung.abrechnung.kostenvorschau": {
+    "sachlich": {
+      "du": "Kostenvorschau",
+      "sie": "Kostenvorschau"
+    },
+    "freundlich": {
+      "du": "Kostenvorschau",
+      "sie": "Kostenvorschau"
+    },
+    "motivierend": {
+      "du": "Kostenvorschau",
+      "sie": "Kostenvorschau"
+    }
+  },
+  "verwaltung.abrechnung.laufenderMonat": {
+    "sachlich": {
+      "du": "Laufender Monat {periode}",
+      "sie": "Laufender Monat {periode}"
+    },
+    "freundlich": {
+      "du": "Laufender Monat {periode}",
+      "sie": "Laufender Monat {periode}"
+    },
+    "motivierend": {
+      "du": "Laufender Monat {periode}",
+      "sie": "Laufender Monat {periode}"
+    }
+  },
+  "verwaltung.abrechnung.plan": {
+    "sachlich": {
+      "du": "Preisplan {plan}",
+      "sie": "Preisplan {plan}"
+    },
+    "freundlich": {
+      "du": "Preisplan {plan}",
+      "sie": "Preisplan {plan}"
+    },
+    "motivierend": {
+      "du": "Preisplan {plan}",
+      "sie": "Preisplan {plan}"
+    }
+  },
+  "verwaltung.abrechnung.netto": {
+    "sachlich": {
+      "du": "Netto",
+      "sie": "Netto"
+    },
+    "freundlich": {
+      "du": "Netto",
+      "sie": "Netto"
+    },
+    "motivierend": {
+      "du": "Netto",
+      "sie": "Netto"
+    }
+  },
+  "verwaltung.abrechnung.steuer": {
+    "sachlich": {
+      "du": "Steuer",
+      "sie": "Steuer"
+    },
+    "freundlich": {
+      "du": "Steuer",
+      "sie": "Steuer"
+    },
+    "motivierend": {
+      "du": "Steuer",
+      "sie": "Steuer"
+    }
+  },
+  "verwaltung.abrechnung.brutto": {
+    "sachlich": {
+      "du": "Brutto",
+      "sie": "Brutto"
+    },
+    "freundlich": {
+      "du": "Brutto",
+      "sie": "Brutto"
+    },
+    "motivierend": {
+      "du": "Brutto",
+      "sie": "Brutto"
+    }
+  },
+  "verwaltung.abrechnung.prognose": {
+    "sachlich": {
+      "du": "Prognose Monatsende",
+      "sie": "Prognose Monatsende"
+    },
+    "freundlich": {
+      "du": "Prognose Monatsende",
+      "sie": "Prognose Monatsende"
+    },
+    "motivierend": {
+      "du": "Prognose Monatsende",
+      "sie": "Prognose Monatsende"
+    }
+  },
+  "verwaltung.abrechnung.prognoseHinweis": {
+    "sachlich": {
+      "du": "Schätzung aus dem bisherigen Verlauf: {tage} von {tageImMonat} Tagen.",
+      "sie": "Schätzung aus dem bisherigen Verlauf: {tage} von {tageImMonat} Tagen."
+    },
+    "freundlich": {
+      "du": "Eine Schätzung aus dem bisherigen Verlauf, {tage} von {tageImMonat} Tagen sind vorbei.",
+      "sie": "Eine Schätzung aus dem bisherigen Verlauf, {tage} von {tageImMonat} Tagen sind vorbei."
+    },
+    "motivierend": {
+      "du": "Nur eine Schätzung: {tage} von {tageImMonat} Tagen sind geschafft!",
+      "sie": "Nur eine Schätzung: {tage} von {tageImMonat} Tagen sind geschafft!"
+    }
+  },
+  "verwaltung.abrechnung.testphaseHinweis": {
+    "sachlich": {
+      "du": "In der Testphase wären das {betrag} € gewesen.",
+      "sie": "In der Testphase wären das {betrag} € gewesen."
+    },
+    "freundlich": {
+      "du": "In der Testphase wären das {betrag} € gewesen. Du zahlst dafür nichts.",
+      "sie": "In der Testphase wären das {betrag} € gewesen. Sie zahlen dafür nichts."
+    },
+    "motivierend": {
+      "du": "In der Testphase wären das {betrag} € gewesen. Für dich kostenlos!",
+      "sie": "In der Testphase wären das {betrag} € gewesen. Für Sie kostenlos!"
+    }
+  },
+  "verwaltung.abrechnung.positionen": {
+    "sachlich": {
+      "du": "Positionen je Regel",
+      "sie": "Positionen je Regel"
+    },
+    "freundlich": {
+      "du": "Positionen je Regel",
+      "sie": "Positionen je Regel"
+    },
+    "motivierend": {
+      "du": "Positionen je Regel",
+      "sie": "Positionen je Regel"
+    }
+  },
+  "verwaltung.abrechnung.position.regel": {
+    "sachlich": {
+      "du": "Regel",
+      "sie": "Regel"
+    },
+    "freundlich": {
+      "du": "Regel",
+      "sie": "Regel"
+    },
+    "motivierend": {
+      "du": "Regel",
+      "sie": "Regel"
+    }
+  },
+  "verwaltung.abrechnung.position.metrik": {
+    "sachlich": {
+      "du": "Metrik",
+      "sie": "Metrik"
+    },
+    "freundlich": {
+      "du": "Metrik",
+      "sie": "Metrik"
+    },
+    "motivierend": {
+      "du": "Metrik",
+      "sie": "Metrik"
+    }
+  },
+  "verwaltung.abrechnung.position.menge": {
+    "sachlich": {
+      "du": "Menge",
+      "sie": "Menge"
+    },
+    "freundlich": {
+      "du": "Menge",
+      "sie": "Menge"
+    },
+    "motivierend": {
+      "du": "Menge",
+      "sie": "Menge"
+    }
+  },
+  "verwaltung.abrechnung.position.rechenweg": {
+    "sachlich": {
+      "du": "Rechenweg",
+      "sie": "Rechenweg"
+    },
+    "freundlich": {
+      "du": "Rechenweg",
+      "sie": "Rechenweg"
+    },
+    "motivierend": {
+      "du": "Rechenweg",
+      "sie": "Rechenweg"
+    }
+  },
+  "verwaltung.abrechnung.position.betrag": {
+    "sachlich": {
+      "du": "Betrag",
+      "sie": "Betrag"
+    },
+    "freundlich": {
+      "du": "Betrag",
+      "sie": "Betrag"
+    },
+    "motivierend": {
+      "du": "Betrag",
+      "sie": "Betrag"
+    }
+  },
+  "verwaltung.abrechnung.nichtBewertet": {
+    "sachlich": {
+      "du": "Testphase, nicht bewertet",
+      "sie": "Testphase, nicht bewertet"
+    },
+    "freundlich": {
+      "du": "Testphase, nicht bewertet",
+      "sie": "Testphase, nicht bewertet"
+    },
+    "motivierend": {
+      "du": "Testphase, nicht bewertet",
+      "sie": "Testphase, nicht bewertet"
+    }
+  },
+  "verwaltung.abrechnung.keinePositionen": {
+    "sachlich": {
+      "du": "Im laufenden Monat liegen noch keine bewerteten Mengen vor.",
+      "sie": "Im laufenden Monat liegen noch keine bewerteten Mengen vor."
+    },
+    "freundlich": {
+      "du": "Noch keine bewerteten Mengen in diesem Monat.",
+      "sie": "Noch keine bewerteten Mengen in diesem Monat."
+    },
+    "motivierend": {
+      "du": "Noch keine bewerteten Mengen in diesem Monat.",
+      "sie": "Noch keine bewerteten Mengen in diesem Monat."
+    }
+  },
+  "verwaltung.abrechnung.rechnungen": {
+    "sachlich": {
+      "du": "Rechnungsentwürfe",
+      "sie": "Rechnungsentwürfe"
+    },
+    "freundlich": {
+      "du": "Rechnungsentwürfe",
+      "sie": "Rechnungsentwürfe"
+    },
+    "motivierend": {
+      "du": "Rechnungsentwürfe",
+      "sie": "Rechnungsentwürfe"
+    }
+  },
+  "verwaltung.abrechnung.rechnungenLeer": {
+    "sachlich": {
+      "du": "Der erste Rechnungsentwurf entsteht nach dem Ende des Monats.",
+      "sie": "Der erste Rechnungsentwurf entsteht nach dem Ende des Monats."
+    },
+    "freundlich": {
+      "du": "Der erste Rechnungsentwurf kommt nach dem Monatsende.",
+      "sie": "Der erste Rechnungsentwurf kommt nach dem Monatsende."
+    },
+    "motivierend": {
+      "du": "Der erste Rechnungsentwurf kommt nach dem Monatsende.",
+      "sie": "Der erste Rechnungsentwurf kommt nach dem Monatsende."
+    }
+  },
+  "verwaltung.abrechnung.rechnung.periode": {
+    "sachlich": {
+      "du": "Periode",
+      "sie": "Periode"
+    },
+    "freundlich": {
+      "du": "Periode",
+      "sie": "Periode"
+    },
+    "motivierend": {
+      "du": "Periode",
+      "sie": "Periode"
+    }
+  },
+  "verwaltung.abrechnung.rechnung.erstellt": {
+    "sachlich": {
+      "du": "Erstellt",
+      "sie": "Erstellt"
+    },
+    "freundlich": {
+      "du": "Erstellt",
+      "sie": "Erstellt"
+    },
+    "motivierend": {
+      "du": "Erstellt",
+      "sie": "Erstellt"
+    }
+  },
+  "verwaltung.abrechnung.rechnung.status.draft": {
+    "sachlich": {
+      "du": "Entwurf",
+      "sie": "Entwurf"
+    },
+    "freundlich": {
+      "du": "Entwurf",
+      "sie": "Entwurf"
+    },
+    "motivierend": {
+      "du": "Entwurf",
+      "sie": "Entwurf"
+    }
+  },
+  "verwaltung.abrechnung.rechnung.oeffnen": {
+    "sachlich": {
+      "du": "Positionen anzeigen",
+      "sie": "Positionen anzeigen"
+    },
+    "freundlich": {
+      "du": "Positionen anzeigen",
+      "sie": "Positionen anzeigen"
+    },
+    "motivierend": {
+      "du": "Positionen anzeigen",
+      "sie": "Positionen anzeigen"
+    }
+  },
+  "verwaltung.abrechnung.rechnung.steuersatz": {
+    "sachlich": {
+      "du": "Steuersatz {satz} %",
+      "sie": "Steuersatz {satz} %"
+    },
+    "freundlich": {
+      "du": "Steuersatz {satz} %",
+      "sie": "Steuersatz {satz} %"
+    },
+    "motivierend": {
+      "du": "Steuersatz {satz} %",
+      "sie": "Steuersatz {satz} %"
+    }
+  },
+  "verwaltung.abrechnung.verbrauch": {
+    "sachlich": {
+      "du": "Verbrauch",
+      "sie": "Verbrauch"
+    },
+    "freundlich": {
+      "du": "Verbrauch",
+      "sie": "Verbrauch"
+    },
+    "motivierend": {
+      "du": "Verbrauch",
+      "sie": "Verbrauch"
+    }
+  },
+  "verwaltung.abrechnung.verbrauchHinweis": {
+    "sachlich": {
+      "du": "Mengen je Metrik und Tag als Aggregat; personennahe Metriken nur als Monatssumme. Einzelne Ereignisse gibt es hier nicht.",
+      "sie": "Mengen je Metrik und Tag als Aggregat; personennahe Metriken nur als Monatssumme. Einzelne Ereignisse gibt es hier nicht."
+    },
+    "freundlich": {
+      "du": "Mengen je Metrik und Tag als Aggregat. Personennahe Metriken zeigen wir nur als Monatssumme, einzelne Ereignisse nie.",
+      "sie": "Mengen je Metrik und Tag als Aggregat. Personennahe Metriken zeigen wir nur als Monatssumme, einzelne Ereignisse nie."
+    },
+    "motivierend": {
+      "du": "Mengen je Metrik und Tag als Aggregat. Personennahe Metriken zeigen wir nur als Monatssumme, einzelne Ereignisse nie.",
+      "sie": "Mengen je Metrik und Tag als Aggregat. Personennahe Metriken zeigen wir nur als Monatssumme, einzelne Ereignisse nie."
+    }
+  },
+  "verwaltung.abrechnung.verbrauch.summe": {
+    "sachlich": {
+      "du": "Summe",
+      "sie": "Summe"
+    },
+    "freundlich": {
+      "du": "Summe",
+      "sie": "Summe"
+    },
+    "motivierend": {
+      "du": "Summe",
+      "sie": "Summe"
+    }
+  },
+  "verwaltung.abrechnung.verbrauch.tage": {
+    "sachlich": {
+      "du": "Tage",
+      "sie": "Tage"
+    },
+    "freundlich": {
+      "du": "Tage",
+      "sie": "Tage"
+    },
+    "motivierend": {
+      "du": "Tage",
+      "sie": "Tage"
+    }
+  },
+  "verwaltung.abrechnung.verbrauch.nurSumme": {
+    "sachlich": {
+      "du": "nur Monatssumme",
+      "sie": "nur Monatssumme"
+    },
+    "freundlich": {
+      "du": "nur Monatssumme",
+      "sie": "nur Monatssumme"
+    },
+    "motivierend": {
+      "du": "nur Monatssumme",
+      "sie": "nur Monatssumme"
+    }
+  },
+  "verwaltung.abrechnung.verbrauch.leer": {
+    "sachlich": {
+      "du": "Für diese Periode liegen keine Mengen vor.",
+      "sie": "Für diese Periode liegen keine Mengen vor."
+    },
+    "freundlich": {
+      "du": "Für diese Periode gibt es noch keine Mengen.",
+      "sie": "Für diese Periode gibt es noch keine Mengen."
+    },
+    "motivierend": {
+      "du": "Für diese Periode gibt es noch keine Mengen.",
+      "sie": "Für diese Periode gibt es noch keine Mengen."
+    }
+  },
+  "verwaltung.abrechnung.export": {
+    "sachlich": {
+      "du": "Als CSV exportieren",
+      "sie": "Als CSV exportieren"
+    },
+    "freundlich": {
+      "du": "Als CSV exportieren",
+      "sie": "Als CSV exportieren"
+    },
+    "motivierend": {
+      "du": "Als CSV exportieren",
+      "sie": "Als CSV exportieren"
+    }
+  },
+  "verwaltung.abrechnung.module": {
+    "sachlich": {
+      "du": "Module",
+      "sie": "Module"
+    },
+    "freundlich": {
+      "du": "Module",
+      "sie": "Module"
+    },
+    "motivierend": {
+      "du": "Module",
+      "sie": "Module"
+    }
+  },
+  "verwaltung.abrechnung.moduleHinweis": {
+    "sachlich": {
+      "du": "Module sind jederzeit zubuchbar und zum Monatsende kündbar. Kosten erscheinen vor dem Klick.",
+      "sie": "Module sind jederzeit zubuchbar und zum Monatsende kündbar. Kosten erscheinen vor dem Klick."
+    },
+    "freundlich": {
+      "du": "Module kannst du jederzeit zubuchen und zum Monatsende kündigen. Die Kosten siehst du vor dem Klick.",
+      "sie": "Module können Sie jederzeit zubuchen und zum Monatsende kündigen. Die Kosten sehen Sie vor dem Klick."
+    },
+    "motivierend": {
+      "du": "Module kannst du jederzeit zubuchen und zum Monatsende kündigen. Die Kosten siehst du vor dem Klick.",
+      "sie": "Module können Sie jederzeit zubuchen und zum Monatsende kündigen. Die Kosten sehen Sie vor dem Klick."
+    }
+  },
+  "verwaltung.abrechnung.modul.zustand.trial": {
+    "sachlich": {
+      "du": "Testphase",
+      "sie": "Testphase"
+    },
+    "freundlich": {
+      "du": "Testphase",
+      "sie": "Testphase"
+    },
+    "motivierend": {
+      "du": "Testphase",
+      "sie": "Testphase"
+    }
+  },
+  "verwaltung.abrechnung.modul.zustand.active": {
+    "sachlich": {
+      "du": "aktiv",
+      "sie": "aktiv"
+    },
+    "freundlich": {
+      "du": "aktiv",
+      "sie": "aktiv"
+    },
+    "motivierend": {
+      "du": "aktiv",
+      "sie": "aktiv"
+    }
+  },
+  "verwaltung.abrechnung.modul.zustand.expiring": {
+    "sachlich": {
+      "du": "auslaufend",
+      "sie": "auslaufend"
+    },
+    "freundlich": {
+      "du": "auslaufend",
+      "sie": "auslaufend"
+    },
+    "motivierend": {
+      "du": "auslaufend",
+      "sie": "auslaufend"
+    }
+  },
+  "verwaltung.abrechnung.modul.zustand.inactive": {
+    "sachlich": {
+      "du": "inaktiv",
+      "sie": "inaktiv"
+    },
+    "freundlich": {
+      "du": "inaktiv",
+      "sie": "inaktiv"
+    },
+    "motivierend": {
+      "du": "inaktiv",
+      "sie": "inaktiv"
+    }
+  },
+  "verwaltung.abrechnung.modul.aktivBis": {
+    "sachlich": {
+      "du": "bis {datum}",
+      "sie": "bis {datum}"
+    },
+    "freundlich": {
+      "du": "bis {datum}",
+      "sie": "bis {datum}"
+    },
+    "motivierend": {
+      "du": "bis {datum}",
+      "sie": "bis {datum}"
+    }
+  },
+  "verwaltung.abrechnung.modul.testBis": {
+    "sachlich": {
+      "du": "Testphase bis {datum}",
+      "sie": "Testphase bis {datum}"
+    },
+    "freundlich": {
+      "du": "Testphase bis {datum}",
+      "sie": "Testphase bis {datum}"
+    },
+    "motivierend": {
+      "du": "Testphase bis {datum}",
+      "sie": "Testphase bis {datum}"
+    }
+  },
+  "verwaltung.abrechnung.modul.voraussetzung": {
+    "sachlich": {
+      "du": "Voraussetzung: {module}",
+      "sie": "Voraussetzung: {module}"
+    },
+    "freundlich": {
+      "du": "Voraussetzung: {module}",
+      "sie": "Voraussetzung: {module}"
+    },
+    "motivierend": {
+      "du": "Voraussetzung: {module}",
+      "sie": "Voraussetzung: {module}"
+    }
+  },
+  "verwaltung.abrechnung.modul.buchen": {
+    "sachlich": {
+      "du": "Buchen",
+      "sie": "Buchen"
+    },
+    "freundlich": {
+      "du": "Buchen",
+      "sie": "Buchen"
+    },
+    "motivierend": {
+      "du": "Buchen",
+      "sie": "Buchen"
+    }
+  },
+  "verwaltung.abrechnung.modul.testphase": {
+    "sachlich": {
+      "du": "Testphase starten",
+      "sie": "Testphase starten"
+    },
+    "freundlich": {
+      "du": "Testphase starten",
+      "sie": "Testphase starten"
+    },
+    "motivierend": {
+      "du": "Testphase starten",
+      "sie": "Testphase starten"
+    }
+  },
+  "verwaltung.abrechnung.modul.kuendigen": {
+    "sachlich": {
+      "du": "Kündigen",
+      "sie": "Kündigen"
+    },
+    "freundlich": {
+      "du": "Kündigen",
+      "sie": "Kündigen"
+    },
+    "motivierend": {
+      "du": "Kündigen",
+      "sie": "Kündigen"
+    }
+  },
+  "verwaltung.abrechnung.modul.ruecknahme": {
+    "sachlich": {
+      "du": "Kündigung zurücknehmen",
+      "sie": "Kündigung zurücknehmen"
+    },
+    "freundlich": {
+      "du": "Kündigung zurücknehmen",
+      "sie": "Kündigung zurücknehmen"
+    },
+    "motivierend": {
+      "du": "Kündigung zurücknehmen",
+      "sie": "Kündigung zurücknehmen"
+    }
+  },
+  "verwaltung.abrechnung.modul.datenschutz": {
+    "sachlich": {
+      "du": "Datenschutz",
+      "sie": "Datenschutz"
+    },
+    "freundlich": {
+      "du": "Datenschutz",
+      "sie": "Datenschutz"
+    },
+    "motivierend": {
+      "du": "Datenschutz",
+      "sie": "Datenschutz"
+    }
+  },
+  "verwaltung.abrechnung.auswirkung": {
+    "sachlich": {
+      "du": "Auswirkung: laufender Monat {monat} €, Folgemonat {folgemonat} €.",
+      "sie": "Auswirkung: laufender Monat {monat} €, Folgemonat {folgemonat} €."
+    },
+    "freundlich": {
+      "du": "Das kostet im laufenden Monat {monat} € und im Folgemonat {folgemonat} €.",
+      "sie": "Das kostet im laufenden Monat {monat} € und im Folgemonat {folgemonat} €."
+    },
+    "motivierend": {
+      "du": "Das kostet im laufenden Monat {monat} € und im Folgemonat {folgemonat} €.",
+      "sie": "Das kostet im laufenden Monat {monat} € und im Folgemonat {folgemonat} €."
+    }
+  },
+  "verwaltung.abrechnung.auswirkungNutzung": {
+    "sachlich": {
+      "du": "Dazu kommen nutzungsabhängige Mengen: {metriken}.",
+      "sie": "Dazu kommen nutzungsabhängige Mengen: {metriken}."
+    },
+    "freundlich": {
+      "du": "Dazu kommen nutzungsabhängige Mengen: {metriken}.",
+      "sie": "Dazu kommen nutzungsabhängige Mengen: {metriken}."
+    },
+    "motivierend": {
+      "du": "Dazu kommen nutzungsabhängige Mengen: {metriken}.",
+      "sie": "Dazu kommen nutzungsabhängige Mengen: {metriken}."
+    }
+  },
+  "verwaltung.abrechnung.jetztBuchen": {
+    "sachlich": {
+      "du": "Jetzt buchen",
+      "sie": "Jetzt buchen"
+    },
+    "freundlich": {
+      "du": "Jetzt buchen",
+      "sie": "Jetzt buchen"
+    },
+    "motivierend": {
+      "du": "Jetzt buchen",
+      "sie": "Jetzt buchen"
+    }
+  },
+  "verwaltung.abrechnung.abbrechen": {
+    "sachlich": {
+      "du": "Abbrechen",
+      "sie": "Abbrechen"
+    },
+    "freundlich": {
+      "du": "Abbrechen",
+      "sie": "Abbrechen"
+    },
+    "motivierend": {
+      "du": "Abbrechen",
+      "sie": "Abbrechen"
+    }
+  },
+  "verwaltung.abrechnung.buendel.vorschlag": {
+    "sachlich": {
+      "du": "Dieses Modul setzt {module} voraus. Vorschlag als Bündel:",
+      "sie": "Dieses Modul setzt {module} voraus. Vorschlag als Bündel:"
+    },
+    "freundlich": {
+      "du": "Dieses Modul braucht {module}. Unser Vorschlag als Bündel:",
+      "sie": "Dieses Modul braucht {module}. Unser Vorschlag als Bündel:"
+    },
+    "motivierend": {
+      "du": "Dieses Modul braucht {module}. Gemeinsam als Bündel geht es los!",
+      "sie": "Dieses Modul braucht {module}. Gemeinsam als Bündel geht es los!"
+    }
+  },
+  "verwaltung.abrechnung.buendel.buchen": {
+    "sachlich": {
+      "du": "Bündel buchen",
+      "sie": "Bündel buchen"
+    },
+    "freundlich": {
+      "du": "Bündel buchen",
+      "sie": "Bündel buchen"
+    },
+    "motivierend": {
+      "du": "Bündel buchen",
+      "sie": "Bündel buchen"
+    }
+  },
+  "verwaltung.abrechnung.gebucht": {
+    "sachlich": {
+      "du": "Gebucht: {module}. Die Navigation der Mitglieder-App erweitert sich beim nächsten Laden.",
+      "sie": "Gebucht: {module}. Die Navigation der Mitglieder-App erweitert sich beim nächsten Laden."
+    },
+    "freundlich": {
+      "du": "Gebucht: {module}. Beim nächsten Laden sehen alle den neuen Bereich.",
+      "sie": "Gebucht: {module}. Beim nächsten Laden sehen alle den neuen Bereich."
+    },
+    "motivierend": {
+      "du": "Gebucht: {module}. Beim nächsten Laden geht es los!",
+      "sie": "Gebucht: {module}. Beim nächsten Laden geht es los!"
+    }
+  },
+  "verwaltung.abrechnung.gekuendigt": {
+    "sachlich": {
+      "du": "Gekündigt zum {datum}: {module}. Bis dahin bleibt alles nutzbar.",
+      "sie": "Gekündigt zum {datum}: {module}. Bis dahin bleibt alles nutzbar."
+    },
+    "freundlich": {
+      "du": "Gekündigt zum {datum}: {module}. Bis dahin bleibt alles wie gewohnt.",
+      "sie": "Gekündigt zum {datum}: {module}. Bis dahin bleibt alles wie gewohnt."
+    },
+    "motivierend": {
+      "du": "Gekündigt zum {datum}: {module}. Bis dahin bleibt alles wie gewohnt.",
+      "sie": "Gekündigt zum {datum}: {module}. Bis dahin bleibt alles wie gewohnt."
+    }
+  },
+  "verwaltung.abrechnung.testphaseGestartet": {
+    "sachlich": {
+      "du": "Testphase gestartet bis {datum}. Ereignisse werden erfasst und nicht bewertet.",
+      "sie": "Testphase gestartet bis {datum}. Ereignisse werden erfasst und nicht bewertet."
+    },
+    "freundlich": {
+      "du": "Testphase gestartet bis {datum}. Wir erfassen alles, berechnen aber nichts.",
+      "sie": "Testphase gestartet bis {datum}. Wir erfassen alles, berechnen aber nichts."
+    },
+    "motivierend": {
+      "du": "Testphase gestartet bis {datum}. Wir erfassen alles, berechnen aber nichts.",
+      "sie": "Testphase gestartet bis {datum}. Wir erfassen alles, berechnen aber nichts."
+    }
+  },
+  "verwaltung.abrechnung.testphaseVerbraucht": {
+    "sachlich": {
+      "du": "Eine Testphase gibt es je Modul nur einmal.",
+      "sie": "Eine Testphase gibt es je Modul nur einmal."
+    },
+    "freundlich": {
+      "du": "Eine Testphase gibt es je Modul nur einmal.",
+      "sie": "Eine Testphase gibt es je Modul nur einmal."
+    },
+    "motivierend": {
+      "du": "Eine Testphase gibt es je Modul nur einmal.",
+      "sie": "Eine Testphase gibt es je Modul nur einmal."
+    }
+  },
+  "verwaltung.abrechnung.wiederhergestellt": {
+    "sachlich": {
+      "du": "Kündigung zurückgenommen: {module}.",
+      "sie": "Kündigung zurückgenommen: {module}."
+    },
+    "freundlich": {
+      "du": "Kündigung zurückgenommen: {module}.",
+      "sie": "Kündigung zurückgenommen: {module}."
+    },
+    "motivierend": {
+      "du": "Kündigung zurückgenommen: {module}.",
+      "sie": "Kündigung zurückgenommen: {module}."
+    }
+  },
+  "verwaltung.abrechnung.frischeAnmeldung": {
+    "sachlich": {
+      "du": "Buchungen verlangen eine Anmeldung, die nicht älter als 15 Minuten ist. Bitte erneut anmelden.",
+      "sie": "Buchungen verlangen eine Anmeldung, die nicht älter als 15 Minuten ist. Bitte erneut anmelden."
+    },
+    "freundlich": {
+      "du": "Buchungen brauchen eine frische Anmeldung (nicht älter als 15 Minuten). Bitte melde dich erneut an.",
+      "sie": "Buchungen brauchen eine frische Anmeldung (nicht älter als 15 Minuten). Bitte melden Sie sich erneut an."
+    },
+    "motivierend": {
+      "du": "Buchungen brauchen eine frische Anmeldung (nicht älter als 15 Minuten). Bitte melde dich erneut an.",
+      "sie": "Buchungen brauchen eine frische Anmeldung (nicht älter als 15 Minuten). Bitte melden Sie sich erneut an."
+    }
+  },
+  "verwaltung.abrechnung.keineBerechtigung": {
+    "sachlich": {
+      "du": "Module und Kosten verwaltet der Tenant-Admin.",
+      "sie": "Module und Kosten verwaltet der Tenant-Admin."
+    },
+    "freundlich": {
+      "du": "Module und Kosten verwaltet der Tenant-Admin.",
+      "sie": "Module und Kosten verwaltet der Tenant-Admin."
+    },
+    "motivierend": {
+      "du": "Module und Kosten verwaltet der Tenant-Admin.",
+      "sie": "Module und Kosten verwaltet der Tenant-Admin."
+    }
+  },
+  "verwaltung.abrechnung.definitionen": {
+    "sachlich": {
+      "du": "Definitionen der Metriken",
+      "sie": "Definitionen der Metriken"
+    },
+    "freundlich": {
+      "du": "Definitionen der Metriken",
+      "sie": "Definitionen der Metriken"
+    },
+    "motivierend": {
+      "du": "Definitionen der Metriken",
+      "sie": "Definitionen der Metriken"
+    }
+  },
+  "verwaltung.abrechnung.definitionenHinweis": {
+    "sachlich": {
+      "du": "Jede Rechnungsposition verweist auf Regel und Mengennachweis. Die Definitionen gelten wie im Vertrag.",
+      "sie": "Jede Rechnungsposition verweist auf Regel und Mengennachweis. Die Definitionen gelten wie im Vertrag."
+    },
+    "freundlich": {
+      "du": "Jede Position verweist auf ihre Regel und den Mengennachweis. Die Definitionen gelten wie im Vertrag.",
+      "sie": "Jede Position verweist auf ihre Regel und den Mengennachweis. Die Definitionen gelten wie im Vertrag."
+    },
+    "motivierend": {
+      "du": "Jede Position verweist auf ihre Regel und den Mengennachweis. Die Definitionen gelten wie im Vertrag.",
+      "sie": "Jede Position verweist auf ihre Regel und den Mengennachweis. Die Definitionen gelten wie im Vertrag."
+    }
+  },
+  "verwaltung.abrechnung.personennah": {
+    "sachlich": {
+      "du": "personennah, nur Monatssumme",
+      "sie": "personennah, nur Monatssumme"
+    },
+    "freundlich": {
+      "du": "personennah, nur Monatssumme",
+      "sie": "personennah, nur Monatssumme"
+    },
+    "motivierend": {
+      "du": "personennah, nur Monatssumme",
+      "sie": "personennah, nur Monatssumme"
+    }
+  },
+  "verwaltung.abrechnung.historie": {
+    "sachlich": {
+      "du": "Buchungshistorie",
+      "sie": "Buchungshistorie"
+    },
+    "freundlich": {
+      "du": "Buchungshistorie",
+      "sie": "Buchungshistorie"
+    },
+    "motivierend": {
+      "du": "Buchungshistorie",
+      "sie": "Buchungshistorie"
+    }
+  },
+  "verwaltung.abrechnung.periodeWaehlen": {
+    "sachlich": {
+      "du": "Periode",
+      "sie": "Periode"
+    },
+    "freundlich": {
+      "du": "Periode",
+      "sie": "Periode"
+    },
+    "motivierend": {
+      "du": "Periode",
+      "sie": "Periode"
+    }
+  },
+  "modul.m1": {
+    "sachlich": {
+      "du": "Challenges",
+      "sie": "Challenges"
+    },
+    "freundlich": {
+      "du": "Challenges",
+      "sie": "Challenges"
+    },
+    "motivierend": {
+      "du": "Challenges",
+      "sie": "Challenges"
+    }
+  },
+  "modul.m1.datenschutz": {
+    "sachlich": {
+      "du": "Sichtbarkeit je Person begrenzt jede Challenge; Ranglisten erst ab fünf Personen und 40 Prozent.",
+      "sie": "Sichtbarkeit je Person begrenzt jede Challenge; Ranglisten erst ab fünf Personen und 40 Prozent."
+    },
+    "freundlich": {
+      "du": "Sichtbarkeit je Person begrenzt jede Challenge; Ranglisten erst ab fünf Personen und 40 Prozent.",
+      "sie": "Sichtbarkeit je Person begrenzt jede Challenge; Ranglisten erst ab fünf Personen und 40 Prozent."
+    },
+    "motivierend": {
+      "du": "Sichtbarkeit je Person begrenzt jede Challenge; Ranglisten erst ab fünf Personen und 40 Prozent.",
+      "sie": "Sichtbarkeit je Person begrenzt jede Challenge; Ranglisten erst ab fünf Personen und 40 Prozent."
+    }
+  },
+  "modul.m2": {
+    "sachlich": {
+      "du": "Arena",
+      "sie": "Arena"
+    },
+    "freundlich": {
+      "du": "Arena",
+      "sie": "Arena"
+    },
+    "motivierend": {
+      "du": "Arena",
+      "sie": "Arena"
+    }
+  },
+  "modul.m2.datenschutz": {
+    "sachlich": {
+      "du": "Es verlässt den Tenant nur der Pro-Kopf-Wert; unter fünf Beitragenden kein Wert.",
+      "sie": "Es verlässt den Tenant nur der Pro-Kopf-Wert; unter fünf Beitragenden kein Wert."
+    },
+    "freundlich": {
+      "du": "Es verlässt den Tenant nur der Pro-Kopf-Wert; unter fünf Beitragenden kein Wert.",
+      "sie": "Es verlässt den Tenant nur der Pro-Kopf-Wert; unter fünf Beitragenden kein Wert."
+    },
+    "motivierend": {
+      "du": "Es verlässt den Tenant nur der Pro-Kopf-Wert; unter fünf Beitragenden kein Wert.",
+      "sie": "Es verlässt den Tenant nur der Pro-Kopf-Wert; unter fünf Beitragenden kein Wert."
+    }
+  },
+  "modul.m3": {
+    "sachlich": {
+      "du": "Bewegung",
+      "sie": "Bewegung"
+    },
+    "freundlich": {
+      "du": "Bewegung",
+      "sie": "Bewegung"
+    },
+    "motivierend": {
+      "du": "Bewegung",
+      "sie": "Bewegung"
+    }
+  },
+  "modul.m3.datenschutz": {
+    "sachlich": {
+      "du": "Der Verlauf bleibt bei der Person; Nutzung nur als Aggregat ab fünf Personen.",
+      "sie": "Der Verlauf bleibt bei der Person; Nutzung nur als Aggregat ab fünf Personen."
+    },
+    "freundlich": {
+      "du": "Der Verlauf bleibt bei der Person; Nutzung nur als Aggregat ab fünf Personen.",
+      "sie": "Der Verlauf bleibt bei der Person; Nutzung nur als Aggregat ab fünf Personen."
+    },
+    "motivierend": {
+      "du": "Der Verlauf bleibt bei der Person; Nutzung nur als Aggregat ab fünf Personen.",
+      "sie": "Der Verlauf bleibt bei der Person; Nutzung nur als Aggregat ab fünf Personen."
+    }
+  },
+  "modul.m4": {
+    "sachlich": {
+      "du": "Ergonomie",
+      "sie": "Ergonomie"
+    },
+    "freundlich": {
+      "du": "Ergonomie",
+      "sie": "Ergonomie"
+    },
+    "motivierend": {
+      "du": "Ergonomie",
+      "sie": "Ergonomie"
+    }
+  },
+  "modul.m4.datenschutz": {
+    "sachlich": {
+      "du": "Ergebnisse verschlüsselt und nur für die Person; der Tenant erhält Aggregate ab fünf Personen für den Arbeitsschutz.",
+      "sie": "Ergebnisse verschlüsselt und nur für die Person; der Tenant erhält Aggregate ab fünf Personen für den Arbeitsschutz."
+    },
+    "freundlich": {
+      "du": "Ergebnisse verschlüsselt und nur für die Person; der Tenant erhält Aggregate ab fünf Personen für den Arbeitsschutz.",
+      "sie": "Ergebnisse verschlüsselt und nur für die Person; der Tenant erhält Aggregate ab fünf Personen für den Arbeitsschutz."
+    },
+    "motivierend": {
+      "du": "Ergebnisse verschlüsselt und nur für die Person; der Tenant erhält Aggregate ab fünf Personen für den Arbeitsschutz.",
+      "sie": "Ergebnisse verschlüsselt und nur für die Person; der Tenant erhält Aggregate ab fünf Personen für den Arbeitsschutz."
+    }
+  },
+  "modul.m5": {
+    "sachlich": {
+      "du": "Wissen",
+      "sie": "Wissen"
+    },
+    "freundlich": {
+      "du": "Wissen",
+      "sie": "Wissen"
+    },
+    "motivierend": {
+      "du": "Wissen",
+      "sie": "Wissen"
+    }
+  },
+  "modul.m5.datenschutz": {
+    "sachlich": {
+      "du": "Quiz-Ergebnisse nur für die Person.",
+      "sie": "Quiz-Ergebnisse nur für die Person."
+    },
+    "freundlich": {
+      "du": "Quiz-Ergebnisse nur für die Person.",
+      "sie": "Quiz-Ergebnisse nur für die Person."
+    },
+    "motivierend": {
+      "du": "Quiz-Ergebnisse nur für die Person.",
+      "sie": "Quiz-Ergebnisse nur für die Person."
+    }
+  },
+  "modul.m6": {
+    "sachlich": {
+      "du": "Regeneration",
+      "sie": "Regeneration"
+    },
+    "freundlich": {
+      "du": "Regeneration",
+      "sie": "Regeneration"
+    },
+    "motivierend": {
+      "du": "Regeneration",
+      "sie": "Regeneration"
+    }
+  },
+  "modul.m6.datenschutz": {
+    "sachlich": {
+      "du": "Stimmungs-Check-in verschlüsselt, ausschließlich privat, nie aggregiert.",
+      "sie": "Stimmungs-Check-in verschlüsselt, ausschließlich privat, nie aggregiert."
+    },
+    "freundlich": {
+      "du": "Stimmungs-Check-in verschlüsselt, ausschließlich privat, nie aggregiert.",
+      "sie": "Stimmungs-Check-in verschlüsselt, ausschließlich privat, nie aggregiert."
+    },
+    "motivierend": {
+      "du": "Stimmungs-Check-in verschlüsselt, ausschließlich privat, nie aggregiert.",
+      "sie": "Stimmungs-Check-in verschlüsselt, ausschließlich privat, nie aggregiert."
+    }
+  },
+  "modul.m7": {
+    "sachlich": {
+      "du": "Ernährung",
+      "sie": "Ernährung"
+    },
+    "freundlich": {
+      "du": "Ernährung",
+      "sie": "Ernährung"
+    },
+    "motivierend": {
+      "du": "Ernährung",
+      "sie": "Ernährung"
+    }
+  },
+  "modul.m7.datenschutz": {
+    "sachlich": {
+      "du": "Keine Kalorien, Gewichtsziele oder Ernährungs-Scores.",
+      "sie": "Keine Kalorien, Gewichtsziele oder Ernährungs-Scores."
+    },
+    "freundlich": {
+      "du": "Keine Kalorien, Gewichtsziele oder Ernährungs-Scores.",
+      "sie": "Keine Kalorien, Gewichtsziele oder Ernährungs-Scores."
+    },
+    "motivierend": {
+      "du": "Keine Kalorien, Gewichtsziele oder Ernährungs-Scores.",
+      "sie": "Keine Kalorien, Gewichtsziele oder Ernährungs-Scores."
+    }
+  },
+  "modul.m8": {
+    "sachlich": {
+      "du": "Wearables",
+      "sie": "Wearables"
+    },
+    "freundlich": {
+      "du": "Wearables",
+      "sie": "Wearables"
+    },
+    "motivierend": {
+      "du": "Wearables",
+      "sie": "Wearables"
+    }
+  },
+  "modul.m8.datenschutz": {
+    "sachlich": {
+      "du": "Rohdaten im isolierten Vault, 90 Tage; nur abgeleitete Tageswerte verlassen ihn; keine KI.",
+      "sie": "Rohdaten im isolierten Vault, 90 Tage; nur abgeleitete Tageswerte verlassen ihn; keine KI."
+    },
+    "freundlich": {
+      "du": "Rohdaten im isolierten Vault, 90 Tage; nur abgeleitete Tageswerte verlassen ihn; keine KI.",
+      "sie": "Rohdaten im isolierten Vault, 90 Tage; nur abgeleitete Tageswerte verlassen ihn; keine KI."
+    },
+    "motivierend": {
+      "du": "Rohdaten im isolierten Vault, 90 Tage; nur abgeleitete Tageswerte verlassen ihn; keine KI.",
+      "sie": "Rohdaten im isolierten Vault, 90 Tage; nur abgeleitete Tageswerte verlassen ihn; keine KI."
+    }
+  },
+  "modul.m9": {
+    "sachlich": {
+      "du": "Workshops und Events",
+      "sie": "Workshops und Events"
+    },
+    "freundlich": {
+      "du": "Workshops und Events",
+      "sie": "Workshops und Events"
+    },
+    "motivierend": {
+      "du": "Workshops und Events",
+      "sie": "Workshops und Events"
+    }
+  },
+  "modul.m9.datenschutz": {
+    "sachlich": {
+      "du": "Belohnungen immer kollektiv; Teilnehmerliste nur für den Organisator, nach 30 Tagen gelöscht; Preise je Termin oder Platzkontingent, nie je Teilnehmer.",
+      "sie": "Belohnungen immer kollektiv; Teilnehmerliste nur für den Organisator, nach 30 Tagen gelöscht; Preise je Termin oder Platzkontingent, nie je Teilnehmer."
+    },
+    "freundlich": {
+      "du": "Belohnungen immer kollektiv; Teilnehmerliste nur für den Organisator, nach 30 Tagen gelöscht; Preise je Termin oder Platzkontingent, nie je Teilnehmer.",
+      "sie": "Belohnungen immer kollektiv; Teilnehmerliste nur für den Organisator, nach 30 Tagen gelöscht; Preise je Termin oder Platzkontingent, nie je Teilnehmer."
+    },
+    "motivierend": {
+      "du": "Belohnungen immer kollektiv; Teilnehmerliste nur für den Organisator, nach 30 Tagen gelöscht; Preise je Termin oder Platzkontingent, nie je Teilnehmer.",
+      "sie": "Belohnungen immer kollektiv; Teilnehmerliste nur für den Organisator, nach 30 Tagen gelöscht; Preise je Termin oder Platzkontingent, nie je Teilnehmer."
+    }
+  },
+  "modul.m10": {
+    "sachlich": {
+      "du": "Firmenkanal",
+      "sie": "Firmenkanal"
+    },
+    "freundlich": {
+      "du": "Firmenkanal",
+      "sie": "Firmenkanal"
+    },
+    "motivierend": {
+      "du": "Firmenkanal",
+      "sie": "Firmenkanal"
+    }
+  },
+  "modul.m10.datenschutz": {
+    "sachlich": {
+      "du": "Dokumente ohne Personenbezug; Zielgruppen über Gruppen.",
+      "sie": "Dokumente ohne Personenbezug; Zielgruppen über Gruppen."
+    },
+    "freundlich": {
+      "du": "Dokumente ohne Personenbezug; Zielgruppen über Gruppen.",
+      "sie": "Dokumente ohne Personenbezug; Zielgruppen über Gruppen."
+    },
+    "motivierend": {
+      "du": "Dokumente ohne Personenbezug; Zielgruppen über Gruppen.",
+      "sie": "Dokumente ohne Personenbezug; Zielgruppen über Gruppen."
+    }
+  },
+  "modul.m11": {
+    "sachlich": {
+      "du": "Mehrsprachigkeit",
+      "sie": "Mehrsprachigkeit"
+    },
+    "freundlich": {
+      "du": "Mehrsprachigkeit",
+      "sie": "Mehrsprachigkeit"
+    },
+    "motivierend": {
+      "du": "Mehrsprachigkeit",
+      "sie": "Mehrsprachigkeit"
+    }
+  },
+  "modul.m11.datenschutz": {
+    "sachlich": {
+      "du": "Keine besonderen Hinweise.",
+      "sie": "Keine besonderen Hinweise."
+    },
+    "freundlich": {
+      "du": "Keine besonderen Hinweise.",
+      "sie": "Keine besonderen Hinweise."
+    },
+    "motivierend": {
+      "du": "Keine besonderen Hinweise.",
+      "sie": "Keine besonderen Hinweise."
+    }
+  },
+  "modul.m12": {
+    "sachlich": {
+      "du": "Verzeichnis und Netzwerk",
+      "sie": "Verzeichnis und Netzwerk"
+    },
+    "freundlich": {
+      "du": "Verzeichnis und Netzwerk",
+      "sie": "Verzeichnis und Netzwerk"
+    },
+    "motivierend": {
+      "du": "Verzeichnis und Netzwerk",
+      "sie": "Verzeichnis und Netzwerk"
+    }
+  },
+  "modul.m12.datenschutz": {
+    "sachlich": {
+      "du": "Kein Personenimport; das Verzeichnis liefert keine Namen in die Plattform.",
+      "sie": "Kein Personenimport; das Verzeichnis liefert keine Namen in die Plattform."
+    },
+    "freundlich": {
+      "du": "Kein Personenimport; das Verzeichnis liefert keine Namen in die Plattform.",
+      "sie": "Kein Personenimport; das Verzeichnis liefert keine Namen in die Plattform."
+    },
+    "motivierend": {
+      "du": "Kein Personenimport; das Verzeichnis liefert keine Namen in die Plattform.",
+      "sie": "Kein Personenimport; das Verzeichnis liefert keine Namen in die Plattform."
+    }
+  },
+  "metrik.member_active_month": {
+    "sachlich": {
+      "du": "Aktives Mitglied: eine Person mit mindestens einer gewerteten Handlung im Abrechnungsmonat mit Quelle „selbst“ oder „Plattform“ (Check-in, Challenge-Beitrag, Beitrag, Anerkennung). Öffnen der App, Anmeldung, empfangene Benachrichtigungen, automatische Tageswerte und Kommentare zählen nicht. Gezählt wird je Monat ein gesalzener Zähler-Slot, nie eine Person.",
+      "sie": "Aktives Mitglied: eine Person mit mindestens einer gewerteten Handlung im Abrechnungsmonat mit Quelle „selbst“ oder „Plattform“ (Check-in, Challenge-Beitrag, Beitrag, Anerkennung). Öffnen der App, Anmeldung, empfangene Benachrichtigungen, automatische Tageswerte und Kommentare zählen nicht. Gezählt wird je Monat ein gesalzener Zähler-Slot, nie eine Person."
+    },
+    "freundlich": {
+      "du": "Aktives Mitglied: eine Person mit mindestens einer gewerteten Handlung im Abrechnungsmonat mit Quelle „selbst“ oder „Plattform“ (Check-in, Challenge-Beitrag, Beitrag, Anerkennung). Öffnen der App, Anmeldung, empfangene Benachrichtigungen, automatische Tageswerte und Kommentare zählen nicht. Gezählt wird je Monat ein gesalzener Zähler-Slot, nie eine Person.",
+      "sie": "Aktives Mitglied: eine Person mit mindestens einer gewerteten Handlung im Abrechnungsmonat mit Quelle „selbst“ oder „Plattform“ (Check-in, Challenge-Beitrag, Beitrag, Anerkennung). Öffnen der App, Anmeldung, empfangene Benachrichtigungen, automatische Tageswerte und Kommentare zählen nicht. Gezählt wird je Monat ein gesalzener Zähler-Slot, nie eine Person."
+    },
+    "motivierend": {
+      "du": "Aktives Mitglied: eine Person mit mindestens einer gewerteten Handlung im Abrechnungsmonat mit Quelle „selbst“ oder „Plattform“ (Check-in, Challenge-Beitrag, Beitrag, Anerkennung). Öffnen der App, Anmeldung, empfangene Benachrichtigungen, automatische Tageswerte und Kommentare zählen nicht. Gezählt wird je Monat ein gesalzener Zähler-Slot, nie eine Person.",
+      "sie": "Aktives Mitglied: eine Person mit mindestens einer gewerteten Handlung im Abrechnungsmonat mit Quelle „selbst“ oder „Plattform“ (Check-in, Challenge-Beitrag, Beitrag, Anerkennung). Öffnen der App, Anmeldung, empfangene Benachrichtigungen, automatische Tageswerte und Kommentare zählen nicht. Gezählt wird je Monat ein gesalzener Zähler-Slot, nie eine Person."
+    }
+  },
+  "metrik.member_active_day": {
+    "sachlich": {
+      "du": "Aktiver Tag: eine Person mit mindestens einer gewerteten Handlung am Kalendertag; dieselbe Zählregel wie beim aktiven Mitglied.",
+      "sie": "Aktiver Tag: eine Person mit mindestens einer gewerteten Handlung am Kalendertag; dieselbe Zählregel wie beim aktiven Mitglied."
+    },
+    "freundlich": {
+      "du": "Aktiver Tag: eine Person mit mindestens einer gewerteten Handlung am Kalendertag; dieselbe Zählregel wie beim aktiven Mitglied.",
+      "sie": "Aktiver Tag: eine Person mit mindestens einer gewerteten Handlung am Kalendertag; dieselbe Zählregel wie beim aktiven Mitglied."
+    },
+    "motivierend": {
+      "du": "Aktiver Tag: eine Person mit mindestens einer gewerteten Handlung am Kalendertag; dieselbe Zählregel wie beim aktiven Mitglied.",
+      "sie": "Aktiver Tag: eine Person mit mindestens einer gewerteten Handlung am Kalendertag; dieselbe Zählregel wie beim aktiven Mitglied."
+    }
+  },
+  "metrik.member_joined": {
+    "sachlich": {
+      "du": "Beitritte: jede neue Mitgliedschaft im Tenant.",
+      "sie": "Beitritte: jede neue Mitgliedschaft im Tenant."
+    },
+    "freundlich": {
+      "du": "Beitritte: jede neue Mitgliedschaft im Tenant.",
+      "sie": "Beitritte: jede neue Mitgliedschaft im Tenant."
+    },
+    "motivierend": {
+      "du": "Beitritte: jede neue Mitgliedschaft im Tenant.",
+      "sie": "Beitritte: jede neue Mitgliedschaft im Tenant."
+    }
+  },
+  "metrik.tenant_month": {
+    "sachlich": {
+      "du": "Monate je Modul: die Flatrate eines gebuchten Moduls, tagesgenau anteilig bei Buchung mitten im Monat.",
+      "sie": "Monate je Modul: die Flatrate eines gebuchten Moduls, tagesgenau anteilig bei Buchung mitten im Monat."
+    },
+    "freundlich": {
+      "du": "Monate je Modul: die Flatrate eines gebuchten Moduls, tagesgenau anteilig bei Buchung mitten im Monat.",
+      "sie": "Monate je Modul: die Flatrate eines gebuchten Moduls, tagesgenau anteilig bei Buchung mitten im Monat."
+    },
+    "motivierend": {
+      "du": "Monate je Modul: die Flatrate eines gebuchten Moduls, tagesgenau anteilig bei Buchung mitten im Monat.",
+      "sie": "Monate je Modul: die Flatrate eines gebuchten Moduls, tagesgenau anteilig bei Buchung mitten im Monat."
+    }
+  },
+  "metrik.module_trial_day": {
+    "sachlich": {
+      "du": "Testtage: Tage in der Testphase eines Moduls; nur Nachweis, nie bewertet.",
+      "sie": "Testtage: Tage in der Testphase eines Moduls; nur Nachweis, nie bewertet."
+    },
+    "freundlich": {
+      "du": "Testtage: Tage in der Testphase eines Moduls; nur Nachweis, nie bewertet.",
+      "sie": "Testtage: Tage in der Testphase eines Moduls; nur Nachweis, nie bewertet."
+    },
+    "motivierend": {
+      "du": "Testtage: Tage in der Testphase eines Moduls; nur Nachweis, nie bewertet.",
+      "sie": "Testtage: Tage in der Testphase eines Moduls; nur Nachweis, nie bewertet."
+    }
+  },
+  "metrik.challenge_participant_day": {
+    "sachlich": {
+      "du": "Teilnehmertage: je Person und Kalendertag mit gültigem Beitrag zu einer Challenge, gezählt ohne Personenbezug.",
+      "sie": "Teilnehmertage: je Person und Kalendertag mit gültigem Beitrag zu einer Challenge, gezählt ohne Personenbezug."
+    },
+    "freundlich": {
+      "du": "Teilnehmertage: je Person und Kalendertag mit gültigem Beitrag zu einer Challenge, gezählt ohne Personenbezug.",
+      "sie": "Teilnehmertage: je Person und Kalendertag mit gültigem Beitrag zu einer Challenge, gezählt ohne Personenbezug."
+    },
+    "motivierend": {
+      "du": "Teilnehmertage: je Person und Kalendertag mit gültigem Beitrag zu einer Challenge, gezählt ohne Personenbezug.",
+      "sie": "Teilnehmertage: je Person und Kalendertag mit gültigem Beitrag zu einer Challenge, gezählt ohne Personenbezug."
+    }
+  },
+  "metrik.notification_sent": {
+    "sachlich": {
+      "du": "Gesendete Benachrichtigungen: Push und E-Mail je Kanal und Kategorie, ohne Empfänger.",
+      "sie": "Gesendete Benachrichtigungen: Push und E-Mail je Kanal und Kategorie, ohne Empfänger."
+    },
+    "freundlich": {
+      "du": "Gesendete Benachrichtigungen: Push und E-Mail je Kanal und Kategorie, ohne Empfänger.",
+      "sie": "Gesendete Benachrichtigungen: Push und E-Mail je Kanal und Kategorie, ohne Empfänger."
+    },
+    "motivierend": {
+      "du": "Gesendete Benachrichtigungen: Push und E-Mail je Kanal und Kategorie, ohne Empfänger.",
+      "sie": "Gesendete Benachrichtigungen: Push und E-Mail je Kanal und Kategorie, ohne Empfänger."
+    }
+  },
+  "metrik.kiosk_device_month": {
+    "sachlich": {
+      "du": "Kiosk-Geräte je Monat: jedes registrierte Gerät je Abrechnungsmonat.",
+      "sie": "Kiosk-Geräte je Monat: jedes registrierte Gerät je Abrechnungsmonat."
+    },
+    "freundlich": {
+      "du": "Kiosk-Geräte je Monat: jedes registrierte Gerät je Abrechnungsmonat.",
+      "sie": "Kiosk-Geräte je Monat: jedes registrierte Gerät je Abrechnungsmonat."
+    },
+    "motivierend": {
+      "du": "Kiosk-Geräte je Monat: jedes registrierte Gerät je Abrechnungsmonat.",
+      "sie": "Kiosk-Geräte je Monat: jedes registrierte Gerät je Abrechnungsmonat."
+    }
   }
 }

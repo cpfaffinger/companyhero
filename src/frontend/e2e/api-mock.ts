@@ -26,6 +26,8 @@ export interface MockOptions {
   unauthenticated?: boolean;
   /** Kiosk (Zugang 6): Gerät registriert (Gerätesitzung) oder nicht registriert (401 am Gerätezustand). */
   kiosk?: 'device' | 'unregistered';
+  /** Entitlements (Stufe 7): Kern plus M1 (Voreinstellung) oder nur Kern (zwei Bereiche, keine Hinweise auf Module). */
+  modules?: 'default' | 'core';
 }
 
 /** Zustandsändernde Requests der Zugangs-Endpunkte, die ein Test prüft: Methode, Pfad, Körper, CSRF-Header. */
@@ -66,7 +68,30 @@ export async function mockApi(page: Page, options: MockOptions): Promise<{ tenan
   });
   await mockAccess(page, options);
   await mockFachpfad(page, options);
+  await mockGeld(page, options);
   return { tenantId, theme };
+}
+
+/**
+ * Geld (Stufe 7): Navigation aus Entitlements, Modulkatalog mit Buchung (Bündelvorschlag aus der Probe beim ersten Versuch, danach
+ * gebucht), Kostenvorschau, Simulation, Verbrauch als Tagesaggregate, Rechnungsentwürfe aus den Vertragsproben.
+ */
+export async function mockGeld(page: Page, options: MockOptions): Promise<void> {
+  const respond = (s: Sample, body?: unknown) => ({ status: s.status, contentType: s.contentType ?? 'application/json', body: JSON.stringify(body ?? s.body) });
+  await page.route('**/api/entitlements/me', (route) => route.fulfill(respond(sample(options.modules === 'core' ? 'entitlements-me-core' : 'entitlements-me'))));
+  await page.route('**/api/entitlements/modules', (route) => route.fulfill(respond(sample('entitlements-modules'))));
+  await page.route('**/api/entitlements/modules/*/book', (route) => route.fulfill(respond(sample('entitlements-book-suggested'))));
+  await page.route('**/api/entitlements/bundles/book', (route) => route.fulfill(respond(sample('entitlements-bundle-booked'))));
+  await page.route('**/api/entitlements/modules/*/trial', (route) => route.fulfill(respond(sample('entitlements-trial'))));
+  await page.route('**/api/entitlements/modules/*/cancel', (route) => route.fulfill(respond(sample('entitlements-cancel'))));
+  await page.route('**/api/entitlements/modules/*/revoke-cancellation', (route) => route.fulfill(respond(sample('entitlements-cancel'), { ...(sample('entitlements-cancel').body as object), activeUntil: null })));
+  await page.route('**/api/entitlements/history', (route) => route.fulfill(respond(sample('entitlements-history'))));
+  await page.route('**/api/billing/preview', (route) => route.fulfill(respond(sample('billing-preview'))));
+  await page.route('**/api/billing/preview/simulate?*', (route) => route.fulfill(respond(sample('billing-simulate'))));
+  await page.route('**/api/billing/usage?*', (route) => route.fulfill(respond(sample('billing-usage'))));
+  await page.route('**/api/billing/invoices', (route) => route.fulfill(respond(sample('billing-invoices'))));
+  await page.route('**/api/billing/invoices/*', (route) => route.fulfill(respond(sample('billing-invoice'))));
+  await page.route('**/api/billing/metrics', (route) => route.fulfill(respond(sample('billing-metrics'))));
 }
 
 /**

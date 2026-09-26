@@ -3085,6 +3085,244 @@
         }
       }
     },
+    "/api/entitlements/me": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetMyEntitlements",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NavigationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/entitlements/modules": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListModules",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleStatusResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/entitlements/modules/{module}/book": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "BookModule",
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/entitlements/bundles/book": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "BookBundle",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BundleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/entitlements/modules/{module}/trial": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "StartModuleTrial",
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrialResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/entitlements/modules/{module}/cancel": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "CancelModule",
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancellationResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/entitlements/modules/{module}/revoke-cancellation": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RevokeModuleCancellation",
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancellationResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/entitlements/history": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListEntitlementHistory",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntitlementHistoryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/challenges": {
       "get": {
         "tags": [
@@ -3182,6 +3420,26 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ChallengeCardResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenges/export": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ExportChallenges",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChallengeExportResponse"
                 }
               }
             }
@@ -3669,6 +3927,229 @@
           }
         }
       }
+    },
+    "/api/billing/preview": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetCostPreview",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CostPreviewResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/billing/preview/simulate": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "SimulateBooking",
+        "parameters": [
+          {
+            "name": "module",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimulationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/billing/usage": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetUsage",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsageResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/billing/usage/export": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ExportUsage",
+        "parameters": [
+          {
+            "name": "period",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/billing/invoices": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListInvoices",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InvoiceSummaryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/billing/invoices/{invoiceId}": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetInvoice",
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDraftResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/billing/periods": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListBillingPeriods",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PeriodResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/billing/metrics": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListBillingMetrics",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -3881,6 +4362,67 @@
           }
         }
       },
+      "BookingResponse": {
+        "required": [
+          "outcome",
+          "suggestion",
+          "booked"
+        ],
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "type": "string"
+          },
+          "suggestion": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "booked": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BundleRequest": {
+        "required": [
+          "modules"
+        ],
+        "type": "object",
+        "properties": {
+          "modules": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CancellationResponse": {
+        "required": [
+          "affected",
+          "activeUntil"
+        ],
+        "type": "object",
+        "properties": {
+          "affected": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "activeUntil": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
       "ChallengeCardResponse": {
         "required": [
           "challengeId",
@@ -3997,6 +4539,25 @@
           },
           "visibility": {
             "$ref": "#/components/schemas/ChallengeVisibilityDto"
+          }
+        }
+      },
+      "ChallengeExportResponse": {
+        "required": [
+          "exportedAt",
+          "challenges"
+        ],
+        "type": "object",
+        "properties": {
+          "exportedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "challenges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChallengeCardResponse"
+            }
           }
         }
       },
@@ -4216,6 +4777,59 @@
           }
         }
       },
+      "CostPreviewResponse": {
+        "required": [
+          "period",
+          "currency",
+          "planName",
+          "lines",
+          "net",
+          "tax",
+          "gross",
+          "wouldHaveBeen",
+          "forecast",
+          "definitions"
+        ],
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "planName": {
+            "type": "string"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceLineResponse"
+            }
+          },
+          "net": {
+            "type": "string"
+          },
+          "tax": {
+            "type": "string"
+          },
+          "gross": {
+            "type": "string"
+          },
+          "wouldHaveBeen": {
+            "type": "string"
+          },
+          "forecast": {
+            "$ref": "#/components/schemas/ForecastResponse"
+          },
+          "definitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricDefinitionResponse"
+            }
+          }
+        }
+      },
       "CountResponse": {
         "required": [
           "count"
@@ -4371,6 +4985,61 @@
             "type": "string"
           }
         }
+      },
+      "EntitlementHistoryResponse": {
+        "required": [
+          "id",
+          "module",
+          "occurredAt",
+          "fromState",
+          "toState",
+          "actorRoles",
+          "source",
+          "reason"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "module": {
+            "type": "string"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fromState": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/EntitlementStateDto"
+              }
+            ]
+          },
+          "toState": {
+            "$ref": "#/components/schemas/EntitlementStateDto"
+          },
+          "actorRoles": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "EntitlementStateDto": {
+        "enum": [
+          "trial",
+          "active",
+          "expiring",
+          "inactive"
+        ]
       },
       "ErsetzungDto": {
         "required": [
@@ -4544,6 +5213,31 @@
           }
         }
       },
+      "ForecastResponse": {
+        "required": [
+          "net",
+          "estimate",
+          "elapsedDays",
+          "daysInMonth"
+        ],
+        "type": "object",
+        "properties": {
+          "net": {
+            "type": "string"
+          },
+          "estimate": {
+            "type": "boolean"
+          },
+          "elapsedDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "daysInMonth": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "GroupChoiceRequest": {
         "required": [
           "dimensionId",
@@ -4709,6 +5403,161 @@
                 "type": "string"
               }
             }
+          }
+        }
+      },
+      "InvoiceDraftResponse": {
+        "required": [
+          "invoiceId",
+          "period",
+          "createdAt",
+          "currency",
+          "taxRate",
+          "planName",
+          "net",
+          "tax",
+          "gross",
+          "wouldHaveBeen",
+          "status",
+          "lines"
+        ],
+        "type": "object",
+        "properties": {
+          "invoiceId": {
+            "type": "string"
+          },
+          "period": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "taxRate": {
+            "type": "string"
+          },
+          "planName": {
+            "type": "string"
+          },
+          "net": {
+            "type": "string"
+          },
+          "tax": {
+            "type": "string"
+          },
+          "gross": {
+            "type": "string"
+          },
+          "wouldHaveBeen": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvoiceLineResponse"
+            }
+          }
+        }
+      },
+      "InvoiceLineResponse": {
+        "required": [
+          "ruleKey",
+          "model",
+          "module",
+          "metric",
+          "quantity",
+          "unitPrice",
+          "calculation",
+          "net",
+          "tax",
+          "rated"
+        ],
+        "type": "object",
+        "properties": {
+          "ruleKey": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "module": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "metric": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "quantity": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "calculation": {
+            "type": "string"
+          },
+          "net": {
+            "type": "string"
+          },
+          "tax": {
+            "type": "string"
+          },
+          "rated": {
+            "type": "boolean"
+          }
+        }
+      },
+      "InvoiceSummaryResponse": {
+        "required": [
+          "invoiceId",
+          "period",
+          "createdAt",
+          "currency",
+          "net",
+          "tax",
+          "gross",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "invoiceId": {
+            "type": "string"
+          },
+          "period": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "net": {
+            "type": "string"
+          },
+          "tax": {
+            "type": "string"
+          },
+          "gross": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
           }
         }
       },
@@ -5465,6 +6314,126 @@
           }
         }
       },
+      "MetricDefinitionResponse": {
+        "required": [
+          "module",
+          "metric",
+          "textKey",
+          "personal",
+          "model"
+        ],
+        "type": "object",
+        "properties": {
+          "module": {
+            "type": "string"
+          },
+          "metric": {
+            "type": "string"
+          },
+          "textKey": {
+            "type": "string"
+          },
+          "personal": {
+            "type": "boolean"
+          },
+          "model": {
+            "type": "string"
+          }
+        }
+      },
+      "MetricsResponse": {
+        "required": [
+          "metrics"
+        ],
+        "type": "object",
+        "properties": {
+          "metrics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricDefinitionResponse"
+            }
+          }
+        }
+      },
+      "ModuleStatusResponse": {
+        "required": [
+          "module",
+          "nameKey",
+          "state",
+          "activeFrom",
+          "activeUntil",
+          "trialUntil",
+          "trialAvailable",
+          "dependencies",
+          "privacyHintKey"
+        ],
+        "type": "object",
+        "properties": {
+          "module": {
+            "type": "string"
+          },
+          "nameKey": {
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/EntitlementStateDto"
+          },
+          "activeFrom": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "activeUntil": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "trialUntil": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "trialAvailable": {
+            "type": "boolean"
+          },
+          "dependencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "privacyHintKey": {
+            "type": "string"
+          }
+        }
+      },
+      "NavigationResponse": {
+        "required": [
+          "modules",
+          "areas"
+        ],
+        "type": "object",
+        "properties": {
+          "modules": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "areas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "NotificationCategoryDto": {
         "enum": [
           "challenge",
@@ -5680,6 +6649,38 @@
           },
           "displayName": {
             "type": "string"
+          }
+        }
+      },
+      "PeriodResponse": {
+        "required": [
+          "period",
+          "openedAt",
+          "sealedAt",
+          "saltDestroyedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "openedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sealedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "saltDestroyedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
           }
         }
       },
@@ -6208,6 +7209,36 @@
           }
         }
       },
+      "SimulationResponse": {
+        "required": [
+          "module",
+          "thisMonth",
+          "nextMonth",
+          "usageBasedMetrics",
+          "currency"
+        ],
+        "type": "object",
+        "properties": {
+          "module": {
+            "type": "string"
+          },
+          "thisMonth": {
+            "type": "string"
+          },
+          "nextMonth": {
+            "type": "string"
+          },
+          "usageBasedMetrics": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "currency": {
+            "type": "string"
+          }
+        }
+      },
       "TenantNotificationSettingsRequest": {
         "required": [
           "pushEnabled",
@@ -6583,6 +7614,25 @@
           }
         }
       },
+      "TrialResponse": {
+        "required": [
+          "outcome",
+          "trialUntil"
+        ],
+        "type": "object",
+        "properties": {
+          "outcome": {
+            "type": "string"
+          },
+          "trialUntil": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
       "UnsubscribeResponse": {
         "required": [
           "category"
@@ -6591,6 +7641,89 @@
         "properties": {
           "category": {
             "$ref": "#/components/schemas/NotificationCategoryDto"
+          }
+        }
+      },
+      "UsageDayResponse": {
+        "required": [
+          "day",
+          "quantity"
+        ],
+        "type": "object",
+        "properties": {
+          "day": {
+            "type": "string",
+            "format": "date"
+          },
+          "quantity": {
+            "type": "string"
+          }
+        }
+      },
+      "UsageMetricResponse": {
+        "required": [
+          "module",
+          "metric",
+          "textKey",
+          "personal",
+          "total",
+          "rated",
+          "unrated",
+          "days"
+        ],
+        "type": "object",
+        "properties": {
+          "module": {
+            "type": "string"
+          },
+          "metric": {
+            "type": "string"
+          },
+          "textKey": {
+            "type": "string"
+          },
+          "personal": {
+            "type": "boolean"
+          },
+          "total": {
+            "type": "string"
+          },
+          "rated": {
+            "type": "string"
+          },
+          "unrated": {
+            "type": "string"
+          },
+          "days": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/UsageDayResponse"
+            }
+          }
+        }
+      },
+      "UsageResponse": {
+        "required": [
+          "period",
+          "sealed",
+          "metrics"
+        ],
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "sealed": {
+            "type": "boolean"
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UsageMetricResponse"
+            }
           }
         }
       },

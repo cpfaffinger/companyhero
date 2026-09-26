@@ -1,0 +1,57 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "metrics": [
+      {
+        "module": "M1",
+        "metric": "tenant.month",
+        "textKey": "metrik.tenant_month",
+        "personal": false,
+        "model": "flat"
+      },
+      {
+        "module": "M2",
+        "metric": "tenant.month",
+        "textKey": "metrik.tenant_month",
+        "personal": false,
+        "model": "flat"
+      },
+      {
+        "module": "M3",
+        "metric": "tenant.month",
+        "textKey": "metrik.tenant_month",
+        "personal": false,
+        "model": "flat"
+      },
+      {
+        "module": "Kern",
+        "metric": "member.active_month",
+        "textKey": "metrik.member_active_month",
+        "personal": true,
+        "model": "per_unit"
+      },
+      {
+        "module": "Kern",
+        "metric": "member.joined",
+        "textKey": "metrik.member_joined",
+        "personal": false,
+        "model": "per_unit"
+      },
+      {
+        "module": "Kern",
+        "metric": "kiosk.device_month",
+        "textKey": "metrik.kiosk_device_month",
+        "personal": false,
+        "model": "per_unit"
+      },
+      {
+        "module": "M1",
+        "metric": "challenge.participant_day",
+        "textKey": "metrik.challenge_participant_day",
+        "personal": true,
+        "model": "tiered"
+      }
+    ]
+  }
+}

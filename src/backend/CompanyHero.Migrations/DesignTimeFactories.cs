@@ -1,5 +1,6 @@
 using CompanyHero.Modules.Branding.Infrastructure;
 using CompanyHero.Modules.Challenges.Infrastructure;
+using CompanyHero.Modules.Entitlements.Infrastructure;
 using CompanyHero.Modules.Feed.Infrastructure;
 using CompanyHero.Modules.Identity.Infrastructure;
 using CompanyHero.Modules.Metering.Infrastructure;
@@ -71,4 +72,9 @@ internal sealed class FeedDbContextFactory : IDesignTimeDbContextFactory<FeedDbC
 internal sealed class NotificationsDbContextFactory : IDesignTimeDbContextFactory<NotificationsDbContext>
 {
     public NotificationsDbContext CreateDbContext(string[] args) => new(DesignTime.Options<NotificationsDbContext>(ModuleSchemas.Notifications));
+}
+
+internal sealed class EntitlementsDbContextFactory : IDesignTimeDbContextFactory<EntitlementsDbContext>
+{
+    public EntitlementsDbContext CreateDbContext(string[] args) => new(DesignTime.Options<EntitlementsDbContext>(ModuleSchemas.Entitlements));
 }

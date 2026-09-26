@@ -16,7 +16,7 @@ Die Umsetzung folgt dem [technischen Durchstich](concept/technischer-durchstich.
 | 4 Zugang | Beitritt, Passkey, Wiederherstellungscode, Magic-Link, OIDC, Kiosk, Sitzungen, Austritt | [stufe-4.md](durchstich/abnahme/stufe-4.md) |
 | 5 Vertrag und Oberfläche | OpenAPI-Client, Referenzscreen, Marken, Großflächenmodus, Ladebudget, Manifest | [stufe-5.md](durchstich/abnahme/stufe-5.md) |
 | 6 Fachpfad | Organisation, Kickoff-Challenge, Beiträge, Fortschritt, Feed, Sichtbarkeit, Push und E-Mail | [stufe-6.md](durchstich/abnahme/stufe-6.md) |
-| 7 Geld | Ledger, Slots, Kostenvorschau, Testphase, Rechnungsentwurf | offen |
+| 7 Geld | Ledger, Slots, Kostenvorschau, Testphase, Rechnungsentwurf | [stufe-7.md](durchstich/abnahme/stufe-7.md) |
 | 8 Onboarding | Beitritt unter 90 Sekunden, Programmstart-Checkliste, Rollout-Fortschritt | offen |
 
 ## Aufbau des Repositories

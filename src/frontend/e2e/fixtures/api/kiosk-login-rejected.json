@@ -6,6 +6,6 @@
     "title": "Zugang abgelehnt",
     "status": 401,
     "detail": "kiosk_login_failed",
-    "traceId": "00-69eeea8082c67b573ab8b1740d3e1532-1eec3a39d0c27a6b-01"
+    "traceId": "00-bb8a0091895dd7d0a76cdf222109c3e3-40c2a2c1d64f1e53-01"
   }
 }

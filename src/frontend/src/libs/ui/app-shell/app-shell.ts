@@ -1,6 +1,6 @@
 // Schale der Mitglieder-App (Marke 2.4, 2.5 Struktur; K07): kollabierende Kopfzeile mit Glocke, untere Navigationsleiste
 // unter 640 px, Navigations-Rail ab 640 px, Seitennavigation ab 1024 px mit Inhalt bis 1.280 px und Kontextspalte 320 px.
-// Navigation im Durchstich: Start, Challenges, Ich (keine Platzhalter für nicht gebuchte Module, A-064). Marke aus dem
+// Navigation aus aktiven Entitlements: Start und Ich immer, Challenges mit M1 (keine Platzhalter für nicht gebuchte Module, A-064). Marke aus dem
 // Theme-Service: Tenant-Logo als Kennzeichen, Plattform-Bildzeichen in der Plattform-Schale (A-078).
 import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, viewChild } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
@@ -36,6 +36,8 @@ export class AppShell {
   readonly hasContext = input(false);
 
   readonly initial = computed(() => this.theme.produktname().trim().charAt(0).toUpperCase() || 'C');
+  /** Beschriftung der Navigation aus den tatsächlich vorhandenen Bereichen (A-064: keine Einträge für inaktive Module). */
+  readonly navLabel = computed(() => this.items().map((i) => this.texts.t(i.labelKey)).join(', '));
   readonly platform = computed(() => this.theme.context() === 'platform');
 
   private readonly main = viewChild.required<ElementRef<HTMLElement>>('main');

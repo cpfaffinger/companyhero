@@ -23,6 +23,7 @@ Konfigurationsdateien; diese Liste dokumentiert sie an einem Ort. Änderungen la
 | OpenAPI-Erzeugung | Microsoft.AspNetCore.OpenApi 10.0.12 (Microsoft.OpenApi 2.12.0), OpenAPI 3.1, Export über `--export-openapi` (A-109) | `Directory.Packages.props`, `src/backend/CompanyHero.Api/OpenApi/` |
 | Theme-Ableitung | keine Bibliothek; eigene Portierung von material-color-utilities (Apache-2.0, TypeScript-Paket 0.4.0, Stand 5b3618b) (A-110) | `src/backend/CompanyHero.Modules.Branding/Domain/Color/` |
 | Web Push, E-Mail, Aushang | keine Bibliothek; VAPID (ES256) und RFC 8291 (`aes128gcm`) mit `ECDsa`, `ECDiffieHellman`, `HKDF`, `AesGcm` aus .NET 10; SMTP über `System.Net.Mail`; eigener PDF-Schreiber (PDF 1.4) (A-112) | `src/backend/CompanyHero.Modules.Notifications/Application/` |
+| Preisrechnung, Ledger und Slots | keine Bibliothek; `System.Decimal` mit `MidpointRounding.AwayFromZero`, `numeric(18,4)`/`numeric(18,2)` in PostgreSQL, HMAC-SHA256 (`System.Security.Cryptography`) für Zähler-Slots, Periodensalz mit Microsoft.AspNetCore.DataProtection 10.0.12 geschützt (A-113) | `src/backend/CompanyHero.Modules.Metering/Domain/`, `Application/` |
 | Analyseregeln | `latest-recommended`, Warnungen als Fehler, Ausnahmen in `.editorconfig` | `Directory.Build.props` |
 
 ## Frontend

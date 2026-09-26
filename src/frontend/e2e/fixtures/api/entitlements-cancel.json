@@ -1,0 +1,10 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "affected": [
+      "M3"
+    ],
+    "activeUntil": "2026-10-25T08:08:00+00:00"
+  }
+}

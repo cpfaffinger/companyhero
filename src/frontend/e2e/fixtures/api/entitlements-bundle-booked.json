@@ -1,0 +1,12 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "outcome": "booked",
+    "suggestion": [],
+    "booked": [
+      "M1",
+      "M2"
+    ]
+  }
+}

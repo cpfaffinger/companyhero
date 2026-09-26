@@ -84,6 +84,8 @@ public sealed class Stufe6IsolationTests(PostgresFixture pg) : IAsyncLifetime
             ["/api/access/providers/{id:guid}"] = (HttpMethod.Delete, $"/api/access/providers/{Guid.CreateVersion7():D}", null),
             ["/api/me/passkeys/{passkeyId:guid}"] = (HttpMethod.Delete, $"/api/me/passkeys/{Guid.CreateVersion7():D}", null),
             ["/api/me/providers/{linkId:guid}"] = (HttpMethod.Delete, $"/api/me/providers/{Guid.CreateVersion7():D}", null),
+            // Stufe 7: Rechnungsentwurf des Tenants W (Metering 6.1) aus Sicht des fremden Tenant-Admins.
+            ["/api/billing/invoices/{invoiceId:guid}"] = (HttpMethod.Get, $"/api/billing/invoices/{await Stufe7.InvoiceIdAsync(pg, _w, Ct)}", null),
         };
 
         // Kiosk-only-Routen und Routen ohne Fachobjekt (Beitrittscodes ohne Sitzung, Icons) sind hier nicht gemeint.

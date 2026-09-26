@@ -30,7 +30,7 @@ public static class NotificationJobTypes
     public const string EmailSend = "notifications.email.send";
     public const string Challenges = "notifications.pipeline.challenges";
     public const string Progress = "notifications.pipeline.progress";
-    public const string MeteringModule = "notifications";
+    public const string MeteringModule = "Kern";
     public const string SentMetric = "notification.sent";
 }
 

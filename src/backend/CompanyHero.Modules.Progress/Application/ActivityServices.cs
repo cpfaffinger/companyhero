@@ -1,5 +1,3 @@
-using System.Security.Cryptography;
-using System.Text;
 using CompanyHero.Modules.Organisation.Application;
 using CompanyHero.Modules.Organisation.Domain;
 using CompanyHero.Modules.Privacy.Application;
@@ -86,6 +84,7 @@ internal sealed class ActivityRecorder(
     ITenantContextAccessor context,
     ITenantTimeZone timeZone,
     IMeteringEmitter metering,
+    IMeteringSlots slots,
     IJobQueue jobs,
     IDomainEventDispatcher events,
     TimeProvider clock) : IActivityRecorder
@@ -123,12 +122,15 @@ internal sealed class ActivityRecorder(
         }
 
         // „Aktives Mitglied“ (Fortschritt 2.3, A-071): einmal je Person und Tag beziehungsweise Monat bei der ersten gewerteten Handlung
-        // mit Quelle selbst oder Plattform; automatische Tageswerte nie. Bezug und Schlüssel ohne Personenkennung (Metering 2.1).
-        if (points > 0 && countedTotal == 0 && source != ActivitySource.Automatic)
+        // mit Quelle selbst oder Plattform; automatische Tageswerte und Kommentare nie. Bezug und Schlüssel sind der periodengesalzene
+        // Zähler-Slot von Metering (Metering 2.3): innerhalb der Periode zählbar, über Perioden nicht verkettbar, ohne Salz nicht rückrechenbar.
+        // Die Deduplizierung je Tag und Monat leistet der Idempotenzschlüssel des Ledgers, nicht der Zähler der Punkte: ein automatischer
+        // Tageswert mit Punkten davor darf die erste gewertete eigene Handlung nicht verdecken.
+        if (points > 0 && source != ActivitySource.Automatic)
         {
-            var period = TenantTimeZone.PeriodOf(occurredAt, zone);
-            await metering.EmitAsync(new MeteringEmission(ProgressConstants.MeteringModule, ProgressConstants.ActiveDayMetric, $"active-day:{day:yyyy-MM-dd}", 1m, MeteringSource.Self, occurredAt, "ad:" + Pseudonym(tenantId, personId, day.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture))), cancellationToken);
-            await metering.EmitAsync(new MeteringEmission(ProgressConstants.MeteringModule, ProgressConstants.ActiveMonthMetric, $"active-month:{period}", 1m, MeteringSource.Self, occurredAt, "am:" + Pseudonym(tenantId, personId, period)), cancellationToken);
+            var slot = await slots.SlotForAsync(personId, occurredAt, cancellationToken);
+            await metering.EmitAsync(new MeteringEmission(ProgressConstants.MeteringModule, ProgressConstants.ActiveDayMetric, slot, 1m, MeteringSource.Self, occurredAt, $"ad:{slot}:{day:yyyy-MM-dd}"), cancellationToken);
+            await metering.EmitAsync(new MeteringEmission(ProgressConstants.MeteringModule, ProgressConstants.ActiveMonthMetric, slot, 1m, MeteringSource.Self, occurredAt, $"am:{slot}"), cancellationToken);
         }
 
         // Abzeichen ereignisgetrieben durch Jobs nach jeder Handlung (Fortschritt 4.2), dedupliziert je Handlung.
@@ -168,8 +170,6 @@ internal sealed class ActivityRecorder(
         await tx.CommitAsync(cancellationToken);
     }
 
-    private static string Pseudonym(TenantId tenantId, PersonId personId, string suffix) =>
-        Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes($"{tenantId}|{personId}|{suffix}")))[..40];
 }
 
 internal sealed class PersonalActivityQuery(ProgressDbContext db, IContextTransaction transaction, ITenantContextAccessor context, IVisibilityRule visibility) : IPersonalActivityQuery

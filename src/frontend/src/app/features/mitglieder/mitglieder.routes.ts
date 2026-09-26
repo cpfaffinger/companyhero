@@ -15,6 +15,7 @@ export const MITGLIEDER_ROUTES: Routes = [
       { path: 'benachrichtigungen', loadComponent: () => import('./benachrichtigungen/benachrichtigungen-page').then((m) => m.BenachrichtigungenPage), data: { titleKey: 'kopf.benachrichtigungen' } },
       { path: 'verwaltung/marke', loadComponent: () => import('../verwaltung/marke/marke-page').then((m) => m.MarkePage), data: { titleKey: 'verwaltung.marke' } },
       { path: 'verwaltung/challenges', loadComponent: () => import('../verwaltung/challenges/challenges-verwaltung-page').then((m) => m.ChallengesVerwaltungPage), data: { titleKey: 'verwaltung.challenges' } },
+      { path: 'verwaltung/abrechnung', loadComponent: () => import('../verwaltung/abrechnung/abrechnung-page').then((m) => m.AbrechnungPage), data: { titleKey: 'verwaltung.abrechnung' } },
     ],
   },
 ];

@@ -2,7 +2,7 @@
   "status": 200,
   "contentType": "application/json",
   "body": {
-    "personId": "01a0def2-53ae-719d-b792-96f6501e38d0",
+    "personId": "01a0df42-303b-78e4-800f-d2be1f83216a",
     "displayName": "Probe Kiosk",
     "idleSeconds": 60,
     "idleUntil": "2026-09-25T08:09:00+00:00",

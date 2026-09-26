@@ -221,11 +221,12 @@ internal sealed class ContributionService(
         var domainEvent = ChallengeEvent.ContributionRecorded(tenantId, contribution, receivedAt);
         db.Events.Add(domainEvent);
 
-        // Teilnehmertag: einmal je Person und Kalendertag der Challenge (Challenges 8 ↔ Metering); anonymer Bezug ist die Challenge.
+        // Teilnehmertag: einmal je Person und Kalendertag der Challenge (Challenges 8 ↔ Metering); anonymer Bezug ist die Challenge,
+        // Idempotenzschlüssel aus Fachereignis (Beitrag) und Metrik (Metering 2.1).
         if (await IsFirstContributionOfDayAsync(tenantId, challenge.Id, personId, contribution.RecordedAt, zone, cancellationToken))
         {
             await metering.EmitAsync(
-                new MeteringEmission(ContributionConstants.MeteringModule, ContributionConstants.ParticipantDayMetric, challenge.Id.ToString("D"), 1m, MeteringSource.Self, contribution.RecordedAt, $"{domainEvent.Id:D}:{ContributionConstants.ParticipantDayMetric}"),
+                new MeteringEmission(ContributionConstants.MeteringModule, ContributionConstants.ParticipantDayMetric, challenge.Id.ToString("D"), 1m, MeteringSource.Self, contribution.RecordedAt, ParticipantDayKey(contribution.Id)),
                 cancellationToken);
         }
 
@@ -280,6 +281,26 @@ internal sealed class ContributionService(
             await activities.ReverseAsync(activityId, cancellationToken);
         }
 
+        // Gegenbuchung im Ledger (Metering 3.3): der Teilnehmertag entfällt, wenn an diesem Tag kein gültiger Beitrag der Person bleibt.
+        var zone = await timeZone.GetAsync(cancellationToken);
+        var day = TenantTimeZone.DayOf(contribution.RecordedAt, zone);
+        var from = TenantTimeZone.StartOfDay(day, zone);
+        var to = TenantTimeZone.StartOfDay(day.AddDays(1), zone);
+        var remaining = await db.Contributions
+            .Where(c => c.TenantId == tenantId && c.ChallengeId == challenge.Id && c.PersonId == personId && c.RecordedAt >= from && c.RecordedAt < to && c.ReversalOf == null && !c.Reversed)
+            .AnyAsync(cancellationToken);
+        if (!remaining)
+        {
+            var first = await db.Contributions
+                .Where(c => c.TenantId == tenantId && c.ChallengeId == challenge.Id && c.PersonId == personId && c.RecordedAt >= from && c.RecordedAt < to && c.ReversalOf == null)
+                .OrderBy(c => c.RecordedAt).ThenBy(c => c.Id)
+                .Select(c => c.Id)
+                .FirstAsync(cancellationToken);
+            await metering.EmitAsync(
+                new MeteringEmission(ContributionConstants.MeteringModule, ContributionConstants.ParticipantDayMetric, challenge.Id.ToString("D"), -1m, MeteringSource.Self, contribution.RecordedAt, ParticipantDayKey(reversal.Id), ParticipantDayKey(first)),
+                cancellationToken);
+        }
+
         await jobs.EnqueueAsync(new JobRequest(CollectiveRecalculateHandler.JobType, challenge.Id.ToString("D"), $"reversal:{reversal.Id:D}"), cancellationToken);
         await events.DispatchAsync(ChallengeEventTypes.ContributionReversed, domainEvent.Id, cancellationToken);
         await tx.CommitAsync(cancellationToken);
@@ -298,6 +319,8 @@ internal sealed class ContributionService(
         await tx.CommitAsync(cancellationToken);
         return rows;
     }
+
+    private static string ParticipantDayKey(Guid contributionId) => $"{contributionId:D}:{ContributionConstants.ParticipantDayMetric}";
 
     private async Task<bool> IsFirstContributionOfDayAsync(TenantId tenantId, Guid challengeId, PersonId personId, DateTimeOffset recordedAt, TimeZoneInfo zone, CancellationToken cancellationToken)
     {

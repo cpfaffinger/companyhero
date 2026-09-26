@@ -1,7 +1,7 @@
 # CompanyHero – Entscheidungsregister
 
 **Stand:** 26.09.2026  
-**Status:** A-001 bis A-112 angenommen durch Christopher. Dokumentierte Entscheidungen; technisch nachgewiesene Nachweise tragen den Zusatz „technisch nachgewiesen“ mit Datum und Verweis auf das Abnahmeprotokoll unter `durchstich/abnahme/`.
+**Status:** A-001 bis A-113 angenommen durch Christopher. Dokumentierte Entscheidungen; technisch nachgewiesene Nachweise tragen den Zusatz „technisch nachgewiesen“ mit Datum und Verweis auf das Abnahmeprotokoll unter `durchstich/abnahme/`.
 
 Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetzung: [Backend](architektur-backend.md), [Frontend](architektur-frontend.md), [Zuständigkeiten und Integrationsregeln](architektur-integrationsregeln.md), [Domänen und Schnittmengen](domaenen-und-schnittmengen.md), [Zugang und Identität](zugang-und-identitaet.md), [Datenschutz und Nachweis](datenschutz-und-nachweis.md), [Betrieb](betrieb.md), [Organisation und Mandanten](organisation-und-mandanten.md), [Challenges](challenges.md), [Fortschritt](fortschritt.md), [Feed und Inhalte](feed-und-inhalte.md), [Benachrichtigungen](benachrichtigungen.md), [Entitlements](entitlements.md), [Metering und Abrechnung](metering-und-abrechnung.md), [Marke und Theme](marke-und-theme.md), [Workshops und Events](workshops-und-events.md), [Arena](arena.md), [Wearable-Vault](wearable-vault.md), [Onboarding und Rollout](onboarding-und-rollout.md), [Verwaltung und Konsolen](verwaltung-und-konsolen.md), [Inhaltsmodule](inhaltsmodule.md), [Mehrsprachigkeit](mehrsprachigkeit.md), [Verzeichnis und Netzwerk](verzeichnis-und-netzwerk.md), [Technischer Durchstich](technischer-durchstich.md). Jede Entscheidung steht hier in ihrer gültigen Form. Wird eine Entscheidung geändert, wird der Eintrag ersetzt und die betroffenen Dateien werden gemeinsam angepasst.
 
@@ -208,7 +208,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Aggregate nur ab fünf Personen mit Beitrag. Auswertungsgruppen sind ausschließlich Tenant-Gruppen je Dimension und der ganze Tenant; keine Kombination zweier Dimensionen; Zeiträume nur Challenge-Zeitraum, Kalenderwoche, Kalendermonat. Gruppenumbau löst keine Differenzbildung aus. Ranglisten zusätzlich erst ab 40 Prozent Beteiligung der aktivierten Personen der Gruppe. Arena erhält nur Pro-Kopf-Wert auf Sollstärke, Größenklasse, Name, Logo, Zeitpunkt.
 - **Begründung:** Schutz vor Rückrechnung einzelner Beiträge und vor Erkennbarkeit schwacher Beteiligung.
 - **Folgen:** Exporte und Verwaltungsansichten verwenden dieselbe Prüfung wie die App; Sollstärke steuert nie Sichtbarkeit.
-- **Nachweise:** vier Beitragende ergeben keine Ausgabe, fünf schon; Gruppenumbau ohne Differenz; Rangliste erst bei beiden Schwellen. Nachweisstand: Kollektivstand und Beteiligung unter fünf Personen ohne Zahlen, Sammelkarte erst ab fünf technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
+- **Nachweise:** vier Beitragende ergeben keine Ausgabe, fünf schon; Gruppenumbau ohne Differenz; Rangliste erst bei beiden Schwellen. Nachweisstand: Kollektivstand und Beteiligung unter fünf Personen ohne Zahlen, Sammelkarte erst ab fünf technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`); Verbrauchsdetail ohne Tagesschnitte bei personennahen Metriken über API und Export technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`).
 
 ## A-024 – Fristen, Löschung und Austritt
 
@@ -507,77 +507,77 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Kern immer aktiv: Identität und Zugang mit allen Anmeldewegen und Kiosk, Organisation, Profil und Fortschritt, Feed mit Tenant- und Mitglieder-Beiträgen, alle Benachrichtigungskanäle, Marke, Datenschutz und Nachweis, Rollout-Werkzeuge, PWA, Redaktion für Tenant-Beiträge und Tenant-Inhalte durch Programm-Manager und Redakteur mit optionalem KI-Authoring, Verwaltung. Die Rolle Redakteur ist Kern; M10 fügt Firmenkanal-Rechte je Gruppe, Dokumente, Termine und Zielgruppen hinzu. Zwölf Module: M1 Challenges, M2 Arena (setzt M1 voraus), M3 Bewegung, M4 Ergonomie, M5 Wissen, M6 Regeneration, M7 Ernährung, M8 Wearables (buchbar nur mit vom Operator freigegebenem Hersteller), M9 Workshops und Events (setzt M1 voraus), M10 Firmenkanal, M11 Mehrsprachigkeit, M12 Verzeichnis und Netzwerk ohne Personenimport. Navigation aus Modulen mit höchstens fünf Bereichen. Bündel sind Vertriebsvorschläge, keine Entitlements. Katalog mit Datenschutzhinweis je Modul gemäß [Entitlements](entitlements.md), Abschnitt 2.
 - **Begründung:** Der Kern enthält alles, was Rollout und Vertrauen tragen; Module sind Einheiten aus Funktion, Sichtbarkeit und Preis.
-- **Nachweise:** Navigation je Modulkombination; kein Hinweis auf inaktive Module; M12 ohne Personenimport.
+- **Nachweise:** Navigation je Modulkombination; kein Hinweis auf inaktive Module; M12 ohne Personenimport. Nachweisstand: Navigation ausschließlich aus aktiven Entitlements (Kern: Start und Ich; mit M1: Challenges), keine Hinweise auf inaktive Module in App und API, Katalog mit Datenschutzhinweis je Modul technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`); M12 ohne Personenimport mit dem Modul.
 
 ## A-065 – Entitlement-Modell
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Je Tenant und Modul höchstens ein aktiver Datensatz mit Zustand (Testphase, aktiv, auslaufend, inaktiv), aktiv_ab, aktiv_bis, test_bis, Quelle, Grenzwerten und append-only Historie. Testphase höchstens einmal je Tenant und Modul, Ereignisse erfasst und nicht bewertet, danach automatisch aktiv. Rahmen entlang Operator → Partner → Tenant mit erlaubten Modulen, Testphasen-Erlaubnis und -dauer (Voreinstellung 30 Tage) und Voreinstellungen bei Tenant-Anlage. Entfernen aus dem Rahmen lässt bestehende Entitlements zum übernächsten Monatsende auslaufen. Entitlements prüfen nie Zahlungen.
 - **Begründung:** Trennung von Zugang und Verbrauch; Vererbung ohne Umbau; keine abrupten Programmabbrüche durch Rahmenänderungen.
-- **Nachweise:** zweite Testphase abgelehnt; Rahmenentzug mit Auslauf und Benachrichtigung; Historie vollständig.
+- **Nachweise:** zweite Testphase abgelehnt; Rahmenentzug mit Auslauf und Benachrichtigung; Historie vollständig. Nachweisstand: zweite Testphase abgelehnt (`trial_used`), Testphase erfasst und nicht bewertet, danach automatisch aktiv, append-only Historie mit Rolle und Grund, Voreinstellung M1 mit Quelle „Voreinstellung“ technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`); Rahmenentzug mit Auslauf und Benachrichtigung folgt mit der Partner-Konsole.
 
 ## A-066 – Buchung, Testphase und Kündigung
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Tenant-Admin bucht, testet (wenn erlaubt) und kündigt im Rahmen; Partner für eigene Tenants; Operator für alle und erzwungene Deaktivierung mit Grund und sieben Tagen Vorlauf. Buchungsablauf mit Vorschau, Datenschutzhinweis, Preis, Kostenauswirkung vor dem Klick, Bündelvorschlag statt Ablehnung bei Abhängigkeit, frischer Anmeldung, sofortiger Wirkung, keiner automatischen Ankündigung. Kündigung zum Monatsende; abhängige Module enden zum selben Termin; laufende Challenges enden zum Termin; Arena mit laufender Arena; Wearable-Verbindungen getrennt; danach 90 Tage Export, Verdichtung, Abzeichen bleiben.
 - **Begründung:** Buchung ohne Überraschung, Kündigung ohne Datenverlust.
-- **Nachweise:** Bündelvorschlag; Kündigungskaskade; Rücknahme vor Termin; erzwungene Deaktivierung im Protokoll.
+- **Nachweise:** Bündelvorschlag; Kündigungskaskade; Rücknahme vor Termin; erzwungene Deaktivierung im Protokoll. Nachweisstand: Bündelvorschlag statt Ablehnung, Kündigungskaskade M1 → M2 zum Monatsende in der Tenant-Zeitzone, Rücknahme vor dem Termin stellt beide wieder her, Kostenauswirkung vor dem Klick, frische Anmeldung, Buchung wirkt beim nächsten Request, nach `aktiv_bis` Export 90 Tage und Abzeichen bleiben, erzwungene Deaktivierung mit Grund im Protokoll technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`); Ende laufender Challenges zum Kündigungstermin und sieben Tage Vorlauf offen.
 
 ## A-067 – Durchsetzung
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Navigation nur aus aktiven Entitlements; API-Prüfung im Autorisierungsquerschnitt mit Antwort „nicht gefunden“; Lesepfade inaktiver Module leer außer Tenant-Export für 90 Tage; keine neuen Feed-Karten und Benachrichtigungen; Jobs übersprungen und protokolliert; Challenge-Achsen und Inhaltskategorien nur mit Modul; Auswertung je Request mit 60 Sekunden Cache und sofortiger Invalidierung; Historie als Nachweis. Frontend-Darstellung ist keine Autorisierung.
 - **Begründung:** Ein unsichtbares Modul darf auch über API und Daten nicht erkennbar oder nutzbar sein.
-- **Nachweise:** Modulendpunkt ohne Entitlement liefert „nicht gefunden“; Buchung wirkt beim nächsten Request.
+- **Nachweise:** Modulendpunkt ohne Entitlement liefert „nicht gefunden“; Buchung wirkt beim nächsten Request. Nachweisstand: Modulendpunkt ohne Entitlement „nicht gefunden“ für Mitglied, Programm-Manager, Tenant-Admin und Kiosk; Buchung wirkt beim nächsten Request (Auswertung je Request, kein prozessweiter Cache) technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`).
 
 ## A-068 – Funktionsfreigaben und Grenzwerte
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Funktionsfreigaben des Operators je Tenant, befristet auf höchstens 90 Tage, verlängerbar, protokolliert, nicht buchbar, nicht sichtbar, ohne Bewertung, für die Einsichtsrolle sichtbar. Grenzwerte als Betriebsschutz am Entitlement-Datensatz: Medienspeicher 50 GB, 50 Video-Uploads je Monat, 500 Dokumente, 5 Sprachen, 20 Kiosk-Geräte, KI-Aufrufe nach Tenant-Vorgabe oder 1.000; Überschreitung blockiert mit Hinweis; Operator ändert je Tenant; keine Preisstufen.
 - **Begründung:** Vorabfreigaben ohne Vermischung mit dem Katalog; Schutz des Betriebs ohne Preislogik.
-- **Nachweise:** Freigabe läuft aus; Grenzwert blockiert ohne Metering-Wirkung.
+- **Nachweise:** Freigabe läuft aus; Grenzwert blockiert ohne Metering-Wirkung. Nachweisstand: Grenzwert Kiosk-Geräte blockiert mit Hinweis `kiosk_device_limit` ohne Metering-Wirkung, Operator erhöht je Tenant technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`); Funktionsfreigaben und die übrigen Grenzwerte folgen mit den Modulen, die sie zählen.
 
 ## A-069 – Metering-Ledger
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Append-only Ledger, je Periode partitioniert, mit Tenant, Modul, Metrik, anonymem Bezug, Menge mit vier Nachkommastellen, Quelle, fachlichem Zeitpunkt, Buchungsperiode, Idempotenzschlüssel aus Fachereignis und Metrik, Nachlauf-Kennzeichnung und Storno-Verweis; keine Klarnamen, keine Personen-IDs. Versiegelung am dritten Kalendertag des Folgemonats um 03:00 Tenant-Zeit; Nachläufer in die offene Periode; Testphasen-Ereignisse erfasst und nicht bewertet; Korrekturen als Gegenbuchung; Aufbewahrung sieben Jahre. Periodensalz je Tenant und Periode in OpenBao, Slots als schlüsselabhängiger Hash, Salz sieben Tage nach Versiegelung vernichtet.
 - **Begründung:** Was nicht von Anfang an erfasst wird, lässt sich nicht rekonstruieren; Slots ohne Salz sind nicht rückrechenbar.
-- **Nachweise:** Doppelübertragung ein Ereignis; Slot je Periode neu; keine Rückrechnung nach Salzvernichtung; versiegelte Periode unverändert.
+- **Nachweise:** Doppelübertragung ein Ereignis; Slot je Periode neu; keine Rückrechnung nach Salzvernichtung; versiegelte Periode unverändert. Nachweisstand: Doppelübertragung ein Ereignis, Gegenbuchung mit Storno-Verweis, Slot je Periode neu und nicht verkettbar, Salzvernichtung sieben Tage nach Versiegelung ohne Rückrechnung, Versiegelung am dritten Kalendertag 03:00 Tenant-Zeit, Nachläufer in der offenen Periode mit Kennzeichnung, versiegelte Periode unverändert, RLS mit FORCE auf allen Metering-Tabellen technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`); Ablage des Periodensalzes nach A-113, Partitionierung je Periode und Aufbewahrung sieben Jahre folgen mit dem Betriebsausbau.
 
 ## A-070 – Metrikkatalog und Emission
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Katalog gemäß [Metering und Abrechnung](metering-und-abrechnung.md), Abschnitt 3.1, mit Standardmetrik `member.active_month`; `wearable.tenant_month` nie je Verbindung; `ai.call` nur als Nachweis. Jede Domäne emittiert in derselben Transaktion wie die fachliche Änderung mit Idempotenzschlüssel, unabhängig vom Entitlement-Zustand; Korrekturen als Gegenbuchung; kein Ereignis mit Anzeigenamen, Personen-IDs, Gruppen oder persönlichen Messwerten. Neue Metriken sind Konfiguration plus Emissionsstelle.
 - **Begründung:** Jede Entität emittiert von Beginn an, damit spätere Preisregeln auf vollständige Historie treffen.
-- **Nachweise:** jede Domäne emittiert; Gegenbuchung bei Korrektur; kein Personenbezug im Ledger.
+- **Nachweise:** jede Domäne emittiert; Gegenbuchung bei Korrektur; kein Personenbezug im Ledger. Nachweisstand: Emission aller Domänen der Stufen 4 bis 7 in derselben Transaktion (member.joined, kiosk.device_month, member.active_day, member.active_month, challenge.participant_day, notification.sent, tenant.month, module.trial_day), Gegenbuchung bei Korrektur, kein Personenbezug im Ledger technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`).
 
 ## A-071 – Aktives Mitglied
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Aktiv ist eine Person mit mindestens einer gewerteten Handlung im Monat mit Quelle selbst oder Plattform gemäß A-044. Nicht: Öffnen der App, Anmeldung, empfangene Benachrichtigungen, automatische Wearable-Tageswerte, Kommentare, Systemereignisse. Fortschritt emittiert je Person und Monat genau ein Ereignis mit Slot bei der ersten gewerteten Handlung; `member.active_day` analog je Tag. Definition im Vertrag, in der Verwaltung und an jeder Rechnungsposition.
 - **Begründung:** Der Kunde zahlt für Beteiligung; Öffnen darf keinen Umsatz erzeugen, sonst hätte der Betreiber ein Interesse an Erinnerungen statt an Beteiligung.
-- **Nachweise:** zehn Handlungen ergeben ein Ereignis; Öffnen, Push, automatischer Wert und Kommentar ergeben keines.
+- **Nachweise:** zehn Handlungen ergeben ein Ereignis; Öffnen, Push, automatischer Wert und Kommentar ergeben keines. Nachweisstand: zehn Handlungen ergeben ein Ereignis; Öffnen der App, Anmeldung, empfangene Benachrichtigung, automatischer Tageswert und Kommentar ergeben keines; Definition als Klartext in der Verwaltung technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`).
 
 ## A-072 – Preisregeln, Pläne und Rahmen
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Preisregel mit Geltung, Modul, Metrik, Modell, Parametern, Währung EUR, Periode, Gültigkeit und Priorität; zehn Modelle: flat, per_unit, tiered, volume, package, step, one_time, revenue_share, min_max, credit; min_max und credit als Modifikatoren, revenue_share auf die Ebene darüber. Preispläne je Tenant, versioniert, Änderungen nur mit Gültigkeit ab dem nächsten Monatsersten oder später; vergangene Perioden unveränderlich; Listenpreisplan des Operators als Vorlage; alle Beträge sind Konfiguration. Preisrahmen je Partner mit erlaubten Modellen, Betragsgrenzen, Rabatten und Provisionssatz; Rahmenverletzungen werden abgelehnt, Rahmenänderungen wirken ab dem nächsten Monatsersten mit Auslauf betroffener Pläne zum übernächsten Monatsende. Mengen und Einzelpreise mit vier Nachkommastellen, Rundung kaufmännisch auf zwei je Position; Proratierung tagesgenau einschließlich Flatrates; Testtage nicht bewertet.
 - **Begründung:** Maximal variable Preise brauchen kombinierbare Modelle und einen Rahmen für Partner; Rundung je Position hält jede Zeile nachrechenbar.
-- **Nachweise:** Beispielplan mit sechs Modellen nachrechenbar; Rahmenverletzung abgelehnt; Proratierung korrekt.
+- **Nachweise:** Beispielplan mit sechs Modellen nachrechenbar; Rahmenverletzung abgelehnt; Proratierung korrekt. Nachweisstand: Beispielplan mit flat, per_unit, tiered, min_max, credit und revenue_share als Rechnungsentwurf mit einzeln nachrechenbaren Positionen, Rundung kaufmännisch je Position, volume, package, step und one_time als Fachtests, Proratierung tagesgenau (Buchung am 16. eines 30-Tage-Monats 0,5; Kündigung am 10. voller Monat), Testtage nicht bewertet technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`); Preisrahmen für Partner folgt mit der Partner-Konsole (Metering 9.9).
 
 ## A-073 – Kostenvorschau und Verbrauchsdetail
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Laufender Monat je Regel, Prognose als Schätzung, Simulation vor Buchung, Verbrauchsdetail ohne Ledger-Einzelzeilen: Mengen ohne Personenbezug je Metrik und Tag, personennahe Metriken (aktive Mitglieder, Teilnehmertage) nur als Monatssumme, Stufenwarnungen nach unten aktiv und nach oben zwingend, Testphasen-Anzeige, Klartextdefinitionen, Rechnungsarchiv sieben Jahre. Tagesaggregate je Tenant, Metrik und Tag als einzige Datenquelle für Tenant-Oberflächen und -Exporte, stündlich und bei Buchung aktualisiert. Programm-Manager, Botschafter und Einsichtsrolle sehen keine Kostenvorschau, Rechnungen oder Verbrauchsdetails; der Programm-Manager sieht Angebotspreise im Veranstaltungskatalog; Einsichtsrolle sieht verwendete Metriken ohne Beträge; Partner sehen Mengen und Beträge ihrer Pläne und ihre Provision.
 - **Begründung:** Echtzeit-Transparenz macht variable Preise zum Vorteil; Aggregate schließen die Hintertür zur Auswertung.
-- **Nachweise:** kein Einzelzeilenzugriff über Oberfläche, API oder Export; Simulation vor Buchung; Warnung bei Stufensprung.
+- **Nachweise:** kein Einzelzeilenzugriff über Oberfläche, API oder Export; Simulation vor Buchung; Warnung bei Stufensprung. Nachweisstand: Verbrauchsdetail über Oberfläche, API und CSV-Export nur aus Tagesaggregaten, personennahe Metriken nur als Monatssumme, kein Einzelzeilenzugriff über eine Route, Simulation vor Buchung, Kostenvorschau mit Prognose als Schätzung und „wären X Euro gewesen“, Einsichtsrolle sieht Metriken ohne Beträge, Programm-Manager sieht keine Kosten technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`); Stufenwarnung und Prognose aus drei Monaten folgen mit der Historie.
 
 ## A-074 – Rechnungslauf, Steuern, Zahlung und Mahnwesen
 
 - **Status:** angenommen, 20.09.2026.
 - **Umfang:** Versiegeln, Bewerten, Positionen mit Regel und Mengennachweis, Steuer je Position nach Steuerregel des Tenant-Landes (Steuersatz, Reverse Charge mit UID, Drittland; Konfiguration des Betreibers), Rechnungsentwurf mit fortlaufender Nummer je Rechtsträger und Jahr, Freigabe durch Operator-Admin mit optionaler automatischer Freigabe je Tenant, Versand als PDF, CSV und XML nach EN 16931, Zahlungseingang gebucht durch den Operator. Korrekturen nach Versand nur als Gutschrift oder Nachbelastung. Zahlungsweg Überweisung mit 14 Tagen Ziel; kein Zahlungsdienstleister, keine Karte, keine Lastschrift. Mahnwesen: Erinnerung Tag 7, Mahnung Tag 21, Sperrvorschlag Tag 45; Sperre nur durch Operator-Admin; während der Sperre Flatrates weiter, keine nutzungsabhängigen Mengen. Sonderfälle gemäß Export.
 - **Begründung:** vertriebsgeführtes B2B ohne weiteren Unterauftragsverarbeiter; keine automatische Sperre gegen Belegschaften wegen Buchhaltungsfehlern.
-- **Nachweise:** Rechnung in drei Formaten mit fortlaufender Nummer; Korrektur nur als Gutschrift; Mahnlauf ohne automatische Sperre.
+- **Nachweise:** Rechnung in drei Formaten mit fortlaufender Nummer; Korrektur nur als Gutschrift; Mahnlauf ohne automatische Sperre. Nachweisstand: Versiegeln, Bewerten, Positionen mit Regel und Mengennachweis, Steuer je Position (Steuersatz als Konfiguration, A-113) und Rechnungsentwurf je Periode technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`); fortlaufende Nummer, Freigabe, Versand als PDF, CSV und EN-16931-XML, Zahlungseingang und Mahnwesen folgen (Metering 9.10, 9.11).
 
 ## A-075 – Partnerabrechnung
 
@@ -851,6 +851,15 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Alternativen:** WebPush-Bibliotheken (abgelehnt: zusätzliche Abhängigkeit für wenige Zeilen Standardkryptografie); MailKit (abgelehnt, solange nur einfacher SMTP-Versand mit STARTTLS gebraucht wird); QuestPDF (abgelehnt für einen Textzettel).
 - **Nachweise:** Nutzlast am Fake-Push-Dienst entschlüsselt enthält nur Kennung, Kategorie und Ziel; VAPID-Signatur prüfbar; E-Mail ohne Pixel mit Abmeldelink; PDF mit Tokenfarben ohne Personendaten. Nachweisstand: technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-6.md`).
 
+## A-113 – Geld im Durchstich: eigene Preisrechnung in `decimal`, Periodensalz unter Data Protection in PostgreSQL, Steuerregel als Konfiguration
+
+- **Status:** angenommen, 26.09.2026.
+- **Entscheidung:** Die Bewertung nach A-072 ist eine eigene Fachregel (`PricingEngine`) in `System.Decimal` ohne Bibliothek: Mengen und Einzelpreise mit vier Nachkommastellen, Rundung kaufmännisch (`MidpointRounding.AwayFromZero`) auf zwei Nachkommastellen je Rechnungsposition, Modelle flat, per_unit, tiered, volume, package, step, one_time als Positionen, min_max und credit als Modifikatoren auf das Planergebnis, revenue_share als Provision der Ebene darüber; Beträge in der Datenbank als `numeric(18,2)` und `numeric(18,4)`, im Vertrag als Strings (K13). Preispläne sind versionierte JSON-Dokumente je Tenant mit Gültigkeit ab einer Periode; ohne eigene Version gilt der Listenpreisplan des Operators aus der Konfiguration. Die Zähler-Slots des aktiven Mitglieds entstehen als HMAC-SHA256 aus Personenkennung und einem Periodensalz je Tenant und Periode; **im Durchstich liegt das Salz mit ASP.NET Core Data Protection geschützt in `metering.billing_period`** (Schlüsselring in PostgreSQL nach A-007) statt in OpenBao; die Vernichtung löscht das geschützte Salz aus der Zeile, die Zeile bleibt als Nachweis. Steuer je Position nach einem Steuersatz je Preisplan (Voreinstellung 20 Prozent für Österreich); Reverse Charge und Drittlandregel folgen mit den Stammdaten des Tenants. Entitlements meldet Metering die Monatsmenge `tenant.month` je Modul: bei Aktivierung den tagesgenauen Rest des Monats, danach je Monat 1; eine sofortige erzwungene Deaktivierung bucht den ungenutzten Rest gegen; Testphasen liefern `module.trial_day` je Tag ohne Bewertung.
+- **Begründung:** Die Rechenregeln sind kurz, deterministisch und mit Fachtests auf den Cent prüfbar; eine Abrechnungsbibliothek brächte fremde Rundungs- und Modellannahmen ohne fachlichen Gewinn (A-030). Das Periodensalz muss zur Laufzeit erzeugt und nach sieben Tagen vernichtet werden; der Lesepfad zu OpenBao der Plattform (Konfiguration beim Start, A-029) hat keinen Schreibpfad, und ein zweiter Geheimnisspeicher nur für Salze wäre im Durchstich unverhältnismäßig. Data Protection schützt das Salz mit demselben Schlüsselring, der bereits Sitzungs- und Anbietergeheimnisse schützt; die Vernichtung ist eine Zeilenänderung im Ledger-Schema mit Zeitstempel.
+- **Konsequenzen:** A-069 bleibt in der Sache erhalten (Slot je Periode neu, keine Rückrechnung nach Vernichtung, Nachweis der Vernichtung); die Ablage in OpenBao folgt mit einem Schreibpfad (KV-v2 `app/metering/salts/<tenant>/<periode>`), die Umstellung ist ein Austausch von `PeriodStore` ohne Vertragsänderung. Der Preisrahmen für Partner (A-072), nummerierte Rechnungen, Versand, Zahlung und Mahnwesen (A-074) und die Partnerabrechnung (A-075) bauen auf denselben Positionen auf.
+- **Alternativen:** Abrechnungsdienste oder -bibliotheken (abgelehnt: Unterauftragsverarbeitung beziehungsweise fremde Rundungsregeln); Salz in OpenBao mit Schreibpfad (verschoben, siehe Konsequenzen); Salz unverschlüsselt in der Tabelle (abgelehnt: die Laufzeitrolle könnte Slots rückrechnen).
+- **Nachweise:** Fachtests der sechs Modelle mit Rundung je Position; Integrationstest des Rechnungsentwurfs aus dem Listenpreisplan; Slot je Periode neu; Salz nach Vernichtung nicht mehr vorhanden, Slot der versiegelten Periode nicht berechenbar. Nachweisstand: technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-7.md`).
+
 ## Noch zu entscheidende Produktwahlen
 
 Diese Punkte sind keine offenen Architekturfragen, sondern Produktauswahlen innerhalb der beschlossenen Architektur. Sie wurden im technischen Durchstich festgelegt:
@@ -861,5 +870,6 @@ Diese Punkte sind keine offenen Architekturfragen, sondern Produktauswahlen inne
 | OpenAPI-Clientgenerator | entschieden: A-109 |
 | Bibliothek für die Theme-Ableitung | entschieden: A-110 |
 | Bibliotheken für OIDC-Middleware und WebAuthn | entschieden: A-111 |
+| Preisrechnung und Ablage des Periodensalzes | entschieden: A-113 |
 
 Hosting und Plattformdomain stellt der Betreiber bereit; sie sind keine Entscheidungen dieses Konzepts.

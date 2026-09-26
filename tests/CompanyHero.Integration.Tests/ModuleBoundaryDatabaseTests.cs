@@ -49,10 +49,11 @@ public sealed class ModuleBoundaryDatabaseTests(PostgresFixture pg)
         Assert.Equal(
             [
                 "branding.tenant_theme", "challenges.challenge", "challenges.collective_state", "challenges.contribution", "challenges.contribution_key", "challenges.domain_event",
+                "entitlements.entitlement", "entitlements.entitlement_history", "entitlements.tenant_limit",
                 "feed.feed_entry",
                 "identity.email_login", "identity.external_login", "identity.external_provider", "identity.identity_index", "identity.join_code", "identity.kiosk_credential", "identity.kiosk_device",
                 "identity.kiosk_failed_attempt", "identity.login_policy", "identity.magic_link", "identity.passkey", "identity.person", "identity.recovery_code", "identity.role_code", "identity.session", "identity.transfer_link",
-                "metering.ledger_event",
+                "metering.billing_period", "metering.daily_aggregate", "metering.invoice_draft", "metering.ledger_event", "metering.price_plan_version",
                 "notifications.aushang", "notifications.challenge_snapshot", "notifications.delivery", "notifications.notification_entry", "notifications.person_settings", "notifications.push_subscription", "notifications.tenant_settings",
                 "organisation.group_dimension", "organisation.group_membership", "organisation.headcount", "organisation.member_group", "organisation.membership", "organisation.organisation", "organisation.role_assignment",
                 "privacy.audit_entry", "privacy.consent_entry", "privacy.security_event", "privacy.visibility_setting",

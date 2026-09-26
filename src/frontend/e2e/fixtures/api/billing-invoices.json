@@ -1,0 +1,16 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": [
+    {
+      "invoiceId": "01a0df42-3e1e-7a7c-8901-290522adf1f3",
+      "period": "2026-09",
+      "createdAt": "2026-10-03T01:30:00+00:00",
+      "currency": "EUR",
+      "net": "27.00",
+      "tax": "5.40",
+      "gross": "32.40",
+      "status": "draft"
+    }
+  ]
+}

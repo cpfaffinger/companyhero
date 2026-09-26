@@ -1,0 +1,225 @@
+<section class="ch-ab">
+  @if (fehler(); as f) {
+    <p class="ch-ab__status ch-ab__status--fehler" role="alert">{{ texts.t(f) }}</p>
+  }
+  @if (meldung(); as m) {
+    <p class="ch-ab__status" role="status" data-testid="meldung">{{ m }}</p>
+  }
+
+  @if (preview(); as p) {
+    <div class="ch-ab__block" data-testid="kostenvorschau">
+      <h2 class="ch-ab__title">{{ texts.t('verwaltung.abrechnung.kostenvorschau') }}</h2>
+      <p class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.laufenderMonat', { periode: formatPeriode(p.period) }) }} · {{ texts.t('verwaltung.abrechnung.plan', { plan: p.planName }) }}</p>
+      <div class="ch-ab__kennzahlen">
+        <ch-kennzahl [wert]="formatEuro(p.net)" [label]="texts.t('verwaltung.abrechnung.netto')" data-testid="netto" />
+        <ch-kennzahl [wert]="formatEuro(p.tax)" [label]="texts.t('verwaltung.abrechnung.steuer')" />
+        <ch-kennzahl [wert]="formatEuro(p.gross)" [label]="texts.t('verwaltung.abrechnung.brutto')" />
+        <ch-kennzahl [wert]="formatEuro(p.forecast.net)" [label]="texts.t('verwaltung.abrechnung.prognose')" data-testid="prognose" />
+      </div>
+      <p class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.prognoseHinweis', { tage: p.forecast.elapsedDays, tageImMonat: p.forecast.daysInMonth }) }}</p>
+      @if (hatTestphase()) {
+        <p class="ch-ab__status" data-testid="testphase-hinweis">{{ texts.t('verwaltung.abrechnung.testphaseHinweis', { betrag: formatEuro(p.wouldHaveBeen).replace(' €', '') }) }}</p>
+      }
+      <h3 class="ch-ab__subtitle">{{ texts.t('verwaltung.abrechnung.positionen') }}</h3>
+      @if (bewertetePositionen().length === 0) {
+        <p class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.keinePositionen') }}</p>
+      } @else {
+        <table class="ch-ab__tabelle" data-testid="positionen">
+          <thead>
+            <tr>
+              <th scope="col">{{ texts.t('verwaltung.abrechnung.position.regel') }}</th>
+              <th scope="col">{{ texts.t('verwaltung.abrechnung.position.metrik') }}</th>
+              <th scope="col" class="ch-ab__zahl">{{ texts.t('verwaltung.abrechnung.position.menge') }}</th>
+              <th scope="col">{{ texts.t('verwaltung.abrechnung.position.rechenweg') }}</th>
+              <th scope="col" class="ch-ab__zahl">{{ texts.t('verwaltung.abrechnung.position.betrag') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (line of bewertetePositionen(); track $index) {
+              <tr [class.ch-ab__zeile--test]="!line.rated">
+                <td>{{ line.ruleKey }}</td>
+                <td>{{ line.metric ? metrikText(line.metric) : '' }}</td>
+                <td class="ch-ab__zahl">{{ formatMenge(line.quantity) }}</td>
+                <td>{{ line.calculation }}@if (!line.rated) { <em>({{ texts.t('verwaltung.abrechnung.nichtBewertet') }})</em> }</td>
+                <td class="ch-ab__zahl">{{ formatEuro(line.net) }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+
+  <div class="ch-ab__block" data-testid="module">
+    <h2 class="ch-ab__title">{{ texts.t('verwaltung.abrechnung.module') }}</h2>
+    <p class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.moduleHinweis') }}</p>
+    @if (absicht(); as a) {
+      <div class="ch-ab__dialog" role="group" data-testid="auswirkung">
+        <p>{{ texts.t('verwaltung.abrechnung.auswirkung', { monat: formatEuro(a.simulation.thisMonth).replace(' €', ''), folgemonat: formatEuro(a.simulation.nextMonth).replace(' €', '') }) }}</p>
+        @if (a.simulation.usageBasedMetrics.length > 0) {
+          <p class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.auswirkungNutzung', { metriken: a.simulation.usageBasedMetrics.join(', ') }) }}</p>
+        }
+        <div class="ch-ab__aktionen">
+          <button matButton="filled" type="button" [disabled]="busy()" (click)="buchen()" data-testid="jetzt-buchen">{{ texts.t('verwaltung.abrechnung.jetztBuchen') }}</button>
+          <button matButton type="button" (click)="abbrechen()">{{ texts.t('verwaltung.abrechnung.abbrechen') }}</button>
+        </div>
+      </div>
+    }
+    @if (buendel(); as b) {
+      <div class="ch-ab__dialog" role="group" data-testid="buendel">
+        <p>{{ texts.t('verwaltung.abrechnung.buendel.vorschlag', { module: modulNamen(b.slice(0, -1)) }) }} <strong>{{ modulNamen(b) }}</strong></p>
+        <div class="ch-ab__aktionen">
+          <button matButton="filled" type="button" [disabled]="busy()" (click)="buendelBuchen()" data-testid="buendel-buchen">{{ texts.t('verwaltung.abrechnung.buendel.buchen') }}</button>
+          <button matButton type="button" (click)="abbrechen()">{{ texts.t('verwaltung.abrechnung.abbrechen') }}</button>
+        </div>
+      </div>
+    }
+    @if (modules(); as list) {
+      <ul class="ch-ab__module">
+        @for (m of list; track m.module) {
+          <li class="ch-ab__modul" [attr.data-testid]="'modul-' + m.module">
+            <div class="ch-ab__modul-kopf">
+              <span class="ch-ab__modul-name">{{ modulName(m.module) }}</span>
+              <span class="ch-ab__modul-zustand" [attr.data-zustand]="m.state">{{ zustand(m.state) }}</span>
+              @if (m.state === 'expiring' && m.activeUntil) {
+                <span class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.modul.aktivBis', { datum: datum(m.activeUntil) }) }}</span>
+              }
+              @if (m.state === 'trial' && m.trialUntil) {
+                <span class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.modul.testBis', { datum: datum(m.trialUntil) }) }}</span>
+              }
+            </div>
+            <p class="ch-ab__hint"><strong>{{ texts.t('verwaltung.abrechnung.modul.datenschutz') }}:</strong> {{ texts.t(m.privacyHintKey) }}</p>
+            @if (m.dependencies.length > 0) {
+              <p class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.modul.voraussetzung', { module: modulNamen(m.dependencies) }) }}</p>
+            }
+            <div class="ch-ab__aktionen">
+              @if (m.state === 'inactive') {
+                <button matButton="filled" type="button" [disabled]="busy()" (click)="buchenVorbereiten(m.module)" [attr.data-testid]="'buchen-' + m.module">{{ texts.t('verwaltung.abrechnung.modul.buchen') }}</button>
+                @if (m.trialAvailable) {
+                  <button matButton type="button" [disabled]="busy()" (click)="testphase(m.module)" [attr.data-testid]="'testphase-' + m.module">{{ texts.t('verwaltung.abrechnung.modul.testphase') }}</button>
+                }
+              }
+              @if (m.state === 'active' || m.state === 'trial') {
+                <button matButton type="button" [disabled]="busy()" (click)="kuendigen(m.module)" [attr.data-testid]="'kuendigen-' + m.module">{{ texts.t('verwaltung.abrechnung.modul.kuendigen') }}</button>
+              }
+              @if (m.state === 'expiring') {
+                <button matButton type="button" [disabled]="busy()" (click)="ruecknahme(m.module)" [attr.data-testid]="'ruecknahme-' + m.module">{{ texts.t('verwaltung.abrechnung.modul.ruecknahme') }}</button>
+              }
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+
+  @if (usage(); as u) {
+    <div class="ch-ab__block" data-testid="verbrauch">
+      <h2 class="ch-ab__title">{{ texts.t('verwaltung.abrechnung.verbrauch') }} {{ formatPeriode(u.period) }}</h2>
+      <p class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.verbrauchHinweis') }}</p>
+      @if (u.metrics.length === 0) {
+        <p class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.verbrauch.leer') }}</p>
+      } @else {
+        <table class="ch-ab__tabelle">
+          <thead>
+            <tr>
+              <th scope="col">{{ texts.t('verwaltung.abrechnung.position.metrik') }}</th>
+              <th scope="col" class="ch-ab__zahl">{{ texts.t('verwaltung.abrechnung.verbrauch.summe') }}</th>
+              <th scope="col">{{ texts.t('verwaltung.abrechnung.verbrauch.tage') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (m of u.metrics; track m.metric + m.module) {
+              <tr [attr.data-testid]="'verbrauch-' + m.metric">
+                <td>{{ texts.t(m.textKey) }}</td>
+                <td class="ch-ab__zahl">{{ formatMenge(m.total) }}</td>
+                <td>
+                  @if (m.personal || !m.days) {
+                    <span class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.verbrauch.nurSumme') }}</span>
+                  } @else {
+                    <button matButton type="button" (click)="tageUmschalten(m.metric)" [attr.aria-expanded]="offeneTage() === m.metric">{{ m.days.length }} {{ texts.t('verwaltung.abrechnung.verbrauch.tage') }}</button>
+                    @if (offeneTage() === m.metric) {
+                      <ul class="ch-ab__tage">
+                        @for (d of m.days; track d.day) {
+                          <li>{{ d.day }}: {{ formatMenge(d.quantity) }}</li>
+                        }
+                      </ul>
+                    }
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+      <a matButton [href]="exportUrl()" download data-testid="export">{{ texts.t('verwaltung.abrechnung.export') }}</a>
+    </div>
+  }
+
+  <div class="ch-ab__block" data-testid="rechnungen">
+    <h2 class="ch-ab__title">{{ texts.t('verwaltung.abrechnung.rechnungen') }}</h2>
+    @if (invoices(); as list) {
+      @if (list.length === 0) {
+        <p class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.rechnungenLeer') }}</p>
+      } @else {
+        <table class="ch-ab__tabelle">
+          <thead>
+            <tr>
+              <th scope="col">{{ texts.t('verwaltung.abrechnung.rechnung.periode') }}</th>
+              <th scope="col">{{ texts.t('verwaltung.abrechnung.rechnung.erstellt') }}</th>
+              <th scope="col" class="ch-ab__zahl">{{ texts.t('verwaltung.abrechnung.netto') }}</th>
+              <th scope="col" class="ch-ab__zahl">{{ texts.t('verwaltung.abrechnung.brutto') }}</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (i of list; track i.invoiceId) {
+              <tr>
+                <td>{{ formatPeriode(i.period) }} · {{ statusText(i.status) }}</td>
+                <td>{{ datum(i.createdAt) }}</td>
+                <td class="ch-ab__zahl">{{ formatEuro(i.net) }}</td>
+                <td class="ch-ab__zahl">{{ formatEuro(i.gross) }}</td>
+                <td><button matButton type="button" (click)="rechnungOeffnen(i.invoiceId)" [attr.data-testid]="'rechnung-' + i.period">{{ texts.t('verwaltung.abrechnung.rechnung.oeffnen') }}</button></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    }
+    @if (invoice(); as d) {
+      <div class="ch-ab__dialog" data-testid="rechnung-detail">
+        <h3 class="ch-ab__subtitle">{{ formatPeriode(d.period) }} · {{ statusText(d.status) }} · {{ texts.t('verwaltung.abrechnung.rechnung.steuersatz', { satz: formatProzent(d.taxRate) }) }}</h3>
+        <table class="ch-ab__tabelle">
+          <tbody>
+            @for (line of d.lines; track $index) {
+              <tr [class.ch-ab__zeile--test]="!line.rated">
+                <td>{{ line.ruleKey }}</td>
+                <td class="ch-ab__zahl">{{ formatMenge(line.quantity) }}</td>
+                <td>{{ line.calculation }}</td>
+                <td class="ch-ab__zahl">{{ formatEuro(line.net) }}</td>
+                <td class="ch-ab__zahl">{{ formatEuro(line.tax) }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        <div class="ch-ab__kennzahlen">
+          <ch-kennzahl [wert]="formatEuro(d.net)" [label]="texts.t('verwaltung.abrechnung.netto')" />
+          <ch-kennzahl [wert]="formatEuro(d.tax)" [label]="texts.t('verwaltung.abrechnung.steuer')" />
+          <ch-kennzahl [wert]="formatEuro(d.gross)" [label]="texts.t('verwaltung.abrechnung.brutto')" />
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (preview(); as p) {
+    <div class="ch-ab__block" data-testid="definitionen">
+      <h2 class="ch-ab__title">{{ texts.t('verwaltung.abrechnung.definitionen') }}</h2>
+      <p class="ch-ab__hint">{{ texts.t('verwaltung.abrechnung.definitionenHinweis') }}</p>
+      <dl class="ch-ab__definitionen">
+        @for (d of p.definitions; track d.metric) {
+          <dt>{{ d.metric }} <span class="ch-ab__hint">({{ d.model }}@if (d.personal) {, {{ texts.t('verwaltung.abrechnung.personennah') }}})</span></dt>
+          <dd>{{ texts.t(d.textKey) }}</dd>
+        }
+      </dl>
+    </div>
+  }
+</section>

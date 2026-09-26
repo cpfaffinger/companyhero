@@ -388,6 +388,134 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/billing/invoices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListInvoices"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/invoices/{invoiceId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetInvoice"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/metrics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListBillingMetrics"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/periods": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListBillingPeriods"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetCostPreview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/preview/simulate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SimulateBooking"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetUsage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/usage/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ExportUsage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/branding/kiosk/manifest.webmanifest": {
         parameters: {
             query?: never;
@@ -676,6 +804,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/challenges/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ExportChallenges"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/challenges/kickoff": {
         parameters: {
             query?: never;
@@ -702,6 +846,134 @@ export interface paths {
         get: operations["ListAllChallenges"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/entitlements/bundles/book": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["BookBundle"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/entitlements/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListEntitlementHistory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/entitlements/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["GetMyEntitlements"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/entitlements/modules": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ListModules"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/entitlements/modules/{module}/book": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["BookModule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/entitlements/modules/{module}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CancelModule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/entitlements/modules/{module}/revoke-cancellation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["RevokeModuleCancellation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/entitlements/modules/{module}/trial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["StartModuleTrial"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1594,6 +1866,19 @@ export interface components {
             serie: string;
             stufen: string[];
         };
+        BookingResponse: {
+            booked: string[];
+            outcome: string;
+            suggestion: string[];
+        };
+        BundleRequest: {
+            modules: string[];
+        };
+        CancellationResponse: {
+            /** Format: date-time */
+            activeUntil: null | string;
+            affected: string[];
+        };
         ChallengeCardResponse: {
             challengeId: string;
             collective: null | components["schemas"]["CollectiveResponse"];
@@ -1623,6 +1908,11 @@ export interface components {
             target: string;
             title: string;
             visibility: components["schemas"]["ChallengeVisibilityDto"];
+        };
+        ChallengeExportResponse: {
+            challenges: components["schemas"]["ChallengeCardResponse"][];
+            /** Format: date-time */
+            exportedAt: string;
         };
         /** @enum {unknown} */
         ChallengeMetricDto: "checkmark" | "count";
@@ -1679,6 +1969,18 @@ export interface components {
             contributionId: string;
             outcome: string;
         };
+        CostPreviewResponse: {
+            currency: string;
+            definitions: components["schemas"]["MetricDefinitionResponse"][];
+            forecast: components["schemas"]["ForecastResponse"];
+            gross: string;
+            lines: components["schemas"]["InvoiceLineResponse"][];
+            net: string;
+            period: string;
+            planName: string;
+            tax: string;
+            wouldHaveBeen: string;
+        };
         CountResponse: {
             /** Format: int32 */
             count: number;
@@ -1722,6 +2024,19 @@ export interface components {
         EndChallengeRequest: {
             reason: string;
         };
+        EntitlementHistoryResponse: {
+            actorRoles: string;
+            fromState: null | components["schemas"]["EntitlementStateDto"];
+            id: string;
+            module: string;
+            /** Format: date-time */
+            occurredAt: string;
+            reason: string;
+            source: string;
+            toState: components["schemas"]["EntitlementStateDto"];
+        };
+        /** @enum {unknown} */
+        EntitlementStateDto: "trial" | "active" | "expiring" | "inactive";
         ErsetzungDto: {
             angefordert: string;
             ersetzt: string;
@@ -1762,6 +2077,14 @@ export interface components {
             cards: components["schemas"]["FeedCardResponse"][];
             checkInDue: boolean;
             head: components["schemas"]["HeadCardResponse"];
+        };
+        ForecastResponse: {
+            /** Format: int32 */
+            daysInMonth: number;
+            /** Format: int32 */
+            elapsedDays: number;
+            estimate: boolean;
+            net: string;
         };
         GroupChoiceRequest: {
             dimensionId: string;
@@ -1804,6 +2127,44 @@ export interface components {
             status?: null | number;
             title?: null | string;
             type?: null | string;
+        };
+        InvoiceDraftResponse: {
+            /** Format: date-time */
+            createdAt: string;
+            currency: string;
+            gross: string;
+            invoiceId: string;
+            lines: components["schemas"]["InvoiceLineResponse"][];
+            net: string;
+            period: string;
+            planName: string;
+            status: string;
+            tax: string;
+            taxRate: string;
+            wouldHaveBeen: string;
+        };
+        InvoiceLineResponse: {
+            calculation: string;
+            metric: null | string;
+            model: string;
+            module: null | string;
+            net: string;
+            quantity: string;
+            rated: boolean;
+            ruleKey: string;
+            tax: string;
+            unitPrice: null | string;
+        };
+        InvoiceSummaryResponse: {
+            /** Format: date-time */
+            createdAt: string;
+            currency: string;
+            gross: string;
+            invoiceId: string;
+            net: string;
+            period: string;
+            status: string;
+            tax: string;
         };
         IssueRoleCodeRequest: {
             email: null | string;
@@ -1988,6 +2349,34 @@ export interface components {
             tenantId: string;
             tenantName: string;
         };
+        MetricDefinitionResponse: {
+            metric: string;
+            model: string;
+            module: string;
+            personal: boolean;
+            textKey: string;
+        };
+        MetricsResponse: {
+            metrics: components["schemas"]["MetricDefinitionResponse"][];
+        };
+        ModuleStatusResponse: {
+            /** Format: date-time */
+            activeFrom: null | string;
+            /** Format: date-time */
+            activeUntil: null | string;
+            dependencies: string[];
+            module: string;
+            nameKey: string;
+            privacyHintKey: string;
+            state: components["schemas"]["EntitlementStateDto"];
+            trialAvailable: boolean;
+            /** Format: date-time */
+            trialUntil: null | string;
+        };
+        NavigationResponse: {
+            areas: string[];
+            modules: string[];
+        };
         /** @enum {unknown} */
         NotificationCategoryDto: "challenge" | "progress";
         NotificationResponse: {
@@ -2046,6 +2435,15 @@ export interface components {
         PendingExternalResponse: {
             displayName: string;
             providerKey: string;
+        };
+        PeriodResponse: {
+            /** Format: date-time */
+            openedAt: string;
+            period: string;
+            /** Format: date-time */
+            saltDestroyedAt: null | string;
+            /** Format: date-time */
+            sealedAt: null | string;
         };
         PersonalProgressResponse: {
             checkedInToday: boolean;
@@ -2182,6 +2580,13 @@ export interface components {
             slidingUntil: null | string;
             tenantId: string;
         };
+        SimulationResponse: {
+            currency: string;
+            module: string;
+            nextMonth: string;
+            thisMonth: string;
+            usageBasedMetrics: string[];
+        };
         TenantNotificationSettingsRequest: {
             aushangEnabled: boolean;
             emailEnabled: boolean;
@@ -2283,8 +2688,33 @@ export interface components {
             expiresAt: string;
             url: string;
         };
+        TrialResponse: {
+            outcome: string;
+            /** Format: date-time */
+            trialUntil: null | string;
+        };
         UnsubscribeResponse: {
             category: components["schemas"]["NotificationCategoryDto"];
+        };
+        UsageDayResponse: {
+            /** Format: date */
+            day: string;
+            quantity: string;
+        };
+        UsageMetricResponse: {
+            days: null | components["schemas"]["UsageDayResponse"][];
+            metric: string;
+            module: string;
+            personal: boolean;
+            rated: string;
+            textKey: string;
+            total: string;
+            unrated: string;
+        };
+        UsageResponse: {
+            metrics: components["schemas"]["UsageMetricResponse"][];
+            period: string;
+            sealed: boolean;
         };
         VapidResponse: {
             available: boolean;
@@ -3133,6 +3563,197 @@ export interface operations {
             };
         };
     };
+    ListInvoices: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvoiceSummaryResponse"][];
+                };
+            };
+        };
+    };
+    GetInvoice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                invoiceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvoiceDraftResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ListBillingMetrics: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MetricsResponse"];
+                };
+            };
+        };
+    };
+    ListBillingPeriods: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PeriodResponse"][];
+                };
+            };
+        };
+    };
+    GetCostPreview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CostPreviewResponse"];
+                };
+            };
+        };
+    };
+    SimulateBooking: {
+        parameters: {
+            query: {
+                module: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SimulationResponse"];
+                };
+            };
+        };
+    };
+    GetUsage: {
+        parameters: {
+            query: {
+                period: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UsageResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+        };
+    };
+    ExportUsage: {
+        parameters: {
+            query: {
+                period: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+        };
+    };
     GetKioskManifest: {
         parameters: {
             query?: never;
@@ -3817,6 +4438,26 @@ export interface operations {
             };
         };
     };
+    ExportChallenges: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChallengeExportResponse"];
+                };
+            };
+        };
+    };
     CreateKickoffChallenge: {
         parameters: {
             query?: never;
@@ -3854,6 +4495,215 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ChallengeCardResponse"][];
                 };
+            };
+        };
+    };
+    BookBundle: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BundleRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BookingResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["HttpValidationProblemDetails"];
+                };
+            };
+        };
+    };
+    ListEntitlementHistory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitlementHistoryResponse"][];
+                };
+            };
+        };
+    };
+    GetMyEntitlements: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NavigationResponse"];
+                };
+            };
+        };
+    };
+    ListModules: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModuleStatusResponse"][];
+                };
+            };
+        };
+    };
+    BookModule: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                module: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BookingResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    CancelModule: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                module: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CancellationResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    RevokeModuleCancellation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                module: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CancellationResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    StartModuleTrial: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                module: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TrialResponse"];
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

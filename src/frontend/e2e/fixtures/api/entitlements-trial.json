@@ -1,0 +1,8 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "outcome": "started",
+    "trialUntil": "2026-10-25T08:08:00+00:00"
+  }
+}

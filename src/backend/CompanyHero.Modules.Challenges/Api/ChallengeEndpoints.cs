@@ -4,6 +4,7 @@ using CompanyHero.Modules.Challenges.Application;
 using CompanyHero.Modules.Challenges.Domain;
 using CompanyHero.Modules.Organisation.Domain;
 using CompanyHero.Modules.Privacy.Domain;
+using CompanyHero.Platform.Entitlements;
 using CompanyHero.Platform.Hosting;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.AspNetCore.Builder;
@@ -80,10 +81,14 @@ public sealed record OwnContributionResponse(string ContributionId, string Value
 
 public sealed record ReversalResponse(string Outcome);
 
+/// <summary>Tenant-Export der Challenges (Entitlements 4.3, A-024): nach <c>aktiv_bis</c> 90 Tage lesbar, nur Karten und Kollektivstände ohne Personenbezug.</summary>
+public sealed record ChallengeExportResponse(DateTimeOffset ExportedAt, IReadOnlyList<ChallengeCardResponse> Challenges);
+
 internal static class ChallengeEndpoints
 {
     public static void Map(IEndpointRouteBuilder endpoints)
     {
+        // Jede Operation des Moduls M1 prüft das Entitlement im Autorisierungsquerschnitt; ohne Entitlement „nicht gefunden“ (Entitlements 5, A-067).
         var group = endpoints.MapGroup("/api/challenges").HandleChallengeErrors();
 
         group.MapGet("/", async (IChallengeCatalog catalog, CancellationToken ct) =>
@@ -91,7 +96,7 @@ internal static class ChallengeEndpoints
                 var cards = await catalog.ListRunningAsync(ct);
                 return Results.Ok(cards.Select(ToCard).ToList());
             })
-            .RequireTenantContext().AllowKiosk(device: true)
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).AllowKiosk(device: true)
             .WithName("ListRunningChallenges")
             .Produces<List<ChallengeCardResponse>>();
 
@@ -100,7 +105,7 @@ internal static class ChallengeEndpoints
                 var cards = await catalog.ListAllAsync(ct);
                 return Results.Ok(cards.Select(ToCard).ToList());
             })
-            .RequireTenantContext().RequireRoles(Role.ProgrammeManager, Role.TenantAdmin, Role.Insight)
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).RequireRoles(Role.ProgrammeManager, Role.TenantAdmin, Role.Insight)
             .WithName("ListAllChallenges")
             .Produces<List<ChallengeCardResponse>>();
 
@@ -116,7 +121,7 @@ internal static class ChallengeEndpoints
                 var record = await catalog.GetAsync(id, ct);
                 return Results.Created($"/api/challenges/{id:D}", ToCard(new ChallengeCardRecord(record!, null, 0, false)));
             })
-            .RequireTenantContext().RequireRoles(Role.ProgrammeManager, Role.TenantAdmin)
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).RequireRoles(Role.ProgrammeManager, Role.TenantAdmin)
             .WithName("CreateChallengeDraft")
             .Produces<ChallengeCardResponse>(StatusCodes.Status201Created)
             .ProducesValidationProblem();
@@ -127,9 +132,19 @@ internal static class ChallengeEndpoints
                 var record = await catalog.GetAsync(id, ct);
                 return Results.Created($"/api/challenges/{id:D}", ToCard(new ChallengeCardRecord(record!, null, 0, false)));
             })
-            .RequireTenantContext().RequireRoles(Role.ProgrammeManager, Role.TenantAdmin)
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).RequireRoles(Role.ProgrammeManager, Role.TenantAdmin)
             .WithName("CreateKickoffChallenge")
             .Produces<ChallengeCardResponse>(StatusCodes.Status201Created);
+
+        // Export für den Tenant (Entitlements 5 „Daten“): auch in den 90 Tagen nach aktiv_bis erreichbar, danach „nicht gefunden“.
+        group.MapGet("/export", async (IChallengeCatalog catalog, TimeProvider clock, CancellationToken ct) =>
+            {
+                var cards = await catalog.ListAllAsync(ct);
+                return Results.Ok(new ChallengeExportResponse(clock.GetUtcNow(), cards.Select(ToCard).ToList()));
+            })
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges, allowExportWindow: true).RequireRoles(Role.TenantAdmin, Role.Insight)
+            .WithName("ExportChallenges")
+            .Produces<ChallengeExportResponse>();
 
         group.MapGet("/{challengeId:guid}", async (Guid challengeId, IChallengeCatalog catalog, CancellationToken ct) =>
             {
@@ -143,7 +158,7 @@ internal static class ChallengeEndpoints
                 var percent = collective is null ? 0 : (int)Math.Min(100m, Math.Max(0m, Math.Round(collective.Total / record.Target * 100m, 0, MidpointRounding.AwayFromZero)));
                 return Results.Ok(ToCard(new ChallengeCardRecord(record, collective, percent, false)));
             })
-            .RequireTenantContext().AllowKiosk(device: true)
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).AllowKiosk(device: true)
             .WithName("GetChallenge")
             .Produces<ChallengeCardResponse>()
             .Produces(StatusCodes.Status404NotFound);
@@ -153,14 +168,14 @@ internal static class ChallengeEndpoints
                 var card = await catalog.PreviewAsync(challengeId, ct);
                 return card is null ? Results.NotFound() : Results.Ok(ToCard(card));
             })
-            .RequireTenantContext().RequireRoles(Role.ProgrammeManager, Role.TenantAdmin)
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).RequireRoles(Role.ProgrammeManager, Role.TenantAdmin)
             .WithName("PreviewChallenge")
             .Produces<ChallengeCardResponse>()
             .Produces(StatusCodes.Status404NotFound);
 
         group.MapPost("/{challengeId:guid}/plan", async (Guid challengeId, IChallengeCatalog catalog, CancellationToken ct) =>
                 await catalog.PlanAsync(challengeId, ct) ? Results.NoContent() : Results.NotFound())
-            .RequireTenantContext().RequireRoles(Role.ProgrammeManager, Role.TenantAdmin)
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).RequireRoles(Role.ProgrammeManager, Role.TenantAdmin)
             .WithName("PlanChallenge")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
@@ -175,7 +190,7 @@ internal static class ChallengeEndpoints
 
                 return await catalog.EndEarlyAsync(challengeId, request.Reason, ct) ? Results.NoContent() : Results.NotFound();
             })
-            .RequireTenantContext().RequireRoles(Role.ProgrammeManager)
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).RequireRoles(Role.ProgrammeManager)
             .WithName("EndChallengeEarly")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
@@ -184,7 +199,7 @@ internal static class ChallengeEndpoints
 
         group.MapPut("/{challengeId:guid}/texts", async (Guid challengeId, ChallengeTextsRequest request, IChallengeCatalog catalog, CancellationToken ct) =>
                 await catalog.UpdateTextsAsync(challengeId, request.Title, request.Description, ct) ? Results.NoContent() : Results.NotFound())
-            .RequireTenantContext().RequireRoles(Role.ProgrammeManager, Role.TenantAdmin)
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).RequireRoles(Role.ProgrammeManager, Role.TenantAdmin)
             .WithName("UpdateChallengeTexts")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
@@ -206,7 +221,7 @@ internal static class ChallengeEndpoints
                 var operationId = await contributions.ReserveOperationAsync(ct);
                 return Results.Created($"/api/challenges/{challengeId:D}/contribution-operations/{operationId}", new OperationResponse(operationId));
             })
-            .RequireTenantContext().AllowKiosk()
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).AllowKiosk()
             .WithName("ReserveContributionOperation")
             .Produces<OperationResponse>(StatusCodes.Status201Created)
             .ProducesProblem(StatusCodes.Status403Forbidden)
@@ -267,7 +282,7 @@ internal static class ChallengeEndpoints
                     _ => Results.Problem(statusCode: StatusCodes.Status422UnprocessableEntity, title: "Beitrag abgelehnt", detail: outcome.Rejection.ToString()),
                 };
             })
-            .RequireTenantContext().AllowKiosk()
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).AllowKiosk()
             .WithName("SubmitContribution")
             .Produces<ContributionResponse>(StatusCodes.Status201Created)
             .Produces<ContributionResponse>(StatusCodes.Status200OK)
@@ -289,7 +304,7 @@ internal static class ChallengeEndpoints
                 var mine = await contributions.ListMineAsync(challengeId, ct);
                 return Results.Ok(mine.Select(c => new OwnContributionResponse(c.Id.ToString("D"), ChallengeCards.Decimal(c.Value), c.RecordedAt, c.Channel == ContributionChannel.Kiosk ? "kiosk" : "mobile", c.Reversed, c.IsReversal)).ToList());
             })
-            .RequireTenantContext()
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges)
             .WithName("ListMyContributions")
             .Produces<List<OwnContributionResponse>>()
             .Produces(StatusCodes.Status404NotFound);
@@ -310,7 +325,7 @@ internal static class ChallengeEndpoints
                     _ => Results.NotFound(),
                 };
             })
-            .RequireTenantContext()
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges)
             .WithName("ReverseContribution")
             .Produces<ReversalResponse>()
             .ProducesProblem(StatusCodes.Status422UnprocessableEntity)
@@ -329,7 +344,7 @@ internal static class ChallengeEndpoints
                     ? Results.Ok(new CollectiveResponse(null, null, null, DateTimeOffset.MinValue, 0))
                     : Results.Ok(ChallengeCards.ToCollective(collective, (int)Math.Min(100m, Math.Max(0m, Math.Round(collective.Total / challenge.Target * 100m, 0, MidpointRounding.AwayFromZero)))));
             })
-            .RequireTenantContext().AllowKiosk(device: true)
+            .RequireTenantContext().RequireModule(ModuleCodes.M1Challenges).AllowKiosk(device: true)
             .WithName("GetChallengeCollective")
             .Produces<CollectiveResponse>()
             .Produces(StatusCodes.Status404NotFound);

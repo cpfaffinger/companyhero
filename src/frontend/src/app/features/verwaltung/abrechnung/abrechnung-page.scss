@@ -1,0 +1,150 @@
+.ch-ab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-5);
+  padding-top: var(--ch-space-3);
+}
+
+.ch-ab__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+  align-items: flex-start;
+  padding: var(--ch-space-4);
+  border-radius: var(--ch-radius-sheet);
+  border: 1px solid var(--ch-outline-variant);
+}
+
+.ch-ab__title {
+  font: 600 var(--ch-type-title-m) / var(--ch-line-title-m) var(--ch-font-text);
+}
+
+.ch-ab__subtitle {
+  font: 600 var(--ch-type-body-l) / var(--ch-line-body-l) var(--ch-font-text);
+}
+
+.ch-ab__hint {
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-ab__status {
+  padding: var(--ch-space-3) var(--ch-space-4);
+  border-radius: var(--ch-radius-card);
+  background: var(--ch-surface-container-high);
+}
+
+.ch-ab__status--fehler {
+  background: var(--ch-error-container);
+  color: var(--ch-on-error-container);
+}
+
+.ch-ab__kennzahlen {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--ch-space-3);
+  width: 100%;
+}
+
+.ch-ab__tabelle {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.ch-ab__tabelle th,
+.ch-ab__tabelle td {
+  padding: var(--ch-space-2) var(--ch-space-3);
+  border-bottom: 1px solid var(--ch-outline-variant);
+  vertical-align: top;
+}
+
+.ch-ab__zahl {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ch-ab__zeile--test {
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-ab__dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+  width: 100%;
+  padding: var(--ch-space-4);
+  border-radius: var(--ch-radius-card);
+  background: var(--ch-surface-container);
+}
+
+.ch-ab__aktionen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ch-touch-gap);
+}
+
+.ch-ab__module {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ch-ab__modul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-2);
+  padding: var(--ch-space-3);
+  border-radius: var(--ch-radius-card);
+  border: 1px solid var(--ch-outline-variant);
+}
+
+.ch-ab__modul-kopf {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--ch-space-3);
+}
+
+.ch-ab__modul-name {
+  font: 600 var(--ch-type-body-l) / var(--ch-line-body-l) var(--ch-font-text);
+}
+
+.ch-ab__modul-zustand {
+  padding: 0 var(--ch-space-2);
+  border-radius: var(--ch-radius-card);
+  background: var(--ch-surface-container-high);
+  font-size: var(--ch-type-label-m);
+}
+
+.ch-ab__tage {
+  margin: var(--ch-space-2) 0 0;
+  padding-left: var(--ch-space-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.ch-ab__definitionen {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) 3fr;
+  gap: var(--ch-space-2) var(--ch-space-4);
+  width: 100%;
+  margin: 0;
+}
+
+.ch-ab__definitionen dt {
+  font-weight: 600;
+}
+
+.ch-ab__definitionen dd {
+  margin: 0;
+}
+
+@media (width < 640px) {
+  .ch-ab__definitionen {
+    grid-template-columns: 1fr;
+  }
+}

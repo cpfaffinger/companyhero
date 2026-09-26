@@ -2,10 +2,10 @@
   "status": 201,
   "contentType": "application/json",
   "body": {
-    "tenantId": "01a0def2-4fb9-70eb-991e-eddbdbd2e107",
-    "personId": "01a0def2-58bb-7839-9703-761b051dd5b5",
-    "kioskId": "920700",
-    "recoveryCode": "RWT-M2B-XJQ-ANA",
+    "tenantId": "01a0df42-2673-7f99-9828-3ddaebceacaf",
+    "personId": "01a0df42-3c52-75b6-8a00-d6f9d3274251",
+    "kioskId": "388311",
+    "recoveryCode": "QP2-A2U-LN8-Y4E",
     "sessionKind": null
   }
 }
