@@ -13,7 +13,7 @@ namespace CompanyHero.Modules.Identity.Api;
 public sealed record MeResponse(string PersonId, string DisplayName, string TenantId, string TenantName, IReadOnlyList<string> Roles);
 
 /// <summary>Eintrag der Mitgliederliste (Organisation 3.2): Anzeigename, Rollen, Beitritt. Keine Aktivitätsdaten.</summary>
-public sealed record MemberResponse(string PersonId, string DisplayName, IReadOnlyList<string> Roles, DateTimeOffset JoinedAt);
+public sealed record MemberResponse(string PersonId, string DisplayName, IReadOnlyList<string> Roles, DateTimeOffset JoinedAt, IReadOnlyList<string> Groups);
 
 internal static class IdentityEndpoints
 {
@@ -52,7 +52,7 @@ internal static class IdentityEndpoints
                 var members = await organisations.ListMembersAsync(ct);
                 var names = await persons.GetDisplayNamesAsync(members.Select(m => m.PersonId), ct);
                 var response = members
-                    .Select(m => new MemberResponse(m.PersonId.ToString(), names.GetValueOrDefault(m.PersonId, string.Empty), m.Roles, m.JoinedAt))
+                    .Select(m => new MemberResponse(m.PersonId.ToString(), names.GetValueOrDefault(m.PersonId, string.Empty), m.Roles, m.JoinedAt, m.Groups.Select(g => g.ToString("D")).ToList()))
                     .OrderBy(m => m.DisplayName, StringComparer.Ordinal)
                     .ToList();
                 return Results.Ok(response);

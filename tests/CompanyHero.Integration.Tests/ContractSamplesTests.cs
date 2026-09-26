@@ -61,24 +61,58 @@ public sealed class ContractSamplesTests(PostgresFixture pg)
         var control = new TestJobControl { SubscriberPerson = wiesner.MemberA };
         using var worker = WorkerHost.Create(pg, control, "w-proben");
         await worker.StartAsync(Ct);
-        await TestJobControl.WaitUntilAsync(() => member.GetFromJsonAsync<CollectiveResponse>($"/api/challenges/{challenge:D}/collective", Ct).Result!.ContributionCount == 3, TimeSpan.FromSeconds(20), Ct);
+        await TestJobControl.WaitUntilAsync(() => member.GetFromJsonAsync<CollectiveResponse>($"/api/challenges/{challenge:D}/collective", Ct).Result!.Percent == 12, TimeSpan.FromSeconds(20), Ct);
         await worker.StopAsync(Ct);
 
         // Zugang (Stufe 4): Sitzung, Beitrittsvorschau, Anmeldewege, Kiosk-Gerät und -Anmeldung, Anbieterliste.
         var joinCode = await AccessJoinTests.CreateJoinCodeAsync(pg, wiesner, Ct);
         var (kiosk, _) = await KioskTests.RegisterKioskAsync(pg, wiesner, Ct);
         using var kioskDevice = kiosk;
-        var kioskJoin = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{joinCode}/kiosk", new KioskJoinRequest("Probe Kiosk", VisibilityDto.Company, "7391"), Ct, HttpStatusCode.Created);
+        var kioskJoin = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{joinCode}/kiosk", new KioskJoinRequest("Probe Kiosk", VisibilityDto.Company, "7391", null), Ct, HttpStatusCode.Created);
+
+        // Fachpfad (Stufe 6): Feed, Fortschritt, Benachrichtigungen, Organisation, Datenschutz und Challenge-Verwaltung als Proben.
+        using var wiesnerManager = Client(wiesner.Id, wiesner.Manager);
+        using var checkIn = await member.PostAsJsonAsync("/api/me/check-in", new Modules.Progress.Api.CheckInRequest([Modules.Progress.Api.CheckInTileDto.Moved]), Ct);
+        Assert.Equal(HttpStatusCode.Created, checkIn.StatusCode);
+        using var post = await member.PostAsJsonAsync("/api/feed/posts", new Modules.Feed.Api.FeedPostRequest("Heute mit dem Rad zur Arbeit."), Ct);
+        Assert.Equal(HttpStatusCode.Created, post.StatusCode);
+        var firstDimension = (await member.GetFromJsonAsync<List<Modules.Organisation.Api.DimensionResponse>>("/api/organisation/dimensions", Ct))![0].DimensionId;
+        using var groupCreated = await wiesnerManager.PostAsJsonAsync($"/api/organisation/dimensions/{firstDimension}/groups", new Modules.Organisation.Api.CreateGroupRequest("Wien", 12), Ct);
+        Assert.Equal(HttpStatusCode.Created, groupCreated.StatusCode);
+        using var subscriptionKey = System.Security.Cryptography.ECDiffieHellman.Create(System.Security.Cryptography.ECCurve.NamedCurves.nistP256);
+        using var subscription = await member.PostAsJsonAsync("/api/me/notifications/subscriptions", new Modules.Notifications.Api.PushSubscriptionRequest("https://push.example/probe", System.Buffers.Text.Base64Url.EncodeToString(Modules.Notifications.Application.WebPushCrypto.ExportRaw(subscriptionKey.PublicKey)), "b2Zmb25lc29mZm9uZXM", "Handy"), Ct);
+        Assert.Equal(HttpStatusCode.Created, subscription.StatusCode);
+        using var feedWorker = WorkerHost.Create(pg, control, "w-proben-feed");
+        await feedWorker.StartAsync(Ct);
+        await Stufe6.WaitForQueueAsync(pg, wiesner.Id, Ct);
+        await feedWorker.StopAsync(Ct);
 
         var samples = new Dictionary<string, HttpResponseMessage>(StringComparer.Ordinal)
         {
+            ["feed"] = await member.GetAsync("/api/feed", Ct),
+            ["feed-post-created"] = await member.PostAsJsonAsync("/api/feed/posts", new Modules.Feed.Api.FeedPostRequest("Zweiter Beitrag."), Ct),
+            ["me-progress"] = await member.GetAsync("/api/me/progress", Ct),
+            ["check-in-already"] = await member.PostAsJsonAsync("/api/me/check-in", new Modules.Progress.Api.CheckInRequest([Modules.Progress.Api.CheckInTileDto.Rested]), Ct),
+            ["participation"] = await wiesnerAdmin.GetAsync("/api/progress/participation?period=month", Ct),
+            ["notifications"] = await member.GetAsync("/api/notifications", Ct),
+            ["me-notifications"] = await member.GetAsync("/api/me/notifications", Ct),
+            ["me-notification-subscriptions"] = await member.GetAsync("/api/me/notifications/subscriptions", Ct),
+            ["vapid"] = await member.GetAsync("/api/notifications/vapid", Ct),
+            ["notifications-tenant"] = await wiesnerAdmin.GetAsync("/api/notifications/tenant", Ct),
+            ["dimensions"] = await member.GetAsync("/api/organisation/dimensions", Ct),
+            ["me-groups"] = await member.GetAsync("/api/me/groups", Ct),
+            ["tenant"] = await wiesnerAdmin.GetAsync("/api/organisation/tenant", Ct),
+            ["me-visibility"] = await member.GetAsync("/api/me/visibility", Ct),
+            ["me-consents"] = await member.GetAsync("/api/me/consents", Ct),
+            ["challenges-manage"] = await wiesnerManager.GetAsync("/api/challenges/manage", Ct),
+            ["challenge-kickoff"] = await wiesnerManager.PostAsync(new Uri("/api/challenges/kickoff", UriKind.Relative), null, Ct),
             ["session"] = await member.GetAsync("/api/auth/session", Ct),
             ["session-none"] = await anonymous.GetAsync("/api/auth/session", Ct),
             ["join-preview"] = await anonymous.GetAsync($"/api/join/{joinCode}", Ct),
             ["providers"] = await anonymous.GetAsync($"/api/auth/providers?tenant={wiesner.Id}", Ct),
             ["me-access"] = await member.GetAsync("/api/me/access", Ct),
             ["kiosk-device"] = await kiosk.GetAsync("/api/kiosk/device", Ct),
-            ["kiosk-join"] = await kiosk.PostAsync($"/api/join/{joinCode}/kiosk", new KioskJoinRequest("Probe Kiosk Zwei", VisibilityDto.Team, "4826"), Ct),
+            ["kiosk-join"] = await kiosk.PostAsync($"/api/join/{joinCode}/kiosk", new KioskJoinRequest("Probe Kiosk Zwei", VisibilityDto.Team, "4826", null), Ct),
             ["kiosk-login"] = await kiosk.PostAsync("/api/kiosk/login", new KioskLoginRequest(kioskJoin.KioskId, "7391"), Ct),
             ["kiosk-login-rejected"] = await kiosk.PostAsync("/api/kiosk/login", new KioskLoginRequest(kioskJoin.KioskId, "0000"), Ct),
             ["access-policy"] = await wiesnerAdmin.GetAsync("/api/access/policy", Ct),
@@ -95,6 +129,12 @@ public sealed class ContractSamplesTests(PostgresFixture pg)
         };
 
         Assert.Equal(HttpStatusCode.Created, samples["contribution-created"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["feed"].StatusCode);
+        Assert.Equal(HttpStatusCode.Created, samples["feed-post-created"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["me-progress"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["check-in-already"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["notifications"].StatusCode);
+        Assert.Equal(HttpStatusCode.Created, samples["challenge-kickoff"].StatusCode);
         Assert.Equal(HttpStatusCode.OK, samples["session"].StatusCode);
         Assert.Equal(HttpStatusCode.Unauthorized, samples["session-none"].StatusCode);
         Assert.Equal(HttpStatusCode.OK, samples["join-preview"].StatusCode);

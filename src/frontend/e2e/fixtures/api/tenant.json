@@ -1,0 +1,14 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "tenantId": "01a0def2-4fb9-70eb-991e-eddbdbd2e107",
+    "displayName": "Wiesner Probe",
+    "state": "active",
+    "timeZone": "Europe/Vienna",
+    "headcount": null,
+    "terminationEffectiveAt": null,
+    "readOnlyUntil": null,
+    "suspensionReason": null
+  }
+}

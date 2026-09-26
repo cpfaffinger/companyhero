@@ -1,0 +1,13 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": [
+    {
+      "entryId": "01a0def2-4fec-70e7-a428-09d4777ff568",
+      "occurredAt": "2026-09-25T08:08:00+00:00",
+      "kind": "visibility",
+      "previous": null,
+      "next": "Company"
+    }
+  ]
+}

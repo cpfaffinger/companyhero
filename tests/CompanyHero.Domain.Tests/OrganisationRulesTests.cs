@@ -27,12 +27,12 @@ public sealed class OrganisationRulesTests
     {
         var tenant = Organisation.CreateTenant("Tenant", Organisation.CreateOperator("Betreiber", Now), Now);
         Assert.Equal(OrganisationState.Provisioned, tenant.State);
-        Assert.False(tenant.GrantsMemberAccess);
+        Assert.False(tenant.GrantsMemberAccessAt(Now));
 
         tenant.ActivateOnFirstTenantAdmin();
 
         Assert.Equal(OrganisationState.Active, tenant.State);
-        Assert.True(tenant.GrantsMemberAccess);
+        Assert.True(tenant.GrantsMemberAccessAt(Now));
     }
 
     [Fact]

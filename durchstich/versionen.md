@@ -22,6 +22,7 @@ Konfigurationsdateien; diese Liste dokumentiert sie an einem Ort. Änderungen la
 | Data-Protection-Schlüssel | Microsoft.AspNetCore.DataProtection.EntityFrameworkCore 10.0.12, Tabelle `platform.data_protection_key` (A-007) | `Directory.Packages.props`, `src/backend/CompanyHero.Platform/Data/` |
 | OpenAPI-Erzeugung | Microsoft.AspNetCore.OpenApi 10.0.12 (Microsoft.OpenApi 2.12.0), OpenAPI 3.1, Export über `--export-openapi` (A-109) | `Directory.Packages.props`, `src/backend/CompanyHero.Api/OpenApi/` |
 | Theme-Ableitung | keine Bibliothek; eigene Portierung von material-color-utilities (Apache-2.0, TypeScript-Paket 0.4.0, Stand 5b3618b) (A-110) | `src/backend/CompanyHero.Modules.Branding/Domain/Color/` |
+| Web Push, E-Mail, Aushang | keine Bibliothek; VAPID (ES256) und RFC 8291 (`aes128gcm`) mit `ECDsa`, `ECDiffieHellman`, `HKDF`, `AesGcm` aus .NET 10; SMTP über `System.Net.Mail`; eigener PDF-Schreiber (PDF 1.4) (A-112) | `src/backend/CompanyHero.Modules.Notifications/Application/` |
 | Analyseregeln | `latest-recommended`, Warnungen als Fehler, Ausnahmen in `.editorconfig` | `Directory.Build.props` |
 
 ## Frontend
@@ -38,7 +39,8 @@ Konfigurationsdateien; diese Liste dokumentiert sie an einem Ort. Änderungen la
 | Inter, Inter Tight, Material Symbols Rounded (selbst ausgeliefert) | fontsource 5.3.0 / 5.3.0 / 5.3.7 | `package.json` |
 | OpenAPI-Clientgenerator | openapi-typescript 7.13.0 (A-109); Peer-Auflösung auf TypeScript 6.0 über `overrides` | `package.json`, Skript `api:generate` |
 | QR-Code-Erzeugung (Beitrittslink, Kiosk-Kennung, Übertragung) | qrcode 1.5.4 (MIT), @types/qrcode 1.5.6; nur in Lazy-Chunks | `package.json`, `src/frontend/src/libs/ui/qr-code/` |
-| @types/node (Tests, Skripte) | 24.10.1 | `package.json` |
+| @types/node (Tests, Skripte) | 24.10.1 (passend zur Node-Hauptversion 24; Dependabot-Vorschlag 26 nicht übernommen) | `package.json` |
+| Push-Service-Worker | eigener Worker `public/push-sw.js` (kein Angular-Service-Worker für Push; Nutzlast nur Referenz, A-059) | `src/frontend/public/push-sw.js` |
 
 Browsermatrix (K18): Angular 22 unterstützt die aktuelle und die vorherige Hauptversion von Chrome, Firefox, Edge und
 Safari sowie iOS-Safari ab 16.4; Web Push in installierten PWAs setzt auf iOS 16.4 voraus (A-059). Ältere Browser erhalten

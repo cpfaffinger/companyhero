@@ -2,8 +2,10 @@ using System.Collections.Concurrent;
 using CompanyHero.ModuleCatalog;
 using CompanyHero.Modules.Challenges.Application;
 using CompanyHero.Modules.Challenges.Domain;
+using CompanyHero.Modules.Notifications.Application;
 using CompanyHero.Modules.Progress.Application;
 using CompanyHero.Modules.Progress.Domain;
+using CompanyHero.Modules.Progress.Infrastructure;
 using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Events;
 using CompanyHero.Platform.Hosting;
@@ -11,6 +13,7 @@ using CompanyHero.Platform.Jobs;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -76,7 +79,7 @@ public sealed class TestJobControl
 }
 
 /// <summary>Testjob mit sichtbarer Wirkung in einer Modultabelle unter RLS: ein Aktivitätsereignis der referenzierten Person.</summary>
-internal sealed class EffectJobHandler(TestJobControl control, IActivityRecorder activities, ITenantContextAccessor context, TimeProvider clock) : IJobHandler
+internal sealed class EffectJobHandler(TestJobControl control, ProgressDbContext progress, IContextTransaction transaction, ITenantContextAccessor context, TimeProvider clock) : IJobHandler
 {
     public static string JobType => "test.effect";
 
@@ -85,8 +88,16 @@ internal sealed class EffectJobHandler(TestJobControl control, IActivityRecorder
     public async Task HandleAsync(JobExecution job, CancellationToken cancellationToken)
     {
         var person = new PersonId(Guid.ParseExact(job.Reference.Split('#')[0], "D"));
-        // Wirkung zuerst, dann blockieren: ein abgebrochener Versuch darf die Wirkung nicht hinterlassen.
-        await activities.RecordAsync(person, KindFor(job.Id), ActivitySource.Platform, clock.GetUtcNow(), cancellationToken);
+        // Wirkung zuerst, dann blockieren: ein abgebrochener Versuch darf die Wirkung nicht hinterlassen. Die Wirkung ist eine
+        // eigene Zeile ohne gemeinsam gesperrte Zeile, damit zwei Worker denselben Job wirklich gleichzeitig versuchen können.
+        var now = clock.GetUtcNow();
+        await using (var tx = await transaction.BeginAsync(cancellationToken))
+        {
+            progress.ActivityEvents.Add(ActivityEvent.Record(context.Require().RequireTenant(), person, KindFor(job.Id), ActivitySource.Platform, now, TenantTimeZone.DayOf(now), 0));
+            await progress.SaveChangesAsync(cancellationToken);
+            await tx.CommitAsync(cancellationToken);
+        }
+
         control.Order.Enqueue((context.Require().RequireTenant(), job.Id, job.Reference));
         await control.EnterAsync(job.Reference, cancellationToken);
     }
@@ -131,7 +142,13 @@ internal static class WorkerHost
     public static IHost Create(PostgresFixture pg, TestJobControl control, string workerId, Action<JobWorkerOptions>? configure = null, string? connectionString = null)
     {
         var builder = Host.CreateApplicationBuilder();
-        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?> { ["ConnectionStrings:Default"] = connectionString ?? pg.AppConnectionString });
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["ConnectionStrings:Default"] = connectionString ?? pg.AppConnectionString,
+            ["Identity:PublicOrigin"] = PostgresFixture.Origin,
+            ["Notifications:Vapid:PrivateKeyPem"] = PostgresFixture.VapidPem,
+            ["Notifications:Vapid:Subject"] = "mailto:betrieb@localhost",
+        });
         builder.Logging.SetMinimumLevel(LogLevel.Warning);
         builder.Services.AddPlatformData(builder.Configuration);
         foreach (var module in AllModules.Create())
@@ -140,6 +157,8 @@ internal static class WorkerHost
         }
 
         builder.Services.AddSingleton(control);
+        builder.Services.Replace(ServiceDescriptor.Singleton<IWebPushTransport>(pg.Push));
+        builder.Services.Replace(ServiceDescriptor.Singleton<IMailTransport>(pg.Mail));
         builder.Services.AddJobHandler<EffectJobHandler>();
         builder.Services.AddEventSubscription<SubscriberJobHandler>(ChallengeEventTypes.ContributionRecorded);
         builder.Services.AddScheduledTask<TickScheduledTask>();
@@ -155,5 +174,42 @@ internal static class WorkerHost
             configure?.Invoke(o);
         });
         return builder.Build();
+    }
+
+    /// <summary>Führt eine zeitgesteuerte Aufgabe des Worker-Hosts sofort im Plattformkontext aus (Backend 6.2), unabhängig von ihrer Fälligkeit.</summary>
+    public static Task RunScheduledTaskAsync(IHost host, string name, CancellationToken cancellationToken)
+    {
+        var registration = host.Services.GetServices<ScheduledTaskRegistration>().Single(r => r.Name == name);
+        return host.Services.GetRequiredService<ITenantScopeFactory>().RunAsync(TenantContext.ForPlatform(), (sp, ct) => ((IScheduledTask)sp.GetRequiredService(registration.TaskType)).RunAsync(ct), cancellationToken);
+    }
+}
+
+/// <summary>Push-Dienst der Tests: speichert jede Nachricht und antwortet je Endpunkt mit dem eingestellten Status (Voreinstellung 201).</summary>
+public sealed class CapturingPushTransport : IWebPushTransport
+{
+    private readonly ConcurrentDictionary<string, int> _status = new(StringComparer.Ordinal);
+
+    public ConcurrentQueue<PushMessage> Sent { get; } = new();
+
+    public void Respond(string endpoint, int status) => _status[endpoint] = status;
+
+    public Task<PushSendResult> SendAsync(PushMessage message, CancellationToken cancellationToken)
+    {
+        Sent.Enqueue(message);
+        return Task.FromResult(new PushSendResult(_status.GetValueOrDefault(message.Endpoint.ToString(), 201)));
+    }
+}
+
+/// <summary>SMTP-Transport der Tests: konfiguriert, speichert Umschläge, kann Unzustellbarkeit simulieren.</summary>
+public sealed class CapturingMailTransport : IMailTransport
+{
+    public ConcurrentQueue<MailEnvelope> Sent { get; } = new();
+
+    public bool Configured => true;
+
+    public Task SendAsync(MailEnvelope envelope, CancellationToken cancellationToken)
+    {
+        Sent.Enqueue(envelope);
+        return Task.CompletedTask;
     }
 }

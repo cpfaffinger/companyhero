@@ -4,7 +4,7 @@ using CompanyHero.Platform.Hosting;
 using CompanyHero.Platform.Jobs;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddOpenBaoIfConfigured(["app/database"]);
+builder.Configuration.AddOpenBaoIfConfigured(["app/database", "app/notifications"]);
 builder.Services.AddPlatformData(builder.Configuration);
 builder.AddCompanyHeroHost("companyhero-worker", AllModules.Create());
 builder.Services.AddJobWorker();

@@ -54,7 +54,7 @@ public sealed class AccessJoinTests(PostgresFixture pg) : IAsyncLifetime
         var ceremony = await browser.PostJsonAsync<PasskeyCeremonyResponse>($"/api/join/{code}/passkey-options", new JoinPasskeyOptionsRequest(displayName), ct);
         Assert.Equal("localhost", ceremony.Options.GetProperty("rp").GetProperty("id").GetString());
         var credential = authenticator.CreateAttestation(ceremony.Options);
-        var join = await browser.PostJsonAsync<JoinResponse>($"/api/join/{code}", new JoinRequest(displayName, VisibilityDto.Company, new PasskeyAnswerRequest(ceremony.State, credential, "Testgerät"), email, false, null), ct, HttpStatusCode.Created);
+        var join = await browser.PostJsonAsync<JoinResponse>($"/api/join/{code}", new JoinRequest(displayName, VisibilityDto.Company, new PasskeyAnswerRequest(ceremony.State, credential, "Testgerät"), email, false, null, null), ct, HttpStatusCode.Created);
         Assert.NotNull(browser.Cookies[SessionCookies.Session]);
         Assert.NotNull(browser.Cookies[SessionCookies.Csrf]);
         return (browser, join, authenticator);

@@ -24,7 +24,20 @@ internal static class AuthEndpoints
 
         auth.MapGet("/session", async (HttpContext http, ITenantContextAccessor context, ISessionService sessions, CancellationToken ct) =>
             {
+                if (context.Current is null)
+                {
+                    // Geprüfte Sitzung ohne Kontext: gesperrter oder gekündigter Tenant zeigt Mitgliedern einen neutralen Hinweis (Organisation 1.3).
+                    return http.Items.TryGetValue(TenantContextMiddleware.DeniedReasonItem, out var reason) && reason is string denied
+                        ? Results.Problem(statusCode: StatusCodes.Status403Forbidden, title: "Kein Zugang", detail: denied)
+                        : Results.Unauthorized();
+                }
+
                 var current = context.Require();
+                if (current.Kind != TenantContextKind.Tenant)
+                {
+                    return Results.Forbid();
+                }
+
                 if (current.Session == SessionKind.KioskDevice)
                 {
                     return Results.Ok(new SessionResponse(SessionKindDto.KioskDevice, current.RequireTenant().ToString(), null, DateTimeOffset.MinValue, null, null, DateTimeOffset.MinValue, current.KioskDeviceId?.ToString("D")));
@@ -41,9 +54,9 @@ internal static class AuthEndpoints
                     session.Kind.ToDto(), session.TenantId.ToString(), session.PersonId?.ToString(), session.AuthenticatedAt, session.SlidingUntil, session.AbsoluteUntil,
                     session.AuthenticatedAt + TenantContextEndpointExtensions.FreshLoginMaxAge, session.KioskDeviceId?.ToString("D")));
             })
-            .RequireTenantContext().AllowKiosk(device: true)
             .WithName("GetSession")
-            .Produces<SessionResponse>();
+            .Produces<SessionResponse>()
+            .ProducesProblem(StatusCodes.Status403Forbidden);
 
         auth.MapPost("/logout", async (HttpContext http, ISessionService sessions, CancellationToken ct) =>
             {

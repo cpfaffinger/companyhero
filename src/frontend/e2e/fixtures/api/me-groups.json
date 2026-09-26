@@ -1,0 +1,21 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": [
+    {
+      "dimensionId": "01a0def2-5192-7707-9704-244587329465",
+      "groupId": null,
+      "rechoice": false
+    },
+    {
+      "dimensionId": "01a0def2-5192-7fbd-b6a7-b84b5613c174",
+      "groupId": null,
+      "rechoice": false
+    },
+    {
+      "dimensionId": "01a0def2-5192-7877-9d2c-a1477b5bc37f",
+      "groupId": null,
+      "rechoice": false
+    }
+  ]
+}

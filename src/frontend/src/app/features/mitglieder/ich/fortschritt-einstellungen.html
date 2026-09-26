@@ -1,0 +1,129 @@
+<section class="ch-fortschritt" data-testid="fortschritt">
+  @if (progress.mine(); as p) {
+    <div class="ch-fortschritt__block">
+      <h2 class="ch-fortschritt__title">{{ texts.t('ich.fortschritt.titel') }}</h2>
+      <div class="ch-fortschritt__grid">
+        <ch-kennzahl [wert]="texts.formatNumber(p.points)" [label]="theme.tenantTheme()?.bezeichnungen?.punkte ?? texts.t('ich.fortschritt.punkte')" />
+        <ch-kennzahl [wert]="stufeName()" [label]="texts.t('ich.fortschritt.stufe')" />
+        <ch-kennzahl [wert]="texts.formatNumber(p.currentStreak)" [label]="theme.tenantTheme()?.bezeichnungen?.serie ?? texts.t('ich.fortschritt.serie')" />
+      </div>
+      <p class="ch-fortschritt__hint">{{ texts.t('ich.fortschritt.heute', { heute: p.todayActions, ziel: p.dailyGoal }) }}</p>
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>{{ texts.t('ich.fortschritt.tagesziel') }}</mat-label>
+        <mat-select [value]="p.dailyGoal" (selectionChange)="setDailyGoal($event.value)" data-testid="tagesziel">
+          <mat-option [value]="1">1</mat-option>
+          <mat-option [value]="2">2</mat-option>
+          <mat-option [value]="3">3</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <h3 class="ch-fortschritt__subtitle">{{ texts.t('ich.fortschritt.abzeichen') }}</h3>
+      <ul class="ch-fortschritt__abzeichen">
+        @for (badge of p.earned; track badge.key) {
+          <li class="ch-fortschritt__abzeichen-item ch-fortschritt__abzeichen-item--verdient" [attr.data-testid]="'abzeichen-' + badge.key">
+            <span class="material-symbols-rounded ch-icon--filled" aria-hidden="true">military_tech</span>
+            <span>{{ texts.t(badge.textKey) }}</span>
+          </li>
+        }
+        @for (badge of p.next; track badge.key) {
+          <li class="ch-fortschritt__abzeichen-item">
+            <span class="material-symbols-rounded" aria-hidden="true">military_tech</span>
+            <span>{{ texts.t(badge.textKey) }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+
+  <div class="ch-fortschritt__block">
+    <h2 class="ch-fortschritt__title" id="ch-ich-sichtbarkeit">{{ texts.t('sichtbarkeit.frage') }}</h2>
+    <mat-button-toggle-group [value]="privacy.visibility()?.level ?? null" (change)="setVisibility($event.value)" aria-labelledby="ch-ich-sichtbarkeit" data-testid="sichtbarkeit">
+      @for (option of visibilities; track option.value) {
+        <mat-button-toggle [value]="option.value">{{ texts.t(option.key) }}</mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+    <p class="ch-fortschritt__hint">{{ texts.t('sichtbarkeit.rueckwirkend') }}</p>
+  </div>
+
+  @if (organisation.dimensions(); as dimensions) {
+    <div class="ch-fortschritt__block">
+      <h2 class="ch-fortschritt__title">{{ texts.t('ich.gruppen.titel') }}</h2>
+      <p class="ch-fortschritt__hint">{{ texts.t('ich.gruppen.hinweis') }}</p>
+      @for (dimension of dimensions; track dimension.dimensionId) {
+        @if (dimension.active && dimension.groups.length > 0) {
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ dimension.name }}</mat-label>
+            <mat-select [value]="gewaehlt().get(dimension.dimensionId) ?? null" (selectionChange)="chooseGroup(dimension.dimensionId, $event.value)" [attr.data-testid]="'gruppe-' + dimension.dimensionId">
+              <mat-option [value]="null">{{ texts.t('ich.gruppen.keine') }}</mat-option>
+              @for (group of dimension.groups; track group.groupId) {
+                @if (!group.archived) {
+                  <mat-option [value]="group.groupId">{{ group.name }}</mat-option>
+                }
+              }
+            </mat-select>
+          </mat-form-field>
+        }
+      }
+    </div>
+  }
+
+  @if (notifications.settings(); as s) {
+    <div class="ch-fortschritt__block" data-testid="benachrichtigungen-einstellungen">
+      <h2 class="ch-fortschritt__title">{{ texts.t('benachrichtigung.einstellungen') }}</h2>
+      @if (pushZustand() === 'an') {
+        <p class="ch-fortschritt__hint">{{ texts.t('benachrichtigung.pushAktiv') }}</p>
+      } @else if (pushZustand() === 'nicht_verfuegbar') {
+        <p class="ch-fortschritt__hint">{{ texts.t('benachrichtigung.pushNichtVerfuegbar') }}</p>
+      } @else {
+        <p class="ch-fortschritt__hint">{{ texts.t('benachrichtigung.pushErklaerung') }}</p>
+        <button matButton="filled" type="button" (click)="pushEinschalten()" data-testid="push-einschalten">{{ texts.t('benachrichtigung.pushEinschalten') }}</button>
+      }
+      @if (pushFehler(); as f) {
+        <p class="ch-fortschritt__hint" role="alert">{{ texts.t(f) }}</p>
+      }
+      @if (!s.tenant.pushEnabled || !s.tenant.emailEnabled) {
+        <p class="ch-fortschritt__pausiert" role="status">{{ texts.t('benachrichtigung.vomUnternehmenPausiert') }}</p>
+      }
+      <table class="ch-fortschritt__tabelle">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">{{ texts.t('benachrichtigung.push') }}</th>
+            <th scope="col">{{ texts.t('benachrichtigung.email') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">{{ texts.t('benachrichtigung.kategorieChallenge') }}</th>
+            <td><mat-slide-toggle [checked]="s.pushChallenge" (change)="setSetting('pushChallenge', $event.checked)" [attr.aria-label]="texts.t('benachrichtigung.push')" /></td>
+            <td><mat-slide-toggle [checked]="s.emailChallenge" (change)="setSetting('emailChallenge', $event.checked)" [attr.aria-label]="texts.t('benachrichtigung.email')" /></td>
+          </tr>
+          <tr>
+            <th scope="row">{{ texts.t('benachrichtigung.kategorieFortschritt') }}</th>
+            <td><mat-slide-toggle [checked]="s.pushProgress" (change)="setSetting('pushProgress', $event.checked)" [attr.aria-label]="texts.t('benachrichtigung.push')" /></td>
+            <td><mat-slide-toggle [checked]="s.emailProgress" (change)="setSetting('emailProgress', $event.checked)" [attr.aria-label]="texts.t('benachrichtigung.email')" /></td>
+          </tr>
+        </tbody>
+      </table>
+      @if (gespeichert()) {
+        <p class="ch-fortschritt__hint" role="status">{{ texts.t('benachrichtigung.gespeichert') }}</p>
+      }
+      @if (notifications.subscriptions(); as subscriptions) {
+        @if (subscriptions.length > 0) {
+          <h3 class="ch-fortschritt__subtitle">{{ texts.t('benachrichtigung.geraete') }}</h3>
+          @for (sub of subscriptions; track sub.id) {
+            <div class="ch-fortschritt__row">
+              <span>{{ sub.deviceLabel }}</span>
+              <button matButton type="button" (click)="geraetAbmelden(sub.id)">{{ texts.t('benachrichtigung.geraetAbmelden') }}</button>
+            </div>
+          }
+        }
+      }
+    </div>
+  }
+
+  <div class="ch-fortschritt__block">
+    <h2 class="ch-fortschritt__title">{{ texts.t('ich.auskunft.titel') }}</h2>
+    <p class="ch-fortschritt__hint">{{ texts.t('ich.auskunft.hinweis') }}</p>
+    <a matButton="outlined" [href]="exportUrl" download="selbstexport.json" data-testid="export">{{ texts.t('ich.auskunft.export') }}</a>
+  </div>
+</section>

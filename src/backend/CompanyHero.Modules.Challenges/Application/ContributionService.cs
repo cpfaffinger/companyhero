@@ -1,11 +1,14 @@
+using System.Text.Json.Nodes;
 using CompanyHero.Modules.Challenges.Domain;
 using CompanyHero.Modules.Challenges.Infrastructure;
+using CompanyHero.Modules.Organisation.Application;
 using CompanyHero.Modules.Progress.Application;
 using CompanyHero.Modules.Progress.Domain;
 using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Events;
 using CompanyHero.Platform.Jobs;
 using CompanyHero.Platform.Metering;
+using CompanyHero.Platform.Privacy;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,12 +42,23 @@ public enum ContributionResult
 
 public sealed record ContributionOutcome(ContributionResult Result, Guid? ContributionId, ContributionRejection Rejection = ContributionRejection.None);
 
+public enum ReversalResult
+{
+    Reversed = 1,
+    NotFound = 2,
+    AlreadyReversed = 3,
+    GracePeriodOver = 4,
+}
+
+/// <summary>Eigener Beitrag aus Sicht der Person (Challenges 3): Wert, Zeitpunkt, Kanal, Korrekturzustand.</summary>
+public sealed record OwnContributionRecord(Guid Id, decimal Value, DateTimeOffset RecordedAt, ContributionChannel Channel, bool Reversed, bool IsReversal);
+
 /// <summary>Feste Bezeichner der Erfassung: Aktivitätsart für Fortschritt, Metrik und Modul für Metering (Challenges 8).</summary>
 public static class ContributionConstants
 {
     public const string MeteringModule = "M1";
     public const string ParticipantDayMetric = "challenge.participant_day";
-    public const string ActivityKind = "challenge_contribution";
+    public const string ActivityKind = ActivityKinds.ChallengeContribution;
 }
 
 /// <summary>Öffentliche Anwendungsfunktionen der Erfassung (Domänenkarte 2, 3 „Idempotenz von Beiträgen“).</summary>
@@ -65,14 +79,22 @@ public interface IContributionService
     /// Zustellung an Abonnenten (Challenges 3, A-006).
     /// </summary>
     Task<ContributionOutcome> SubmitAsync(ContributionSubmission submission, CancellationToken cancellationToken);
+
+    /// <summary>Korrektur eines eigenen Beitrags als Gegenbuchung bis zum Ende der Nachfrist (Challenges 3): Kollektivstand neu, Abzeichen bleiben.</summary>
+    Task<ReversalResult> ReverseAsync(Guid contributionId, CancellationToken cancellationToken);
+
+    /// <summary>Eigene Beiträge einer Challenge, nie die anderer Personen.</summary>
+    Task<IReadOnlyList<OwnContributionRecord>> ListMineAsync(Guid challengeId, CancellationToken cancellationToken);
 }
 
 internal sealed class ContributionService(
     ChallengesDbContext db,
     IContextTransaction transaction,
     ITenantContextAccessor context,
+    ITenantTimeZone timeZone,
     TimeProvider clock,
     IActivityRecorder activities,
+    IOrganisationDirectory organisations,
     IMeteringEmitter metering,
     IJobQueue jobs,
     IDomainEventDispatcher events) : IContributionService
@@ -131,6 +153,7 @@ internal sealed class ContributionService(
         var key = ContributionKey.Normalize(submission.Key);
         var receivedAt = clock.GetUtcNow();
         var contentHash = ContributionKey.HashContent(submission.ChallengeId, submission.Value, submission.RecordedAt, submission.Channel);
+        var zone = await timeZone.GetAsync(cancellationToken);
 
         await using var tx = await transaction.BeginAsync(cancellationToken);
 
@@ -178,25 +201,28 @@ internal sealed class ContributionService(
             return new ContributionOutcome(ContributionResult.ChallengeNotFound, null);
         }
 
-        var rejection = ContributionRules.Validate(challenge, challenge.Metric, submission.Value, submission.RecordedAt, receivedAt);
+        var rejection = ContributionRules.Validate(challenge, challenge.Metric, submission.Value, submission.RecordedAt, receivedAt, zone);
         if (rejection != ContributionRejection.None)
         {
             await tx.RollbackAsync(cancellationToken);
             return new ContributionOutcome(ContributionResult.Rejected, null, rejection);
         }
 
-        var contribution = Contribution.Record(tenantId, challenge.Id, personId, submission.Value, submission.RecordedAt, receivedAt, submission.Channel);
+        // Genau ein pauschales Aktivitätsereignis je Beitrag (Challenges 8, Fortschritt 2.1); Messwert bleibt hier.
+        var activityId = await activities.RecordAsync(personId, ContributionConstants.ActivityKind, ActivitySource.Self, submission.RecordedAt, cancellationToken);
+
+        // Gruppen zum Beitragszeitpunkt (Organisation 3.3): ein späterer Wechsel verändert vergangene Kollektivstände nicht.
+        var groups = (await organisations.GetGroupsOfAsync(personId, cancellationToken)).Where(g => g.GroupId is not null).Select(g => g.GroupId!.Value).ToList();
+
+        var contribution = Contribution.Record(tenantId, challenge.Id, personId, submission.Value, submission.RecordedAt, receivedAt, submission.Channel, groups, activityId);
         db.Contributions.Add(contribution);
         proof.Commit(contribution.Id, contentHash, receivedAt);
 
         var domainEvent = ChallengeEvent.ContributionRecorded(tenantId, contribution, receivedAt);
         db.Events.Add(domainEvent);
 
-        // Genau ein pauschales Aktivitätsereignis je Beitrag (Challenges 8, Fortschritt 2.1); Messwert bleibt hier.
-        await activities.RecordAsync(personId, ContributionConstants.ActivityKind, ActivitySource.Self, contribution.RecordedAt, cancellationToken);
-
         // Teilnehmertag: einmal je Person und Kalendertag der Challenge (Challenges 8 ↔ Metering); anonymer Bezug ist die Challenge.
-        if (await IsFirstContributionOfDayAsync(tenantId, challenge.Id, personId, contribution.RecordedAt, cancellationToken))
+        if (await IsFirstContributionOfDayAsync(tenantId, challenge.Id, personId, contribution.RecordedAt, zone, cancellationToken))
         {
             await metering.EmitAsync(
                 new MeteringEmission(ContributionConstants.MeteringModule, ContributionConstants.ParticipantDayMetric, challenge.Id.ToString("D"), 1m, MeteringSource.Self, contribution.RecordedAt, $"{domainEvent.Id:D}:{ContributionConstants.ParticipantDayMetric}"),
@@ -212,11 +238,72 @@ internal sealed class ContributionService(
         return new ContributionOutcome(ContributionResult.Recorded, contribution.Id);
     }
 
-    private async Task<bool> IsFirstContributionOfDayAsync(TenantId tenantId, Guid challengeId, PersonId personId, DateTimeOffset recordedAt, CancellationToken cancellationToken)
+    public async Task<ReversalResult> ReverseAsync(Guid contributionId, CancellationToken cancellationToken)
     {
-        var day = TenantTimeZone.DayOf(recordedAt);
-        var from = TenantTimeZone.StartOfDay(day);
-        var to = TenantTimeZone.StartOfDay(day.AddDays(1));
+        var (tenantId, personId) = RequirePerson();
+        if (context.Require().IsKiosk)
+        {
+            throw new UnauthorizedAccessException("Am Kiosk keine Korrektur vergangener Tage (Challenges 3).");
+        }
+
+        var now = clock.GetUtcNow();
+        await using var tx = await transaction.BeginAsync(cancellationToken);
+        var contribution = await db.Contributions.SingleOrDefaultAsync(c => c.TenantId == tenantId && c.Id == contributionId && c.PersonId == personId, cancellationToken);
+        if (contribution is null || contribution.IsReversal)
+        {
+            await tx.CommitAsync(cancellationToken);
+            return ReversalResult.NotFound;
+        }
+
+        if (contribution.Reversed)
+        {
+            await tx.CommitAsync(cancellationToken);
+            return ReversalResult.AlreadyReversed;
+        }
+
+        var challenge = await db.Challenges.AsNoTracking().SingleAsync(c => c.TenantId == tenantId && c.Id == contribution.ChallengeId, cancellationToken);
+        if (!ContributionRules.MayReverse(challenge, now))
+        {
+            await tx.CommitAsync(cancellationToken);
+            return ReversalResult.GracePeriodOver;
+        }
+
+        var reversal = contribution.Reverse(now);
+        db.Contributions.Add(reversal);
+        var domainEvent = ChallengeEvent.Create(tenantId, ChallengeEventTypes.ContributionReversed, new ContributionReversedPayload(contribution.Id, reversal.Id, challenge.Id), now, personId);
+        db.Events.Add(domainEvent);
+        await db.SaveChangesAsync(cancellationToken);
+
+        // Gegenereignis für Fortschritt (Fortschritt 2.1); verliehene Abzeichen bleiben (Fortschritt 4.2).
+        if (contribution.ActivityEventId is { } activityId)
+        {
+            await activities.ReverseAsync(activityId, cancellationToken);
+        }
+
+        await jobs.EnqueueAsync(new JobRequest(CollectiveRecalculateHandler.JobType, challenge.Id.ToString("D"), $"reversal:{reversal.Id:D}"), cancellationToken);
+        await events.DispatchAsync(ChallengeEventTypes.ContributionReversed, domainEvent.Id, cancellationToken);
+        await tx.CommitAsync(cancellationToken);
+        return ReversalResult.Reversed;
+    }
+
+    public async Task<IReadOnlyList<OwnContributionRecord>> ListMineAsync(Guid challengeId, CancellationToken cancellationToken)
+    {
+        var (tenantId, personId) = RequirePerson();
+        await using var tx = await transaction.BeginAsync(cancellationToken);
+        var rows = await db.Contributions.AsNoTracking()
+            .Where(c => c.TenantId == tenantId && c.ChallengeId == challengeId && c.PersonId == personId)
+            .OrderBy(c => c.RecordedAt).ThenBy(c => c.Id)
+            .Select(c => new OwnContributionRecord(c.Id, c.Value, c.RecordedAt, c.Channel, c.Reversed, c.ReversalOf != null))
+            .ToListAsync(cancellationToken);
+        await tx.CommitAsync(cancellationToken);
+        return rows;
+    }
+
+    private async Task<bool> IsFirstContributionOfDayAsync(TenantId tenantId, Guid challengeId, PersonId personId, DateTimeOffset recordedAt, TimeZoneInfo zone, CancellationToken cancellationToken)
+    {
+        var day = TenantTimeZone.DayOf(recordedAt, zone);
+        var from = TenantTimeZone.StartOfDay(day, zone);
+        var to = TenantTimeZone.StartOfDay(day.AddDays(1), zone);
         return !await db.Contributions.AnyAsync(
             c => c.TenantId == tenantId && c.ChallengeId == challengeId && c.PersonId == personId && c.RecordedAt >= from && c.RecordedAt < to,
             cancellationToken);
@@ -226,5 +313,50 @@ internal sealed class ContributionService(
     {
         var current = context.Require();
         return (current.RequireTenant(), current.RequirePerson());
+    }
+}
+
+/// <summary>Auskunft (Datenschutz 6.4): eigene Beiträge; Löschung (5.2): Beiträge bleiben als Summenanteil ohne Personenbezug, Nachweise entfallen.</summary>
+internal sealed class ChallengesPersonalData(ChallengesDbContext db, IContextTransaction transaction, ITenantContextAccessor context, IJobQueue jobs) : IPersonalDataExporter, IPersonalDataEraser
+{
+    public string Section => "challenges";
+
+    public async Task<JsonNode> ExportAsync(PersonId personId, CancellationToken cancellationToken)
+    {
+        var tenantId = context.Require().RequireTenant();
+        await using var tx = await transaction.BeginAsync(cancellationToken);
+        var rows = await db.Contributions.AsNoTracking().Where(c => c.TenantId == tenantId && c.PersonId == personId).OrderBy(c => c.RecordedAt).ToListAsync(cancellationToken);
+        var ids = rows.Select(r => r.ChallengeId).Distinct().ToList();
+        var titles = await db.Challenges.AsNoTracking().Where(c => c.TenantId == tenantId && ids.Contains(c.Id)).ToDictionaryAsync(c => c.Id, c => c.Title, cancellationToken);
+        await tx.CommitAsync(cancellationToken);
+        return new JsonObject
+        {
+            ["beitraege"] = new JsonArray(rows.Select(r => (JsonNode)new JsonObject
+            {
+                ["challenge"] = titles.GetValueOrDefault(r.ChallengeId, r.ChallengeId.ToString("D")),
+                ["wert"] = r.Value.ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture),
+                ["erfasst"] = r.RecordedAt,
+                ["kanal"] = r.Channel.ToString(),
+                ["gegenbuchung"] = r.IsReversal,
+            }).ToArray()),
+        };
+    }
+
+    public async Task EraseAsync(PersonId personId, CancellationToken cancellationToken)
+    {
+        var tenantId = context.Require().RequireTenant();
+        var anonymous = Contribution.AnonymousPerson;
+        await using var tx = await transaction.BeginAsync(cancellationToken);
+        var challenges = await db.Contributions.Where(c => c.TenantId == tenantId && c.PersonId == personId).Select(c => c.ChallengeId).Distinct().ToListAsync(cancellationToken);
+        await db.ContributionKeys.Where(k => k.TenantId == tenantId && k.PersonId == personId).ExecuteDeleteAsync(cancellationToken);
+        await db.Contributions.Where(c => c.TenantId == tenantId && c.PersonId == personId).ExecuteUpdateAsync(u => u.SetProperty(c => c.PersonId, anonymous).SetProperty(c => c.GroupIds, new List<Guid>()), cancellationToken);
+        // Der Kollektivstand zählt anonyme Beiträge in Summen, nicht mehr als Beitragende: Neuberechnung als Job in derselben Transaktion (A-006).
+        foreach (var challengeId in challenges)
+        {
+            await jobs.EnqueueAsync(new JobRequest(CollectiveRecalculateHandler.JobType, challengeId.ToString("D"), $"erase:{personId.Value:D}:{challengeId:D}"), cancellationToken);
+        }
+
+        await db.Events.Where(e => e.TenantId == tenantId && e.CausedBy == personId).ExecuteUpdateAsync(u => u.SetProperty(e => e.CausedBy, (PersonId?)null), cancellationToken);
+        await tx.CommitAsync(cancellationToken);
     }
 }

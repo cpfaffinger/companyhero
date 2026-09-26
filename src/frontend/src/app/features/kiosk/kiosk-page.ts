@@ -257,7 +257,7 @@ export class KioskPage {
     const v = this.beitritt.getRawValue();
     this.start();
     this.kiosk
-      .joinAtKiosk(v.code.trim().toUpperCase(), { displayName: v.name.trim(), visibility: v.visibility!, pin: v.pin })
+      .joinAtKiosk(v.code.trim().toUpperCase(), { displayName: v.name.trim(), visibility: v.visibility!, pin: v.pin, groups: null })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (result) => {

@@ -23,6 +23,139 @@ namespace CompanyHero.Migrations.Migrations.Organisation
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("CompanyHero.Modules.Organisation.Domain.GroupDimension", b =>
+                {
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean")
+                        .HasColumnName("active");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)")
+                        .HasColumnName("name");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer")
+                        .HasColumnName("position");
+
+                    b.HasKey("TenantId", "Id");
+
+                    b.HasIndex("TenantId", "Position")
+                        .IsUnique();
+
+                    b.ToTable("group_dimension", "organisation");
+                });
+
+            modelBuilder.Entity("CompanyHero.Modules.Organisation.Domain.GroupMembership", b =>
+                {
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("person_id");
+
+                    b.Property<Guid>("DimensionId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("dimension_id");
+
+                    b.Property<Guid>("GroupId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("group_id");
+
+                    b.Property<DateTimeOffset>("Since")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("since");
+
+                    b.HasKey("TenantId", "PersonId", "DimensionId");
+
+                    b.HasIndex("TenantId", "GroupId");
+
+                    b.ToTable("group_membership", "organisation");
+                });
+
+            modelBuilder.Entity("CompanyHero.Modules.Organisation.Domain.HeadcountEntry", b =>
+                {
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer")
+                        .HasColumnName("count");
+
+                    b.Property<DateOnly>("EffectiveFrom")
+                        .HasColumnType("date")
+                        .HasColumnName("effective_from");
+
+                    b.Property<Guid?>("GroupId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("group_id");
+
+                    b.Property<DateTimeOffset>("RecordedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("recorded_at");
+
+                    b.HasKey("TenantId", "Id");
+
+                    b.HasIndex("TenantId", "GroupId", "EffectiveFrom");
+
+                    b.ToTable("headcount", "organisation");
+                });
+
+            modelBuilder.Entity("CompanyHero.Modules.Organisation.Domain.MemberGroup", b =>
+                {
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset?>("ArchivedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("archived_at");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid>("DimensionId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("dimension_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)")
+                        .HasColumnName("name");
+
+                    b.HasKey("TenantId", "Id");
+
+                    b.HasIndex("TenantId", "DimensionId");
+
+                    b.ToTable("member_group", "organisation");
+                });
+
             modelBuilder.Entity("CompanyHero.Modules.Organisation.Domain.Membership", b =>
                 {
                     b.Property<Guid>("TenantId")
@@ -61,6 +194,10 @@ namespace CompanyHero.Migrations.Migrations.Organisation
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deleted_at");
+
                     b.Property<string>("DisplayName")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -74,6 +211,31 @@ namespace CompanyHero.Migrations.Migrations.Organisation
                     b.Property<short>("State")
                         .HasColumnType("smallint")
                         .HasColumnName("state");
+
+                    b.Property<DateTimeOffset?>("SuspendedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("suspended_at");
+
+                    b.Property<string>("SuspensionReason")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("suspension_reason");
+
+                    b.Property<DateTimeOffset?>("TerminatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("terminated_at");
+
+                    b.Property<DateTimeOffset?>("TerminationEffectiveAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("termination_effective_at");
+
+                    b.Property<string>("TimeZoneId")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasDefaultValue("Europe/Vienna")
+                        .HasColumnName("time_zone");
 
                     b.Property<short>("Type")
                         .HasColumnType("smallint")
@@ -116,6 +278,24 @@ namespace CompanyHero.Migrations.Migrations.Organisation
                         .IsUnique();
 
                     b.ToTable("role_assignment", "organisation");
+                });
+
+            modelBuilder.Entity("CompanyHero.Modules.Organisation.Domain.GroupMembership", b =>
+                {
+                    b.HasOne("CompanyHero.Modules.Organisation.Domain.MemberGroup", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "GroupId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CompanyHero.Modules.Organisation.Domain.MemberGroup", b =>
+                {
+                    b.HasOne("CompanyHero.Modules.Organisation.Domain.GroupDimension", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "DimensionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CompanyHero.Modules.Organisation.Domain.Organisation", b =>

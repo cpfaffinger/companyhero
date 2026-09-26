@@ -82,9 +82,9 @@ public sealed class KioskTests(PostgresFixture pg) : IAsyncLifetime
             Assert.Equal("Eingang Halle 2", device.Name);
 
             // Beitritt am Kiosk: Kennung wird angezeigt, PIN gewählt, Wiederherstellungscode dazu (Zugang 2.2, 6.2).
-            using var trivial = await kiosk.PostAsync($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Kioskkind", VisibilityDto.Team, "1234"), Ct);
+            using var trivial = await kiosk.PostAsync($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Kioskkind", VisibilityDto.Team, "1234", null), Ct);
             Assert.Equal(HttpStatusCode.UnprocessableEntity, trivial.StatusCode);
-            var join = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Kioskkind", VisibilityDto.Team, "7391"), Ct, HttpStatusCode.Created);
+            var join = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Kioskkind", VisibilityDto.Team, "7391", null), Ct, HttpStatusCode.Created);
             Assert.Matches("^[0-9]{6}$", join.KioskId);
             Assert.NotNull(join.RecoveryCode);
             Assert.Null(join.SessionKind);
@@ -159,8 +159,8 @@ public sealed class KioskTests(PostgresFixture pg) : IAsyncLifetime
         {
             try
             {
-                var join = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Gesperrt", VisibilityDto.Company, "8524"), Ct, HttpStatusCode.Created);
-                var other = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Andere", VisibilityDto.Company, "9137"), Ct, HttpStatusCode.Created);
+                var join = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Gesperrt", VisibilityDto.Company, "8524", null), Ct, HttpStatusCode.Created);
+                var other = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Andere", VisibilityDto.Company, "9137", null), Ct, HttpStatusCode.Created);
 
                 // Fünf Fehlversuche für eine Kennung: die Kennung ist am Gerät 15 Minuten gesperrt, auch mit richtiger PIN.
                 for (var i = 0; i < 5; i++)
@@ -242,8 +242,8 @@ public sealed class KioskTests(PostgresFixture pg) : IAsyncLifetime
         {
             try
             {
-                var anna = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Anna K", VisibilityDto.Company, "8524"), Ct, HttpStatusCode.Created);
-                var ben = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Ben K", VisibilityDto.Company, "9137"), Ct, HttpStatusCode.Created);
+                var anna = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Anna K", VisibilityDto.Company, "8524", null), Ct, HttpStatusCode.Created);
+                var ben = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Ben K", VisibilityDto.Company, "9137", null), Ct, HttpStatusCode.Created);
 
                 // Jede Eingabe setzt den Countdown zurück; 60 Sekunden ohne Eingabe beenden die Personensitzung.
                 await KioskLoginAsync(kiosk, anna.KioskId, "8524", Ct);
@@ -324,7 +324,7 @@ public sealed class KioskTests(PostgresFixture pg) : IAsyncLifetime
         var (kiosk, _) = await RegisterKioskAsync(pg, _t, Ct);
         using (kiosk)
         {
-            var join = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Vergesslich", VisibilityDto.Company, "8524"), Ct, HttpStatusCode.Created);
+            var join = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Vergesslich", VisibilityDto.Company, "8524", null), Ct, HttpStatusCode.Created);
 
             // Vergessene PIN ohne eigenes Gerät: Neusetzung mit dem Wiederherstellungscode am Kiosk (Zugang 6.2); der Code erneuert sich.
             using var wrongCode = await kiosk.PostAsync("/api/kiosk/pin/reset", new PinResetRequest(join.KioskId, "AAA-AAA-AAA-AAA", "2580"), Ct);
@@ -350,13 +350,13 @@ public sealed class KioskTests(PostgresFixture pg) : IAsyncLifetime
             Assert.False(ways.Ways.Kiosk);
             Assert.Equal(["microsoft"], ways.Ways.ForcedProviderKeys);
             Assert.Equal(["microsoft"], ways.Ways.Providers.Select(p => p.Key).ToList());
-            using var noKioskJoin = await kiosk.PostAsync($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Zu spät", VisibilityDto.Company, "2580"), Ct);
+            using var noKioskJoin = await kiosk.PostAsync($"/api/join/{_joinCode}/kiosk", new KioskJoinRequest("Zu spät", VisibilityDto.Company, "2580", null), Ct);
             Assert.Equal(HttpStatusCode.Forbidden, noKioskJoin.StatusCode);
             using var noPasskeyJoin = pg.Browser();
             using var ceremony = await noPasskeyJoin.PostAsync($"/api/join/{_joinCode}/passkey-options", new JoinPasskeyOptionsRequest("X"), Ct);
             using var authenticator = new SoftwareAuthenticator();
             var options = (await ceremony.Content.ReadFromJsonAsync<PasskeyCeremonyResponse>(Ct))!;
-            using var rejected = await noPasskeyJoin.PostAsync($"/api/join/{_joinCode}", new JoinRequest("Ohne Anbieter", VisibilityDto.Company, new PasskeyAnswerRequest(options.State, authenticator.CreateAttestation(options.Options), null), null, false, null), Ct);
+            using var rejected = await noPasskeyJoin.PostAsync($"/api/join/{_joinCode}", new JoinRequest("Ohne Anbieter", VisibilityDto.Company, new PasskeyAnswerRequest(options.State, authenticator.CreateAttestation(options.Options), null), null, false, null, null), Ct);
             Assert.Equal(HttpStatusCode.Forbidden, rejected.StatusCode);
             var still = await KioskLoginAsync(kiosk, join.KioskId, "4826", Ct);
             Assert.Equal("Vergesslich", still.DisplayName);

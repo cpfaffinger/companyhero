@@ -1,0 +1,20 @@
+{
+  "status": 201,
+  "contentType": "application/json",
+  "body": {
+    "challengeId": "01a0def2-57d8-7104-8262-034ffe576b47",
+    "title": "Gemeinsam starten",
+    "description": null,
+    "metric": "checkmark",
+    "target": "400.0000",
+    "state": "draft",
+    "visibility": "company",
+    "startsAt": "2026-09-27T22:00:00+00:00",
+    "endsAt": "2026-10-25T22:59:59+00:00",
+    "collective": null,
+    "percent": 0,
+    "contributedToday": false,
+    "previewed": false,
+    "templateKey": "kickoff"
+  }
+}

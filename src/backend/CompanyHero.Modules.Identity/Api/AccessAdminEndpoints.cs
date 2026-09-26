@@ -1,4 +1,5 @@
 using CompanyHero.Modules.Identity.Application.Access;
+using CompanyHero.Modules.Identity.Application.Account;
 using CompanyHero.Modules.Identity.Application.Kiosk;
 using CompanyHero.Platform.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +37,18 @@ internal static class AccessAdminEndpoints
             .WithName("RevokeJoinCode")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound);
+
+        // Mitglied entfernen (Organisation 3.1, 3.2): nur Tenant-Admin, wirkt wie Austritt, sensible Aktion mit frischer Anmeldung.
+        access.MapPost("/members/{personId:guid}/remove", async (Guid personId, IPersonLifecycle lifecycle, CancellationToken ct) =>
+            {
+                await lifecycle.EndMembershipAsync(new Platform.Tenancy.PersonId(personId), MembershipEndReason.Removed, ct);
+                return Results.NoContent();
+            })
+            .RequireTenantContext().RequireRoles(Modules.Organisation.Domain.Role.TenantAdmin).RequireFreshLogin()
+            .WithName("RemoveMember")
+            .Produces(StatusCodes.Status204NoContent)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .ProducesProblem(StatusCodes.Status409Conflict);
 
         access.MapPost("/role-codes", async (IssueRoleCodeRequest request, IAccessAdministration admin, CancellationToken ct) =>
             {

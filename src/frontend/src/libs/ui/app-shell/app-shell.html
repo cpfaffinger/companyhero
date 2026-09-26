@@ -37,9 +37,9 @@
     </div>
     <h1 class="ch-shell__title">{{ title() }}</h1>
     <span class="ch-shell__spacer"></span>
-    <button matIconButton type="button" [attr.aria-label]="texts.t('kopf.benachrichtigungen')">
+    <a matIconButton [routerLink]="[base(), 'benachrichtigungen']" [attr.aria-label]="texts.t('kopf.benachrichtigungen')" data-testid="glocke">
       <span class="material-symbols-rounded" aria-hidden="true">notifications</span>
-    </button>
+    </a>
   </header>
   <main class="ch-shell__main" id="ch-main" tabindex="-1" #main>
     <h1 class="ch-shell__page-title">{{ title() }}</h1>

@@ -1,7 +1,9 @@
 using CompanyHero.Modules.Branding.Infrastructure;
 using CompanyHero.Modules.Challenges.Infrastructure;
+using CompanyHero.Modules.Feed.Infrastructure;
 using CompanyHero.Modules.Identity.Infrastructure;
 using CompanyHero.Modules.Metering.Infrastructure;
+using CompanyHero.Modules.Notifications.Infrastructure;
 using CompanyHero.Modules.Organisation.Infrastructure;
 using CompanyHero.Modules.Privacy.Infrastructure;
 using CompanyHero.Modules.Progress.Infrastructure;
@@ -59,4 +61,14 @@ internal sealed class MeteringDbContextFactory : IDesignTimeDbContextFactory<Met
 internal sealed class BrandingDbContextFactory : IDesignTimeDbContextFactory<BrandingDbContext>
 {
     public BrandingDbContext CreateDbContext(string[] args) => new(DesignTime.Options<BrandingDbContext>(ModuleSchemas.Branding));
+}
+
+internal sealed class FeedDbContextFactory : IDesignTimeDbContextFactory<FeedDbContext>
+{
+    public FeedDbContext CreateDbContext(string[] args) => new(DesignTime.Options<FeedDbContext>(ModuleSchemas.Feed));
+}
+
+internal sealed class NotificationsDbContextFactory : IDesignTimeDbContextFactory<NotificationsDbContext>
+{
+    public NotificationsDbContext CreateDbContext(string[] args) => new(DesignTime.Options<NotificationsDbContext>(ModuleSchemas.Notifications));
 }

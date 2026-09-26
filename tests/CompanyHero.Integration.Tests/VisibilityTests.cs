@@ -91,7 +91,7 @@ public sealed class VisibilityTests(PostgresFixture pg)
         foreach (var entry in doc.RootElement.EnumerateArray())
         {
             var fields = entry.EnumerateObject().Select(p => p.Name).Order(StringComparer.Ordinal).ToList();
-            Assert.Equal(["displayName", "joinedAt", "personId", "roles"], fields);
+            Assert.Equal(["displayName", "groups", "joinedAt", "personId", "roles"], fields);
         }
 
         Assert.DoesNotContain("activit", json, StringComparison.OrdinalIgnoreCase);

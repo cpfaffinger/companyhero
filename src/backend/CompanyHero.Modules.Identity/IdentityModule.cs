@@ -15,6 +15,7 @@ using CompanyHero.Modules.Identity.Infrastructure.Oidc;
 using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Jobs;
 using CompanyHero.Platform.Modules;
+using CompanyHero.Platform.Privacy;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Routing;
@@ -50,11 +51,19 @@ public sealed class IdentityModule : IModule
         services.AddScoped<IJoinService, JoinService>();
         services.AddScoped<IKioskService, KioskService>();
         services.AddScoped<IAccountService, AccountService>();
-        services.AddScoped<IAccessAdministration, AccessAdministration>();
+        services.AddScoped<AccessAdministration>();
+        services.AddScoped<IAccessAdministration>(sp => sp.GetRequiredService<AccessAdministration>());
+        services.AddScoped<IJoinLinks>(sp => sp.GetRequiredService<AccessAdministration>());
         services.AddScoped<IDiscoveryDocumentReader, DiscoveryDocumentReader>();
         services.TryAddSingleton<IOidcBackchannel, DefaultOidcBackchannel>();
         services.AddSingleton<OidcSchemeRegistry>();
+        services.AddScoped<IPersonLifecycle, PersonLifecycle>();
+        services.AddScoped<IdentityPersonalData>();
+        services.AddScoped<IPersonalDataExporter>(sp => sp.GetRequiredService<IdentityPersonalData>());
+        services.AddScoped<IPersonalDataEraser>(sp => sp.GetRequiredService<IdentityPersonalData>());
         services.AddScheduledTask<KioskDeviceMonthTask>();
+        services.AddScheduledTask<IdentityCleanupTask>();
+        services.AddScheduledTask<OrphanedPersonsTask>();
 
         // Sitzungsschema als Standard (A-007); OIDC-Schemata entstehen dynamisch je Anbieter mit dem Sitzungsschema als SignInScheme.
         services.AddAuthentication(SessionCookies.Scheme)

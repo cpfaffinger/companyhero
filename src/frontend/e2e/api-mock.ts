@@ -65,7 +65,48 @@ export async function mockApi(page: Page, options: MockOptions): Promise<{ tenan
     return route.fulfill(respond(s));
   });
   await mockAccess(page, options);
+  await mockFachpfad(page, options);
   return { tenantId, theme };
+}
+
+/**
+ * Fachpfad (Stufe 6): Feed, Fortschritt, Benachrichtigungen, Gruppen, Sichtbarkeit und Challenge-Verwaltung aus den Vertragsproben.
+ * Zustandsändernde Aufrufe antworten mit den Proben (Beitrag, Check-in, Kickoff) oder 204; die Proben selbst bleiben unverändert.
+ */
+export async function mockFachpfad(page: Page, options: MockOptions): Promise<void> {
+  const respond = (s: Sample, body?: unknown) => ({ status: s.status, contentType: s.contentType ?? 'application/json', body: JSON.stringify(body ?? s.body) });
+  const feed = sample('feed');
+  const now = Date.now();
+  const feedBody = feed.body as { head: { challenge: { startsAt: string; endsAt: string; collective: { updatedAt: string } | null } | null }; cards: { day: string; occurredAt: string }[] };
+  const today = new Date(now).toISOString().slice(0, 10);
+  const feedNow = {
+    ...feedBody,
+    head: feedBody.head.challenge
+      ? { ...feedBody.head, challenge: { ...feedBody.head.challenge, startsAt: new Date(now - 12 * 86_400_000).toISOString(), endsAt: new Date(now + 9 * 86_400_000 - 60_000).toISOString(), collective: feedBody.head.challenge.collective ? { ...feedBody.head.challenge.collective, updatedAt: new Date(now - 4 * 60_000).toISOString() } : null } }
+      : feedBody.head,
+    cards: feedBody.cards.map((card) => ({ ...card, day: today })),
+  };
+  await page.route('**/api/feed', (route) => route.fulfill(respond(feed, feedNow)));
+  await page.route('**/api/feed/posts', (route) => (options.contribution === 'rejected' ? route.fulfill({ status: 422, contentType: 'application/problem+json', body: JSON.stringify({ status: 422, title: 'Mit „Nur für mich“ ist kein Beitrag möglich', detail: 'visibility_only_me' }) }) : route.fulfill(respond(sample('feed-post-created')))));
+  await page.route('**/api/me/progress', (route) => route.fulfill(respond(sample('me-progress'))));
+  await page.route('**/api/me/progress/daily-goal', (route) => route.fulfill({ status: 204, body: '' }));
+  await page.route('**/api/me/check-in', (route) => route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ outcome: 'recorded' }) }));
+  await page.route('**/api/notifications', (route) => route.fulfill(respond(sample('notifications'))));
+  await page.route('**/api/notifications?*', (route) => route.fulfill(respond(sample('notifications'))));
+  await page.route('**/api/notifications/*/read', (route) => route.fulfill({ status: 204, body: '' }));
+  await page.route('**/api/notifications/read-all', (route) => route.fulfill({ status: 204, body: '' }));
+  await page.route('**/api/notifications/vapid', (route) => route.fulfill(respond(sample('vapid'))));
+  await page.route('**/api/me/notifications', (route) => route.fulfill(respond(sample('me-notifications'))));
+  await page.route('**/api/me/notifications/subscriptions', (route) => route.fulfill(respond(sample('me-notification-subscriptions'))));
+  await page.route('**/api/organisation/dimensions', (route) => route.fulfill(respond(sample('dimensions'))));
+  await page.route('**/api/organisation/tenant', (route) => route.fulfill(respond(sample('tenant'))));
+  await page.route('**/api/me/groups', (route) => (route.request().method() === 'GET' ? route.fulfill(respond(sample('me-groups'))) : route.fulfill({ status: 204, body: '' })));
+  await page.route('**/api/me/visibility', (route) => (route.request().method() === 'GET' ? route.fulfill(respond(sample('me-visibility'))) : route.fulfill({ status: 204, body: '' })));
+  await page.route('**/api/me/consents', (route) => route.fulfill(respond(sample('me-consents'))));
+  await page.route('**/api/challenges/manage', (route) => route.fulfill(respond(sample('challenges-manage'))));
+  await page.route('**/api/challenges/kickoff', (route) => route.fulfill(respond(sample('challenge-kickoff'))));
+  await page.route('**/api/challenges/*/preview', (route) => route.fulfill(respond(sample('challenge-kickoff'), { ...(sample('challenge-kickoff').body as object), previewed: true })));
+  await page.route('**/api/challenges/*/plan', (route) => route.fulfill({ status: 204, body: '' }));
 }
 
 /**

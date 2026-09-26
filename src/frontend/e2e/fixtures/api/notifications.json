@@ -1,0 +1,39 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": [
+    {
+      "id": "01a0def2-5548-730b-b398-6d736c00e9dc",
+      "category": "progress",
+      "textKey": "benachrichtigung.abzeichen",
+      "params": {
+        "abzeichen": "abzeichen.vielfalt.fuenfArten"
+      },
+      "target": "/ich",
+      "occurredAt": "2026-09-26T18:20:18.553344+00:00",
+      "readAt": null
+    },
+    {
+      "id": "01a0def2-5514-76af-8ad0-1ddb9a6b382d",
+      "category": "progress",
+      "textKey": "benachrichtigung.abzeichen",
+      "params": {
+        "abzeichen": "abzeichen.einstieg.ersteUebung"
+      },
+      "target": "/ich",
+      "occurredAt": "2026-09-26T18:20:17.86393+00:00",
+      "readAt": null
+    },
+    {
+      "id": "01a0def2-5504-7fcc-98ea-6064c00e7ea2",
+      "category": "progress",
+      "textKey": "benachrichtigung.abzeichen",
+      "params": {
+        "abzeichen": "abzeichen.einstieg.ersterTag"
+      },
+      "target": "/ich",
+      "occurredAt": "2026-09-26T18:20:17.86393+00:00",
+      "readAt": null
+    }
+  ]
+}

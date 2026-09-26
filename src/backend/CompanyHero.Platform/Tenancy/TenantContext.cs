@@ -41,7 +41,7 @@ public enum SessionKind
 /// </summary>
 public sealed record TenantContext
 {
-    private TenantContext(TenantContextKind kind, TenantId? tenantId, PersonId? personId, IReadOnlySet<string> roles, SessionKind session, DateTimeOffset? authenticatedAt, Guid? kioskDeviceId)
+    private TenantContext(TenantContextKind kind, TenantId? tenantId, PersonId? personId, IReadOnlySet<string> roles, SessionKind session, DateTimeOffset? authenticatedAt, Guid? kioskDeviceId, bool readOnly = false)
     {
         Kind = kind;
         TenantId = tenantId;
@@ -50,6 +50,7 @@ public sealed record TenantContext
         Session = session;
         AuthenticatedAt = authenticatedAt;
         KioskDeviceId = kioskDeviceId;
+        ReadOnly = readOnly;
     }
 
     public TenantContextKind Kind { get; }
@@ -72,6 +73,9 @@ public sealed record TenantContext
     /// <summary>Kiosk-Gerät der Sitzung (Geräte- und Personensitzung).</summary>
     public Guid? KioskDeviceId { get; }
 
+    /// <summary>Nur lesender Zugriff (gekündigter Tenant in der Lesefrist, Organisation 1.3): zustandsändernde Requests werden abgelehnt.</summary>
+    public bool ReadOnly { get; }
+
     /// <summary>Kontext eines Jobs oder eines Systemablaufs im Tenant, ohne handelnde Person.</summary>
     public static TenantContext ForTenant(TenantId tenantId) =>
         new(TenantContextKind.Tenant, tenantId, null, new HashSet<string>(StringComparer.Ordinal), SessionKind.None, null, null);
@@ -81,8 +85,8 @@ public sealed record TenantContext
         ForPerson(tenantId, personId, roles, SessionKind.Member, null, null);
 
     /// <summary>Kontext einer angemeldeten Person mit Sitzungsart, Anmeldezeitpunkt und gegebenenfalls Kiosk-Gerät.</summary>
-    public static TenantContext ForPerson(TenantId tenantId, PersonId personId, IEnumerable<string> roles, SessionKind session, DateTimeOffset? authenticatedAt, Guid? kioskDeviceId) =>
-        new(TenantContextKind.Tenant, tenantId, personId, new HashSet<string>(roles, StringComparer.Ordinal), session, authenticatedAt, kioskDeviceId);
+    public static TenantContext ForPerson(TenantId tenantId, PersonId personId, IEnumerable<string> roles, SessionKind session, DateTimeOffset? authenticatedAt, Guid? kioskDeviceId, bool readOnly = false) =>
+        new(TenantContextKind.Tenant, tenantId, personId, new HashSet<string>(roles, StringComparer.Ordinal), session, authenticatedAt, kioskDeviceId, readOnly);
 
     /// <summary>Kontext einer Kiosk-Gerätesitzung: Tenant bekannt, keine Person, keine Rollen (A-005).</summary>
     public static TenantContext ForKioskDevice(TenantId tenantId, Guid kioskDeviceId) =>

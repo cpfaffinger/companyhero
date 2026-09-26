@@ -6,12 +6,13 @@ import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { TextService } from '../../../../libs/theme/text.service';
 import { ThemeService, type ThemeMode } from '../../../../libs/theme/theme.service';
+import { FortschrittEinstellungen } from './fortschritt-einstellungen';
 import { ZugangEinstellungen } from './zugang-einstellungen';
 
 @Component({
   selector: 'ch-ich-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonToggleGroup, MatButtonToggle, MatSlideToggle, ZugangEinstellungen],
+  imports: [MatButtonToggleGroup, MatButtonToggle, MatSlideToggle, ZugangEinstellungen, FortschrittEinstellungen],
   template: `
     <section class="ch-ich">
       <div class="ch-ich__block">
@@ -26,6 +27,7 @@ import { ZugangEinstellungen } from './zugang-einstellungen';
         <mat-slide-toggle [checked]="theme.scale() === 'gross'" (change)="theme.setScale($event.checked ? 'gross' : 'standard')">{{ texts.t('ich.grossflaeche') }}</mat-slide-toggle>
         <p class="ch-ich__hint">{{ texts.t('ich.grossflaecheHinweis') }}</p>
       </div>
+      <ch-fortschritt-einstellungen class="ch-ich__block ch-ich__block--voll" />
       <ch-zugang-einstellungen class="ch-ich__block ch-ich__block--voll" />
       <div class="ch-ich__block">
         <h2 class="ch-ich__title">{{ texts.t('ich.installieren') }}</h2>

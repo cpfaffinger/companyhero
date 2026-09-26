@@ -236,6 +236,7 @@ public static class JobWorkerExtensions
         services.AddSingleton(sp => new JobHandlerRegistry(sp.GetServices<JobHandlerRegistration>()));
         services.AddSingleton(sp => sp.GetServices<ScheduledTaskRegistration>().ToList() as IReadOnlyList<ScheduledTaskRegistration>);
         services.AddSingleton<ScheduleRunner>();
+        services.AddScheduledTask<JobCleanupTask>();
         return services;
     }
 

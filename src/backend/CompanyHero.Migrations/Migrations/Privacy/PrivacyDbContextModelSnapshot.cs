@@ -70,6 +70,50 @@ namespace CompanyHero.Migrations.Migrations.Privacy
                     b.ToTable("audit_entry", "privacy");
                 });
 
+            modelBuilder.Entity("CompanyHero.Modules.Privacy.Domain.ConsentEntry", b =>
+                {
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("kind");
+
+                    b.Property<string>("Next")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("next");
+
+                    b.Property<DateTimeOffset>("OccurredAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("occurred_at");
+
+                    b.Property<string>("Previous")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("previous");
+
+                    b.Property<string>("SubjectRef")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("subject_ref");
+
+                    b.HasKey("TenantId", "Id");
+
+                    b.HasIndex("TenantId", "SubjectRef", "OccurredAt");
+
+                    b.ToTable("consent_entry", "privacy");
+                });
+
             modelBuilder.Entity("CompanyHero.Modules.Privacy.Domain.SecurityRecord", b =>
                 {
                     b.Property<Guid>("TenantId")

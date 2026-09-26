@@ -101,6 +101,19 @@ DB_NAME="${CH_DB_NAME:-companyhero}"
 bao kv put -mount=companyhero app/database \
   "ConnectionStrings__Default=Host=${DB_HOST};Database=${DB_NAME};Username=ch_app;Password=${APP_PASSWORD};Maximum Pool Size=50" > /dev/null
 
+# Benachrichtigungen (A-059, A-032): VAPID-Schlüssel und SMTP-Zugang als Anwendungsgeheimnis; Werte kommen aus Docker-Secrets und .env.
+VAPID_PEM="$(cat /run/secrets/vapid_private_key 2>/dev/null || true)"
+SMTP_PASSWORD="$(cat /run/secrets/smtp_password 2>/dev/null || true)"
+bao kv put -mount=companyhero app/notifications \
+  "Notifications__Vapid__PrivateKeyPem=${VAPID_PEM}" \
+  "Notifications__Vapid__Subject=${CH_VAPID_SUBJECT:-mailto:betrieb@localhost}" \
+  "Notifications__Smtp__Host=${CH_SMTP_HOST:-}" \
+  "Notifications__Smtp__Port=${CH_SMTP_PORT:-587}" \
+  "Notifications__Smtp__Username=${CH_SMTP_USERNAME:-}" \
+  "Notifications__Smtp__Password=${SMTP_PASSWORD}" \
+  "Notifications__Smtp__From=${CH_SMTP_FROM:-companyhero@localhost}" \
+  "Notifications__Smtp__FromName=${CH_SMTP_FROM_NAME:-CompanyHero}" > /dev/null
+
 mkdir -p "$RUNTIME_DIR"
 bao token create -policy=companyhero-app -period=720h -orphan -format=json \
   | sed -n 's/.*"client_token": "\([^"]*\)".*/\1/p' > "$RUNTIME_DIR/openbao-app-token.tmp"
@@ -108,4 +121,4 @@ bao token create -policy=companyhero-app -period=720h -orphan -format=json \
 mv "$RUNTIME_DIR/openbao-app-token.tmp" "$RUNTIME_DIR/openbao-app-token"
 chmod 0644 "$RUNTIME_DIR/openbao-app-token"
 
-log "OpenBao eingerichtet: KV companyhero, Transit companyhero-transit, Token für companyhero-app ausgestellt"
+log "OpenBao eingerichtet: KV companyhero (app/database, app/notifications), Transit companyhero-transit, Token für companyhero-app ausgestellt"

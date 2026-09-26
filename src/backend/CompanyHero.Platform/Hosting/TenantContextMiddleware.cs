@@ -25,14 +25,17 @@ public sealed class TenantContextMiddleware(RequestDelegate next, ILogger<Tenant
         if (user.Identity?.IsAuthenticated == true)
         {
             var accessor = httpContext.RequestServices.GetRequiredService<TenantContextAccessor>();
-            var context = await ResolveAsync(user, httpContext.RequestServices, httpContext.RequestAborted);
+            var context = await ResolveAsync(user, httpContext.RequestServices, httpContext.Items, httpContext.RequestAborted);
             accessor.Set(context);
         }
 
         await next(httpContext);
     }
 
-    private async Task<TenantContext?> ResolveAsync(ClaimsPrincipal user, IServiceProvider services, CancellationToken cancellationToken)
+    /// <summary>Schlüssel in <c>HttpContext.Items</c> mit dem neutralen Grund, warum eine geprüfte Sitzung keinen Kontext erhielt (Organisation 1.3).</summary>
+    public const string DeniedReasonItem = "ch:denied_reason";
+
+    private async Task<TenantContext?> ResolveAsync(ClaimsPrincipal user, IServiceProvider services, IDictionary<object, object?> httpItems, CancellationToken cancellationToken)
     {
         var kind = user.FindFirstValue(CompanyHeroClaims.Context) ?? CompanyHeroClaims.ContextTenant;
         var person = ParseId(user.FindFirstValue(CompanyHeroClaims.Person));
@@ -91,11 +94,16 @@ public sealed class TenantContextMiddleware(RequestDelegate next, ILogger<Tenant
             if (!verdict.Active)
             {
                 logger.LogWarning("Sitzung ohne aktive Mitgliedschaft; kein Kontext gesetzt.");
+                if (verdict.DeniedReason is not null)
+                {
+                    httpItems[DeniedReasonItem] = verdict.DeniedReason;
+                }
+
                 return null;
             }
 
             var roles = session == SessionKind.KioskPerson ? verdict.Roles.Where(r => string.Equals(r, "member", StringComparison.Ordinal)) : verdict.Roles;
-            return TenantContext.ForPerson(tenantId, personId, roles, session, authenticatedAt, device);
+            return TenantContext.ForPerson(tenantId, personId, roles, session, authenticatedAt, device, verdict.ReadOnly);
         }
         finally
         {
@@ -160,6 +168,12 @@ public static class TenantContextEndpointExtensions
             if (current.PersonId is null)
             {
                 return Results.Forbid();
+            }
+
+            // Lesefrist nach der Kündigung (Organisation 1.3): Tenant-Admin und Einsichtsrolle lesen, nichts ändert sich mehr.
+            if (current.ReadOnly && !HttpMethods.IsGet(invocation.HttpContext.Request.Method) && !HttpMethods.IsHead(invocation.HttpContext.Request.Method))
+            {
+                return Results.Problem(statusCode: StatusCodes.Status403Forbidden, title: "Nur lesender Zugriff", detail: "tenant_read_only");
             }
 
             var fresh = invocation.HttpContext.GetEndpoint()?.Metadata.GetMetadata<FreshLoginMetadata>();

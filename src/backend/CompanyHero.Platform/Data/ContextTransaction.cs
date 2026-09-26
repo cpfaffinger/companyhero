@@ -77,7 +77,7 @@ public sealed class ContextTransactionScope : IAsyncDisposable
 }
 
 /// <summary>Ein Exemplar je Scope (Request oder Job); erzeugt die Verbindung des Scopes, öffnet sie nur für die Transaktion.</summary>
-internal sealed class ContextTransaction(NpgsqlDataSource dataSource, ITenantContextAccessor accessor) : IContextTransaction, IAsyncDisposable
+internal sealed class ContextTransaction(NpgsqlDataSource dataSource, ITenantContextAccessor accessor, IServiceProvider services, IEnumerable<ModuleDbContextRegistration> contexts) : IContextTransaction, IAsyncDisposable
 {
     private NpgsqlTransaction? _transaction;
     private int _depth;
@@ -188,6 +188,8 @@ internal sealed class ContextTransaction(NpgsqlDataSource dataSource, ITenantCon
             else
             {
                 await RollbackQuietlyAsync(transaction);
+                // Verworfene Änderungen verschwinden auch aus den Modulkontexten des Scopes: der nächste Abschnitt beginnt ohne Altlasten.
+                ClearTrackedEntities();
             }
         }
         finally
@@ -195,6 +197,17 @@ internal sealed class ContextTransaction(NpgsqlDataSource dataSource, ITenantCon
             await transaction.DisposeAsync();
             // Verbindung zurück in den Pool: kurze Transaktionen, kein Kontext auf der Poolverbindung (Backend 5.2).
             await Connection.CloseAsync();
+        }
+    }
+
+    private void ClearTrackedEntities()
+    {
+        foreach (var registration in contexts)
+        {
+            if (services.GetService(registration.ContextType) is Microsoft.EntityFrameworkCore.DbContext db)
+            {
+                db.ChangeTracker.Clear();
+            }
         }
     }
 

@@ -5,7 +5,7 @@ using CompanyHero.Platform.Configuration;
 using CompanyHero.Platform.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddOpenBaoIfConfigured(["app/database"]);
+builder.Configuration.AddOpenBaoIfConfigured(["app/database", "app/notifications"]);
 var modules = AllModules.Create();
 builder.Services.AddPlatformData(builder.Configuration);
 builder.AddCompanyHeroHost("companyhero-api", modules);

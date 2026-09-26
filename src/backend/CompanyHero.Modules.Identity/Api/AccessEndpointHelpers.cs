@@ -29,6 +29,10 @@ internal static class AccessEndpointHelpers
             {
                 return Results.Problem(statusCode: StatusCodes.Status422UnprocessableEntity, title: "Passkey abgelehnt", detail: "passkey_rejected", extensions: new Dictionary<string, object?> { ["reason"] = ex.Message });
             }
+            catch (Modules.Organisation.Domain.OrganisationHierarchyException ex)
+            {
+                return Results.Problem(statusCode: StatusCodes.Status409Conflict, title: "Organisation", detail: ex.Message);
+            }
             catch (UnauthorizedAccessException)
             {
                 return Results.Forbid();

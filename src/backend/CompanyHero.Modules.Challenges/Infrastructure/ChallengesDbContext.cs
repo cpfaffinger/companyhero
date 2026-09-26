@@ -32,12 +32,24 @@ public sealed class ChallengesDbContext(DbContextOptions<ChallengesDbContext> op
             b.Property(c => c.TenantId).HasColumnName("tenant_id");
             b.Property(c => c.Id).HasColumnName("id");
             b.Property(c => c.Title).HasColumnName("title").HasMaxLength(200).IsRequired();
+            b.Property(c => c.Description).HasColumnName("description").HasMaxLength(2000);
             b.Property(c => c.Metric).HasColumnName("metric").HasConversion<short>();
             b.Property(c => c.Target).HasColumnName("target").HasPrecision(12, 4);
             b.Property(c => c.State).HasColumnName("state").HasConversion<short>();
             b.Property(c => c.StartsAt).HasColumnName("starts_at");
             b.Property(c => c.EndsAt).HasColumnName("ends_at");
             b.Property(c => c.CreatedAt).HasColumnName("created_at");
+            b.Property(c => c.Visibility).HasColumnName("visibility").HasConversion<short>().HasDefaultValue(ChallengeVisibility.Company);
+            b.Property(c => c.CreatedBy).HasColumnName("created_by");
+            b.Property(c => c.TemplateKey).HasColumnName("template_key").HasMaxLength(40);
+            b.Property(c => c.PreviewedAt).HasColumnName("previewed_at");
+            b.Property(c => c.PlannedAt).HasColumnName("planned_at");
+            b.Property(c => c.EndedAt).HasColumnName("ended_at");
+            b.Property(c => c.EndedEarlyReason).HasColumnName("ended_early_reason").HasMaxLength(500);
+            b.Property(c => c.ArchivedAt).HasColumnName("archived_at");
+            b.Ignore(c => c.AcceptsContributionsUntil);
+            b.Ignore(c => c.AcceptsContributions);
+            b.HasIndex(c => new { c.TenantId, c.State });
         });
 
         modelBuilder.Entity<Contribution>(b =>
@@ -52,6 +64,11 @@ public sealed class ChallengesDbContext(DbContextOptions<ChallengesDbContext> op
             b.Property(c => c.RecordedAt).HasColumnName("recorded_at");
             b.Property(c => c.ReceivedAt).HasColumnName("received_at");
             b.Property(c => c.Channel).HasColumnName("channel").HasConversion<short>();
+            b.PrimitiveCollection(c => c.GroupIds).HasColumnName("group_ids");
+            b.Property(c => c.ActivityEventId).HasColumnName("activity_event_id");
+            b.Property(c => c.ReversalOf).HasColumnName("reversal_of");
+            b.Property(c => c.Reversed).HasColumnName("reversed");
+            b.Ignore(c => c.IsReversal);
             // Zusammengesetzter Fremdschlüssel (tenant_id, challenge_id) (Backend 5.1 Nr. 3).
             b.HasOne<Challenge>().WithMany().HasForeignKey(c => new { c.TenantId, c.ChallengeId }).OnDelete(DeleteBehavior.Restrict);
             b.HasIndex(c => new { c.TenantId, c.ChallengeId, c.PersonId, c.RecordedAt });
@@ -96,6 +113,7 @@ public sealed class ChallengesDbContext(DbContextOptions<ChallengesDbContext> op
             b.Property(s => s.ContributionCount).HasColumnName("contribution_count");
             b.Property(s => s.ContributorCount).HasColumnName("contributor_count");
             b.Property(s => s.UpdatedAt).HasColumnName("updated_at");
+            b.Property(s => s.MilestoneReached).HasColumnName("milestone_reached");
             b.HasOne<Challenge>().WithOne().HasForeignKey<CollectiveState>(s => new { s.TenantId, s.ChallengeId }).OnDelete(DeleteBehavior.Cascade);
         });
     }

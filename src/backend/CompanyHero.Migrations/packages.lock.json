@@ -702,6 +702,7 @@
           "CompanyHero.Modules.Branding": "[1.0.0, )",
           "CompanyHero.Modules.Challenges": "[1.0.0, )",
           "CompanyHero.Modules.Entitlements": "[1.0.0, )",
+          "CompanyHero.Modules.Identity": "[1.0.0, )",
           "CompanyHero.Modules.Organisation": "[1.0.0, )",
           "CompanyHero.Modules.Privacy": "[1.0.0, )",
           "CompanyHero.Modules.Progress": "[1.0.0, )",
@@ -730,6 +731,7 @@
         "type": "Project",
         "dependencies": {
           "CompanyHero.Modules.Branding": "[1.0.0, )",
+          "CompanyHero.Modules.Identity": "[1.0.0, )",
           "CompanyHero.Modules.Organisation": "[1.0.0, )",
           "CompanyHero.Modules.Privacy": "[1.0.0, )",
           "CompanyHero.Modules.Progress": "[1.0.0, )",

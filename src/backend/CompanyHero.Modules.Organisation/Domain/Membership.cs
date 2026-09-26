@@ -46,6 +46,14 @@ public sealed class Membership : ITenantOwned
         _roles.Clear();
     }
 
+    /// <summary>Entfernen durch einen Tenant-Admin (Organisation 3.1): wirkt wie Austritt, protokolliert.</summary>
+    public void Remove(DateTimeOffset removedAt)
+    {
+        State = MembershipState.Removed;
+        LeftAt = removedAt;
+        _roles.Clear();
+    }
+
     /// <summary>Rolle entziehen; liefert die entfernte Zuweisung oder <c>null</c>.</summary>
     public RoleAssignment? Revoke(string role)
     {

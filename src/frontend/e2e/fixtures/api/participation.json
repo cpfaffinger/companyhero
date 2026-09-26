@@ -1,0 +1,12 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "period": "month",
+    "groupId": null,
+    "available": false,
+    "activePersons": null,
+    "headcount": null,
+    "percent": null
+  }
+}

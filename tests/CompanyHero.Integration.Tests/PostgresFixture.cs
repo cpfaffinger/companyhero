@@ -73,6 +73,14 @@ public sealed class PostgresFixture : IAsyncLifetime
 
     public CapturingMailSender Mails { get; } = new();
 
+    /// <summary>Push-Dienst und SMTP-Transport der Tests: nehmen Nachrichten an, statt sie zu senden (Benachrichtigungen 3.1, 6.3).</summary>
+    public CapturingPushTransport Push { get; } = new();
+
+    public CapturingMailTransport Mail { get; } = new();
+
+    /// <summary>VAPID-Schlüsselpaar der Testplattform, je Testlauf erzeugt (A-059).</summary>
+    public static string VapidPem { get; } = Modules.Notifications.Application.VapidSigner.GeneratePrivateKeyPem();
+
     public string For(string user, string password, string database)
     {
         var b = new NpgsqlConnectionStringBuilder(SuperuserConnectionString)
@@ -91,6 +99,8 @@ public sealed class PostgresFixture : IAsyncLifetime
         {
             b.UseSetting("ConnectionStrings:Default", connectionString ?? AppConnectionString);
             b.UseSetting("Identity:PublicOrigin", Origin);
+            b.UseSetting("Notifications:Vapid:PrivateKeyPem", VapidPem);
+            b.UseSetting("Notifications:Vapid:Subject", "mailto:betrieb@localhost");
             foreach (var (key, name) in new[] { ("microsoft", "Microsoft"), ("google", "Google") })
             {
                 b.UseSetting($"Identity:Providers:{key}:DisplayName", name);
@@ -104,6 +114,8 @@ public sealed class PostgresFixture : IAsyncLifetime
                 services.Replace(ServiceDescriptor.Singleton<TimeProvider>(Clock));
                 services.Replace(ServiceDescriptor.Singleton<IOidcBackchannel>(new TestOidcBackchannel(Idp)));
                 services.Replace(ServiceDescriptor.Singleton<IAccountMailSender>(Mails));
+                services.Replace(ServiceDescriptor.Singleton<Modules.Notifications.Application.IWebPushTransport>(Push));
+                services.Replace(ServiceDescriptor.Singleton<Modules.Notifications.Application.IMailTransport>(Mail));
                 // Testabonnent eines fremden Moduls (Backend 6.4): die API reiht je Ereignis den Job ein, der Worker-Host verarbeitet ihn.
                 services.AddSingleton(new EventSubscription(ChallengeEventTypes.ContributionRecorded, SubscriberJobHandler.JobType));
             });

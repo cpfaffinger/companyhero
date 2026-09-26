@@ -16,7 +16,7 @@ describe('ApiClient (generierter Vertrag über HttpClient)', () => {
   afterEach(() => http.verify());
 
   it('setzt Pfadparameter aus dem Vertrag ein und sendet mit Sitzungscookie', () => {
-    let result: { total: string } | undefined;
+    let result: { total: string | null } | undefined;
     client.get('/api/challenges/{challengeId}/collective', { path: { challengeId: '01a0dc9f-5e22-7257-b448-4cde50f98097' } }).subscribe((r) => (result = r));
     const request = http.expectOne('/api/challenges/01a0dc9f-5e22-7257-b448-4cde50f98097/collective');
     expect(request.request.method).toBe('GET');

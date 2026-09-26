@@ -46,7 +46,7 @@ public sealed class OidcLoginTests(PostgresFixture pg) : IAsyncLifetime
 
         var preview = await browser.GetJsonAsync<JoinPreviewResponse>($"/api/join/{joinCode}", ct);
         Assert.Equal(providerKey, preview.PendingExternal?.ProviderKey);
-        var join = await browser.PostJsonAsync<JoinResponse>($"/api/join/{joinCode}", new JoinRequest(displayName, VisibilityDto.Company, null, null, true, null), ct, HttpStatusCode.Created);
+        var join = await browser.PostJsonAsync<JoinResponse>($"/api/join/{joinCode}", new JoinRequest(displayName, VisibilityDto.Company, null, null, true, null, null), ct, HttpStatusCode.Created);
         Assert.NotNull(browser.Cookies[SessionCookies.Session]);
         Assert.Null(browser.Cookies[SessionCookies.ExternalHandoff]);
         Assert.Null(join.RecoveryCode);
@@ -197,7 +197,7 @@ public sealed class OidcLoginTests(PostgresFixture pg) : IAsyncLifetime
             var login = await OidcFlow.LoginAsync(pg, again, "microsoft", "ms-austritt-3", Ct);
             Assert.Equal("/zugang/beitritt?extern=1", login.FinalLocation);
             Assert.Null(again.Cookies[SessionCookies.Session]);
-            var rejoin = await again.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}", new JoinRequest("Austretende neu", VisibilityDto.OnlyMe, null, null, true, null), Ct, HttpStatusCode.Created);
+            var rejoin = await again.PostJsonAsync<JoinResponse>($"/api/join/{_joinCode}", new JoinRequest("Austretende neu", VisibilityDto.OnlyMe, null, null, true, null, null), Ct, HttpStatusCode.Created);
             Assert.NotEqual(join.PersonId, rejoin.PersonId);
 
             // Die Mitgliedschaft der alten Person ist beendet; ihre alte E-Mail ist wieder frei.

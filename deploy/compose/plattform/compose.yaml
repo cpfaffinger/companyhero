@@ -248,13 +248,20 @@ services:
       BAO_ADDR: http://openbao:8200
       CH_OPENBAO_AUTO_INIT: ${CH_OPENBAO_AUTO_INIT:-false}
       CH_OPENBAO_ROOT_TOKEN_FILE: ${CH_OPENBAO_ROOT_TOKEN_FILE:-/run/secrets/openbao_root_token}
+      # Benachrichtigungen (A-032, A-059): SMTP-Transport und VAPID-Kontakt; Passwort und Schlüssel als Docker-Secrets.
+      CH_SMTP_HOST: ${CH_SMTP_HOST:-}
+      CH_SMTP_PORT: ${CH_SMTP_PORT:-587}
+      CH_SMTP_USERNAME: ${CH_SMTP_USERNAME:-}
+      CH_SMTP_FROM: ${CH_SMTP_FROM:-companyhero@localhost}
+      CH_SMTP_FROM_NAME: ${CH_SMTP_FROM_NAME:-CompanyHero}
+      CH_VAPID_SUBJECT: ${CH_VAPID_SUBJECT:-mailto:betrieb@localhost}
       CH_DB_HOST: postgres
       CH_DB_NAME: ${CH_DB_NAME:-companyhero}
     volumes:
       - ./openbao/init.sh:/openbao/init.sh:ro
       - openbao-init:/openbao/init
       - runtime:/run/companyhero
-    secrets: [db_app_password]
+    secrets: [db_app_password, vapid_private_key, smtp_password]
     depends_on:
       openbao:
         condition: service_healthy
@@ -299,3 +306,7 @@ secrets:
     file: ./secrets/garage_rpc_secret
   garage_admin_token:
     file: ./secrets/garage_admin_token
+  vapid_private_key:
+    file: ./secrets/vapid_private_key
+  smtp_password:
+    file: ./secrets/smtp_password

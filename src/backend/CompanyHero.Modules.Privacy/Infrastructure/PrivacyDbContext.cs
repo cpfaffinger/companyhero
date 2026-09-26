@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyHero.Modules.Privacy.Infrastructure;
 
-/// <summary>Schema <c>privacy</c>: Sichtbarkeitseinstellungen, Prüfprotokoll und Sicherheitsprotokoll; das Zustimmungsprotokoll folgt mit dem Fachpfad.</summary>
+/// <summary>Schema <c>privacy</c>: Sichtbarkeitseinstellungen, Prüfprotokoll und Sicherheitsprotokoll; Zustimmungsprotokoll.</summary>
 public sealed class PrivacyDbContext(DbContextOptions<PrivacyDbContext> options) : ModuleDbContext(options)
 {
     public DbSet<VisibilitySetting> VisibilitySettings => Set<VisibilitySetting>();
@@ -13,6 +13,8 @@ public sealed class PrivacyDbContext(DbContextOptions<PrivacyDbContext> options)
     public DbSet<AuditRecord> AuditRecords => Set<AuditRecord>();
 
     public DbSet<SecurityRecord> SecurityRecords => Set<SecurityRecord>();
+
+    public DbSet<ConsentEntry> Consents => Set<ConsentEntry>();
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder) =>
         IdentifierConventions.Apply(configurationBuilder);
@@ -44,6 +46,20 @@ public sealed class PrivacyDbContext(DbContextOptions<PrivacyDbContext> options)
             b.Property(a => a.SubjectRef).HasColumnName("subject_ref").HasMaxLength(200);
             b.Property(a => a.Detail).HasColumnName("detail").HasMaxLength(500);
             b.HasIndex(a => new { a.TenantId, a.OccurredAt });
+        });
+
+        modelBuilder.Entity<ConsentEntry>(b =>
+        {
+            b.ToTable("consent_entry");
+            b.HasKey(c => new { c.TenantId, c.Id });
+            b.Property(c => c.TenantId).HasColumnName("tenant_id");
+            b.Property(c => c.Id).HasColumnName("id");
+            b.Property(c => c.SubjectRef).HasColumnName("subject_ref").HasMaxLength(64).IsRequired();
+            b.Property(c => c.Kind).HasColumnName("kind").HasMaxLength(40).IsRequired();
+            b.Property(c => c.Previous).HasColumnName("previous").HasMaxLength(40);
+            b.Property(c => c.Next).HasColumnName("next").HasMaxLength(40).IsRequired();
+            b.Property(c => c.OccurredAt).HasColumnName("occurred_at");
+            b.HasIndex(c => new { c.TenantId, c.SubjectRef, c.OccurredAt });
         });
 
         modelBuilder.Entity<SecurityRecord>(b =>

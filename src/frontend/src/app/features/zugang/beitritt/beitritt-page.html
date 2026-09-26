@@ -100,6 +100,26 @@
           }
         </div>
 
+        @if (p.dimensions.length > 0) {
+          <div class="ch-beitritt__group" role="group" aria-labelledby="ch-gruppen" formGroupName="groups">
+            <span class="ch-beitritt__label" id="ch-gruppen">{{ texts.t('zugang.beitritt.gruppen') }}</span>
+            <span class="ch-beitritt__hint">{{ texts.t('zugang.beitritt.gruppenHinweis') }}</span>
+            @for (dimension of p.dimensions; track dimension.dimensionId) {
+              @if (dimension.groups.length > 0) {
+                <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                  <mat-label>{{ dimension.name }}</mat-label>
+                  <mat-select [formControlName]="dimension.dimensionId" [attr.data-testid]="'gruppe-' + dimension.dimensionId">
+                    <mat-option [value]="null">{{ texts.t('zugang.beitritt.keineGruppe') }}</mat-option>
+                    @for (group of dimension.groups; track group.groupId) {
+                      <mat-option [value]="group.groupId">{{ group.name }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              }
+            }
+          </div>
+        }
+
         @if (p.ways.kiosk) {
           <mat-form-field appearance="outline">
             <mat-label>{{ texts.t('zugang.feld.kioskPin') }}</mat-label>

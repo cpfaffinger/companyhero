@@ -1,0 +1,85 @@
+.ch-fortschritt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-5);
+}
+
+.ch-fortschritt__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+  align-items: flex-start;
+  padding: var(--ch-space-4);
+  border-radius: var(--ch-radius-sheet);
+  border: 1px solid var(--ch-outline-variant);
+  width: 100%;
+}
+
+.ch-fortschritt__title {
+  font: 600 var(--ch-type-title-m) / var(--ch-line-title-m) var(--ch-font-text);
+}
+
+.ch-fortschritt__subtitle {
+  font: 600 var(--ch-type-body-m) / var(--ch-line-body-m) var(--ch-font-text);
+}
+
+.ch-fortschritt__hint {
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-fortschritt__pausiert {
+  padding: var(--ch-space-2) var(--ch-space-3);
+  border-radius: var(--ch-radius-card);
+  background: var(--ch-surface-container-high);
+}
+
+.ch-fortschritt__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ch-space-3);
+  width: 100%;
+}
+
+.ch-fortschritt__abzeichen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ch-space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ch-fortschritt__abzeichen-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ch-space-2);
+  padding: var(--ch-space-2) var(--ch-space-3);
+  border-radius: var(--ch-radius-input);
+  border: 1px dashed var(--ch-outline-variant);
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-fortschritt__abzeichen-item--verdient {
+  border-style: solid;
+  background: var(--ch-progress-container);
+  color: var(--ch-on-progress-container);
+}
+
+.ch-fortschritt__tabelle {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+}
+
+.ch-fortschritt__tabelle th,
+.ch-fortschritt__tabelle td {
+  padding: var(--ch-space-2) var(--ch-space-3);
+}
+
+.ch-fortschritt__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ch-space-3);
+  width: 100%;
+}

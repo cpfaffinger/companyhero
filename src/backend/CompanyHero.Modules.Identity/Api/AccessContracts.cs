@@ -45,15 +45,23 @@ public sealed record JoinWaysResponse(bool Passkey, bool MagicLink, bool Kiosk, 
 
 public sealed record PendingExternalResponse(string ProviderKey, string DisplayName);
 
-/// <summary>Tenant-Vorschau beim Beitritt (Zugang 2.1): Name und Wege; Logo über die Marke des Tenants nach Zuordnung.</summary>
-public sealed record JoinPreviewResponse(string TenantId, string TenantName, JoinWaysResponse Ways, PendingExternalResponse? PendingExternal, string? Role);
+public sealed record JoinGroupResponse(string GroupId, string Name);
+
+/// <summary>Dimension mit wählbaren Gruppen für den Beitritt (Zugang 2.2 Schritt 4, Organisation 2.1).</summary>
+public sealed record JoinDimensionResponse(string DimensionId, string Name, IReadOnlyList<JoinGroupResponse> Groups);
+
+/// <summary>Gewählte Gruppe je Dimension beim Beitritt; höchstens eine je Dimension.</summary>
+public sealed record JoinGroupChoiceRequest(string DimensionId, string GroupId);
+
+/// <summary>Tenant-Vorschau beim Beitritt (Zugang 2.1): Name, Wege und wählbare Gruppen; Logo über die Marke des Tenants nach Zuordnung.</summary>
+public sealed record JoinPreviewResponse(string TenantId, string TenantName, JoinWaysResponse Ways, PendingExternalResponse? PendingExternal, string? Role, IReadOnlyList<JoinDimensionResponse> Dimensions);
 
 public sealed record JoinPasskeyOptionsRequest(string DisplayName);
 
 /// <summary>Beitritt auf dem eigenen Gerät: genau die Wege, die die Person wählt; <c>useExternal</c> nimmt die geprüfte Anbieteridentität aus der Übergabe.</summary>
-public sealed record JoinRequest(string DisplayName, VisibilityDto Visibility, PasskeyAnswerRequest? Passkey, string? Email, bool UseExternal, string? KioskPin);
+public sealed record JoinRequest(string DisplayName, VisibilityDto Visibility, PasskeyAnswerRequest? Passkey, string? Email, bool UseExternal, string? KioskPin, IReadOnlyList<JoinGroupChoiceRequest>? Groups);
 
-public sealed record KioskJoinRequest(string DisplayName, VisibilityDto Visibility, string Pin);
+public sealed record KioskJoinRequest(string DisplayName, VisibilityDto Visibility, string Pin, IReadOnlyList<JoinGroupChoiceRequest>? Groups);
 
 public sealed record RoleJoinRequest(string RealName, VisibilityDto Visibility, PasskeyAnswerRequest? Passkey, string? Email, bool UseExternal);
 

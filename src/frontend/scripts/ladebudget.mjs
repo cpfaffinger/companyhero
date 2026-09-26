@@ -14,7 +14,7 @@ const index = readFileSync(join(distDir, 'index.html'), 'utf8');
 // Routen-Chunks des Referenzscreens (namedChunks: Dateiname beginnt mit dem Modulnamen).
 const referenceRoutePrefixes = ['mitglieder.routes-', 'challenges-page-'];
 // Diese Einstiege dürfen nie zum ersten Ladevorgang der Mitglieder-App gehören (K17, A-096).
-const forbiddenInitialPrefixes = ['marke-page-', 'kiosk-page-', 'zugang'];
+const forbiddenInitialPrefixes = ['marke-page-', 'challenges-verwaltung-page-', 'kiosk-page-', 'zugang'];
 
 // Initial geladen sind alle <script src> in index.html sowie deren statisch importierten Chunks.
 const scriptSources = [...index.matchAll(/<script[^>]+src="([^"]+)"/g)].map((m) => m[1]);

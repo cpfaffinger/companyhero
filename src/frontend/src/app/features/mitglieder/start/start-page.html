@@ -1,0 +1,67 @@
+<section class="ch-start">
+  <div class="ch-start__kopf">
+    <h2 class="ch-start__titel">{{ theme.tenantTheme()?.willkommenstext || texts.t('start.willkommen') }}</h2>
+    @if (feed.neu()) {
+      <button matButton="tonal" type="button" (click)="neuLaden()" data-testid="feed-neu">{{ texts.t('feed.neueEintraege') }}</button>
+    }
+  </div>
+
+  @if (feed.feed(); as f) {
+    @if (f.head.kind === 'challenge' && f.head.challenge; as card) {
+      <ch-challenge-card [card]="card" (contribute)="zurChallenge()" />
+    } @else {
+      <div class="ch-start__tagesziel" data-testid="tagesziel">
+        <span class="material-symbols-rounded" aria-hidden="true">flag</span>
+        <p>{{ texts.t('feed.kopf.tagesziel', { heute: f.head.todayActions, ziel: f.head.dailyGoal }) }}</p>
+      </div>
+    }
+
+    @if (f.checkInDue && !checkInDone()) {
+      <div class="ch-start__checkin" data-testid="checkin">
+        <h3 class="ch-start__untertitel">{{ texts.t('feed.checkinKarte') }}</h3>
+        <div class="ch-start__kacheln" role="group" [attr.aria-label]="texts.t('feed.checkinKarte')">
+          @for (tile of tileOptions; track tile.value) {
+            <button type="button" class="ch-start__kachel" [class.ch-start__kachel--aktiv]="tiles().includes(tile.value)" [attr.aria-pressed]="tiles().includes(tile.value)" (click)="toggleTile(tile.value)" [attr.data-testid]="'kachel-' + tile.value">
+              <span class="material-symbols-rounded" aria-hidden="true">{{ tile.icon }}</span>
+              <span>{{ texts.t(tile.key) }}</span>
+            </button>
+          }
+        </div>
+        <button matButton="filled" type="button" [disabled]="tiles().length === 0 || busy()" (click)="checkIn()" data-testid="checkin-senden">{{ texts.t('checkin.senden') }}</button>
+      </div>
+    } @else if (checkInDone()) {
+      <p class="ch-start__erfolg" role="status">{{ texts.t('checkin.danke') }}</p>
+    }
+
+    <form class="ch-start__post" (submit)="$event.preventDefault(); senden()">
+      <mat-form-field appearance="outline" class="ch-start__post-feld">
+        <mat-label>{{ texts.t('feed.beitragSchreiben') }}</mat-label>
+        <textarea matInput [formControl]="post" rows="2" [maxlength]="postMax" data-testid="beitrag-text"></textarea>
+        <mat-hint align="end">{{ texts.t('form.zeichen', { n: post.value.length, max: postMax }) }}</mat-hint>
+      </mat-form-field>
+      <div class="ch-start__post-aktionen">
+        @if (postFehler(); as e) {
+          <span class="ch-start__fehler" role="alert" data-testid="beitrag-fehler">
+            {{ texts.t(e.key) }}
+            @if (e.status === 422) {
+              <button matButton type="button" (click)="zuIch()">{{ texts.t('feed.sichtbarkeitAendern') }}</button>
+            }
+          </span>
+        } @else if (postGesendet()) {
+          <span role="status">{{ texts.t('feed.beitragGesendet') }}</span>
+        }
+        <span class="ch-start__spacer"></span>
+        <button matButton="filled" type="submit" [disabled]="post.invalid || busy()" data-testid="beitrag-senden">{{ texts.t('feed.senden') }}</button>
+      </div>
+    </form>
+
+    @for (tag of tage(); track tag.day) {
+      <h3 class="ch-start__tag">{{ tag.label }}</h3>
+      @for (card of tag.cards; track card.id) {
+        <ch-feed-card [card]="card" (open)="zurChallenge()" (remove)="loeschen($event)" />
+      }
+    } @empty {
+      <ch-empty-state [text]="texts.t('feed.leer')" />
+    }
+  }
+</section>

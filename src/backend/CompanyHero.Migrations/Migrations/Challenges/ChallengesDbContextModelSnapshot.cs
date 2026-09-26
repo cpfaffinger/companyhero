@@ -33,9 +33,31 @@ namespace CompanyHero.Migrations.Migrations.Challenges
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<DateTimeOffset?>("ArchivedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("archived_at");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid")
+                        .HasColumnName("created_by");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)")
+                        .HasColumnName("description");
+
+                    b.Property<DateTimeOffset?>("EndedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ended_at");
+
+                    b.Property<string>("EndedEarlyReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("ended_early_reason");
 
                     b.Property<DateTimeOffset>("EndsAt")
                         .HasColumnType("timestamp with time zone")
@@ -44,6 +66,14 @@ namespace CompanyHero.Migrations.Migrations.Challenges
                     b.Property<short>("Metric")
                         .HasColumnType("smallint")
                         .HasColumnName("metric");
+
+                    b.Property<DateTimeOffset?>("PlannedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("planned_at");
+
+                    b.Property<DateTimeOffset?>("PreviewedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("previewed_at");
 
                     b.Property<DateTimeOffset>("StartsAt")
                         .HasColumnType("timestamp with time zone")
@@ -58,13 +88,26 @@ namespace CompanyHero.Migrations.Migrations.Challenges
                         .HasColumnType("numeric(12,4)")
                         .HasColumnName("target");
 
+                    b.Property<string>("TemplateKey")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("template_key");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)")
                         .HasColumnName("title");
 
+                    b.Property<short>("Visibility")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
+                        .HasDefaultValue((short)3)
+                        .HasColumnName("visibility");
+
                     b.HasKey("TenantId", "Id");
+
+                    b.HasIndex("TenantId", "State");
 
                     b.ToTable("challenge", "challenges");
                 });
@@ -127,6 +170,10 @@ namespace CompanyHero.Migrations.Migrations.Challenges
                         .HasColumnType("integer")
                         .HasColumnName("contributor_count");
 
+                    b.Property<int>("MilestoneReached")
+                        .HasColumnType("integer")
+                        .HasColumnName("milestone_reached");
+
                     b.Property<decimal>("Total")
                         .HasPrecision(14, 4)
                         .HasColumnType("numeric(14,4)")
@@ -151,6 +198,10 @@ namespace CompanyHero.Migrations.Migrations.Challenges
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<Guid?>("ActivityEventId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("activity_event_id");
+
                     b.Property<Guid>("ChallengeId")
                         .HasColumnType("uuid")
                         .HasColumnName("challenge_id");
@@ -158,6 +209,11 @@ namespace CompanyHero.Migrations.Migrations.Challenges
                     b.Property<short>("Channel")
                         .HasColumnType("smallint")
                         .HasColumnName("channel");
+
+                    b.PrimitiveCollection<Guid[]>("GroupIds")
+                        .IsRequired()
+                        .HasColumnType("uuid[]")
+                        .HasColumnName("group_ids");
 
                     b.Property<Guid>("PersonId")
                         .HasColumnType("uuid")
@@ -170,6 +226,14 @@ namespace CompanyHero.Migrations.Migrations.Challenges
                     b.Property<DateTimeOffset>("RecordedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("recorded_at");
+
+                    b.Property<Guid?>("ReversalOf")
+                        .HasColumnType("uuid")
+                        .HasColumnName("reversal_of");
+
+                    b.Property<bool>("Reversed")
+                        .HasColumnType("boolean")
+                        .HasColumnName("reversed");
 
                     b.Property<decimal>("Value")
                         .HasPrecision(12, 4)

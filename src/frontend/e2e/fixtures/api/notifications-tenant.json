@@ -1,0 +1,11 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "pushEnabled": true,
+    "emailEnabled": true,
+    "aushangEnabled": true,
+    "quietStart": "20:00",
+    "quietEnd": "07:00"
+  }
+}

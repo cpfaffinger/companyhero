@@ -33,4 +33,7 @@ public sealed class JobWorkerOptions
 
     /// <summary>Abstand der Prüfung, ob zeitgesteuerte Aufgaben fällig sind.</summary>
     public TimeSpan ScheduleInterval { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>Aufbewahrung erfolgreicher Jobs vor dem Aufräumlauf (A-108 Folgen).</summary>
+    public TimeSpan SucceededRetention { get; set; } = TimeSpan.FromDays(7);
 }

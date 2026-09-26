@@ -1,0 +1,109 @@
+<section class="ch-cv">
+  @if (fehler(); as f) {
+    <p class="ch-cv__status ch-cv__status--fehler" role="alert">{{ texts.t(f) }}</p>
+  }
+
+  <div class="ch-cv__block">
+    <h2 class="ch-cv__title">{{ texts.t('verwaltung.challenges.kickoff') }}</h2>
+    <p class="ch-cv__hint">{{ texts.t('verwaltung.challenges.kickoffHinweis') }}</p>
+    <button matButton="filled" type="button" [disabled]="busy()" (click)="kickoff()" data-testid="kickoff">{{ texts.t('verwaltung.challenges.kickoffAnlegen') }}</button>
+  </div>
+
+  <form class="ch-cv__block" [formGroup]="form" (ngSubmit)="entwurfAnlegen()">
+    <h2 class="ch-cv__title">{{ texts.t('verwaltung.challenges.wizard') }}</h2>
+    <p class="ch-cv__hint">{{ texts.t('verwaltung.challenges.wizardHinweis') }}</p>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ texts.t('verwaltung.challenges.titel') }}</mat-label>
+      <input matInput formControlName="title" maxlength="200" data-testid="wizard-titel" />
+      @if (form.controls.title.touched && form.controls.title.invalid) {
+        <mat-error>{{ texts.t('verwaltung.challenges.titelPflicht') }}</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ texts.t('verwaltung.challenges.beschreibung') }}</mat-label>
+      <textarea matInput formControlName="description" rows="2" maxlength="2000"></textarea>
+    </mat-form-field>
+    <div class="ch-cv__reihe">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ texts.t('verwaltung.challenges.erfassungsart') }}</mat-label>
+        <mat-select formControlName="metric" data-testid="wizard-metrik">
+          <mat-option value="checkmark">{{ texts.t('verwaltung.challenges.haekchen') }}</mat-option>
+          <mat-option value="count">{{ texts.t('verwaltung.challenges.zahl') }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ texts.t('verwaltung.challenges.ziel') }}</mat-label>
+        <input matInput formControlName="target" inputmode="decimal" data-testid="wizard-ziel" />
+        @if (form.controls.target.touched && form.controls.target.invalid) {
+          <mat-error>{{ texts.t('verwaltung.challenges.zielPflicht') }}</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="ch-cv__reihe">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ texts.t('verwaltung.challenges.beginn') }}</mat-label>
+        <input matInput type="datetime-local" formControlName="startsAt" data-testid="wizard-beginn" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ texts.t('verwaltung.challenges.ende') }}</mat-label>
+        <input matInput type="datetime-local" formControlName="endsAt" data-testid="wizard-ende" />
+      </mat-form-field>
+    </div>
+    <p class="ch-cv__hint">{{ texts.t('challenge.form.sammelziel') }}</p>
+    <button matButton="filled" type="submit" [disabled]="busy()" data-testid="wizard-anlegen">{{ texts.t('verwaltung.challenges.entwurfAnlegen') }}</button>
+  </form>
+
+  @if (vorschau(); as card) {
+    <div class="ch-cv__block" data-testid="vorschau">
+      <h2 class="ch-cv__title">{{ texts.t('verwaltung.challenges.vorschau') }}</h2>
+      <ch-challenge-card [card]="card" />
+      <button matButton="filled" type="button" [disabled]="busy()" (click)="planen(card.challengeId)" data-testid="planen">{{ texts.t('verwaltung.challenges.planen') }}</button>
+    </div>
+  }
+
+  @if (cards(); as cards) {
+    <div class="ch-cv__block">
+      <h2 class="ch-cv__title">{{ texts.t('verwaltung.challenges.alle') }}</h2>
+      <table class="ch-cv__tabelle" data-testid="challenge-liste">
+        <thead>
+          <tr>
+            <th scope="col">{{ texts.t('verwaltung.challenges.titel') }}</th>
+            <th scope="col">{{ texts.t('verwaltung.challenges.zustand') }}</th>
+            <th scope="col">{{ texts.t('challenge.firmenziel') }}</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (card of cards; track card.challengeId) {
+            <tr>
+              <td>{{ card.title }}</td>
+              <td>{{ zustand(card.state) }}</td>
+              <td>{{ card.percent }} %</td>
+              <td class="ch-cv__aktionen">
+                @if (card.state === 'draft') {
+                  <button matButton type="button" [disabled]="busy()" (click)="vorschauLaden(card.challengeId)">{{ texts.t('verwaltung.challenges.vorschau') }}</button>
+                }
+                @if (card.state === 'running') {
+                  <button matButton type="button" [disabled]="busy()" (click)="endeStarten(card.challengeId)">{{ texts.t('verwaltung.challenges.beenden') }}</button>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      @if (endeFuer()) {
+        <form class="ch-cv__ende" (submit)="$event.preventDefault(); endeBestaetigen()">
+          <mat-form-field appearance="outline" class="ch-cv__ende-feld">
+            <mat-label>{{ texts.t('verwaltung.challenges.begruendung') }}</mat-label>
+            <input matInput [formControl]="begruendung" maxlength="500" data-testid="begruendung" />
+            @if (begruendung.touched && begruendung.invalid) {
+              <mat-error>{{ texts.t('verwaltung.challenges.begruendungPflicht') }}</mat-error>
+            }
+          </mat-form-field>
+          <button matButton="filled" type="submit" [disabled]="busy()" data-testid="beenden">{{ texts.t('verwaltung.challenges.beenden') }}</button>
+          <button matButton type="button" (click)="endeFuer.set(null)">{{ texts.t('form.abbrechen') }}</button>
+        </form>
+      }
+    </div>
+  }
+</section>
