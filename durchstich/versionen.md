@@ -17,6 +17,8 @@ Konfigurationsdateien; diese Liste dokumentiert sie an einem Ort. Änderungen la
 | NetArchTest.Rules | 1.3.2 | `Directory.Packages.props` |
 | dotnet-ef | 10.0.12 | `.config/dotnet-tools.json` |
 | Jobbibliothek | keine; eigene Umsetzung auf `SKIP LOCKED` mit Npgsql (A-108) | `src/backend/CompanyHero.Platform/Jobs/` |
+| OpenAPI-Erzeugung | Microsoft.AspNetCore.OpenApi 10.0.12 (Microsoft.OpenApi 2.12.0), OpenAPI 3.1, Export über `--export-openapi` (A-109) | `Directory.Packages.props`, `src/backend/CompanyHero.Api/OpenApi/` |
+| Theme-Ableitung | keine Bibliothek; eigene Portierung von material-color-utilities (Apache-2.0, TypeScript-Paket 0.4.0, Stand 5b3618b) (A-110) | `src/backend/CompanyHero.Modules.Branding/Domain/Color/` |
 | Analyseregeln | `latest-recommended`, Warnungen als Fehler, Ausnahmen in `.editorconfig` | `Directory.Build.props` |
 
 ## Frontend
@@ -31,6 +33,8 @@ Konfigurationsdateien; diese Liste dokumentiert sie an einem Ort. Änderungen la
 | ESLint, angular-eslint, typescript-eslint | 10.11.0, 22.5.0, 8.70.1 | `package.json` |
 | Stylelint, stylelint-config-standard-scss | 17.15.0, 17.0.0 | `package.json` |
 | Inter, Inter Tight, Material Symbols Rounded (selbst ausgeliefert) | fontsource 5.3.0 / 5.3.0 / 5.3.7 | `package.json` |
+| OpenAPI-Clientgenerator | openapi-typescript 7.13.0 (A-109); Peer-Auflösung auf TypeScript 6.0 über `overrides` | `package.json`, Skript `api:generate` |
+| @types/node (Tests, Skripte) | 24.10.1 | `package.json` |
 
 Browsermatrix (K18): Angular 22 unterstützt die aktuelle und die vorherige Hauptversion von Chrome, Firefox, Edge und
 Safari sowie iOS-Safari ab 16.4; Web Push in installierten PWAs setzt auf iOS 16.4 voraus (A-059). Ältere Browser erhalten

@@ -1,4 +1,5 @@
 using CompanyHero.Api.Contracts;
+using CompanyHero.Api.OpenApi;
 using CompanyHero.ModuleCatalog;
 using CompanyHero.Platform.Configuration;
 using CompanyHero.Platform.Hosting;
@@ -13,6 +14,8 @@ builder.AddCompanyHeroHost("companyhero-api", modules);
 // bleibt ohne Identität. Der Tenant-Kontext entsteht ausschließlich aus geprüfter Identität und Mitgliedschaft.
 builder.Services.AddAuthentication();
 builder.Services.AddProblemDetails();
+// Verbindlicher API-Vertrag (A-009): OpenAPI aus derselben Endpunktregistrierung, Export über --export-openapi (Stufe 5).
+builder.Services.AddCompanyHeroOpenApi();
 
 var app = builder.Build();
 
@@ -22,10 +25,15 @@ app.UseAuthentication();
 app.UseTenantContext();
 
 app.MapCompanyHeroHealth();
-app.MapGet("/api/version", () => Results.Ok(new VersionResponse(CompanyHeroHost.Version)));
+app.MapGet("/api/version", () => Results.Ok(new VersionResponse(CompanyHeroHost.Version))).WithName("GetVersion").Produces<VersionResponse>();
 foreach (var module in modules)
 {
     module.MapEndpoints(app);
+}
+
+if (await OpenApiContract.TryExportAsync(args, app))
+{
+    return;
 }
 
 app.Run();

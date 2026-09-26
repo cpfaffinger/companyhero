@@ -1,0 +1,102 @@
+// Der zentrale Adapter (K01, A-003): bindet die --ch-* Rollen aus dem Backend-Tokensatz an die öffentlichen
+// Material-Theming-Schnittstellen. Material wird genau einmal ausgegeben (K03). Es gibt keine Selektoren auf private
+// Material-Strukturen; Anpassungen nur über mat.theme, mat.theme-overrides und die *-overrides-Mixins der Komponenten.
+// Die Basispalette ist nur Vorlage für die Tokenstruktur; jede Farbrolle wird durch eine --ch-* Rolle ersetzt, deren Wert
+// der Theme-Service je Marke und Modus setzt. Deshalb gibt es keine pro Tenant gebauten Bundles (K04).
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$orange-palette,
+      theme-type: light,
+    ),
+    typography: (
+      plain-family: ('Inter Variable', system-ui, sans-serif),
+      brand-family: ('Inter Tight Variable', 'Inter Variable', system-ui, sans-serif),
+      bold-weight: 700,
+      medium-weight: 600,
+      regular-weight: 400,
+    ),
+    density: 0,
+  ));
+  @include mat.theme-overrides((
+    primary: var(--ch-primary),
+    on-primary: var(--ch-on-primary),
+    primary-container: var(--ch-primary-container),
+    on-primary-container: var(--ch-on-primary-container),
+    primary-fixed: var(--ch-primary-container),
+    primary-fixed-dim: var(--ch-primary-container),
+    on-primary-fixed: var(--ch-on-primary-container),
+    on-primary-fixed-variant: var(--ch-on-primary-container),
+    inverse-primary: var(--ch-primary-container),
+    surface-tint: var(--ch-primary),
+    secondary: var(--ch-team),
+    on-secondary: var(--ch-surface),
+    secondary-container: var(--ch-team-container),
+    on-secondary-container: var(--ch-on-team-container),
+    secondary-fixed: var(--ch-team-container),
+    secondary-fixed-dim: var(--ch-team-container),
+    on-secondary-fixed: var(--ch-on-team-container),
+    on-secondary-fixed-variant: var(--ch-on-team-container),
+    tertiary: var(--ch-progress),
+    on-tertiary: var(--ch-on-progress),
+    tertiary-container: var(--ch-progress-container),
+    on-tertiary-container: var(--ch-on-progress-container),
+    tertiary-fixed: var(--ch-progress-container),
+    tertiary-fixed-dim: var(--ch-progress-container),
+    on-tertiary-fixed: var(--ch-on-progress-container),
+    on-tertiary-fixed-variant: var(--ch-on-progress-container),
+    error: var(--ch-error),
+    on-error: var(--ch-on-error),
+    error-container: var(--ch-error-container),
+    on-error-container: var(--ch-on-error-container),
+    surface: var(--ch-surface),
+    surface-dim: var(--ch-surface-container),
+    surface-bright: var(--ch-surface),
+    surface-container-lowest: var(--ch-surface),
+    surface-container-low: var(--ch-surface-container),
+    surface-container: var(--ch-surface-container),
+    surface-container-high: var(--ch-surface-container-high),
+    surface-container-highest: var(--ch-surface-container-high),
+    surface-variant: var(--ch-surface-container-high),
+    on-surface: var(--ch-on-surface),
+    on-surface-variant: var(--ch-on-surface-variant),
+    background: var(--ch-surface),
+    on-background: var(--ch-on-surface),
+    inverse-surface: var(--ch-on-surface),
+    inverse-on-surface: var(--ch-surface),
+    outline: var(--ch-outline),
+    outline-variant: var(--ch-outline-variant),
+    corner-extra-small: var(--ch-radius-input),
+    corner-small: var(--ch-radius-input),
+    corner-medium: var(--ch-radius-card),
+    corner-large: var(--ch-radius-sheet),
+    corner-extra-large: var(--ch-radius-dialog),
+    corner-full: var(--ch-radius-full),
+  ));
+
+  // Bedienflächen (K07): Material-Dichte darf sie nicht verkleinern; 48 px Standard, 56 px im Großflächenmodus.
+  @include mat.button-overrides((
+    filled-container-height: var(--ch-touch),
+    outlined-container-height: var(--ch-touch),
+    text-container-height: var(--ch-touch),
+    tonal-container-height: var(--ch-touch),
+    filled-container-shape: var(--ch-radius-full),
+    outlined-container-shape: var(--ch-radius-full),
+    text-container-shape: var(--ch-radius-full),
+    tonal-container-shape: var(--ch-radius-full),
+  ));
+  @include mat.icon-button-overrides((
+    state-layer-size: var(--ch-touch),
+    icon-size: var(--ch-icon),
+  ));
+  @include mat.dialog-overrides((
+    container-shape: var(--ch-radius-dialog),
+    container-color: var(--ch-surface-container-high),
+  ));
+  @include mat.form-field-overrides((
+    outlined-container-shape: var(--ch-radius-input),
+  ));
+}

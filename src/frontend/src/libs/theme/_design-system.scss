@@ -1,0 +1,187 @@
+// Design-System (Marke 2.3, 2.4, 7; A-076, A-081; K07): ein Ort für Raster, Radien, Typografie, Bewegung, Bedienflächen und
+// Layoutgrenzen. Farben kommen ausschließlich als --ch-* Rollen aus dem Backend-Tokensatz (Theme-Service); hier stehen
+// keine Farbwerte. Der Großflächenmodus (data-ch-scale="gross") vergrößert Bedienflächen auf 56 px und Text um zwei Stufen.
+@use 'sass:map';
+
+// Layoutgrenzen (K07); dieselben Werte in layout.ts, geprüft durch layout.spec.ts.
+$ch-breakpoint-tablet: 640px;
+$ch-breakpoint-desktop: 1024px;
+$ch-content-max: 1280px;
+$ch-context-column: 320px;
+$ch-side-nav: 240px;
+$ch-rail: 88px;
+
+:root {
+  // Abstände auf 4-px-Basis.
+  --ch-space-1: 4px;
+  --ch-space-2: 8px;
+  --ch-space-3: 12px;
+  --ch-space-4: 16px;
+  --ch-space-5: 20px;
+  --ch-space-6: 24px;
+  --ch-space-8: 32px;
+  --ch-space-10: 40px;
+  --ch-space-12: 48px;
+  --ch-space-16: 64px;
+
+  // Radien: Eingaben, Karten, große Karten und Sheets, Dialoge; voll für Chips und Buttons.
+  --ch-radius-input: 8px;
+  --ch-radius-card: 12px;
+  --ch-radius-sheet: 16px;
+  --ch-radius-dialog: 24px;
+  --ch-radius-full: 999px;
+
+  // Bewegung: 120 ms Zustandswechsel, 200 ms Standard, 320 ms betont; ein Erfolgsmoment.
+  --ch-motion-state: 120ms;
+  --ch-motion-standard: 200ms;
+  --ch-motion-emphasized: 320ms;
+  --ch-motion-easing: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  // Bedienflächen: 48 px mit 8 px Abstand (Standard), 56 px im Großflächenmodus (K07: gemessene Geometrie).
+  --ch-touch: 48px;
+  --ch-touch-gap: 8px;
+  --ch-tile: 72px;
+  --ch-icon: 24px;
+
+  // Typografie (Marke 2.3): Inter für Text, Inter Tight für Überschriften und Kennzahlen, Tabellenziffern.
+  --ch-font-text: 'Inter Variable', system-ui, sans-serif;
+  --ch-font-display: 'Inter Tight Variable', 'Inter Variable', system-ui, sans-serif;
+  --ch-type-body-l: 16px;
+  --ch-line-body-l: 24px;
+  --ch-type-body-m: 14px;
+  --ch-line-body-m: 20px;
+  --ch-type-label-l: 14px;
+  --ch-line-label-l: 20px;
+  --ch-type-label-m: 12px;
+  --ch-line-label-m: 16px;
+  --ch-type-title-s: 16px;
+  --ch-line-title-s: 22px;
+  --ch-type-title-m: 18px;
+  --ch-line-title-m: 24px;
+  --ch-type-title-l: 22px;
+  --ch-line-title-l: 28px;
+  --ch-type-headline-m: 26px;
+  --ch-line-headline-m: 32px;
+  --ch-type-headline-l: 32px;
+  --ch-line-headline-l: 40px;
+  --ch-type-metric-l: 28px;
+  --ch-line-metric-l: 32px;
+  --ch-type-metric-xl: 40px;
+  --ch-line-metric-xl: 44px;
+
+  // Fokusring in primary mit 2 px Abstand (Marke 7).
+  --ch-focus-width: 2px;
+  --ch-focus-offset: 2px;
+}
+
+// Großflächenmodus (A-081): 56 px, Text zwei Stufen größer, größere Häkchenkacheln, reduzierte Dichte.
+:root[data-ch-scale='gross'] {
+  --ch-touch: 56px;
+  --ch-touch-gap: 12px;
+  --ch-tile: 96px;
+  --ch-icon: 28px;
+  --ch-type-body-l: 20px;
+  --ch-line-body-l: 30px;
+  --ch-type-body-m: 18px;
+  --ch-line-body-m: 26px;
+  --ch-type-label-l: 18px;
+  --ch-line-label-l: 24px;
+  --ch-type-label-m: 14px;
+  --ch-line-label-m: 20px;
+  --ch-type-title-s: 20px;
+  --ch-line-title-s: 26px;
+  --ch-type-title-m: 22px;
+  --ch-line-title-m: 28px;
+  --ch-type-title-l: 26px;
+  --ch-line-title-l: 32px;
+  --ch-type-headline-m: 30px;
+  --ch-line-headline-m: 36px;
+  --ch-type-headline-l: 36px;
+  --ch-line-headline-l: 44px;
+  --ch-type-metric-l: 32px;
+  --ch-line-metric-l: 36px;
+  --ch-type-metric-xl: 44px;
+  --ch-line-metric-xl: 48px;
+}
+
+// Reduzierte Bewegung (Marke 2.4, K09): alle nicht informativen Bewegungen aus, einschließlich der Erfolgsanimation.
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ch-motion-state: 0ms;
+    --ch-motion-standard: 0ms;
+    --ch-motion-emphasized: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.001ms;
+  }
+}
+
+// Fokus (Marke 7): sichtbarer Fokusring in primary mit 2 px Abstand für alle Bedienelemente.
+:focus-visible {
+  outline: var(--ch-focus-width) solid var(--ch-primary);
+  outline-offset: var(--ch-focus-offset);
+}
+
+// Sprungmarke (Marke 7): sichtbar nur mit Fokus.
+.ch-skip-link {
+  position: absolute;
+  top: var(--ch-space-2);
+  left: var(--ch-space-2);
+  z-index: 100;
+  padding: var(--ch-space-3) var(--ch-space-4);
+  border-radius: var(--ch-radius-full);
+  background: var(--ch-primary);
+  color: var(--ch-on-primary);
+  font: 600 var(--ch-type-label-l) / var(--ch-line-label-l) var(--ch-font-text);
+  transform: translateY(-200%);
+}
+
+.ch-skip-link:focus-visible {
+  transform: none;
+}
+
+// Nur für Screenreader (Marke 7: Textentsprechung jeder Fortschrittsanzeige).
+.ch-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+// Material Symbols Rounded, selbst ausgeliefert (Marke 2.6): Outline bei 24 px, gefüllt nur für aktive Navigation.
+.material-symbols-rounded {
+  font-family: 'Material Symbols Rounded Variable', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: var(--ch-icon);
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-symbols-rounded.ch-icon--filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+@mixin ch-tablet {
+  @media (width >= #{$ch-breakpoint-tablet}) {
+    @content;
+  }
+}
+
+@mixin ch-desktop {
+  @media (width >= #{$ch-breakpoint-desktop}) {
+    @content;
+  }
+}

@@ -1,0 +1,53 @@
+<a class="ch-skip-link" href="#ch-main">{{ texts.t('allgemein.zumInhalt') }}</a>
+<div class="ch-shell" [class.ch-shell--context]="hasContext()">
+  <nav class="ch-shell__nav" [attr.aria-label]="texts.t('nav.start') + ', ' + texts.t('nav.challenges') + ', ' + texts.t('nav.ich')">
+    <div class="ch-shell__brand ch-shell__brand--nav">
+      @if (platform()) {
+        <svg class="ch-shell__mark" width="34" height="24" viewBox="0 0 28 20" aria-hidden="true">
+          <path d="M2 18 A16 16 0 0 1 8 8" fill="none" stroke="var(--ch-primary)" stroke-width="4" stroke-linecap="round" />
+          <path d="M10 6.5 A16 16 0 0 1 18 4" fill="none" stroke="var(--ch-primary)" stroke-width="4" stroke-linecap="round" />
+          <path d="M20.5 4.5 A16 16 0 0 1 26 10" fill="none" stroke="var(--ch-progress)" stroke-width="4" stroke-linecap="round" />
+        </svg>
+      } @else {
+        <span class="ch-shell__avatar" aria-hidden="true">{{ initial() }}</span>
+      }
+      <span class="ch-shell__name">{{ theme.produktname() }}</span>
+    </div>
+    @for (item of items(); track item.path) {
+      <a class="ch-shell__item" [routerLink]="[base(), item.path]" routerLinkActive="ch-shell__item--active" ariaCurrentWhenActive="page" #active="routerLinkActive">
+        <span class="ch-shell__icon-pill">
+          <span class="material-symbols-rounded" [class.ch-icon--filled]="active.isActive" aria-hidden="true">{{ item.icon }}</span>
+        </span>
+        <span class="ch-shell__label">{{ texts.t(item.labelKey) }}</span>
+      </a>
+    }
+  </nav>
+  <header class="ch-shell__header">
+    <div class="ch-shell__brand ch-shell__brand--header">
+      @if (platform()) {
+        <svg class="ch-shell__mark" width="34" height="24" viewBox="0 0 28 20" aria-hidden="true">
+          <path d="M2 18 A16 16 0 0 1 8 8" fill="none" stroke="var(--ch-primary)" stroke-width="4" stroke-linecap="round" />
+          <path d="M10 6.5 A16 16 0 0 1 18 4" fill="none" stroke="var(--ch-primary)" stroke-width="4" stroke-linecap="round" />
+          <path d="M20.5 4.5 A16 16 0 0 1 26 10" fill="none" stroke="var(--ch-progress)" stroke-width="4" stroke-linecap="round" />
+        </svg>
+      } @else {
+        <span class="ch-shell__avatar" aria-hidden="true">{{ initial() }}</span>
+      }
+      <span class="ch-shell__name">{{ theme.produktname() }}</span>
+    </div>
+    <h1 class="ch-shell__title">{{ title() }}</h1>
+    <span class="ch-shell__spacer"></span>
+    <button matIconButton type="button" [attr.aria-label]="texts.t('kopf.benachrichtigungen')">
+      <span class="material-symbols-rounded" aria-hidden="true">notifications</span>
+    </button>
+  </header>
+  <main class="ch-shell__main" id="ch-main" tabindex="-1">
+    <h1 class="ch-shell__page-title">{{ title() }}</h1>
+    <ng-content />
+  </main>
+  @if (hasContext()) {
+    <aside class="ch-shell__context">
+      <ng-content select="[chContext]" />
+    </aside>
+  }
+</div>

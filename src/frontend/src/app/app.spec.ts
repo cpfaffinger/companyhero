@@ -1,15 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { App } from './app';
+import { routes } from './app.routes';
 
 describe('App', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [App] }).compileComponents();
-  });
-
-  it('zeigt den Produktnamen als Überschrift', async () => {
+  it('startet mit den Feature-Einstiegen Mitglieder-App und Kiosk', async () => {
+    await TestBed.configureTestingModule({ imports: [App], providers: [provideRouter(routes)] }).compileComponents();
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
-    const heading = (fixture.nativeElement as HTMLElement).querySelector('h1');
-    expect(heading?.textContent).toContain('CompanyHero');
+    expect((fixture.nativeElement as HTMLElement).querySelector('router-outlet')).not.toBeNull();
+    expect(routes.map((r) => r.path)).toEqual(['', 'kiosk', 't/:tenant']);
   });
 });

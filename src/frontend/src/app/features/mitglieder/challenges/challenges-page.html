@@ -1,0 +1,42 @@
+<section class="ch-challenges">
+  @if (cards(); as cards) {
+    @if (current(); as card) {
+      <ch-challenge-card [card]="card" [celebrate]="celebrate()" (contribute)="heuteErledigt($event)" />
+      @if (celebrate()) {
+        <p class="ch-challenges__erfolg" role="status">{{ texts.t('challenge.erfolgsmoment') }}</p>
+      }
+      <form class="ch-challenges__form" [formGroup]="form" (ngSubmit)="eintragen()">
+        <div class="ch-challenges__form-head">
+          <h2 class="ch-challenges__form-title">{{ texts.t('form.titel') }}</h2>
+          <span class="ch-challenges__form-hint">{{ texts.t('form.rueckwirkend') }}</span>
+        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ texts.t('form.tag') }}</mat-label>
+          <mat-select formControlName="daysAgo" data-testid="tag">
+            @for (option of dayOptions; track option.value) {
+              <mat-option [value]="option.value">{{ texts.t(option.key) }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.daysAgo.hasError('server')) {
+            <mat-error>{{ texts.t(form.controls.daysAgo.getError('server')) }}</mat-error>
+          } @else if (form.controls.daysAgo.hasError('required')) {
+            <mat-error>{{ texts.t('form.tagPflicht') }}</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ texts.t('form.notiz') }}</mat-label>
+          <input matInput formControlName="note" [maxlength]="noteMax" data-testid="notiz" />
+          <mat-hint align="end">{{ texts.t('form.zeichen', { n: noteLength().length, max: noteMax }) }}</mat-hint>
+        </mat-form-field>
+        <div class="ch-challenges__form-actions">
+          <button matButton type="button" (click)="loeschenDialog()">{{ texts.t('dialog.beitragLoeschenAktion') }}</button>
+          <span class="ch-challenges__spacer"></span>
+          <button matButton type="button" (click)="abbrechen()">{{ texts.t('form.abbrechen') }}</button>
+          <button matButton="filled" type="submit" [disabled]="form.invalid || submitting()">{{ texts.t('form.eintragen') }}</button>
+        </div>
+      </form>
+    } @else {
+      <ch-empty-state [text]="texts.t('challenge.keineLaufend')" />
+    }
+  }
+</section>

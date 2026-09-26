@@ -1,0 +1,44 @@
+:host {
+  display: inline-block;
+  width: var(--ch-touch);
+  height: var(--ch-touch);
+  border-radius: var(--ch-radius-full);
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ch-ring__track {
+  fill: none;
+  stroke: var(--ch-progress-container);
+  stroke-width: 6;
+}
+
+.ch-ring__fill {
+  fill: none;
+  stroke: var(--ch-progress);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--ch-motion-emphasized) var(--ch-motion-easing);
+}
+
+:host(.ch-ring--celebrate) {
+  animation: ch-pulse var(--ch-motion-emphasized) var(--ch-motion-easing) 1;
+}
+
+@keyframes ch-pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--ch-progress-container);
+  }
+
+  60% {
+    box-shadow: 0 0 0 12px var(--ch-progress-container);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}

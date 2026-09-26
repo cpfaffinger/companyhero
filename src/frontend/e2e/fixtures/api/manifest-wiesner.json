@@ -1,0 +1,42 @@
+{
+  "status": 200,
+  "contentType": "application/manifest+json",
+  "body": {
+    "id": "/t/01a0dcad-835e-7dcc-8ec2-887012deda1e/",
+    "name": "Wiesner Aktiv",
+    "short_name": "Wiesner Akti",
+    "start_url": "/t/01a0dcad-835e-7dcc-8ec2-887012deda1e/start",
+    "scope": "/t/01a0dcad-835e-7dcc-8ec2-887012deda1e/",
+    "display": "standalone",
+    "lang": "de",
+    "theme_color": "#9B1B3A",
+    "background_color": "#FBF8FD",
+    "icons": [
+      {
+        "src": "/api/branding/tenants/01a0dcad-835e-7dcc-8ec2-887012deda1e/icons/icon-192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "/api/branding/tenants/01a0dcad-835e-7dcc-8ec2-887012deda1e/icons/icon-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any"
+      },
+      {
+        "src": "/api/branding/tenants/01a0dcad-835e-7dcc-8ec2-887012deda1e/icons/maskable-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "maskable"
+      },
+      {
+        "src": "/api/branding/tenants/01a0dcad-835e-7dcc-8ec2-887012deda1e/icons/icon.svg",
+        "sizes": "any",
+        "type": "image/svg+xml",
+        "purpose": "any"
+      }
+    ],
+    "orientation": null
+  }
+}

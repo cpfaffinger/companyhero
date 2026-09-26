@@ -8,20 +8,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyHero.Modules.Challenges.Application;
 
-public sealed record ChallengeRecord(Guid Id, string Title, ChallengeMetric Metric, ChallengeState State, DateTimeOffset StartsAt, DateTimeOffset EndsAt);
+public sealed record ChallengeRecord(Guid Id, string Title, ChallengeMetric Metric, decimal Target, ChallengeState State, DateTimeOffset StartsAt, DateTimeOffset EndsAt);
 
 /// <summary>Kollektivstand ohne Personenbezug (Challenges 2.3); <c>null</c>, solange kein Job ihn berechnet hat.</summary>
 public sealed record CollectiveRecord(decimal Total, int ContributionCount, int ContributorCount, DateTimeOffset UpdatedAt);
 
+/// <summary>Daten der Challenge-Karte einer Person (Marke 2.5 Fortschritt): Challenge, Kollektivstand mit Prozent und Altersangabe, eigener Beitrag heute.</summary>
+public sealed record ChallengeCardRecord(ChallengeRecord Challenge, CollectiveRecord? Collective, int Percent, bool ContributedToday);
+
 /// <summary>Öffentliche Anwendungsfunktionen der Challenges (Domänenkarte 2); Tenant-Kontext.</summary>
 public interface IChallengeCatalog
 {
-    /// <summary>Programm-Manager oder Tenant-Admin (Challenges 4.2): laufende Challenge für den Durchstich.</summary>
-    Task<Guid> StartRunningAsync(string title, ChallengeMetric metric, DateTimeOffset startsAt, DateTimeOffset endsAt, CancellationToken cancellationToken);
+    /// <summary>Programm-Manager oder Tenant-Admin (Challenges 4.2): laufende Challenge mit Sammelziel für den Durchstich.</summary>
+    Task<Guid> StartRunningAsync(string title, ChallengeMetric metric, decimal target, DateTimeOffset startsAt, DateTimeOffset endsAt, CancellationToken cancellationToken);
 
     Task<ChallengeRecord?> GetAsync(Guid challengeId, CancellationToken cancellationToken);
 
     Task<CollectiveRecord?> GetCollectiveAsync(Guid challengeId, CancellationToken cancellationToken);
+
+    /// <summary>Laufende Challenges des Tenants mit den Daten der Challenge-Karte für die angemeldete Person; keine Werte anderer Personen.</summary>
+    Task<IReadOnlyList<ChallengeCardRecord>> ListRunningAsync(CancellationToken cancellationToken);
 }
 
 /// <summary>Fachereignisse des Moduls für Abonnenten (Backend 6.4): Lesen über die Schnittstelle, nie über die Tabelle.</summary>
@@ -32,7 +38,7 @@ public interface IChallengeEvents
 
 internal sealed class ChallengeCatalog(ChallengesDbContext db, IContextTransaction transaction, ITenantContextAccessor context, TimeProvider clock) : IChallengeCatalog
 {
-    public async Task<Guid> StartRunningAsync(string title, ChallengeMetric metric, DateTimeOffset startsAt, DateTimeOffset endsAt, CancellationToken cancellationToken)
+    public async Task<Guid> StartRunningAsync(string title, ChallengeMetric metric, decimal target, DateTimeOffset startsAt, DateTimeOffset endsAt, CancellationToken cancellationToken)
     {
         var current = context.Require();
         var tenantId = current.RequireTenant();
@@ -42,7 +48,7 @@ internal sealed class ChallengeCatalog(ChallengesDbContext db, IContextTransacti
         }
 
         await using var tx = await transaction.BeginAsync(cancellationToken);
-        var challenge = Challenge.StartRunning(tenantId, title, metric, startsAt, endsAt, clock.GetUtcNow());
+        var challenge = Challenge.StartRunning(tenantId, title, metric, target, startsAt, endsAt, clock.GetUtcNow());
         db.Challenges.Add(challenge);
         await db.SaveChangesAsync(cancellationToken);
         await tx.CommitAsync(cancellationToken);
@@ -55,7 +61,7 @@ internal sealed class ChallengeCatalog(ChallengesDbContext db, IContextTransacti
         await using var tx = await transaction.BeginAsync(cancellationToken);
         var record = await db.Challenges
             .Where(c => c.TenantId == tenantId && c.Id == challengeId)
-            .Select(c => new ChallengeRecord(c.Id, c.Title, c.Metric, c.State, c.StartsAt, c.EndsAt))
+            .Select(c => new ChallengeRecord(c.Id, c.Title, c.Metric, c.Target, c.State, c.StartsAt, c.EndsAt))
             .SingleOrDefaultAsync(cancellationToken);
         await tx.CommitAsync(cancellationToken);
         return record;
@@ -71,6 +77,42 @@ internal sealed class ChallengeCatalog(ChallengesDbContext db, IContextTransacti
             .SingleOrDefaultAsync(cancellationToken);
         await tx.CommitAsync(cancellationToken);
         return record;
+    }
+
+    public async Task<IReadOnlyList<ChallengeCardRecord>> ListRunningAsync(CancellationToken cancellationToken)
+    {
+        var current = context.Require();
+        var tenantId = current.RequireTenant();
+        var personId = current.RequirePerson();
+        var today = TenantTimeZone.DayOf(clock.GetUtcNow());
+        var from = TenantTimeZone.StartOfDay(today);
+        var to = TenantTimeZone.StartOfDay(today.AddDays(1));
+
+        await using var tx = await transaction.BeginAsync(cancellationToken);
+        var challenges = await db.Challenges
+            .Where(c => c.TenantId == tenantId && c.State == ChallengeState.Running)
+            .OrderBy(c => c.EndsAt).ThenBy(c => c.Id)
+            .ToListAsync(cancellationToken);
+        var ids = challenges.Select(c => c.Id).ToList();
+        var collectives = await db.CollectiveStates
+            .Where(s => s.TenantId == tenantId && ids.Contains(s.ChallengeId))
+            .ToDictionaryAsync(s => s.ChallengeId, cancellationToken);
+        var contributedToday = await db.Contributions
+            .Where(c => c.TenantId == tenantId && c.PersonId == personId && ids.Contains(c.ChallengeId) && c.RecordedAt >= from && c.RecordedAt < to)
+            .Select(c => c.ChallengeId)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+        await tx.CommitAsync(cancellationToken);
+
+        return challenges.Select(c =>
+        {
+            var collective = collectives.TryGetValue(c.Id, out var s) ? new CollectiveRecord(s.Total, s.ContributionCount, s.ContributorCount, s.UpdatedAt) : null;
+            return new ChallengeCardRecord(
+                new ChallengeRecord(c.Id, c.Title, c.Metric, c.Target, c.State, c.StartsAt, c.EndsAt),
+                collective,
+                c.PercentOf(collective?.Total ?? 0m),
+                contributedToday.Contains(c.Id));
+        }).ToList();
     }
 }
 

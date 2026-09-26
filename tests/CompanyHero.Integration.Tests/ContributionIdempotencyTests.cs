@@ -245,7 +245,7 @@ public sealed class ContributionIdempotencyTests(PostgresFixture pg) : IAsyncLif
 
     private Task<Guid> CreateChallengeAsync(ChallengeMetric metric, ScratchTenant? tenant = null) =>
         Scopes.RunAsync(TenantContext.ForPerson((tenant ?? _w).Id, (tenant ?? _w).Manager, [Role.Member, Role.ProgrammeManager]), (sp, ct) =>
-            sp.GetRequiredService<IChallengeCatalog>().StartRunningAsync($"Schritte {Guid.NewGuid():N}", metric, pg.Clock.GetUtcNow().AddDays(-5), pg.Clock.GetUtcNow().AddDays(7), ct), Ct)
+            sp.GetRequiredService<IChallengeCatalog>().StartRunningAsync($"Schritte {Guid.NewGuid():N}", metric, 100m, pg.Clock.GetUtcNow().AddDays(-5), pg.Clock.GetUtcNow().AddDays(7), ct), Ct)
         .ContinueWith(t => t.Result, TaskScheduler.Default);
 
     /// <summary>(Beiträge, Aktivitätsereignisse „challenge_contribution“, Metering-Ereignisse Teilnehmertag, Fachereignisse) der Person in der Challenge.</summary>

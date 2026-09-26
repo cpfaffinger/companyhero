@@ -1,3 +1,4 @@
+using CompanyHero.Modules.Branding.Infrastructure;
 using CompanyHero.Modules.Challenges.Infrastructure;
 using CompanyHero.Modules.Identity.Infrastructure;
 using CompanyHero.Modules.Metering.Infrastructure;
@@ -53,4 +54,9 @@ internal sealed class ChallengesDbContextFactory : IDesignTimeDbContextFactory<C
 internal sealed class MeteringDbContextFactory : IDesignTimeDbContextFactory<MeteringDbContext>
 {
     public MeteringDbContext CreateDbContext(string[] args) => new(DesignTime.Options<MeteringDbContext>(ModuleSchemas.Metering));
+}
+
+internal sealed class BrandingDbContextFactory : IDesignTimeDbContextFactory<BrandingDbContext>
+{
+    public BrandingDbContext CreateDbContext(string[] args) => new(DesignTime.Options<BrandingDbContext>(ModuleSchemas.Branding));
 }

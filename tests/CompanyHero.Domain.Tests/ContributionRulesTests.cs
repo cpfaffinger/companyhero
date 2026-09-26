@@ -8,7 +8,7 @@ public sealed class ContributionRulesTests
 {
     private static readonly DateTimeOffset Start = new(2026, 9, 1, 0, 0, 0, TimeSpan.Zero);
     private static readonly DateTimeOffset End = new(2026, 9, 30, 22, 0, 0, TimeSpan.Zero);
-    private static readonly Challenge Running = Challenge.StartRunning(TenantId.New(), "Schritte", ChallengeMetric.Checkmark, Start, End, Start);
+    private static readonly Challenge Running = Challenge.StartRunning(TenantId.New(), "Schritte", ChallengeMetric.Checkmark, 100m, Start, End, Start);
 
     [Fact]
     public void Beitrag_im_Zeitraum_mit_gueltigem_Wert_wird_angenommen()

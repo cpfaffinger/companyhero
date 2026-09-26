@@ -1,0 +1,52 @@
+.ch-challenges {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+}
+
+.ch-challenges__erfolg {
+  padding: var(--ch-space-3) var(--ch-space-4);
+  border-radius: var(--ch-radius-card);
+  background: var(--ch-progress-container);
+  color: var(--ch-on-progress-container);
+  font-weight: 600;
+}
+
+.ch-challenges__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-4);
+  padding: var(--ch-space-4);
+  border: 1px solid var(--ch-outline-variant);
+  border-radius: var(--ch-radius-card);
+  background: var(--ch-surface);
+}
+
+.ch-challenges__form-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ch-space-2);
+  flex-wrap: wrap;
+}
+
+.ch-challenges__form-title {
+  flex-grow: 1;
+  font: 600 var(--ch-type-title-m) / var(--ch-line-title-m) var(--ch-font-text);
+}
+
+.ch-challenges__form-hint {
+  font-size: var(--ch-type-label-m);
+  line-height: var(--ch-line-label-m);
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-challenges__form-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-touch-gap);
+  flex-wrap: wrap;
+}
+
+.ch-challenges__spacer {
+  flex-grow: 1;
+}

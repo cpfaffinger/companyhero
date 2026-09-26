@@ -1,0 +1,256 @@
+@use 'libs/theme/design-system' as ds;
+
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+// Mobil (< 640 px): eine Spalte mit 16 px Rand, Kopfzeile oben, untere Navigationsleiste.
+.ch-shell {
+  display: grid;
+  grid-template-areas:
+    'header'
+    'main'
+    'nav';
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.ch-shell__header {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-3);
+  padding: var(--ch-space-3) var(--ch-space-4);
+  background: var(--ch-surface);
+}
+
+.ch-shell__title {
+  display: none;
+}
+
+.ch-shell__spacer {
+  flex-grow: 1;
+}
+
+.ch-shell__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-3);
+  min-width: 0;
+}
+
+.ch-shell__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--ch-radius-input);
+  background: var(--ch-primary);
+  color: var(--ch-on-primary);
+  font: 700 14px / 1 var(--ch-font-display);
+  flex-shrink: 0;
+}
+
+.ch-shell__name {
+  font: 700 var(--ch-type-title-m) / var(--ch-line-title-m) var(--ch-font-display);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ch-shell__main {
+  grid-area: main;
+  padding: 0 var(--ch-space-4) var(--ch-space-4);
+  min-width: 0;
+  outline: none;
+}
+
+.ch-shell__page-title {
+  display: none;
+}
+
+.ch-shell__nav {
+  grid-area: nav;
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: var(--ch-space-2) 0 var(--ch-space-4);
+  border-top: 1px solid var(--ch-outline-variant);
+  background: var(--ch-surface-container);
+}
+
+.ch-shell__brand--nav {
+  display: none;
+}
+
+.ch-shell__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ch-space-1);
+  min-height: var(--ch-touch);
+  text-decoration: none;
+  color: var(--ch-on-surface-variant);
+  font: 600 var(--ch-type-label-m) / var(--ch-line-label-m) var(--ch-font-text);
+  border-radius: var(--ch-radius-full);
+  transition: color var(--ch-motion-state) ease;
+}
+
+.ch-shell__icon-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 32px;
+  border-radius: var(--ch-radius-full);
+  transition: background-color var(--ch-motion-state) ease;
+}
+
+.ch-shell__item--active {
+  color: var(--ch-primary);
+}
+
+.ch-shell__item--active .ch-shell__icon-pill {
+  background: var(--ch-primary-container);
+}
+
+.ch-shell__context {
+  display: none;
+}
+
+// Tablet (>= 640 px): Navigations-Rail links.
+@include ds.ch-tablet {
+  .ch-shell {
+    grid-template:
+      'nav header' auto
+      'nav main' 1fr / #{ds.$ch-rail} 1fr;
+  }
+
+  .ch-shell__nav {
+    position: sticky;
+    top: 0;
+    bottom: auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ch-space-4);
+    padding: var(--ch-space-6) 0;
+    border-top: none;
+    border-right: 1px solid var(--ch-outline-variant);
+  }
+
+  .ch-shell__brand--nav {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--ch-space-2);
+  }
+
+  .ch-shell__brand--nav .ch-shell__name {
+    display: none;
+  }
+
+  .ch-shell__brand--nav .ch-shell__avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .ch-shell__brand--header {
+    display: none;
+  }
+
+  .ch-shell__header {
+    position: static;
+    padding: var(--ch-space-8) var(--ch-space-10) 0;
+  }
+
+  .ch-shell__title {
+    display: block;
+    font: 700 var(--ch-type-headline-l) / var(--ch-line-headline-l) var(--ch-font-display);
+  }
+
+  .ch-shell__main {
+    padding: var(--ch-space-5) var(--ch-space-10) var(--ch-space-10);
+    max-width: 680px;
+  }
+}
+
+// Desktop (>= 1024 px): Seitennavigation 240 px, Inhalt bis 1.280 px, Kontextspalte 320 px.
+@include ds.ch-desktop {
+  .ch-shell {
+    grid-template:
+      'nav header' auto
+      'nav main' 1fr / #{ds.$ch-side-nav} minmax(0, 1fr);
+  }
+
+  .ch-shell--context {
+    grid-template:
+      'nav header header' auto
+      'nav main context' 1fr / #{ds.$ch-side-nav} minmax(0, 1fr) #{ds.$ch-context-column};
+  }
+
+  .ch-shell__nav {
+    align-items: stretch;
+    gap: var(--ch-space-1);
+    padding: var(--ch-space-5) var(--ch-space-3);
+  }
+
+  .ch-shell__brand--nav {
+    flex-direction: row;
+    padding: var(--ch-space-1) var(--ch-space-2) var(--ch-space-4);
+    margin: 0;
+  }
+
+  .ch-shell__brand--nav .ch-shell__name {
+    display: block;
+  }
+
+  .ch-shell__brand--nav .ch-shell__avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .ch-shell__item {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--ch-space-3);
+    height: var(--ch-touch);
+    padding: 0 var(--ch-space-4);
+    font-size: var(--ch-type-label-l);
+    line-height: var(--ch-line-label-l);
+  }
+
+  .ch-shell__item--active {
+    background: var(--ch-primary-container);
+  }
+
+  .ch-shell__icon-pill {
+    width: auto;
+    height: auto;
+  }
+
+  .ch-shell__item--active .ch-shell__icon-pill {
+    background: transparent;
+  }
+
+  .ch-shell__main {
+    max-width: ds.$ch-content-max;
+  }
+
+  .ch-shell__context {
+    grid-area: context;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ch-space-4);
+    padding: var(--ch-space-8) var(--ch-space-6);
+    border-left: 1px solid var(--ch-outline-variant);
+  }
+}

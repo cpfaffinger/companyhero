@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text.Json.Serialization;
 using CompanyHero.Modules.Challenges.Application;
 using CompanyHero.Modules.Challenges.Domain;
 using CompanyHero.Platform.Hosting;
@@ -19,12 +20,50 @@ public sealed record ContributionResponse(string ContributionId, string Outcome)
 
 public sealed record OperationResponse(string OperationId);
 
-public sealed record CollectiveResponse(string Total, int ContributionCount, int ContributorCount, DateTimeOffset UpdatedAt);
+/// <summary>Kollektivstand mit Altersangabe (Challenges 6.1); <c>percent</c> ist der gerundete Anteil am Sammelziel.</summary>
+public sealed record CollectiveResponse(string Total, int ContributionCount, int ContributorCount, DateTimeOffset UpdatedAt, int Percent);
+
+[JsonConverter(typeof(JsonStringEnumConverter<ChallengeMetricDto>))]
+public enum ChallengeMetricDto
+{
+    [JsonStringEnumMemberName("checkmark")] Checkmark,
+    [JsonStringEnumMemberName("count")] Count,
+}
+
+/// <summary>Daten der Challenge-Karte (Marke 2.5): Sammelziel, Zeitraum, Kollektivstand, eigener Beitrag heute; keine Werte anderer Personen.</summary>
+public sealed record ChallengeCardResponse(
+    string ChallengeId,
+    string Title,
+    ChallengeMetricDto Metric,
+    string Target,
+    DateTimeOffset StartsAt,
+    DateTimeOffset EndsAt,
+    CollectiveResponse? Collective,
+    int Percent,
+    bool ContributedToday);
 
 internal static class ChallengeEndpoints
 {
     public static void Map(IEndpointRouteBuilder endpoints)
     {
+        endpoints.MapGet("/api/challenges", async (IChallengeCatalog catalog, CancellationToken ct) =>
+            {
+                var cards = await catalog.ListRunningAsync(ct);
+                return Results.Ok(cards.Select(card => new ChallengeCardResponse(
+                    card.Challenge.Id.ToString("D"),
+                    card.Challenge.Title,
+                    card.Challenge.Metric == ChallengeMetric.Count ? ChallengeMetricDto.Count : ChallengeMetricDto.Checkmark,
+                    Decimal(card.Challenge.Target),
+                    card.Challenge.StartsAt,
+                    card.Challenge.EndsAt,
+                    card.Collective is null ? null : ToCollective(card.Collective, card.Percent),
+                    card.Percent,
+                    card.ContributedToday)).ToList());
+            })
+            .RequireTenantContext()
+            .WithName("ListRunningChallenges")
+            .Produces<List<ChallengeCardResponse>>();
+
         endpoints.MapPost("/api/challenges/{challengeId:guid}/contribution-operations", async (Guid challengeId, IChallengeCatalog catalog, IContributionService contributions, CancellationToken ct) =>
             {
                 if (await catalog.GetAsync(challengeId, ct) is null)
@@ -36,7 +75,9 @@ internal static class ChallengeEndpoints
                 return Results.Created($"/api/challenges/{challengeId:D}/contribution-operations/{operationId}", new OperationResponse(operationId));
             })
             .RequireTenantContext()
-            .WithName("ReserveContributionOperation");
+            .WithName("ReserveContributionOperation")
+            .Produces<OperationResponse>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status404NotFound);
 
         endpoints.MapPost("/api/challenges/{challengeId:guid}/contributions", async (Guid challengeId, ContributionRequest request, IContributionService contributions, CancellationToken ct) =>
             {
@@ -87,21 +128,36 @@ internal static class ChallengeEndpoints
                 };
             })
             .RequireTenantContext()
-            .WithName("SubmitContribution");
+            .WithName("SubmitContribution")
+            .Produces<ContributionResponse>(StatusCodes.Status201Created)
+            .Produces<ContributionResponse>(StatusCodes.Status200OK)
+            .ProducesValidationProblem()
+            .ProducesProblem(StatusCodes.Status409Conflict)
+            .ProducesProblem(StatusCodes.Status410Gone)
+            .ProducesProblem(StatusCodes.Status422UnprocessableEntity)
+            .Produces(StatusCodes.Status404NotFound);
 
         endpoints.MapGet("/api/challenges/{challengeId:guid}/collective", async (Guid challengeId, IChallengeCatalog catalog, CancellationToken ct) =>
             {
-                if (await catalog.GetAsync(challengeId, ct) is null)
+                var challenge = await catalog.GetAsync(challengeId, ct);
+                if (challenge is null)
                 {
                     return Results.NotFound();
                 }
 
                 var collective = await catalog.GetCollectiveAsync(challengeId, ct);
                 return collective is null
-                    ? Results.Ok(new CollectiveResponse("0.0000", 0, 0, DateTimeOffset.MinValue))
-                    : Results.Ok(new CollectiveResponse(collective.Total.ToString("0.0000", CultureInfo.InvariantCulture), collective.ContributionCount, collective.ContributorCount, collective.UpdatedAt));
+                    ? Results.Ok(new CollectiveResponse("0.0000", 0, 0, DateTimeOffset.MinValue, 0))
+                    : Results.Ok(ToCollective(collective, (int)Math.Min(100m, Math.Round(collective.Total / challenge.Target * 100m, 0, MidpointRounding.AwayFromZero))));
             })
             .RequireTenantContext()
-            .WithName("GetChallengeCollective");
+            .WithName("GetChallengeCollective")
+            .Produces<CollectiveResponse>()
+            .Produces(StatusCodes.Status404NotFound);
     }
+
+    private static CollectiveResponse ToCollective(CollectiveRecord collective, int percent) =>
+        new(Decimal(collective.Total), collective.ContributionCount, collective.ContributorCount, collective.UpdatedAt, percent);
+
+    private static string Decimal(decimal value) => value.ToString("0.0000", CultureInfo.InvariantCulture);
 }

@@ -1,0 +1,73 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  --ch-fill: 0%;
+}
+
+.ch-bar__track {
+  position: relative;
+  height: 14px;
+  border-radius: var(--ch-radius-full);
+  background: var(--ch-progress-container);
+}
+
+.ch-bar__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--ch-fill);
+  border-radius: var(--ch-radius-full);
+  background: var(--ch-progress);
+  animation: ch-fill var(--ch-motion-emphasized) var(--ch-motion-easing) both;
+}
+
+.ch-bar__milestone {
+  position: absolute;
+  top: 2px;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: var(--ch-radius-full);
+  background: var(--ch-surface-container);
+  border: 2px solid var(--ch-outline-variant);
+}
+
+.ch-bar__milestone[data-milestone='25'] {
+  left: 25%;
+}
+
+.ch-bar__milestone[data-milestone='50'] {
+  left: 50%;
+}
+
+.ch-bar__milestone[data-milestone='75'] {
+  left: 75%;
+}
+
+.ch-bar__milestone[data-milestone='100'] {
+  left: calc(100% - 5px);
+}
+
+.ch-bar__milestone--reached {
+  border-color: var(--ch-progress);
+}
+
+.ch-bar__labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--ch-type-label-m);
+  line-height: var(--ch-line-label-m);
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-bar__label--next {
+  font-weight: 600;
+  color: var(--ch-on-surface);
+}
+
+@keyframes ch-fill {
+  from {
+    width: 0;
+  }
+}

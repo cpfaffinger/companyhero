@@ -1,5 +1,9 @@
-// Globale Basis (K03): Dokument, Box-Sizing, Grundschrift, Hintergrund. Keine Regeln für Buttons oder Inputs.
-// Farben ausschließlich über --ch-* Rollen aus dem Backend-Tokensatz (A-013, K01); Rohfarben scheitern am Lint.
+// Globale Basis (K03): Dokument, Box-Sizing, Grundschrift, Hintergrund; das Design-System und der Material-Adapter
+// werden genau einmal ausgegeben. Keine Regeln für Buttons oder Inputs. Farben ausschließlich über --ch-* Rollen aus dem
+// Backend-Tokensatz (A-013, K01); Rohfarben scheitern am Lint.
+@use 'libs/theme/design-system';
+@use 'libs/theme/material-adapter';
+
 *,
 *::before,
 *::after {
@@ -8,12 +12,26 @@
 
 html {
   color-scheme: light dark;
+  height: 100%;
 }
 
 body {
   margin: 0;
-  font: 400 16px/24px "Inter Variable", system-ui, sans-serif;
+  min-height: 100%;
+  font: 400 var(--ch-type-body-l) / var(--ch-line-body-l) var(--ch-font-text);
   font-variant-numeric: tabular-nums;
   background: var(--ch-surface);
   color: var(--ch-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--ch-primary);
 }

@@ -1,0 +1,34 @@
+<form class="ch-kiosk" (submit)="$event.preventDefault(); submit()">
+  <div class="ch-kiosk__field">
+    <label class="ch-kiosk__label" for="ch-kiosk-kennung">{{ texts.t('kiosk.kennung') }}</label>
+    <input
+      id="ch-kiosk-kennung"
+      class="ch-kiosk__kennung"
+      type="text"
+      inputmode="numeric"
+      autocomplete="off"
+      maxlength="6"
+      [value]="kennung()"
+      (input)="onKennungInput($event)"
+    />
+  </div>
+  <div class="ch-kiosk__field">
+    <div class="ch-kiosk__label" id="ch-kiosk-pin-label">{{ texts.t('kiosk.pin') }}</div>
+    <div class="ch-kiosk__pin" role="group" [attr.aria-label]="texts.t('kiosk.pinStellen')" aria-describedby="ch-kiosk-pin-label">
+      @for (slot of pinSlots; track slot) {
+        <div class="ch-kiosk__pin-slot" [class.ch-kiosk__pin-slot--active]="stage() === 'pin' && pin().length === slot" aria-hidden="true">
+          {{ pin().length > slot ? '●' : '' }}
+        </div>
+      }
+      <span class="ch-visually-hidden" aria-live="polite">{{ pin().length }} von 4</span>
+    </div>
+  </div>
+  <div class="ch-kiosk__keypad">
+    @for (key of keys; track key) {
+      <button class="ch-kiosk__key" type="button" (click)="digit(key)">{{ key }}</button>
+    }
+    <button class="ch-kiosk__key ch-kiosk__key--erase" type="button" [attr.aria-label]="texts.t('kiosk.loeschen')" (click)="erase()">⌫</button>
+    <button class="ch-kiosk__key" type="button" (click)="digit('0')">0</button>
+    <button class="ch-kiosk__key ch-kiosk__key--primary" type="submit" [disabled]="!complete()">{{ texts.t('kiosk.weiter') }}</button>
+  </div>
+</form>

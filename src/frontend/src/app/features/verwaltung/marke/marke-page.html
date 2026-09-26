@@ -1,0 +1,73 @@
+<section class="ch-marke">
+  <form class="ch-marke__form" [formGroup]="form" (ngSubmit)="vorschau()">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ texts.t('verwaltung.produktname') }}</mat-label>
+      <input matInput formControlName="produktname" maxlength="40" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ texts.t('verwaltung.saatfarbe') }}</mat-label>
+      <input matInput formControlName="saatfarbe" placeholder="#RRGGBB" />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ texts.t('verwaltung.anrede') }}</mat-label>
+      <mat-select formControlName="anrede">
+        <mat-option value="du">Du</mat-option>
+        <mat-option value="sie">Sie</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ texts.t('verwaltung.tonalitaet') }}</mat-label>
+      <mat-select formControlName="tonalitaet">
+        <mat-option value="sachlich">{{ texts.t('verwaltung.tonalitaet.sachlich') }}</mat-option>
+        <mat-option value="freundlich">{{ texts.t('verwaltung.tonalitaet.freundlich') }}</mat-option>
+        <mat-option value="motivierend">{{ texts.t('verwaltung.tonalitaet.motivierend') }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="ch-marke__actions">
+      <button matButton="outlined" type="submit" [disabled]="form.invalid">{{ texts.t('verwaltung.vorschau') }}</button>
+      <button matButton="filled" type="button" [disabled]="form.invalid" (click)="veroeffentlichen()">{{ texts.t('verwaltung.veroeffentlichen') }}</button>
+    </div>
+    @if (reasons().length > 0) {
+      <ul class="ch-marke__reasons" role="alert">
+        @for (reason of reasons(); track reason) {
+          <li>{{ reason }}</li>
+        }
+      </ul>
+    }
+    @if (published(); as version) {
+      <p class="ch-marke__ok" role="status">{{ texts.t('verwaltung.veroeffentlicht', { version: version }) }}</p>
+    }
+  </form>
+  @if (preview(); as p) {
+    <div class="ch-marke__preview">
+      <h2 class="ch-marke__title">{{ texts.t('verwaltung.kontrastbericht') }}</h2>
+      <table class="ch-marke__table">
+        <thead>
+          <tr>
+            <th scope="col">{{ texts.t('verwaltung.rolle') }}</th>
+            <th scope="col">{{ texts.t('ich.modus.hell') }}</th>
+            <th scope="col">{{ texts.t('ich.modus.dunkel') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (role of roles; track role) {
+            <tr>
+              <th scope="row">{{ role }}</th>
+              <td>{{ p.hell[role] }}</td>
+              <td>{{ p.dunkel[role] }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      @if (p.ersetzungen.length > 0) {
+        <h3 class="ch-marke__subtitle">{{ texts.t('verwaltung.ersetzungen') }}</h3>
+        <ul class="ch-marke__list">
+          @for (e of p.ersetzungen; track e.modus + e.rolle) {
+            <li>{{ e.modus }} · {{ e.rolle }}: {{ e.angefordert }} → {{ e.ersetzt }} ({{ e.grund }})</li>
+          }
+        </ul>
+      }
+      <p class="ch-marke__hint">{{ texts.t('verwaltung.kontrastGeprueft', { paare: p.kontrast.length }) }}</p>
+    </div>
+  }
+</section>

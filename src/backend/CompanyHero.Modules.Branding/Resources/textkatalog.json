@@ -1,0 +1,1304 @@
+{
+  "nav.start": {
+    "sachlich": {
+      "du": "Start",
+      "sie": "Start"
+    },
+    "freundlich": {
+      "du": "Start",
+      "sie": "Start"
+    },
+    "motivierend": {
+      "du": "Start",
+      "sie": "Start"
+    }
+  },
+  "nav.challenges": {
+    "sachlich": {
+      "du": "Challenges",
+      "sie": "Challenges"
+    },
+    "freundlich": {
+      "du": "Challenges",
+      "sie": "Challenges"
+    },
+    "motivierend": {
+      "du": "Challenges",
+      "sie": "Challenges"
+    }
+  },
+  "nav.ich": {
+    "sachlich": {
+      "du": "Ich",
+      "sie": "Ich"
+    },
+    "freundlich": {
+      "du": "Ich",
+      "sie": "Ich"
+    },
+    "motivierend": {
+      "du": "Ich",
+      "sie": "Ich"
+    }
+  },
+  "kopf.benachrichtigungen": {
+    "sachlich": {
+      "du": "Benachrichtigungen",
+      "sie": "Benachrichtigungen"
+    },
+    "freundlich": {
+      "du": "Benachrichtigungen",
+      "sie": "Benachrichtigungen"
+    },
+    "motivierend": {
+      "du": "Benachrichtigungen",
+      "sie": "Benachrichtigungen"
+    }
+  },
+  "start.willkommen": {
+    "sachlich": {
+      "du": "Willkommen bei {produktname}.",
+      "sie": "Willkommen bei {produktname}."
+    },
+    "freundlich": {
+      "du": "Schön, dass du da bist.",
+      "sie": "Schön, dass Sie da sind."
+    },
+    "motivierend": {
+      "du": "Los geht's, {produktname} wartet auf dich!",
+      "sie": "Los geht's, {produktname} wartet auf Sie!"
+    }
+  },
+  "start.naechsteHandlung": {
+    "sachlich": {
+      "du": "Die laufende Challenge nimmt heute noch ein Häkchen an.",
+      "sie": "Die laufende Challenge nimmt heute noch ein Häkchen an."
+    },
+    "freundlich": {
+      "du": "Dein Häkchen für heute ist noch offen, es dauert nur einen Moment.",
+      "sie": "Ihr Häkchen für heute ist noch offen, es dauert nur einen Moment."
+    },
+    "motivierend": {
+      "du": "Ein Tipp genügt und dein Häkchen zählt fürs Firmenziel!",
+      "sie": "Ein Tipp genügt und Ihr Häkchen zählt fürs Firmenziel!"
+    }
+  },
+  "challenge.firmenziel": {
+    "sachlich": {
+      "du": "Firmenziel",
+      "sie": "Firmenziel"
+    },
+    "freundlich": {
+      "du": "Firmenziel",
+      "sie": "Firmenziel"
+    },
+    "motivierend": {
+      "du": "Firmenziel",
+      "sie": "Firmenziel"
+    }
+  },
+  "challenge.form.sammelziel": {
+    "sachlich": {
+      "du": "Sammelziel · Häkchen · ganze Firma",
+      "sie": "Sammelziel · Häkchen · ganze Firma"
+    },
+    "freundlich": {
+      "du": "Sammelziel · Häkchen · ganze Firma",
+      "sie": "Sammelziel · Häkchen · ganze Firma"
+    },
+    "motivierend": {
+      "du": "Sammelziel · Häkchen · ganze Firma",
+      "sie": "Sammelziel · Häkchen · ganze Firma"
+    }
+  },
+  "challenge.form.zahl": {
+    "sachlich": {
+      "du": "Sammelziel · Zahl · ganze Firma",
+      "sie": "Sammelziel · Zahl · ganze Firma"
+    },
+    "freundlich": {
+      "du": "Sammelziel · Zahl · ganze Firma",
+      "sie": "Sammelziel · Zahl · ganze Firma"
+    },
+    "motivierend": {
+      "du": "Sammelziel · Zahl · ganze Firma",
+      "sie": "Sammelziel · Zahl · ganze Firma"
+    }
+  },
+  "challenge.nochTage": {
+    "sachlich": {
+      "du": "noch {tage} Tage",
+      "sie": "noch {tage} Tage"
+    },
+    "freundlich": {
+      "du": "noch {tage} Tage",
+      "sie": "noch {tage} Tage"
+    },
+    "motivierend": {
+      "du": "noch {tage} Tage",
+      "sie": "noch {tage} Tage"
+    }
+  },
+  "challenge.nochEinTag": {
+    "sachlich": {
+      "du": "noch 1 Tag",
+      "sie": "noch 1 Tag"
+    },
+    "freundlich": {
+      "du": "noch 1 Tag",
+      "sie": "noch 1 Tag"
+    },
+    "motivierend": {
+      "du": "noch 1 Tag",
+      "sie": "noch 1 Tag"
+    }
+  },
+  "challenge.stand": {
+    "sachlich": {
+      "du": "Stand vor {minuten} Min",
+      "sie": "Stand vor {minuten} Min"
+    },
+    "freundlich": {
+      "du": "Stand vor {minuten} Min",
+      "sie": "Stand vor {minuten} Min"
+    },
+    "motivierend": {
+      "du": "Stand vor {minuten} Min",
+      "sie": "Stand vor {minuten} Min"
+    }
+  },
+  "challenge.standGerade": {
+    "sachlich": {
+      "du": "Stand gerade eben",
+      "sie": "Stand gerade eben"
+    },
+    "freundlich": {
+      "du": "Stand gerade eben",
+      "sie": "Stand gerade eben"
+    },
+    "motivierend": {
+      "du": "Stand gerade eben",
+      "sie": "Stand gerade eben"
+    }
+  },
+  "challenge.prozentErreicht": {
+    "sachlich": {
+      "du": "{prozent} Prozent des Firmenziels erreicht, nächster Meilenstein bei {meilenstein} Prozent",
+      "sie": "{prozent} Prozent des Firmenziels erreicht, nächster Meilenstein bei {meilenstein} Prozent"
+    },
+    "freundlich": {
+      "du": "{prozent} Prozent des Firmenziels erreicht, nächster Meilenstein bei {meilenstein} Prozent",
+      "sie": "{prozent} Prozent des Firmenziels erreicht, nächster Meilenstein bei {meilenstein} Prozent"
+    },
+    "motivierend": {
+      "du": "{prozent} Prozent des Firmenziels erreicht, nächster Meilenstein bei {meilenstein} Prozent",
+      "sie": "{prozent} Prozent des Firmenziels erreicht, nächster Meilenstein bei {meilenstein} Prozent"
+    }
+  },
+  "challenge.zielErreicht": {
+    "sachlich": {
+      "du": "Das Firmenziel ist erreicht.",
+      "sie": "Das Firmenziel ist erreicht."
+    },
+    "freundlich": {
+      "du": "Ihr habt das Firmenziel erreicht, schön, dass so viele dabei sind.",
+      "sie": "Sie haben das Firmenziel gemeinsam erreicht, schön, dass so viele dabei sind."
+    },
+    "motivierend": {
+      "du": "Firmenziel erreicht, gemeinsam geschafft!",
+      "sie": "Firmenziel erreicht, gemeinsam geschafft!"
+    }
+  },
+  "challenge.meilensteine": {
+    "sachlich": {
+      "du": "Start",
+      "sie": "Start"
+    },
+    "freundlich": {
+      "du": "Start",
+      "sie": "Start"
+    },
+    "motivierend": {
+      "du": "Start",
+      "sie": "Start"
+    }
+  },
+  "challenge.ziel": {
+    "sachlich": {
+      "du": "Ziel",
+      "sie": "Ziel"
+    },
+    "freundlich": {
+      "du": "Ziel",
+      "sie": "Ziel"
+    },
+    "motivierend": {
+      "du": "Ziel",
+      "sie": "Ziel"
+    }
+  },
+  "challenge.beitragHeute": {
+    "sachlich": {
+      "du": "Dein Beitrag heute",
+      "sie": "Ihr Beitrag heute"
+    },
+    "freundlich": {
+      "du": "Dein Beitrag heute",
+      "sie": "Ihr Beitrag heute"
+    },
+    "motivierend": {
+      "du": "Dein Beitrag heute",
+      "sie": "Ihr Beitrag heute"
+    }
+  },
+  "challenge.offen": {
+    "sachlich": {
+      "du": "noch offen",
+      "sie": "noch offen"
+    },
+    "freundlich": {
+      "du": "noch offen",
+      "sie": "noch offen"
+    },
+    "motivierend": {
+      "du": "noch offen",
+      "sie": "noch offen"
+    }
+  },
+  "challenge.erledigt": {
+    "sachlich": {
+      "du": "eingetragen",
+      "sie": "eingetragen"
+    },
+    "freundlich": {
+      "du": "erledigt, danke",
+      "sie": "erledigt, danke"
+    },
+    "motivierend": {
+      "du": "erledigt, das zählt!",
+      "sie": "erledigt, das zählt!"
+    }
+  },
+  "challenge.heuteErledigt": {
+    "sachlich": {
+      "du": "Heute erledigt",
+      "sie": "Heute erledigt"
+    },
+    "freundlich": {
+      "du": "Heute erledigt",
+      "sie": "Heute erledigt"
+    },
+    "motivierend": {
+      "du": "Heute erledigt",
+      "sie": "Heute erledigt"
+    }
+  },
+  "challenge.erfolgsmoment": {
+    "sachlich": {
+      "du": "Beitrag gespeichert.",
+      "sie": "Beitrag gespeichert."
+    },
+    "freundlich": {
+      "du": "Danke, dein Häkchen zählt für alle.",
+      "sie": "Danke, Ihr Häkchen zählt für alle."
+    },
+    "motivierend": {
+      "du": "Stark, dein Häkchen bringt alle weiter!",
+      "sie": "Stark, Ihr Häkchen bringt alle weiter!"
+    }
+  },
+  "challenge.keineLaufend": {
+    "sachlich": {
+      "du": "Derzeit läuft keine Challenge. Die nächste startet mit dem Programm.",
+      "sie": "Derzeit läuft keine Challenge. Die nächste startet mit dem Programm."
+    },
+    "freundlich": {
+      "du": "Gerade läuft keine Challenge. Schau bald wieder vorbei, die nächste kommt bestimmt.",
+      "sie": "Gerade läuft keine Challenge. Schauen Sie bald wieder vorbei, die nächste kommt bestimmt."
+    },
+    "motivierend": {
+      "du": "Gerade läuft keine Challenge, die nächste startet bald!",
+      "sie": "Gerade läuft keine Challenge, die nächste startet bald!"
+    }
+  },
+  "form.titel": {
+    "sachlich": {
+      "du": "Beitrag nachtragen",
+      "sie": "Beitrag nachtragen"
+    },
+    "freundlich": {
+      "du": "Beitrag nachtragen",
+      "sie": "Beitrag nachtragen"
+    },
+    "motivierend": {
+      "du": "Beitrag nachtragen",
+      "sie": "Beitrag nachtragen"
+    }
+  },
+  "form.rueckwirkend": {
+    "sachlich": {
+      "du": "bis 3 Tage rückwirkend",
+      "sie": "bis 3 Tage rückwirkend"
+    },
+    "freundlich": {
+      "du": "bis 3 Tage rückwirkend",
+      "sie": "bis 3 Tage rückwirkend"
+    },
+    "motivierend": {
+      "du": "bis 3 Tage rückwirkend",
+      "sie": "bis 3 Tage rückwirkend"
+    }
+  },
+  "form.tag": {
+    "sachlich": {
+      "du": "Tag",
+      "sie": "Tag"
+    },
+    "freundlich": {
+      "du": "Tag",
+      "sie": "Tag"
+    },
+    "motivierend": {
+      "du": "Tag",
+      "sie": "Tag"
+    }
+  },
+  "form.heute": {
+    "sachlich": {
+      "du": "Heute",
+      "sie": "Heute"
+    },
+    "freundlich": {
+      "du": "Heute",
+      "sie": "Heute"
+    },
+    "motivierend": {
+      "du": "Heute",
+      "sie": "Heute"
+    }
+  },
+  "form.gestern": {
+    "sachlich": {
+      "du": "Gestern",
+      "sie": "Gestern"
+    },
+    "freundlich": {
+      "du": "Gestern",
+      "sie": "Gestern"
+    },
+    "motivierend": {
+      "du": "Gestern",
+      "sie": "Gestern"
+    }
+  },
+  "form.vorgestern": {
+    "sachlich": {
+      "du": "Vorgestern",
+      "sie": "Vorgestern"
+    },
+    "freundlich": {
+      "du": "Vorgestern",
+      "sie": "Vorgestern"
+    },
+    "motivierend": {
+      "du": "Vorgestern",
+      "sie": "Vorgestern"
+    }
+  },
+  "form.vorDreiTagen": {
+    "sachlich": {
+      "du": "Vor drei Tagen",
+      "sie": "Vor drei Tagen"
+    },
+    "freundlich": {
+      "du": "Vor drei Tagen",
+      "sie": "Vor drei Tagen"
+    },
+    "motivierend": {
+      "du": "Vor drei Tagen",
+      "sie": "Vor drei Tagen"
+    }
+  },
+  "form.notiz": {
+    "sachlich": {
+      "du": "Notiz (nur für dich)",
+      "sie": "Notiz (nur für Sie)"
+    },
+    "freundlich": {
+      "du": "Notiz (nur für dich)",
+      "sie": "Notiz (nur für Sie)"
+    },
+    "motivierend": {
+      "du": "Notiz (nur für dich)",
+      "sie": "Notiz (nur für Sie)"
+    }
+  },
+  "form.zeichen": {
+    "sachlich": {
+      "du": "{n} von {max} Zeichen",
+      "sie": "{n} von {max} Zeichen"
+    },
+    "freundlich": {
+      "du": "{n} von {max} Zeichen",
+      "sie": "{n} von {max} Zeichen"
+    },
+    "motivierend": {
+      "du": "{n} von {max} Zeichen",
+      "sie": "{n} von {max} Zeichen"
+    }
+  },
+  "form.abbrechen": {
+    "sachlich": {
+      "du": "Abbrechen",
+      "sie": "Abbrechen"
+    },
+    "freundlich": {
+      "du": "Abbrechen",
+      "sie": "Abbrechen"
+    },
+    "motivierend": {
+      "du": "Abbrechen",
+      "sie": "Abbrechen"
+    }
+  },
+  "form.eintragen": {
+    "sachlich": {
+      "du": "Eintragen",
+      "sie": "Eintragen"
+    },
+    "freundlich": {
+      "du": "Eintragen",
+      "sie": "Eintragen"
+    },
+    "motivierend": {
+      "du": "Eintragen",
+      "sie": "Eintragen"
+    }
+  },
+  "form.tagPflicht": {
+    "sachlich": {
+      "du": "Bitte einen Tag wählen.",
+      "sie": "Bitte einen Tag wählen."
+    },
+    "freundlich": {
+      "du": "Wähle bitte einen Tag aus.",
+      "sie": "Wählen Sie bitte einen Tag aus."
+    },
+    "motivierend": {
+      "du": "Wähle bitte einen Tag aus.",
+      "sie": "Wählen Sie bitte einen Tag aus."
+    }
+  },
+  "fehler.tagesdeckel": {
+    "sachlich": {
+      "du": "Für diesen Tag ist bereits ein Häkchen gesetzt.",
+      "sie": "Für diesen Tag ist bereits ein Häkchen gesetzt."
+    },
+    "freundlich": {
+      "du": "Für diesen Tag hast du schon ein Häkchen gesetzt.",
+      "sie": "Für diesen Tag haben Sie schon ein Häkchen gesetzt."
+    },
+    "motivierend": {
+      "du": "Für diesen Tag hast du schon ein Häkchen gesetzt, das zählt bereits.",
+      "sie": "Für diesen Tag haben Sie schon ein Häkchen gesetzt, das zählt bereits."
+    }
+  },
+  "fehler.InFuture": {
+    "sachlich": {
+      "du": "Ein Beitrag in der Zukunft ist nicht möglich.",
+      "sie": "Ein Beitrag in der Zukunft ist nicht möglich."
+    },
+    "freundlich": {
+      "du": "In die Zukunft geht es leider nicht, wähle einen Tag bis heute.",
+      "sie": "In die Zukunft geht es leider nicht, wählen Sie einen Tag bis heute."
+    },
+    "motivierend": {
+      "du": "In die Zukunft geht es nicht, wähle einen Tag bis heute.",
+      "sie": "In die Zukunft geht es nicht, wählen Sie einen Tag bis heute."
+    }
+  },
+  "fehler.BackdatedTooFar": {
+    "sachlich": {
+      "du": "Beiträge sind bis drei Tage rückwirkend möglich.",
+      "sie": "Beiträge sind bis drei Tage rückwirkend möglich."
+    },
+    "freundlich": {
+      "du": "Rückwirkend gehen nur die letzten drei Tage.",
+      "sie": "Rückwirkend gehen nur die letzten drei Tage."
+    },
+    "motivierend": {
+      "du": "Rückwirkend gehen nur die letzten drei Tage.",
+      "sie": "Rückwirkend gehen nur die letzten drei Tage."
+    }
+  },
+  "fehler.OutsidePeriod": {
+    "sachlich": {
+      "du": "Der Tag liegt außerhalb des Challenge-Zeitraums.",
+      "sie": "Der Tag liegt außerhalb des Challenge-Zeitraums."
+    },
+    "freundlich": {
+      "du": "Dieser Tag liegt außerhalb der Challenge.",
+      "sie": "Dieser Tag liegt außerhalb der Challenge."
+    },
+    "motivierend": {
+      "du": "Dieser Tag liegt außerhalb der Challenge.",
+      "sie": "Dieser Tag liegt außerhalb der Challenge."
+    }
+  },
+  "fehler.GracePeriodOver": {
+    "sachlich": {
+      "du": "Die Nachfrist dieser Challenge ist vorbei.",
+      "sie": "Die Nachfrist dieser Challenge ist vorbei."
+    },
+    "freundlich": {
+      "du": "Die Nachfrist dieser Challenge ist leider vorbei.",
+      "sie": "Die Nachfrist dieser Challenge ist leider vorbei."
+    },
+    "motivierend": {
+      "du": "Die Nachfrist dieser Challenge ist vorbei, die nächste kommt bestimmt.",
+      "sie": "Die Nachfrist dieser Challenge ist vorbei, die nächste kommt bestimmt."
+    }
+  },
+  "fehler.InvalidValue": {
+    "sachlich": {
+      "du": "Der Wert ist für diese Challenge nicht zulässig.",
+      "sie": "Der Wert ist für diese Challenge nicht zulässig."
+    },
+    "freundlich": {
+      "du": "Dieser Wert passt nicht zur Challenge.",
+      "sie": "Dieser Wert passt nicht zur Challenge."
+    },
+    "motivierend": {
+      "du": "Dieser Wert passt nicht zur Challenge.",
+      "sie": "Dieser Wert passt nicht zur Challenge."
+    }
+  },
+  "fehler.Konflikt": {
+    "sachlich": {
+      "du": "Dieser Beitrag wurde bereits mit anderem Inhalt übertragen.",
+      "sie": "Dieser Beitrag wurde bereits mit anderem Inhalt übertragen."
+    },
+    "freundlich": {
+      "du": "Dieser Beitrag ist schon einmal mit anderem Inhalt angekommen.",
+      "sie": "Dieser Beitrag ist schon einmal mit anderem Inhalt angekommen."
+    },
+    "motivierend": {
+      "du": "Dieser Beitrag ist schon einmal mit anderem Inhalt angekommen.",
+      "sie": "Dieser Beitrag ist schon einmal mit anderem Inhalt angekommen."
+    }
+  },
+  "fehler.Verbindung": {
+    "sachlich": {
+      "du": "Keine Verbindung. Der Beitrag wurde nicht gespeichert.",
+      "sie": "Keine Verbindung. Der Beitrag wurde nicht gespeichert."
+    },
+    "freundlich": {
+      "du": "Gerade keine Verbindung, der Beitrag ist noch nicht gespeichert.",
+      "sie": "Gerade keine Verbindung, der Beitrag ist noch nicht gespeichert."
+    },
+    "motivierend": {
+      "du": "Gerade keine Verbindung, der Beitrag ist noch nicht gespeichert.",
+      "sie": "Gerade keine Verbindung, der Beitrag ist noch nicht gespeichert."
+    }
+  },
+  "dialog.loeschenTitel": {
+    "sachlich": {
+      "du": "Beitrag von gestern löschen?",
+      "sie": "Beitrag von gestern löschen?"
+    },
+    "freundlich": {
+      "du": "Beitrag von gestern löschen?",
+      "sie": "Beitrag von gestern löschen?"
+    },
+    "motivierend": {
+      "du": "Beitrag von gestern löschen?",
+      "sie": "Beitrag von gestern löschen?"
+    }
+  },
+  "dialog.loeschenText": {
+    "sachlich": {
+      "du": "Das Häkchen von gestern wird entfernt. Der Kollektivstand wird neu berechnet. Verdiente Abzeichen bleiben.",
+      "sie": "Das Häkchen von gestern wird entfernt. Der Kollektivstand wird neu berechnet. Verdiente Abzeichen bleiben."
+    },
+    "freundlich": {
+      "du": "Dein Häkchen von gestern wird entfernt. Der Kollektivstand wird neu berechnet. Verdiente Abzeichen bleiben.",
+      "sie": "Ihr Häkchen von gestern wird entfernt. Der Kollektivstand wird neu berechnet. Verdiente Abzeichen bleiben."
+    },
+    "motivierend": {
+      "du": "Dein Häkchen von gestern wird entfernt. Der Kollektivstand wird neu berechnet. Verdiente Abzeichen bleiben.",
+      "sie": "Ihr Häkchen von gestern wird entfernt. Der Kollektivstand wird neu berechnet. Verdiente Abzeichen bleiben."
+    }
+  },
+  "dialog.loeschen": {
+    "sachlich": {
+      "du": "Löschen",
+      "sie": "Löschen"
+    },
+    "freundlich": {
+      "du": "Löschen",
+      "sie": "Löschen"
+    },
+    "motivierend": {
+      "du": "Löschen",
+      "sie": "Löschen"
+    }
+  },
+  "dialog.beitragLoeschenAktion": {
+    "sachlich": {
+      "du": "Beitrag von gestern löschen",
+      "sie": "Beitrag von gestern löschen"
+    },
+    "freundlich": {
+      "du": "Beitrag von gestern löschen",
+      "sie": "Beitrag von gestern löschen"
+    },
+    "motivierend": {
+      "du": "Beitrag von gestern löschen",
+      "sie": "Beitrag von gestern löschen"
+    }
+  },
+  "kontext.deinAnteil": {
+    "sachlich": {
+      "du": "Dein Anteil",
+      "sie": "Ihr Anteil"
+    },
+    "freundlich": {
+      "du": "Dein Anteil",
+      "sie": "Ihr Anteil"
+    },
+    "motivierend": {
+      "du": "Dein Anteil",
+      "sie": "Ihr Anteil"
+    }
+  },
+  "kontext.haekchenGesetzt": {
+    "sachlich": {
+      "du": "Häkchen gesetzt",
+      "sie": "Häkchen gesetzt"
+    },
+    "freundlich": {
+      "du": "Häkchen gesetzt",
+      "sie": "Häkchen gesetzt"
+    },
+    "motivierend": {
+      "du": "Häkchen gesetzt",
+      "sie": "Häkchen gesetzt"
+    }
+  },
+  "kontext.tageDabei": {
+    "sachlich": {
+      "du": "von {tage} Tagen dabei",
+      "sie": "von {tage} Tagen dabei"
+    },
+    "freundlich": {
+      "du": "von {tage} Tagen dabei",
+      "sie": "von {tage} Tagen dabei"
+    },
+    "motivierend": {
+      "du": "von {tage} Tagen dabei",
+      "sie": "von {tage} Tagen dabei"
+    }
+  },
+  "kontext.serie": {
+    "sachlich": {
+      "du": "{tage} Tage {serie}",
+      "sie": "{tage} Tage {serie}"
+    },
+    "freundlich": {
+      "du": "{tage} Tage {serie}",
+      "sie": "{tage} Tage {serie}"
+    },
+    "motivierend": {
+      "du": "{tage} Tage {serie}",
+      "sie": "{tage} Tage {serie}"
+    }
+  },
+  "kontext.sichtbarkeit": {
+    "sachlich": {
+      "du": "Nur für dich sichtbar. Gegenüber anderen gilt „Mein Team“.",
+      "sie": "Nur für Sie sichtbar. Gegenüber anderen gilt „Mein Team“."
+    },
+    "freundlich": {
+      "du": "Nur für dich sichtbar. Gegenüber anderen gilt „Mein Team“.",
+      "sie": "Nur für Sie sichtbar. Gegenüber anderen gilt „Mein Team“."
+    },
+    "motivierend": {
+      "du": "Nur für dich sichtbar. Gegenüber anderen gilt „Mein Team“.",
+      "sie": "Nur für Sie sichtbar. Gegenüber anderen gilt „Mein Team“."
+    }
+  },
+  "ich.titel": {
+    "sachlich": {
+      "du": "Ich",
+      "sie": "Ich"
+    },
+    "freundlich": {
+      "du": "Ich",
+      "sie": "Ich"
+    },
+    "motivierend": {
+      "du": "Ich",
+      "sie": "Ich"
+    }
+  },
+  "ich.darstellung": {
+    "sachlich": {
+      "du": "Darstellung",
+      "sie": "Darstellung"
+    },
+    "freundlich": {
+      "du": "Darstellung",
+      "sie": "Darstellung"
+    },
+    "motivierend": {
+      "du": "Darstellung",
+      "sie": "Darstellung"
+    }
+  },
+  "ich.modus.system": {
+    "sachlich": {
+      "du": "Wie das System",
+      "sie": "Wie das System"
+    },
+    "freundlich": {
+      "du": "Wie das System",
+      "sie": "Wie das System"
+    },
+    "motivierend": {
+      "du": "Wie das System",
+      "sie": "Wie das System"
+    }
+  },
+  "ich.modus.hell": {
+    "sachlich": {
+      "du": "Hell",
+      "sie": "Hell"
+    },
+    "freundlich": {
+      "du": "Hell",
+      "sie": "Hell"
+    },
+    "motivierend": {
+      "du": "Hell",
+      "sie": "Hell"
+    }
+  },
+  "ich.modus.dunkel": {
+    "sachlich": {
+      "du": "Dunkel",
+      "sie": "Dunkel"
+    },
+    "freundlich": {
+      "du": "Dunkel",
+      "sie": "Dunkel"
+    },
+    "motivierend": {
+      "du": "Dunkel",
+      "sie": "Dunkel"
+    }
+  },
+  "ich.grossflaeche": {
+    "sachlich": {
+      "du": "Großflächenmodus",
+      "sie": "Großflächenmodus"
+    },
+    "freundlich": {
+      "du": "Großflächenmodus",
+      "sie": "Großflächenmodus"
+    },
+    "motivierend": {
+      "du": "Großflächenmodus",
+      "sie": "Großflächenmodus"
+    }
+  },
+  "ich.grossflaecheHinweis": {
+    "sachlich": {
+      "du": "Größere Bedienflächen und Schrift, etwa für Handschuhe oder schlechtes Licht.",
+      "sie": "Größere Bedienflächen und Schrift, etwa für Handschuhe oder schlechtes Licht."
+    },
+    "freundlich": {
+      "du": "Größere Bedienflächen und Schrift, etwa für Handschuhe oder schlechtes Licht.",
+      "sie": "Größere Bedienflächen und Schrift, etwa für Handschuhe oder schlechtes Licht."
+    },
+    "motivierend": {
+      "du": "Größere Bedienflächen und Schrift, etwa für Handschuhe oder schlechtes Licht.",
+      "sie": "Größere Bedienflächen und Schrift, etwa für Handschuhe oder schlechtes Licht."
+    }
+  },
+  "ich.installieren": {
+    "sachlich": {
+      "du": "Zum Startbildschirm hinzufügen",
+      "sie": "Zum Startbildschirm hinzufügen"
+    },
+    "freundlich": {
+      "du": "Zum Startbildschirm hinzufügen",
+      "sie": "Zum Startbildschirm hinzufügen"
+    },
+    "motivierend": {
+      "du": "Zum Startbildschirm hinzufügen",
+      "sie": "Zum Startbildschirm hinzufügen"
+    }
+  },
+  "ich.installierenHinweis": {
+    "sachlich": {
+      "du": "{produktname} erscheint dann unter eigenem Namen und Symbol.",
+      "sie": "{produktname} erscheint dann unter eigenem Namen und Symbol."
+    },
+    "freundlich": {
+      "du": "{produktname} erscheint dann unter eigenem Namen und Symbol.",
+      "sie": "{produktname} erscheint dann unter eigenem Namen und Symbol."
+    },
+    "motivierend": {
+      "du": "{produktname} erscheint dann unter eigenem Namen und Symbol.",
+      "sie": "{produktname} erscheint dann unter eigenem Namen und Symbol."
+    }
+  },
+  "ich.ueber": {
+    "sachlich": {
+      "du": "Über {produktname}",
+      "sie": "Über {produktname}"
+    },
+    "freundlich": {
+      "du": "Über {produktname}",
+      "sie": "Über {produktname}"
+    },
+    "motivierend": {
+      "du": "Über {produktname}",
+      "sie": "Über {produktname}"
+    }
+  },
+  "ich.ueberText": {
+    "sachlich": {
+      "du": "{produktname} läuft auf der Plattform {plattform}.",
+      "sie": "{produktname} läuft auf der Plattform {plattform}."
+    },
+    "freundlich": {
+      "du": "{produktname} läuft auf der Plattform {plattform}.",
+      "sie": "{produktname} läuft auf der Plattform {plattform}."
+    },
+    "motivierend": {
+      "du": "{produktname} läuft auf der Plattform {plattform}.",
+      "sie": "{produktname} läuft auf der Plattform {plattform}."
+    }
+  },
+  "kiosk.titel": {
+    "sachlich": {
+      "du": "Kiosk",
+      "sie": "Kiosk"
+    },
+    "freundlich": {
+      "du": "Kiosk",
+      "sie": "Kiosk"
+    },
+    "motivierend": {
+      "du": "Kiosk",
+      "sie": "Kiosk"
+    }
+  },
+  "kiosk.hinweis": {
+    "sachlich": {
+      "du": "Anmeldung mit Kennung und PIN. Eingaben zählen sofort zum Firmenziel.",
+      "sie": "Anmeldung mit Kennung und PIN. Eingaben zählen sofort zum Firmenziel."
+    },
+    "freundlich": {
+      "du": "Melde dich mit deiner Kennung und PIN an. Deine Eingaben zählen sofort zum Firmenziel.",
+      "sie": "Melden Sie sich mit Ihrer Kennung und PIN an. Ihre Eingaben zählen sofort zum Firmenziel."
+    },
+    "motivierend": {
+      "du": "Melde dich mit Kennung und PIN an, dein Häkchen zählt sofort fürs Firmenziel!",
+      "sie": "Melden Sie sich mit Kennung und PIN an, Ihr Häkchen zählt sofort fürs Firmenziel!"
+    }
+  },
+  "kiosk.kennung": {
+    "sachlich": {
+      "du": "Kennung",
+      "sie": "Kennung"
+    },
+    "freundlich": {
+      "du": "Kennung",
+      "sie": "Kennung"
+    },
+    "motivierend": {
+      "du": "Kennung",
+      "sie": "Kennung"
+    }
+  },
+  "kiosk.pin": {
+    "sachlich": {
+      "du": "PIN",
+      "sie": "PIN"
+    },
+    "freundlich": {
+      "du": "PIN",
+      "sie": "PIN"
+    },
+    "motivierend": {
+      "du": "PIN",
+      "sie": "PIN"
+    }
+  },
+  "kiosk.pinStellen": {
+    "sachlich": {
+      "du": "PIN, 4 Stellen",
+      "sie": "PIN, 4 Stellen"
+    },
+    "freundlich": {
+      "du": "PIN, 4 Stellen",
+      "sie": "PIN, 4 Stellen"
+    },
+    "motivierend": {
+      "du": "PIN, 4 Stellen",
+      "sie": "PIN, 4 Stellen"
+    }
+  },
+  "kiosk.weiter": {
+    "sachlich": {
+      "du": "Weiter",
+      "sie": "Weiter"
+    },
+    "freundlich": {
+      "du": "Weiter",
+      "sie": "Weiter"
+    },
+    "motivierend": {
+      "du": "Weiter",
+      "sie": "Weiter"
+    }
+  },
+  "kiosk.loeschen": {
+    "sachlich": {
+      "du": "Löschen",
+      "sie": "Löschen"
+    },
+    "freundlich": {
+      "du": "Löschen",
+      "sie": "Löschen"
+    },
+    "motivierend": {
+      "du": "Löschen",
+      "sie": "Löschen"
+    }
+  },
+  "kiosk.beitreten": {
+    "sachlich": {
+      "du": "Neu hier? Mit Code beitreten",
+      "sie": "Neu hier? Mit Code beitreten"
+    },
+    "freundlich": {
+      "du": "Neu hier? Mit Code beitreten",
+      "sie": "Neu hier? Mit Code beitreten"
+    },
+    "motivierend": {
+      "du": "Neu hier? Mit Code beitreten",
+      "sie": "Neu hier? Mit Code beitreten"
+    }
+  },
+  "kiosk.pinVergessen": {
+    "sachlich": {
+      "du": "PIN vergessen",
+      "sie": "PIN vergessen"
+    },
+    "freundlich": {
+      "du": "PIN vergessen",
+      "sie": "PIN vergessen"
+    },
+    "motivierend": {
+      "du": "PIN vergessen",
+      "sie": "PIN vergessen"
+    }
+  },
+  "kiosk.nochNichtVerbunden": {
+    "sachlich": {
+      "du": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet.",
+      "sie": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet."
+    },
+    "freundlich": {
+      "du": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet.",
+      "sie": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet."
+    },
+    "motivierend": {
+      "du": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet.",
+      "sie": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet."
+    }
+  },
+  "allgemein.schliessen": {
+    "sachlich": {
+      "du": "Schließen",
+      "sie": "Schließen"
+    },
+    "freundlich": {
+      "du": "Schließen",
+      "sie": "Schließen"
+    },
+    "motivierend": {
+      "du": "Schließen",
+      "sie": "Schließen"
+    }
+  },
+  "allgemein.laden": {
+    "sachlich": {
+      "du": "Wird geladen",
+      "sie": "Wird geladen"
+    },
+    "freundlich": {
+      "du": "Wird geladen",
+      "sie": "Wird geladen"
+    },
+    "motivierend": {
+      "du": "Wird geladen",
+      "sie": "Wird geladen"
+    }
+  },
+  "allgemein.zumInhalt": {
+    "sachlich": {
+      "du": "Zum Inhalt springen",
+      "sie": "Zum Inhalt springen"
+    },
+    "freundlich": {
+      "du": "Zum Inhalt springen",
+      "sie": "Zum Inhalt springen"
+    },
+    "motivierend": {
+      "du": "Zum Inhalt springen",
+      "sie": "Zum Inhalt springen"
+    }
+  },
+  "verwaltung.marke": {
+    "sachlich": {
+      "du": "Marke und Sprache",
+      "sie": "Marke und Sprache"
+    },
+    "freundlich": {
+      "du": "Marke und Sprache",
+      "sie": "Marke und Sprache"
+    },
+    "motivierend": {
+      "du": "Marke und Sprache",
+      "sie": "Marke und Sprache"
+    }
+  },
+  "verwaltung.produktname": {
+    "sachlich": {
+      "du": "Produktname",
+      "sie": "Produktname"
+    },
+    "freundlich": {
+      "du": "Produktname",
+      "sie": "Produktname"
+    },
+    "motivierend": {
+      "du": "Produktname",
+      "sie": "Produktname"
+    }
+  },
+  "verwaltung.saatfarbe": {
+    "sachlich": {
+      "du": "Saatfarbe",
+      "sie": "Saatfarbe"
+    },
+    "freundlich": {
+      "du": "Saatfarbe",
+      "sie": "Saatfarbe"
+    },
+    "motivierend": {
+      "du": "Saatfarbe",
+      "sie": "Saatfarbe"
+    }
+  },
+  "verwaltung.anrede": {
+    "sachlich": {
+      "du": "Anrede",
+      "sie": "Anrede"
+    },
+    "freundlich": {
+      "du": "Anrede",
+      "sie": "Anrede"
+    },
+    "motivierend": {
+      "du": "Anrede",
+      "sie": "Anrede"
+    }
+  },
+  "verwaltung.tonalitaet": {
+    "sachlich": {
+      "du": "Tonalität",
+      "sie": "Tonalität"
+    },
+    "freundlich": {
+      "du": "Tonalität",
+      "sie": "Tonalität"
+    },
+    "motivierend": {
+      "du": "Tonalität",
+      "sie": "Tonalität"
+    }
+  },
+  "verwaltung.tonalitaet.sachlich": {
+    "sachlich": {
+      "du": "sachlich",
+      "sie": "sachlich"
+    },
+    "freundlich": {
+      "du": "sachlich",
+      "sie": "sachlich"
+    },
+    "motivierend": {
+      "du": "sachlich",
+      "sie": "sachlich"
+    }
+  },
+  "verwaltung.tonalitaet.freundlich": {
+    "sachlich": {
+      "du": "freundlich",
+      "sie": "freundlich"
+    },
+    "freundlich": {
+      "du": "freundlich",
+      "sie": "freundlich"
+    },
+    "motivierend": {
+      "du": "freundlich",
+      "sie": "freundlich"
+    }
+  },
+  "verwaltung.tonalitaet.motivierend": {
+    "sachlich": {
+      "du": "motivierend",
+      "sie": "motivierend"
+    },
+    "freundlich": {
+      "du": "motivierend",
+      "sie": "motivierend"
+    },
+    "motivierend": {
+      "du": "motivierend",
+      "sie": "motivierend"
+    }
+  },
+  "verwaltung.vorschau": {
+    "sachlich": {
+      "du": "Vorschau",
+      "sie": "Vorschau"
+    },
+    "freundlich": {
+      "du": "Vorschau",
+      "sie": "Vorschau"
+    },
+    "motivierend": {
+      "du": "Vorschau",
+      "sie": "Vorschau"
+    }
+  },
+  "verwaltung.veroeffentlichen": {
+    "sachlich": {
+      "du": "Veröffentlichen",
+      "sie": "Veröffentlichen"
+    },
+    "freundlich": {
+      "du": "Veröffentlichen",
+      "sie": "Veröffentlichen"
+    },
+    "motivierend": {
+      "du": "Veröffentlichen",
+      "sie": "Veröffentlichen"
+    }
+  },
+  "verwaltung.veroeffentlicht": {
+    "sachlich": {
+      "du": "Version {version} ist veröffentlicht und gilt sofort.",
+      "sie": "Version {version} ist veröffentlicht und gilt sofort."
+    },
+    "freundlich": {
+      "du": "Version {version} ist veröffentlicht und gilt sofort.",
+      "sie": "Version {version} ist veröffentlicht und gilt sofort."
+    },
+    "motivierend": {
+      "du": "Version {version} ist veröffentlicht und gilt sofort.",
+      "sie": "Version {version} ist veröffentlicht und gilt sofort."
+    }
+  },
+  "verwaltung.kontrastbericht": {
+    "sachlich": {
+      "du": "Kontrastbericht",
+      "sie": "Kontrastbericht"
+    },
+    "freundlich": {
+      "du": "Kontrastbericht",
+      "sie": "Kontrastbericht"
+    },
+    "motivierend": {
+      "du": "Kontrastbericht",
+      "sie": "Kontrastbericht"
+    }
+  },
+  "verwaltung.rolle": {
+    "sachlich": {
+      "du": "Rolle",
+      "sie": "Rolle"
+    },
+    "freundlich": {
+      "du": "Rolle",
+      "sie": "Rolle"
+    },
+    "motivierend": {
+      "du": "Rolle",
+      "sie": "Rolle"
+    }
+  },
+  "verwaltung.ersetzungen": {
+    "sachlich": {
+      "du": "Ersetzungen mit Grund",
+      "sie": "Ersetzungen mit Grund"
+    },
+    "freundlich": {
+      "du": "Ersetzungen mit Grund",
+      "sie": "Ersetzungen mit Grund"
+    },
+    "motivierend": {
+      "du": "Ersetzungen mit Grund",
+      "sie": "Ersetzungen mit Grund"
+    }
+  },
+  "verwaltung.kontrastGeprueft": {
+    "sachlich": {
+      "du": "{paare} Rollenpaare geprüft, alle bestehen 4,5:1 beziehungsweise 3:1.",
+      "sie": "{paare} Rollenpaare geprüft, alle bestehen 4,5:1 beziehungsweise 3:1."
+    },
+    "freundlich": {
+      "du": "{paare} Rollenpaare geprüft, alle bestehen 4,5:1 beziehungsweise 3:1.",
+      "sie": "{paare} Rollenpaare geprüft, alle bestehen 4,5:1 beziehungsweise 3:1."
+    },
+    "motivierend": {
+      "du": "{paare} Rollenpaare geprüft, alle bestehen 4,5:1 beziehungsweise 3:1.",
+      "sie": "{paare} Rollenpaare geprüft, alle bestehen 4,5:1 beziehungsweise 3:1."
+    }
+  },
+  "zugang.noetig": {
+    "sachlich": {
+      "du": "Für diese Seite ist eine Anmeldung nötig.",
+      "sie": "Für diese Seite ist eine Anmeldung nötig."
+    },
+    "freundlich": {
+      "du": "Melde dich an, dann geht es hier weiter.",
+      "sie": "Melden Sie sich an, dann geht es hier weiter."
+    },
+    "motivierend": {
+      "du": "Melde dich an, dann geht es hier weiter.",
+      "sie": "Melden Sie sich an, dann geht es hier weiter."
+    }
+  },
+  "zugang.link": {
+    "sachlich": {
+      "du": "Zum Zugang",
+      "sie": "Zum Zugang"
+    },
+    "freundlich": {
+      "du": "Zum Zugang",
+      "sie": "Zum Zugang"
+    },
+    "motivierend": {
+      "du": "Zum Zugang",
+      "sie": "Zum Zugang"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": [
+    {
+      "challengeId": "01a0dcad-83e1-7cd2-964b-8c932870ccf0",
+      "title": "Rad oder Fuß zur Arbeit",
+      "metric": "checkmark",
+      "target": "25.0000",
+      "startsAt": "2026-09-13T08:08:00+00:00",
+      "endsAt": "2026-10-04T08:08:00+00:00",
+      "collective": {
+        "total": "3.0000",
+        "contributionCount": 3,
+        "contributorCount": 2,
+        "updatedAt": "2026-09-26T07:45:54.547594+00:00",
+        "percent": 12
+      },
+      "percent": 12,
+      "contributedToday": false
+    }
+  ]
+}

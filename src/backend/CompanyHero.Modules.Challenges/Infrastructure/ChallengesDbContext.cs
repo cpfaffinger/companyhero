@@ -33,6 +33,7 @@ public sealed class ChallengesDbContext(DbContextOptions<ChallengesDbContext> op
             b.Property(c => c.Id).HasColumnName("id");
             b.Property(c => c.Title).HasColumnName("title").HasMaxLength(200).IsRequired();
             b.Property(c => c.Metric).HasColumnName("metric").HasConversion<short>();
+            b.Property(c => c.Target).HasColumnName("target").HasPrecision(12, 4);
             b.Property(c => c.State).HasColumnName("state").HasConversion<short>();
             b.Property(c => c.StartsAt).HasColumnName("starts_at");
             b.Property(c => c.EndsAt).HasColumnName("ends_at");

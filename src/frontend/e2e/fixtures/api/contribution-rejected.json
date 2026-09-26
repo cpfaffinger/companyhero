@@ -1,0 +1,11 @@
+{
+  "status": 422,
+  "contentType": "application/problem+json",
+  "body": {
+    "type": "https://tools.ietf.org/html/rfc4918#section-11.2",
+    "title": "Beitrag abgelehnt",
+    "status": 422,
+    "detail": "InFuture",
+    "traceId": "00-2233c9656b18379ae8e758bc0b19d175-80a600cb398cb82a-01"
+  }
+}

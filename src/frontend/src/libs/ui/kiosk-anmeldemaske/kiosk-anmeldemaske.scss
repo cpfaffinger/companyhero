@@ -1,0 +1,101 @@
+:host {
+  display: block;
+}
+
+.ch-kiosk {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-6);
+}
+
+.ch-kiosk__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ch-kiosk__label {
+  font-size: var(--ch-type-body-m);
+  line-height: var(--ch-line-body-m);
+  font-weight: 600;
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-kiosk__kennung {
+  height: 64px;
+  padding: 0 var(--ch-space-5);
+  border: 2px solid var(--ch-outline);
+  border-radius: var(--ch-radius-input);
+  background: var(--ch-surface);
+  color: var(--ch-on-surface);
+  font: 600 28px / 1 var(--ch-font-display);
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ch-kiosk__kennung:focus-visible {
+  border-color: var(--ch-primary);
+}
+
+.ch-kiosk__pin {
+  display: flex;
+  gap: var(--ch-space-3);
+}
+
+.ch-kiosk__pin-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ch-touch);
+  height: 64px;
+  border: 2px solid var(--ch-outline-variant);
+  border-radius: var(--ch-radius-input);
+  background: var(--ch-surface);
+  font-size: 28px;
+  color: var(--ch-on-surface);
+}
+
+.ch-kiosk__pin-slot--active {
+  border-color: var(--ch-primary);
+}
+
+.ch-kiosk__keypad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ch-touch-gap);
+  max-width: 360px;
+}
+
+.ch-kiosk__key {
+  height: var(--ch-tile);
+  min-width: var(--ch-touch);
+  border: 1px solid var(--ch-outline-variant);
+  border-radius: var(--ch-radius-card);
+  background: var(--ch-surface);
+  color: var(--ch-on-surface);
+  font: 600 28px / 1 var(--ch-font-display);
+  cursor: pointer;
+  transition: background-color var(--ch-motion-state) ease, transform var(--ch-motion-state) ease;
+}
+
+.ch-kiosk__key:active {
+  transform: scale(0.98);
+}
+
+.ch-kiosk__key--erase {
+  background: var(--ch-surface-container);
+  font-size: 20px;
+}
+
+.ch-kiosk__key--primary {
+  border: none;
+  background: var(--ch-primary);
+  color: var(--ch-on-primary);
+  font: 600 var(--ch-type-label-l) / var(--ch-line-label-l) var(--ch-font-text);
+}
+
+.ch-kiosk__key--primary:disabled {
+  background: var(--ch-surface-container-high);
+  color: var(--ch-outline);
+  cursor: not-allowed;
+}

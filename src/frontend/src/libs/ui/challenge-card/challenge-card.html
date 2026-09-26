@@ -1,0 +1,30 @@
+<article class="ch-card" [attr.aria-labelledby]="'ch-card-title-' + card().challengeId">
+  <div class="ch-card__meta">
+    <span class="ch-card__chip">{{ texts.t('challenge.firmenziel') }}</span>
+    <span>{{ daysLeftText() }}</span>
+    <span class="ch-card__spacer"></span>
+    <span>{{ standText() }}</span>
+  </div>
+  <div class="ch-card__head">
+    <div class="ch-card__title-block">
+      <h2 class="ch-card__title" [id]="'ch-card-title-' + card().challengeId">{{ card().title }}</h2>
+      <p class="ch-card__form">{{ formText() }}</p>
+    </div>
+    <div class="ch-card__percent" aria-hidden="true">{{ percentText() }}</div>
+  </div>
+  <ch-collective-bar [percent]="percent()" [label]="barLabel()" [startLabel]="texts.t('challenge.meilensteine')" [goalLabel]="texts.t('challenge.ziel')" />
+  <div class="ch-card__actions">
+    <p class="ch-card__today" aria-live="polite">
+      {{ texts.t('challenge.beitragHeute') }}:
+      <strong>{{ card().contributedToday ? texts.t('challenge.erledigt') : texts.t('challenge.offen') }}</strong>
+    </p>
+    @if (card().contributedToday) {
+      <ch-progress-ring [percent]="100" [label]="texts.t('challenge.erledigt')" [celebrate]="celebrate()" />
+    } @else {
+      <button matButton="filled" type="button" (click)="contribute.emit(card())">
+        <span class="material-symbols-rounded ch-card__icon" aria-hidden="true">check</span>
+        {{ texts.t('challenge.heuteErledigt') }}
+      </button>
+    }
+  </div>
+</article>

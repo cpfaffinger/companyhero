@@ -1,0 +1,8 @@
+{
+  "status": 201,
+  "contentType": "application/json",
+  "body": {
+    "contributionId": "01a0dcad-863d-7610-b134-e0d7aba11019",
+    "outcome": "recorded"
+  }
+}

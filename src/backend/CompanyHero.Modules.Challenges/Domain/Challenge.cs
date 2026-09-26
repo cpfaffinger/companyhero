@@ -25,12 +25,13 @@ public enum ChallengeState
 /// <summary>Challenge eines Tenants mit Sammelziel (Challenges 2, A-038).</summary>
 public sealed class Challenge : ITenantOwned
 {
-    private Challenge(TenantId tenantId, Guid id, string title, ChallengeMetric metric, ChallengeState state, DateTimeOffset startsAt, DateTimeOffset endsAt, DateTimeOffset createdAt)
+    private Challenge(TenantId tenantId, Guid id, string title, ChallengeMetric metric, decimal target, ChallengeState state, DateTimeOffset startsAt, DateTimeOffset endsAt, DateTimeOffset createdAt)
     {
         TenantId = tenantId;
         Id = id;
         Title = title;
         Metric = metric;
+        Target = target;
         State = state;
         StartsAt = startsAt;
         EndsAt = endsAt;
@@ -45,6 +46,9 @@ public sealed class Challenge : ITenantOwned
 
     public ChallengeMetric Metric { get; }
 
+    /// <summary>Sammelziel (Challenges 2.1 Achse 6, Standardform): Zielwert des Kollektivs mit vier Nachkommastellen.</summary>
+    public decimal Target { get; }
+
     public ChallengeState State { get; private set; }
 
     public DateTimeOffset StartsAt { get; }
@@ -58,7 +62,7 @@ public sealed class Challenge : ITenantOwned
 
     public DateTimeOffset AcceptsContributionsUntil => EndsAt.Add(GracePeriod);
 
-    public static Challenge StartRunning(TenantId tenantId, string title, ChallengeMetric metric, DateTimeOffset startsAt, DateTimeOffset endsAt, DateTimeOffset now)
+    public static Challenge StartRunning(TenantId tenantId, string title, ChallengeMetric metric, decimal target, DateTimeOffset startsAt, DateTimeOffset endsAt, DateTimeOffset now)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(title);
         if (endsAt <= startsAt)
@@ -66,6 +70,14 @@ public sealed class Challenge : ITenantOwned
             throw new ArgumentException("Das Ende liegt nach dem Beginn.", nameof(endsAt));
         }
 
-        return new Challenge(tenantId, Guid.CreateVersion7(), title.Trim(), metric, ChallengeState.Running, startsAt.ToUniversalTime(), endsAt.ToUniversalTime(), now.ToUniversalTime());
+        if (target <= 0m)
+        {
+            throw new ArgumentException("Das Sammelziel ist positiv.", nameof(target));
+        }
+
+        return new Challenge(tenantId, Guid.CreateVersion7(), title.Trim(), metric, decimal.Round(target, 4, MidpointRounding.ToEven), ChallengeState.Running, startsAt.ToUniversalTime(), endsAt.ToUniversalTime(), now.ToUniversalTime());
     }
+
+    /// <summary>Kollektivfortschritt in ganzen Prozent, gedeckelt bei 100 (Challenges 6.2: gerundeter Prozentwert).</summary>
+    public int PercentOf(decimal total) => (int)Math.Min(100m, Math.Round(total / Target * 100m, 0, MidpointRounding.AwayFromZero));
 }

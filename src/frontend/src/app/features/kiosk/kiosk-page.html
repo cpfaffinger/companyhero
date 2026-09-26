@@ -1,0 +1,32 @@
+<div class="ch-kiosk-page">
+  <aside class="ch-kiosk-page__panel">
+    <div class="ch-kiosk-page__brand">
+      <span class="ch-kiosk-page__avatar" aria-hidden="true">{{ theme.produktname().charAt(0).toUpperCase() || 'C' }}</span>
+      <span class="ch-kiosk-page__name">{{ theme.produktname() }}</span>
+    </div>
+    <h1 class="ch-kiosk-page__title">{{ texts.t('kiosk.titel') }}</h1>
+    <p class="ch-kiosk-page__hint">{{ texts.t('kiosk.hinweis') }}</p>
+    @if (cards()?.[0]; as card) {
+      <div class="ch-kiosk-page__collective">
+        <div class="ch-kiosk-page__collective-head">
+          <span class="ch-kiosk-page__chip">{{ texts.t('challenge.firmenziel') }}</span>
+          <span>{{ card.title }}</span>
+        </div>
+        <div class="ch-kiosk-page__collective-row">
+          <ch-collective-bar class="ch-kiosk-page__bar" [percent]="card.percent" [label]="texts.t('challenge.prozentErreicht', { prozent: card.percent, meilenstein: 100 })" [startLabel]="texts.t('challenge.meilensteine')" [goalLabel]="texts.t('challenge.ziel')" />
+          <span class="ch-kiosk-page__percent" aria-hidden="true">{{ card.percent }} %</span>
+        </div>
+      </div>
+    }
+  </aside>
+  <main class="ch-kiosk-page__main">
+    <ch-kiosk-anmeldemaske (anmelden)="anmelden($event)" />
+    @if (hinweis(); as text) {
+      <p class="ch-kiosk-page__status" role="status">{{ text }}</p>
+    }
+    <div class="ch-kiosk-page__links">
+      <a class="ch-kiosk-page__link" href="/zugang">{{ texts.t('kiosk.beitreten') }}</a>
+      <a class="ch-kiosk-page__link ch-kiosk-page__link--secondary" href="/zugang">{{ texts.t('kiosk.pinVergessen') }}</a>
+    </div>
+  </main>
+</div>

@@ -53,6 +53,11 @@ namespace CompanyHero.Migrations.Migrations.Challenges
                         .HasColumnType("smallint")
                         .HasColumnName("state");
 
+                    b.Property<decimal>("Target")
+                        .HasPrecision(12, 4)
+                        .HasColumnType("numeric(12,4)")
+                        .HasColumnName("target");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)

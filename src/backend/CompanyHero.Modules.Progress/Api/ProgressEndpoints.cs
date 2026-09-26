@@ -22,6 +22,8 @@ internal static class ProgressEndpoints
                     : Results.Ok(activities.Select(a => new ActivityResponse(a.Id.ToString("D"), a.Kind, a.OccurredAt)).ToList());
             })
             .RequireTenantContext()
-            .WithName("GetPersonActivities");
+            .WithName("GetPersonActivities")
+            .Produces<List<ActivityResponse>>()
+            .Produces(StatusCodes.Status404NotFound);
     }
 }

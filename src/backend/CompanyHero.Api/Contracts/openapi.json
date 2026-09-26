@@ -1,0 +1,1186 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "CompanyHero API",
+    "description": "Verbindlicher Vertrag nach A-009 und K13: Kennungen und Dezimalwerte als Strings, Zeitpunkte mit Offset, Null und fehlendes Feld unterscheidbar.",
+    "version": "1"
+  },
+  "paths": {
+    "/api/version": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetVersion",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetMe",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/members": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListMembers",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/branding/theme": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetTheme",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "PublishTheme",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemeDocumentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/api/branding/theme/versions/{version}": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetThemeVersion",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/branding/theme/preview": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "PreviewTheme",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThemeDocumentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemePreviewResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/api/branding/platform": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetPlatformTheme",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlatformThemeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/branding/tenants/{tenantId}/manifest.webmanifest": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetTenantManifest",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/manifest+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebManifest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/branding/kiosk/manifest.webmanifest": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetKioskManifest",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/manifest+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebManifest"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/branding/tenants/{tenantId}/icons/{name}": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetTenantIcon",
+        "parameters": [
+          {
+            "name": "tenantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/persons/{personId}/activities": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetPersonActivities",
+        "parameters": [
+          {
+            "name": "personId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ActivityResponse"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/challenges": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListRunningChallenges",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChallengeCardResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/contribution-operations": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ReserveContributionOperation",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/contributions": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "SubmitContribution",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContributionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContributionResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContributionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Gone",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/challenges/{challengeId}/collective": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetChallengeCollective",
+        "parameters": [
+          {
+            "name": "challengeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectiveResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActivityResponse": {
+        "required": [
+          "id",
+          "kind",
+          "occurredAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AnredeDto": {
+        "enum": [
+          "du",
+          "sie"
+        ]
+      },
+      "BezeichnungenDto": {
+        "required": [
+          "punkte",
+          "serie",
+          "stufen"
+        ],
+        "type": "object",
+        "properties": {
+          "punkte": {
+            "type": "string"
+          },
+          "serie": {
+            "type": "string"
+          },
+          "stufen": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ChallengeCardResponse": {
+        "required": [
+          "challengeId",
+          "title",
+          "metric",
+          "target",
+          "startsAt",
+          "endsAt",
+          "collective",
+          "percent",
+          "contributedToday"
+        ],
+        "type": "object",
+        "properties": {
+          "challengeId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "metric": {
+            "$ref": "#/components/schemas/ChallengeMetricDto"
+          },
+          "target": {
+            "type": "string"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "collective": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/CollectiveResponse"
+              }
+            ]
+          },
+          "percent": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "contributedToday": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ChallengeMetricDto": {
+        "enum": [
+          "checkmark",
+          "count"
+        ]
+      },
+      "CollectiveResponse": {
+        "required": [
+          "total",
+          "contributionCount",
+          "contributorCount",
+          "updatedAt",
+          "percent"
+        ],
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "string"
+          },
+          "contributionCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "contributorCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "percent": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ContributionRequest": {
+        "required": [
+          "value",
+          "recordedAt",
+          "channel",
+          "idempotencyKey",
+          "operationId"
+        ],
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "channel": {
+            "type": "string"
+          },
+          "idempotencyKey": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "operationId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ContributionResponse": {
+        "required": [
+          "contributionId",
+          "outcome"
+        ],
+        "type": "object",
+        "properties": {
+          "contributionId": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          }
+        }
+      },
+      "ErsetzungDto": {
+        "required": [
+          "modus",
+          "rolle",
+          "angefordert",
+          "ersetzt",
+          "grund"
+        ],
+        "type": "object",
+        "properties": {
+          "modus": {
+            "$ref": "#/components/schemas/ThemeModeDto"
+          },
+          "rolle": {
+            "type": "string"
+          },
+          "angefordert": {
+            "type": "string"
+          },
+          "ersetzt": {
+            "type": "string"
+          },
+          "grund": {
+            "type": "string"
+          }
+        }
+      },
+      "HttpValidationProblemDetails": {
+        "required": [
+          "errors"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "instance": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "KontrastDto": {
+        "required": [
+          "modus",
+          "vordergrund",
+          "hintergrund",
+          "gefordert",
+          "erreicht"
+        ],
+        "type": "object",
+        "properties": {
+          "modus": {
+            "$ref": "#/components/schemas/ThemeModeDto"
+          },
+          "vordergrund": {
+            "type": "string"
+          },
+          "hintergrund": {
+            "type": "string"
+          },
+          "gefordert": {
+            "type": "string"
+          },
+          "erreicht": {
+            "type": "string"
+          }
+        }
+      },
+      "ManifestIcon": {
+        "required": [
+          "src",
+          "sizes",
+          "type",
+          "purpose"
+        ],
+        "type": "object",
+        "properties": {
+          "src": {
+            "type": "string"
+          },
+          "sizes": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "OperationResponse": {
+        "required": [
+          "operationId"
+        ],
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string"
+          }
+        }
+      },
+      "PlatformThemeResponse": {
+        "required": [
+          "plattformname",
+          "verfahren",
+          "hell",
+          "dunkel",
+          "texte"
+        ],
+        "type": "object",
+        "properties": {
+          "plattformname": {
+            "type": "string"
+          },
+          "verfahren": {
+            "type": "string"
+          },
+          "hell": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "dunkel": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "texte": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "title": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "instance": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ThemeDocumentRequest": {
+        "required": [
+          "schema",
+          "produktname",
+          "saatfarbe",
+          "akzent",
+          "anrede",
+          "tonalitaet",
+          "bezeichnungen",
+          "willkommenstext"
+        ],
+        "type": "object",
+        "properties": {
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "produktname": {
+            "type": "string"
+          },
+          "saatfarbe": {
+            "type": "string"
+          },
+          "akzent": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "anrede": {
+            "$ref": "#/components/schemas/AnredeDto"
+          },
+          "tonalitaet": {
+            "$ref": "#/components/schemas/TonalitaetDto"
+          },
+          "bezeichnungen": {
+            "$ref": "#/components/schemas/BezeichnungenDto"
+          },
+          "willkommenstext": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ThemeModeDto": {
+        "enum": [
+          "hell",
+          "dunkel"
+        ]
+      },
+      "ThemePreviewResponse": {
+        "required": [
+          "verfahren",
+          "hell",
+          "dunkel",
+          "ersetzungen",
+          "kontrast"
+        ],
+        "type": "object",
+        "properties": {
+          "verfahren": {
+            "type": "string"
+          },
+          "hell": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "dunkel": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "ersetzungen": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ErsetzungDto"
+            }
+          },
+          "kontrast": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/KontrastDto"
+            }
+          }
+        }
+      },
+      "ThemeResponse": {
+        "required": [
+          "tenantId",
+          "version",
+          "verfahren",
+          "schema",
+          "produktname",
+          "anrede",
+          "tonalitaet",
+          "bezeichnungen",
+          "willkommenstext",
+          "hell",
+          "dunkel",
+          "ersetzungen",
+          "texte",
+          "manifestPfad",
+          "veroeffentlichtAm"
+        ],
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "verfahren": {
+            "type": "string"
+          },
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "produktname": {
+            "type": "string"
+          },
+          "anrede": {
+            "$ref": "#/components/schemas/AnredeDto"
+          },
+          "tonalitaet": {
+            "$ref": "#/components/schemas/TonalitaetDto"
+          },
+          "bezeichnungen": {
+            "$ref": "#/components/schemas/BezeichnungenDto"
+          },
+          "willkommenstext": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "hell": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "dunkel": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "ersetzungen": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ErsetzungDto"
+            }
+          },
+          "texte": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "manifestPfad": {
+            "type": "string"
+          },
+          "veroeffentlichtAm": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "TonalitaetDto": {
+        "enum": [
+          "sachlich",
+          "freundlich",
+          "motivierend"
+        ]
+      },
+      "VersionResponse": {
+        "required": [
+          "version"
+        ],
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string"
+          }
+        }
+      },
+      "WebManifest": {
+        "required": [
+          "id",
+          "name",
+          "short_name",
+          "start_url",
+          "scope",
+          "display",
+          "lang",
+          "theme_color",
+          "background_color",
+          "icons",
+          "orientation"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "short_name": {
+            "type": "string"
+          },
+          "start_url": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "display": {
+            "type": "string"
+          },
+          "lang": {
+            "type": "string"
+          },
+          "theme_color": {
+            "type": "string"
+          },
+          "background_color": {
+            "type": "string"
+          },
+          "icons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ManifestIcon"
+            }
+          },
+          "orientation": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "CompanyHero.Api"
+    }
+  ]
+}
