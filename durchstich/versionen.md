@@ -17,6 +17,9 @@ Konfigurationsdateien; diese Liste dokumentiert sie an einem Ort. Änderungen la
 | NetArchTest.Rules | 1.3.2 | `Directory.Packages.props` |
 | dotnet-ef | 10.0.12 | `.config/dotnet-tools.json` |
 | Jobbibliothek | keine; eigene Umsetzung auf `SKIP LOCKED` mit Npgsql (A-108) | `src/backend/CompanyHero.Platform/Jobs/` |
+| OIDC-Middleware | Microsoft.AspNetCore.Authentication.OpenIdConnect 10.0.12, Schemata je Anbieter zur Laufzeit registriert (A-111) | `Directory.Packages.props`, `src/backend/CompanyHero.Modules.Identity/Infrastructure/Oidc/` |
+| WebAuthn | Fido2 (Fido2NetLib) 4.1.0 (A-111) | `Directory.Packages.props`, `src/backend/CompanyHero.Modules.Identity/Application/Passkeys/` |
+| Data-Protection-Schlüssel | Microsoft.AspNetCore.DataProtection.EntityFrameworkCore 10.0.12, Tabelle `platform.data_protection_key` (A-007) | `Directory.Packages.props`, `src/backend/CompanyHero.Platform/Data/` |
 | OpenAPI-Erzeugung | Microsoft.AspNetCore.OpenApi 10.0.12 (Microsoft.OpenApi 2.12.0), OpenAPI 3.1, Export über `--export-openapi` (A-109) | `Directory.Packages.props`, `src/backend/CompanyHero.Api/OpenApi/` |
 | Theme-Ableitung | keine Bibliothek; eigene Portierung von material-color-utilities (Apache-2.0, TypeScript-Paket 0.4.0, Stand 5b3618b) (A-110) | `src/backend/CompanyHero.Modules.Branding/Domain/Color/` |
 | Analyseregeln | `latest-recommended`, Warnungen als Fehler, Ausnahmen in `.editorconfig` | `Directory.Build.props` |
@@ -34,6 +37,7 @@ Konfigurationsdateien; diese Liste dokumentiert sie an einem Ort. Änderungen la
 | Stylelint, stylelint-config-standard-scss | 17.15.0, 17.0.0 | `package.json` |
 | Inter, Inter Tight, Material Symbols Rounded (selbst ausgeliefert) | fontsource 5.3.0 / 5.3.0 / 5.3.7 | `package.json` |
 | OpenAPI-Clientgenerator | openapi-typescript 7.13.0 (A-109); Peer-Auflösung auf TypeScript 6.0 über `overrides` | `package.json`, Skript `api:generate` |
+| QR-Code-Erzeugung (Beitrittslink, Kiosk-Kennung, Übertragung) | qrcode 1.5.4 (MIT), @types/qrcode 1.5.6; nur in Lazy-Chunks | `package.json`, `src/frontend/src/libs/ui/qr-code/` |
 | @types/node (Tests, Skripte) | 24.10.1 | `package.json` |
 
 Browsermatrix (K18): Angular 22 unterstützt die aktuelle und die vorherige Hauptversion von Chrome, Firefox, Edge und
@@ -55,7 +59,7 @@ keine Unterstützung.
 | Grafana | `grafana/grafana:13.2.2` | ebd. |
 | Uptime Kuma | `louislam/uptime-kuma:2.5.5` | ebd. |
 | Trivy (CI) | `aquasec/trivy:0.74.0` | `.github/workflows/ci.yml` |
-| GitHub Actions | checkout v5, setup-dotnet v5, setup-node v5, buildx v3, login v3, upload-artifact v4 | `.github/workflows/ci.yml` |
+| GitHub Actions | checkout v7, setup-dotnet v6, setup-node v7, buildx v4, login v3, upload-artifact v7 (Dependabot-Vorschläge vom 26.09.2026 übernommen) | `.github/workflows/ci.yml`, `images-woechentlich.yml` |
 
 Produktionsimages werden per Digest ausgerollt (Betrieb 4); die CI schreibt die Digests in die Job-Ausgaben und der
 Deploy-Job in `deploy/compose/plattform/.env` des Zielhosts.

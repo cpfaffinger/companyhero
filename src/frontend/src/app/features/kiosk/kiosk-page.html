@@ -6,6 +6,9 @@
     </div>
     <h1 class="ch-kiosk-page__title">{{ texts.t('kiosk.titel') }}</h1>
     <p class="ch-kiosk-page__hint">{{ texts.t('kiosk.hinweis') }}</p>
+    @if (device(); as d) {
+      <p class="ch-kiosk-page__device" data-testid="geraet">{{ texts.t('kiosk.geraet', { name: d.name }) }}</p>
+    }
     @if (cards()?.[0]; as card) {
       <div class="ch-kiosk-page__collective">
         <div class="ch-kiosk-page__collective-head">
@@ -19,14 +22,166 @@
       </div>
     }
   </aside>
-  <main class="ch-kiosk-page__main">
-    <ch-kiosk-anmeldemaske (anmelden)="anmelden($event)" />
+  <main class="ch-kiosk-page__main" id="ch-main">
     @if (hinweis(); as text) {
-      <p class="ch-kiosk-page__status" role="status">{{ text }}</p>
+      <p class="ch-kiosk-page__status" role="status" data-testid="hinweis">{{ text }}</p>
     }
-    <div class="ch-kiosk-page__links">
-      <a class="ch-kiosk-page__link" href="/zugang">{{ texts.t('kiosk.beitreten') }}</a>
-      <a class="ch-kiosk-page__link ch-kiosk-page__link--secondary" href="/zugang">{{ texts.t('kiosk.pinVergessen') }}</a>
-    </div>
+    @if (fehler(); as text) {
+      <p class="ch-kiosk-page__status ch-kiosk-page__status--fehler" role="alert" data-testid="fehler">{{ text }}</p>
+    }
+
+    @switch (ansicht()) {
+      @case ('laden') {
+        <p role="status">{{ texts.t('kiosk.laden') }}</p>
+      }
+      @case ('registrieren') {
+        <form class="ch-kiosk-page__form" (submit)="$event.preventDefault(); registrieren()">
+          <h2 class="ch-kiosk-page__subtitle">{{ texts.t('kiosk.registrieren.titel') }}</h2>
+          <p class="ch-kiosk-page__hint">{{ texts.t('kiosk.registrieren.hinweis') }}</p>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ texts.t('kiosk.registrieren.code') }}</mat-label>
+            <input matInput autocomplete="off" autocapitalize="characters" spellcheck="false" [formControl]="registrierung" data-testid="registrierungscode" />
+            @if (registrierung.touched && registrierung.invalid) {
+              <mat-error>{{ texts.t('zugang.feld.codePflicht') }}</mat-error>
+            }
+          </mat-form-field>
+          <button matButton="filled" type="submit" [disabled]="busy()" data-testid="registrieren">{{ texts.t('kiosk.registrieren.aktion') }}</button>
+        </form>
+      }
+      @case ('anmelden') {
+        <ch-kiosk-anmeldemaske (anmelden)="anmelden($event)" />
+        <div class="ch-kiosk-page__links">
+          <button type="button" class="ch-kiosk-page__link" (click)="zumBeitritt()" data-testid="zum-beitritt">{{ texts.t('kiosk.beitreten') }}</button>
+          <button type="button" class="ch-kiosk-page__link ch-kiosk-page__link--secondary" (click)="zurPinNeusetzung()" data-testid="pin-vergessen">{{ texts.t('kiosk.pinVergessen') }}</button>
+        </div>
+      }
+      @case ('person') {
+        @if (person(); as p) {
+          <section class="ch-kiosk-page__person" data-testid="personensitzung">
+            <div class="ch-kiosk-page__person-head">
+              <h2 class="ch-kiosk-page__subtitle">{{ texts.t('kiosk.hallo', { name: p.displayName }) }}</h2>
+              <p class="ch-kiosk-page__countdown" [class.ch-kiosk-page__countdown--warnung]="warnung()" role="timer" aria-live="polite" data-testid="countdown">
+                {{ texts.t('kiosk.countdown', { sekunden: rest() }) }}
+              </p>
+            </div>
+            @if (warnung()) {
+              <p class="ch-kiosk-page__status" role="alert">{{ texts.t('kiosk.ablaufWarnung') }}</p>
+            }
+            <div class="ch-kiosk-page__actions">
+              @for (card of cards() ?? []; track card.challengeId) {
+                <button matButton="filled" type="button" class="ch-kiosk-page__action" [disabled]="busy() || beigetragen().has(card.challengeId)" (click)="beitragen(card)" [attr.data-testid]="'beitrag-' + card.challengeId">
+                  <span class="material-symbols-rounded" aria-hidden="true">check</span>
+                  {{ beigetragen().has(card.challengeId) ? texts.t('kiosk.beitragErfasst') : texts.t('kiosk.heuteErledigt', { challenge: card.title }) }}
+                </button>
+              } @empty {
+                <p class="ch-kiosk-page__hint">{{ texts.t('challenge.keineLaufend') }}</p>
+              }
+              <button matButton="outlined" type="button" class="ch-kiosk-page__action" [disabled]="busy()" (click)="uebertragen()" data-testid="uebertragen">
+                <span class="material-symbols-rounded" aria-hidden="true">qr_code_2</span>
+                {{ texts.t('kiosk.uebertragen') }}
+              </button>
+              <button matButton="outlined" type="button" class="ch-kiosk-page__action" (click)="abmelden()" data-testid="abmelden">{{ texts.t('kiosk.abmelden') }}</button>
+            </div>
+            @if (transfer(); as t) {
+              <div class="ch-kiosk-page__transfer" data-testid="transfer">
+                <p>{{ texts.t('kiosk.uebertragenHinweis', { sekunden: transferRest() }) }}</p>
+                <ch-qr-code [value]="t.url" [alt]="texts.t('kiosk.uebertragenQrAlt')" [zeigeWert]="false" />
+              </div>
+            }
+            <form class="ch-kiosk-page__form ch-kiosk-page__form--pin" (submit)="$event.preventDefault(); pinAendern()">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>{{ texts.t('ich.zugang.pinAendern') }}</mat-label>
+                <input matInput inputmode="numeric" autocomplete="off" maxlength="4" [formControl]="neuePin" data-testid="neue-pin" />
+                @if (neuePin.touched && neuePin.invalid) {
+                  <mat-error>{{ texts.t('zugang.feld.pinVierZiffern') }}</mat-error>
+                }
+              </mat-form-field>
+              <button matButton="outlined" type="submit" [disabled]="busy()">{{ texts.t('ich.zugang.pinSpeichern') }}</button>
+            </form>
+          </section>
+        }
+      }
+      @case ('beitritt') {
+        @if (beitrittErgebnis(); as result) {
+          <section class="ch-kiosk-page__form" data-testid="beitritt-ergebnis">
+            <h2 class="ch-kiosk-page__subtitle">{{ texts.t('zugang.beitritt.willkommen') }}</h2>
+            <p>{{ texts.t('kiosk.beitritt.kennungHinweis') }}</p>
+            <code class="ch-kiosk-page__code" data-testid="kiosk-kennung">{{ result.kioskId }}</code>
+            @if (result.recoveryCode; as recovery) {
+              <p>{{ texts.t('kiosk.beitritt.wiederherstellungscodeHinweis') }}</p>
+              <code class="ch-kiosk-page__code" data-testid="wiederherstellungscode">{{ recovery }}</code>
+            }
+            <button matButton="filled" type="button" (click)="zurAnmeldung()">{{ texts.t('kiosk.beitritt.fertig') }}</button>
+          </section>
+        } @else {
+          <form class="ch-kiosk-page__form" [formGroup]="beitritt" (ngSubmit)="beitreten()">
+            <h2 class="ch-kiosk-page__subtitle">{{ texts.t('zugang.beitritt.titel') }}</h2>
+            <mat-form-field appearance="outline">
+              <mat-label>{{ texts.t('zugang.feld.beitrittscode') }}</mat-label>
+              <input matInput formControlName="code" autocomplete="off" autocapitalize="characters" spellcheck="false" data-testid="beitrittscode" />
+              @if (beitritt.controls.code.touched && beitritt.controls.code.invalid) {
+                <mat-error>{{ texts.t('zugang.feld.codePflicht') }}</mat-error>
+              }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>{{ texts.t('zugang.feld.anzeigename') }}</mat-label>
+              <input matInput formControlName="name" autocomplete="off" maxlength="80" data-testid="anzeigename" />
+              <mat-hint>{{ texts.t('zugang.feld.anzeigenameHinweis') }}</mat-hint>
+              @if (beitritt.controls.name.touched && beitritt.controls.name.invalid) {
+                <mat-error>{{ texts.t('zugang.feld.anzeigenamePflicht') }}</mat-error>
+              }
+            </mat-form-field>
+            <div class="ch-kiosk-page__group" role="group" aria-labelledby="ch-kiosk-sichtbarkeit">
+              <span class="ch-kiosk-page__label" id="ch-kiosk-sichtbarkeit">{{ texts.t('sichtbarkeit.frage') }}</span>
+              <mat-radio-group formControlName="visibility" class="ch-kiosk-page__radios">
+                @for (option of visibilities; track option.value) {
+                  <mat-radio-button [value]="option.value" [attr.data-testid]="'sichtbarkeit-' + option.value">{{ texts.t(option.key) }}</mat-radio-button>
+                }
+              </mat-radio-group>
+              @if (beitritt.controls.visibility.touched && beitritt.controls.visibility.invalid) {
+                <span class="ch-kiosk-page__error" role="alert">{{ texts.t('sichtbarkeit.pflicht') }}</span>
+              }
+            </div>
+            <mat-form-field appearance="outline">
+              <mat-label>{{ texts.t('kiosk.pin') }}</mat-label>
+              <input matInput formControlName="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="4" data-testid="pin" />
+              <mat-hint>{{ texts.t('zugang.feld.kioskPinHinweis') }}</mat-hint>
+              @if (beitritt.controls.pin.touched && beitritt.controls.pin.invalid) {
+                <mat-error>{{ texts.t('zugang.feld.pinVierZiffern') }}</mat-error>
+              }
+            </mat-form-field>
+            <div class="ch-kiosk-page__actions ch-kiosk-page__actions--row">
+              <button matButton type="button" (click)="zurAnmeldung()">{{ texts.t('form.abbrechen') }}</button>
+              <button matButton="filled" type="submit" [disabled]="busy()" data-testid="beitreten">{{ texts.t('zugang.beitritt.beitreten') }}</button>
+            </div>
+          </form>
+        }
+      }
+      @case ('pinReset') {
+        <form class="ch-kiosk-page__form" [formGroup]="pinReset" (ngSubmit)="pinNeuSetzen()">
+          <h2 class="ch-kiosk-page__subtitle">{{ texts.t('kiosk.pinReset.titel') }}</h2>
+          <p class="ch-kiosk-page__hint">{{ texts.t('kiosk.pinReset.hinweis') }}</p>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ texts.t('kiosk.kennung') }}</mat-label>
+            <input matInput formControlName="kioskId" inputmode="numeric" autocomplete="off" maxlength="6" data-testid="reset-kennung" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ texts.t('zugang.feld.wiederherstellungscode') }}</mat-label>
+            <input matInput formControlName="recoveryCode" autocomplete="off" autocapitalize="characters" spellcheck="false" data-testid="reset-code" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ texts.t('kiosk.pinReset.neuePin') }}</mat-label>
+            <input matInput formControlName="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="4" data-testid="reset-pin" />
+            @if (pinReset.controls.pin.touched && pinReset.controls.pin.invalid) {
+              <mat-error>{{ texts.t('zugang.feld.pinVierZiffern') }}</mat-error>
+            }
+          </mat-form-field>
+          <div class="ch-kiosk-page__actions ch-kiosk-page__actions--row">
+            <button matButton type="button" (click)="zurAnmeldung()">{{ texts.t('form.abbrechen') }}</button>
+            <button matButton="filled" type="submit" [disabled]="busy()" data-testid="pin-neu-setzen">{{ texts.t('kiosk.pinReset.aktion') }}</button>
+          </div>
+        </form>
+      }
+    }
   </main>
 </div>

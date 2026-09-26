@@ -1,16 +1,20 @@
 using CompanyHero.Platform.Jobs;
 using CompanyHero.Platform.Modules;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CompanyHero.Platform.Data;
 
 /// <summary>
-/// Plattformbereich ohne Tenant-RLS (Backend 5.3, 6.2): Release-Stand, Job-Queue und Zeitpläne. Das Modell dient den
+/// Plattformbereich ohne Tenant-RLS (Backend 5.3, 6.2): Release-Stand, Job-Queue, Zeitpläne und der Schlüsselring der
+/// Data Protection (A-007: mehrere API-Instanzen teilen die Schlüssel für OIDC-Zustand und geschützte Übergaben). Das Modell dient den
 /// Migrationen und den Gesundheitsprüfungen; die Queue selbst arbeitet mit SQL auf der Kontexttransaktion (Einreihung)
 /// beziehungsweise auf eigenen Verbindungen (Beanspruchung), weil <c>FOR UPDATE SKIP LOCKED</c> kein EF-Ausdruck ist.
 /// </summary>
-public sealed class PlatformDbContext(DbContextOptions<PlatformDbContext> options) : DbContext(options)
+public sealed class PlatformDbContext(DbContextOptions<PlatformDbContext> options) : DbContext(options), IDataProtectionKeyContext
 {
+    public DbSet<DataProtectionKey> DataProtectionKeys => Set<DataProtectionKey>();
+
     public DbSet<Release> Releases => Set<Release>();
 
     public DbSet<Job> Jobs => Set<Job>();
@@ -54,6 +58,15 @@ public sealed class PlatformDbContext(DbContextOptions<PlatformDbContext> option
             b.HasIndex(j => new { j.JobType, j.IdempotencyKey, j.TenantId }).IsUnique().AreNullsDistinct(false);
             b.HasIndex(j => new { j.Status, j.RunAt });
             b.HasIndex(j => new { j.TenantId, j.Status, j.CompletedAt });
+        });
+
+        modelBuilder.Entity<DataProtectionKey>(b =>
+        {
+            b.ToTable("data_protection_key");
+            b.HasKey(k => k.Id);
+            b.Property(k => k.Id).HasColumnName("id");
+            b.Property(k => k.FriendlyName).HasColumnName("friendly_name");
+            b.Property(k => k.Xml).HasColumnName("xml");
         });
 
         modelBuilder.Entity<JobSchedule>(b =>

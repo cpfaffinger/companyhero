@@ -79,7 +79,8 @@ public sealed class ContributionIdempotencyTests(PostgresFixture pg) : IAsyncLif
     {
         var challenge = await CreateChallengeAsync(ChallengeMetric.Count);
         var person = _w.MemberB;
-        using var client = Client(_w.Id, person);
+        // Kiosk-Beiträge kommen aus der Kiosk-Personensitzung innerhalb der Gerätesitzung (A-005, A-018).
+        using var client = pg.KioskClient(await pg.KioskSessionAsync(_w.Id, person, Ct));
 
         // Vor dem Absenden reserviert das Backend eine Vorgangskennung (A-005).
         using var reserve = await client.PostAsync(Operations(challenge), null, Ct);
@@ -119,11 +120,12 @@ public sealed class ContributionIdempotencyTests(PostgresFixture pg) : IAsyncLif
         using var mobileChanged = await client.PostAsJsonAsync(Contributions(challenge), new ContributionRequest("4", recordedAt, "mobile", key, null), Ct);
         Assert.Equal(HttpStatusCode.Conflict, mobileChanged.StatusCode);
 
-        using var reserve = await client.PostAsync(Operations(challenge), null, Ct);
+        using var kioskClient = pg.KioskClient(await pg.KioskSessionAsync(_h.Id, _h.MemberA, Ct));
+        using var reserve = await kioskClient.PostAsync(Operations(challenge), null, Ct);
         var operation = (await reserve.Content.ReadFromJsonAsync<OperationResponse>(Ct))!.OperationId;
-        using var kiosk = await client.PostAsJsonAsync(Contributions(challenge), new ContributionRequest("3", recordedAt, "kiosk", null, operation), Ct);
+        using var kiosk = await kioskClient.PostAsJsonAsync(Contributions(challenge), new ContributionRequest("3", recordedAt, "kiosk", null, operation), Ct);
         Assert.Equal(HttpStatusCode.Created, kiosk.StatusCode);
-        using var kioskChanged = await client.PostAsJsonAsync(Contributions(challenge), new ContributionRequest("3", recordedAt.AddMinutes(1), "kiosk", null, operation), Ct);
+        using var kioskChanged = await kioskClient.PostAsJsonAsync(Contributions(challenge), new ContributionRequest("3", recordedAt.AddMinutes(1), "kiosk", null, operation), Ct);
         Assert.Equal(HttpStatusCode.Conflict, kioskChanged.StatusCode);
 
         Assert.Equal((2, 2, 1, 2), await CountsAsync(_h.Id, challenge, _h.MemberA));
@@ -133,8 +135,8 @@ public sealed class ContributionIdempotencyTests(PostgresFixture pg) : IAsyncLif
     public async Task Vorgangskennung_ist_an_Tenant_und_Person_gebunden_und_ein_abgebrochener_Vorgang_nimmt_nichts_mehr_an()
     {
         var challenge = await CreateChallengeAsync(ChallengeMetric.Checkmark);
-        using var cem = Client(_w.Id, _w.MemberB);
-        using var bea = Client(_w.Id, _w.MemberA);
+        using var cem = pg.KioskClient(await pg.KioskSessionAsync(_w.Id, _w.MemberB, Ct));
+        using var bea = pg.KioskClient(await pg.KioskSessionAsync(_w.Id, _w.MemberA, Ct));
 
         using var reserve = await cem.PostAsync(Operations(challenge), null, Ct);
         var operation = (await reserve.Content.ReadFromJsonAsync<OperationResponse>(Ct))!.OperationId;
@@ -159,7 +161,8 @@ public sealed class ContributionIdempotencyTests(PostgresFixture pg) : IAsyncLif
     {
         var challenge = await CreateChallengeAsync(ChallengeMetric.Checkmark);
         using var client = Client(_w.Id, _w.MemberA);
-        using var reserve = await client.PostAsync(Operations(challenge), null, Ct);
+        using var kioskClient = pg.KioskClient(await pg.KioskSessionAsync(_w.Id, _w.MemberA, Ct));
+        using var reserve = await kioskClient.PostAsync(Operations(challenge), null, Ct);
         var operation = (await reserve.Content.ReadFromJsonAsync<OperationResponse>(Ct))!.OperationId;
 
         // Dieselbe Kennung als Client-Schlüssel eines Handy-Beitrags: der Namensraum ist belegt.
@@ -167,8 +170,16 @@ public sealed class ContributionIdempotencyTests(PostgresFixture pg) : IAsyncLif
         Assert.Equal(HttpStatusCode.Conflict, asClientKey.StatusCode);
 
         // Regime und Kanal müssen zusammenpassen (Vertrag A-009); kein clientseitiger Schlüssel am Kiosk.
-        using var kioskWithClientKey = await client.PostAsJsonAsync(Contributions(challenge), new ContributionRequest("1", pg.Clock.GetUtcNow(), "kiosk", Guid.CreateVersion7().ToString("D"), null), Ct);
+        using var kioskWithClientKey = await kioskClient.PostAsJsonAsync(Contributions(challenge), new ContributionRequest("1", pg.Clock.GetUtcNow(), "kiosk", Guid.CreateVersion7().ToString("D"), null), Ct);
         Assert.Equal(HttpStatusCode.BadRequest, kioskWithClientKey.StatusCode);
+
+        // Kanal und Sitzung gehören zusammen (A-005): Mitgliedssitzung reserviert keine Vorgangskennung und sendet keinen Kiosk-Kanal; die Kiosk-Sitzung keinen Handy-Kanal.
+        using var memberReserve = await client.PostAsync(Operations(challenge), null, Ct);
+        Assert.Equal(HttpStatusCode.Forbidden, memberReserve.StatusCode);
+        using var memberKioskChannel = await client.PostAsJsonAsync(Contributions(challenge), new ContributionRequest("1", pg.Clock.GetUtcNow(), "kiosk", null, operation), Ct);
+        Assert.Equal(HttpStatusCode.Forbidden, memberKioskChannel.StatusCode);
+        using var kioskMobileChannel = await kioskClient.PostAsJsonAsync(Contributions(challenge), new ContributionRequest("1", pg.Clock.GetUtcNow(), "mobile", Guid.CreateVersion7().ToString("D"), null), Ct);
+        Assert.Equal(HttpStatusCode.Forbidden, kioskMobileChannel.StatusCode);
         using var notSortable = await client.PostAsJsonAsync(Contributions(challenge), new ContributionRequest("1", pg.Clock.GetUtcNow(), "mobile", Guid.NewGuid().ToString("D"), null), Ct);
         Assert.Equal(HttpStatusCode.BadRequest, notSortable.StatusCode);
     }
@@ -304,12 +315,7 @@ public sealed class ContributionIdempotencyTests(PostgresFixture pg) : IAsyncLif
         return (int)(await cmd.ExecuteScalarAsync(Ct))!;
     }
 
-    private HttpClient Client(TenantId tenant, PersonId person)
-    {
-        var client = pg.Api.CreateClient();
-        client.DefaultRequestHeaders.Add(TestSessionHandler.Header, TestSession.For(tenant, person));
-        return client;
-    }
+    private HttpClient Client(TenantId tenant, PersonId person) => pg.Client(tenant, person);
 
     private static Uri Contributions(Guid challenge) => new($"/api/challenges/{challenge:D}/contributions", UriKind.Relative);
 

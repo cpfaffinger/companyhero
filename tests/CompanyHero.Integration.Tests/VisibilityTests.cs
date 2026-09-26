@@ -98,12 +98,7 @@ public sealed class VisibilityTests(PostgresFixture pg)
         Assert.DoesNotContain("check_in", json, StringComparison.Ordinal);
     }
 
-    private HttpClient Client(TenantId tenant, PersonId person)
-    {
-        var client = pg.Api.CreateClient();
-        client.DefaultRequestHeaders.Add(TestSessionHandler.Header, TestSession.For(tenant, person));
-        return client;
-    }
+    private HttpClient Client(TenantId tenant, PersonId person) => pg.Client(tenant, person);
 
     private static Uri Activities(PersonId person) => new($"/api/persons/{person}/activities", UriKind.Relative);
 }

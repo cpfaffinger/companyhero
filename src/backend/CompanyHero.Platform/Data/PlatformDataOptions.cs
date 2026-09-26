@@ -13,6 +13,9 @@ public sealed record PlatformDataOptions
     /// in der der Kontext gesetzt wurde. Falsch nur für den Migrationslauf.
     /// </summary>
     public bool EnforceTenantContext { get; init; } = true;
+
+    /// <summary>Optional: PEM-Datei (Zertifikat und Schlüssel) zum Schutz des Data-Protection-Schlüsselrings im Ruhezustand.</summary>
+    public string? DataProtectionCertificatePemFile { get; init; }
 }
 
 /// <summary>Ein registrierter Modulkontext; der Migrationslauf iteriert diese Liste (ein Schema, eine Historie je Modul).</summary>

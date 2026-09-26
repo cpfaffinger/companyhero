@@ -1,15 +1,17 @@
 // Ich (Marke 4.3, A-078, A-081): Darstellung system | hell | dunkel je Person, Großflächenmodus als persönliche Einstellung,
-// Hinweis zur Installation mit Tenant-Manifest (A-079), „Über“ mit der Plattform. Standardbedienelemente aus Material.
+// Hinweis zur Installation mit Tenant-Manifest (A-079), „Über“ mit der Plattform, Zugang (Wege, Wiederherstellungscode,
+// Kiosk-Kennung, Sitzungen, Austritt; Zugang 4, 6.2, 8). Standardbedienelemente aus Material.
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
 import { TextService } from '../../../../libs/theme/text.service';
 import { ThemeService, type ThemeMode } from '../../../../libs/theme/theme.service';
+import { ZugangEinstellungen } from './zugang-einstellungen';
 
 @Component({
   selector: 'ch-ich-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatButtonToggleGroup, MatButtonToggle, MatSlideToggle],
+  imports: [MatButtonToggleGroup, MatButtonToggle, MatSlideToggle, ZugangEinstellungen],
   template: `
     <section class="ch-ich">
       <div class="ch-ich__block">
@@ -24,6 +26,7 @@ import { ThemeService, type ThemeMode } from '../../../../libs/theme/theme.servi
         <mat-slide-toggle [checked]="theme.scale() === 'gross'" (change)="theme.setScale($event.checked ? 'gross' : 'standard')">{{ texts.t('ich.grossflaeche') }}</mat-slide-toggle>
         <p class="ch-ich__hint">{{ texts.t('ich.grossflaecheHinweis') }}</p>
       </div>
+      <ch-zugang-einstellungen class="ch-ich__block ch-ich__block--voll" />
       <div class="ch-ich__block">
         <h2 class="ch-ich__title">{{ texts.t('ich.installieren') }}</h2>
         <p class="ch-ich__hint">{{ texts.t('ich.installierenHinweis') }}</p>
@@ -47,6 +50,10 @@ import { ThemeService, type ThemeMode } from '../../../../libs/theme/theme.servi
       flex-direction: column;
       gap: var(--ch-space-3);
       align-items: flex-start;
+    }
+
+    .ch-ich__block--voll {
+      align-items: stretch;
     }
 
     .ch-ich__title {

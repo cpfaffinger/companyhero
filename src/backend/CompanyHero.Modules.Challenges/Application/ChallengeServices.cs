@@ -26,7 +26,7 @@ public interface IChallengeCatalog
 
     Task<CollectiveRecord?> GetCollectiveAsync(Guid challengeId, CancellationToken cancellationToken);
 
-    /// <summary>Laufende Challenges des Tenants mit den Daten der Challenge-Karte für die angemeldete Person; keine Werte anderer Personen.</summary>
+    /// <summary>Laufende Challenges des Tenants mit den Daten der Challenge-Karte für die angemeldete Person; keine Werte anderer Personen. Ohne Person (Kiosk-Gerätesitzung) nur der Kollektivstand.</summary>
     Task<IReadOnlyList<ChallengeCardRecord>> ListRunningAsync(CancellationToken cancellationToken);
 }
 
@@ -83,7 +83,7 @@ internal sealed class ChallengeCatalog(ChallengesDbContext db, IContextTransacti
     {
         var current = context.Require();
         var tenantId = current.RequireTenant();
-        var personId = current.RequirePerson();
+        var personId = current.PersonId;
         var today = TenantTimeZone.DayOf(clock.GetUtcNow());
         var from = TenantTimeZone.StartOfDay(today);
         var to = TenantTimeZone.StartOfDay(today.AddDays(1));
@@ -97,11 +97,13 @@ internal sealed class ChallengeCatalog(ChallengesDbContext db, IContextTransacti
         var collectives = await db.CollectiveStates
             .Where(s => s.TenantId == tenantId && ids.Contains(s.ChallengeId))
             .ToDictionaryAsync(s => s.ChallengeId, cancellationToken);
-        var contributedToday = await db.Contributions
-            .Where(c => c.TenantId == tenantId && c.PersonId == personId && ids.Contains(c.ChallengeId) && c.RecordedAt >= from && c.RecordedAt < to)
-            .Select(c => c.ChallengeId)
-            .Distinct()
-            .ToListAsync(cancellationToken);
+        var contributedToday = personId is null
+            ? []
+            : await db.Contributions
+                .Where(c => c.TenantId == tenantId && c.PersonId == personId && ids.Contains(c.ChallengeId) && c.RecordedAt >= from && c.RecordedAt < to)
+                .Select(c => c.ChallengeId)
+                .Distinct()
+                .ToListAsync(cancellationToken);
         await tx.CommitAsync(cancellationToken);
 
         return challenges.Select(c =>

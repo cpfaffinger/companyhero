@@ -16,6 +16,10 @@ x-app: &app
     ASPNETCORE_ENVIRONMENT: ${CH_ASPNET_ENVIRONMENT:-Production}
     CH_OPENBAO_ADDR: http://openbao:8200
     CH_OPENBAO_TOKEN_FILE: /run/companyhero/openbao-app-token
+    # Öffentliche Origin des Zugangs (A-007, Zugang 3.1): Relying-Party-ID der Passkeys, Redirect-Ziel der Anbieter,
+    # Links in Magic-Link- und Übertragungs-Mails. Anbieterregistrierungen (Identity__Providers__<key>__ClientId/ClientSecret)
+    # liegen als Geheimnis in OpenBao, nicht in dieser Datei.
+    Identity__PublicOrigin: https://${CH_ORIGIN:-localhost}
     OTEL_EXPORTER_OTLP_ENDPOINT: ${CH_OTLP_ENDPOINT:-http://otel-collector:4317}
     OTEL_EXPORTER_OTLP_PROTOCOL: grpc
     TZ: UTC

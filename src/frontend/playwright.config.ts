@@ -15,7 +15,8 @@ export default defineConfig({
   timeout: 60_000,
   expect: { timeout: 15_000 },
   use: {
-    baseURL: `http://127.0.0.1:${port}`,
+    // localhost statt 127.0.0.1: WebAuthn verlangt eine Domain als Relying-Party-ID (Zugang 3.1), keine IP-Adresse.
+    baseURL: `http://localhost:${port}`,
     trace: 'retain-on-failure',
     locale: 'de-AT',
     timezoneId: 'Europe/Vienna',
@@ -26,5 +27,6 @@ export default defineConfig({
     reuseExistingServer: !process.env['CI'],
     timeout: 30_000,
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  // Lokale Umgebungen mit vorinstalliertem Chromium (CH_CHROMIUM=/pfad/zu/chrome) statt Download; CI lädt den Browser selbst.
+  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'], launchOptions: process.env['CH_CHROMIUM'] ? { executablePath: process.env['CH_CHROMIUM'] } : {} } }],
 });

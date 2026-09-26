@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using CompanyHero.Modules.Challenges.Application;
 using CompanyHero.Modules.Challenges.Domain;
 using CompanyHero.Platform.Hosting;
+using CompanyHero.Platform.Tenancy;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -60,12 +61,18 @@ internal static class ChallengeEndpoints
                     card.Percent,
                     card.ContributedToday)).ToList());
             })
-            .RequireTenantContext()
+            .RequireTenantContext().AllowKiosk(device: true)
             .WithName("ListRunningChallenges")
             .Produces<List<ChallengeCardResponse>>();
 
-        endpoints.MapPost("/api/challenges/{challengeId:guid}/contribution-operations", async (Guid challengeId, IChallengeCatalog catalog, IContributionService contributions, CancellationToken ct) =>
+        // Vorgangskennungen reserviert nur die Kiosk-Personensitzung (A-005, A-018); Handy-Beiträge tragen den Client-Schlüssel.
+        endpoints.MapPost("/api/challenges/{challengeId:guid}/contribution-operations", async (Guid challengeId, ITenantContextAccessor context, IChallengeCatalog catalog, IContributionService contributions, CancellationToken ct) =>
             {
+                if (context.Require().Session != SessionKind.KioskPerson)
+                {
+                    return Results.Problem(statusCode: StatusCodes.Status403Forbidden, title: "Vorgangskennung nur am Kiosk", detail: "kiosk_person_session_required");
+                }
+
                 if (await catalog.GetAsync(challengeId, ct) is null)
                 {
                     return Results.NotFound();
@@ -74,12 +81,13 @@ internal static class ChallengeEndpoints
                 var operationId = await contributions.ReserveOperationAsync(ct);
                 return Results.Created($"/api/challenges/{challengeId:D}/contribution-operations/{operationId}", new OperationResponse(operationId));
             })
-            .RequireTenantContext()
+            .RequireTenantContext().AllowKiosk()
             .WithName("ReserveContributionOperation")
             .Produces<OperationResponse>(StatusCodes.Status201Created)
+            .ProducesProblem(StatusCodes.Status403Forbidden)
             .Produces(StatusCodes.Status404NotFound);
 
-        endpoints.MapPost("/api/challenges/{challengeId:guid}/contributions", async (Guid challengeId, ContributionRequest request, IContributionService contributions, CancellationToken ct) =>
+        endpoints.MapPost("/api/challenges/{challengeId:guid}/contributions", async (Guid challengeId, ContributionRequest request, ITenantContextAccessor context, IContributionService contributions, CancellationToken ct) =>
             {
                 if (!decimal.TryParse(request.Value, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var value))
                 {
@@ -115,6 +123,13 @@ internal static class ChallengeEndpoints
                     return Results.ValidationProblem(new Dictionary<string, string[]> { ["idempotencyKey"] = ["Zeitlich sortierbare Kennung (UUIDv7) erwartet."] });
                 }
 
+                // Kanal und Sitzungsart gehören zusammen (A-005, A-009): Kiosk-Beiträge nur aus der Kiosk-Personensitzung, Handy-Beiträge nie daraus.
+                var isKioskSession = context.Require().Session == SessionKind.KioskPerson;
+                if (isKioskSession != (channel == ContributionChannel.Kiosk))
+                {
+                    return Results.Problem(statusCode: StatusCodes.Status403Forbidden, title: "Kanal passt nicht zur Sitzung", detail: isKioskSession ? "kiosk_channel_required" : "kiosk_person_session_required");
+                }
+
                 var outcome = await contributions.SubmitAsync(new ContributionSubmission(challengeId, value, request.RecordedAt, channel, key), ct);
                 return outcome.Result switch
                 {
@@ -127,11 +142,12 @@ internal static class ChallengeEndpoints
                     _ => Results.Problem(statusCode: StatusCodes.Status422UnprocessableEntity, title: "Beitrag abgelehnt", detail: outcome.Rejection.ToString()),
                 };
             })
-            .RequireTenantContext()
+            .RequireTenantContext().AllowKiosk()
             .WithName("SubmitContribution")
             .Produces<ContributionResponse>(StatusCodes.Status201Created)
             .Produces<ContributionResponse>(StatusCodes.Status200OK)
             .ProducesValidationProblem()
+            .ProducesProblem(StatusCodes.Status403Forbidden)
             .ProducesProblem(StatusCodes.Status409Conflict)
             .ProducesProblem(StatusCodes.Status410Gone)
             .ProducesProblem(StatusCodes.Status422UnprocessableEntity)
@@ -150,7 +166,7 @@ internal static class ChallengeEndpoints
                     ? Results.Ok(new CollectiveResponse("0.0000", 0, 0, DateTimeOffset.MinValue, 0))
                     : Results.Ok(ToCollective(collective, (int)Math.Min(100m, Math.Round(collective.Total / challenge.Target * 100m, 0, MidpointRounding.AwayFromZero))));
             })
-            .RequireTenantContext()
+            .RequireTenantContext().AllowKiosk(device: true)
             .WithName("GetChallengeCollective")
             .Produces<CollectiveResponse>()
             .Produces(StatusCodes.Status404NotFound);

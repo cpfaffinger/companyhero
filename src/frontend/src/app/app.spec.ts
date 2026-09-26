@@ -9,6 +9,6 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     expect((fixture.nativeElement as HTMLElement).querySelector('router-outlet')).not.toBeNull();
-    expect(routes.map((r) => r.path)).toEqual(['', 'kiosk', 't/:tenant']);
+    expect(routes.map((r) => r.path)).toEqual(['', 'kiosk', 'join/:code', 'zugang', 't/:tenant']);
   });
 });

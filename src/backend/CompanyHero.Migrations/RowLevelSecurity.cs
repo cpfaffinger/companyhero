@@ -34,6 +34,17 @@ public static class RowLevelSecurity
         Apply(migrationBuilder, schema, table, $"id = {CurrentTenant} or {IsPlatformContext}", $"id = {CurrentTenant} or {IsPlatformContext}");
     }
 
+    /// <summary>
+    /// Tenantbezogene Tabelle, die die Plattforminfrastruktur vor der Tenant-Zuordnung lesen und pflegen muss (Sitzungen,
+    /// Identitätsindex, Codes, die den Tenant erst bestimmen): im Tenant-Kontext nur eigene Zeilen, im Plattformkontext alle.
+    /// Der Plattformkontext ist nur der Plattforminfrastruktur zugänglich (Backend 5.3), nie einem Request eines Mitglieds.
+    /// </summary>
+    public static void IsolateByTenantOrPlatform(MigrationBuilder migrationBuilder, string schema, string table)
+    {
+        ArgumentNullException.ThrowIfNull(migrationBuilder);
+        Apply(migrationBuilder, schema, table, $"tenant_id = {CurrentTenant} or {IsPlatformContext}", $"tenant_id = {CurrentTenant} or {IsPlatformContext}");
+    }
+
     public static void Remove(MigrationBuilder migrationBuilder, string schema, string table)
     {
         ArgumentNullException.ThrowIfNull(migrationBuilder);

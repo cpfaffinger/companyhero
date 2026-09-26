@@ -1,0 +1,26 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "tenantId": "01a0de15-1908-7486-b068-37d9ab0d4d83",
+    "tenantName": "Wiesner Probe",
+    "ways": {
+      "passkey": true,
+      "magicLink": true,
+      "kiosk": true,
+      "providers": [
+        {
+          "key": "google",
+          "displayName": "Google"
+        },
+        {
+          "key": "microsoft",
+          "displayName": "Microsoft"
+        }
+      ],
+      "forcedProviderKeys": []
+    },
+    "pendingExternal": null,
+    "role": null
+  }
+}

@@ -1,0 +1,76 @@
+.ch-zugang-ich {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-5);
+}
+
+.ch-zugang-ich__title {
+  font: 600 var(--ch-type-title-m) / var(--ch-line-title-m) var(--ch-font-text);
+}
+
+.ch-zugang-ich__subtitle {
+  font: 600 var(--ch-type-body-m) / var(--ch-line-body-m) var(--ch-font-text);
+}
+
+.ch-zugang-ich__hint {
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-zugang-ich__status {
+  padding: var(--ch-space-3) var(--ch-space-4);
+  border-radius: var(--ch-radius-card);
+  background: var(--ch-surface-container-high);
+}
+
+.ch-zugang-ich__status--fehler {
+  background: var(--ch-error-container);
+  color: var(--ch-on-error-container);
+}
+
+.ch-zugang-ich__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+  align-items: flex-start;
+  padding: var(--ch-space-4);
+  border-radius: var(--ch-radius-sheet);
+  border: 1px solid var(--ch-outline-variant);
+  width: 100%;
+}
+
+.ch-zugang-ich__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ch-space-3);
+  width: 100%;
+}
+
+.ch-zugang-ich__inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ch-space-3);
+  width: 100%;
+}
+
+.ch-zugang-ich__inline mat-form-field {
+  flex: 1 1 220px;
+}
+
+.ch-zugang-ich__anbieter,
+.ch-zugang-ich__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ch-space-2);
+}
+
+.ch-zugang-ich__code {
+  font: 700 var(--ch-type-headline-l) / var(--ch-line-headline-l) var(--ch-font-display);
+  letter-spacing: 0.12em;
+  user-select: all;
+}
+
+.ch-zugang-ich__austritt {
+  color: var(--ch-error);
+}

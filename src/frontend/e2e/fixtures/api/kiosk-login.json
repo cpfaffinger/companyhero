@@ -1,0 +1,11 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "personId": "01a0de15-21a7-7d2f-aa92-a54d14a3c7c0",
+    "displayName": "Probe Kiosk",
+    "idleSeconds": 60,
+    "idleUntil": "2026-09-25T08:09:00+00:00",
+    "absoluteUntil": "2026-09-25T08:18:00+00:00"
+  }
+}

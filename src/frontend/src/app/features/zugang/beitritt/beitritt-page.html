@@ -1,0 +1,118 @@
+<section class="ch-beitritt">
+  <h1 class="ch-beitritt__title">{{ texts.t('zugang.beitritt.titel') }}</h1>
+
+  @if (fehler(); as f) {
+    <p class="ch-beitritt__status ch-beitritt__status--fehler" role="alert">{{ texts.t(f.key) }}</p>
+  }
+
+  @if (ergebnis(); as result) {
+    <div class="ch-beitritt__block ch-beitritt__block--ergebnis" data-testid="ergebnis">
+      <h2 class="ch-beitritt__subtitle">{{ texts.t('zugang.beitritt.willkommen') }}</h2>
+      <p>{{ texts.t('zugang.beitritt.kennungHinweis') }}</p>
+      <code class="ch-beitritt__code" data-testid="kiosk-kennung">{{ result.kioskId }}</code>
+      @if (result.recoveryCode; as recovery) {
+        <p>{{ texts.t('zugang.beitritt.wiederherstellungscodeHinweis') }}</p>
+        <code class="ch-beitritt__code" data-testid="wiederherstellungscode">{{ recovery }}</code>
+      }
+      <button matButton="filled" type="button" (click)="weiter()">{{ texts.t('zugang.beitritt.los') }}</button>
+    </div>
+  } @else if (!code()) {
+    <form class="ch-beitritt__block" (submit)="$event.preventDefault(); codeUebernehmen()">
+      @if (externOhneCode) {
+        <p role="status">{{ texts.t('zugang.beitritt.externGeprueft') }}</p>
+      }
+      <p class="ch-beitritt__hint">{{ texts.t('zugang.beitritt.hinweis') }}</p>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ texts.t('zugang.feld.beitrittscode') }}</mat-label>
+        <input matInput autocomplete="off" autocapitalize="characters" spellcheck="false" [formControl]="codeEingabe" data-testid="beitrittscode" />
+        @if (codeEingabe.touched && codeEingabe.invalid) {
+          <mat-error>{{ texts.t('zugang.feld.codePflicht') }}</mat-error>
+        }
+      </mat-form-field>
+      <button matButton="filled" type="submit">{{ texts.t('zugang.beitritt.weiter') }}</button>
+    </form>
+  } @else if (preview(); as p) {
+    <p class="ch-beitritt__tenant" data-testid="tenant">{{ texts.t('zugang.beitritt.tenant', { tenant: p.tenantName }) }}</p>
+
+    @if (nurAnbieter()) {
+      <div class="ch-beitritt__block">
+        <p class="ch-beitritt__hint">{{ texts.t('zugang.beitritt.nurAnbieter') }}</p>
+        @for (provider of anbieter(); track provider.key) {
+          <a matButton="filled" [href]="oidcUrl(provider.key)">{{ texts.t('zugang.weg.anbieter', { anbieter: provider.displayName }) }}</a>
+        }
+      </div>
+    } @else {
+      <form class="ch-beitritt__block" [formGroup]="form" (ngSubmit)="beitreten()">
+        @if (p.pendingExternal; as ext) {
+          <p role="status">{{ texts.t('zugang.beitritt.anbieterGeprueft', { anbieter: ext.displayName }) }}</p>
+        }
+        <mat-form-field appearance="outline">
+          <mat-label>{{ texts.t('zugang.feld.anzeigename') }}</mat-label>
+          <input matInput formControlName="name" autocomplete="nickname" maxlength="80" data-testid="anzeigename" />
+          <mat-hint>{{ texts.t('zugang.feld.anzeigenameHinweis') }}</mat-hint>
+          @if (form.controls.name.hasError('server')) {
+            <mat-error>{{ texts.t(form.controls.name.getError('server')) }}</mat-error>
+          } @else if (form.controls.name.touched && form.controls.name.invalid) {
+            <mat-error>{{ texts.t('zugang.feld.anzeigenamePflicht') }}</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="ch-beitritt__group" role="group" [attr.aria-labelledby]="'ch-sichtbarkeit'">
+          <span class="ch-beitritt__label" id="ch-sichtbarkeit">{{ texts.t('sichtbarkeit.frage') }}</span>
+          <mat-radio-group formControlName="visibility" class="ch-beitritt__radios">
+            @for (option of visibilities; track option.value) {
+              <mat-radio-button [value]="option.value" [attr.data-testid]="'sichtbarkeit-' + option.value">{{ texts.t(option.key) }}</mat-radio-button>
+            }
+          </mat-radio-group>
+          @if (form.controls.visibility.touched && form.controls.visibility.invalid) {
+            <span class="ch-beitritt__error" role="alert">{{ texts.t('sichtbarkeit.pflicht') }}</span>
+          }
+        </div>
+
+        <div class="ch-beitritt__group" role="group" aria-labelledby="ch-weg">
+          <span class="ch-beitritt__label" id="ch-weg">{{ texts.t('zugang.beitritt.wegFrage') }}</span>
+          <mat-radio-group formControlName="weg" class="ch-beitritt__radios">
+            @if (p.ways.passkey && passkeyMoeglich) {
+              <mat-radio-button value="passkey" data-testid="weg-passkey">{{ texts.t('zugang.weg.passkey') }}</mat-radio-button>
+            }
+            @if (p.ways.magicLink) {
+              <mat-radio-button value="email" data-testid="weg-email">{{ texts.t('zugang.weg.magicLink') }}</mat-radio-button>
+            }
+            @if (p.pendingExternal; as ext) {
+              <mat-radio-button value="extern" data-testid="weg-extern">{{ texts.t('zugang.weg.anbieter', { anbieter: ext.displayName }) }}</mat-radio-button>
+            }
+          </mat-radio-group>
+          @if (form.controls.weg.value === 'email') {
+            <mat-form-field appearance="outline">
+              <mat-label>{{ texts.t('zugang.feld.email') }}</mat-label>
+              <input matInput type="email" formControlName="email" autocomplete="email" data-testid="email" />
+              @if (form.controls.email.touched && form.controls.email.invalid) {
+                <mat-error>{{ texts.t('zugang.feld.emailPflicht') }}</mat-error>
+              }
+            </mat-form-field>
+          }
+          @if (!p.pendingExternal && anbieter().length > 0) {
+            <div class="ch-beitritt__anbieter">
+              @for (provider of anbieter(); track provider.key) {
+                <a matButton="outlined" [href]="oidcUrl(provider.key)">{{ texts.t('zugang.weg.anbieter', { anbieter: provider.displayName }) }}</a>
+              }
+            </div>
+          }
+        </div>
+
+        @if (p.ways.kiosk) {
+          <mat-form-field appearance="outline">
+            <mat-label>{{ texts.t('zugang.feld.kioskPin') }}</mat-label>
+            <input matInput formControlName="kioskPin" inputmode="numeric" autocomplete="off" maxlength="4" data-testid="kiosk-pin" />
+            <mat-hint>{{ texts.t('zugang.feld.kioskPinHinweis') }}</mat-hint>
+            @if (form.controls.kioskPin.touched && form.controls.kioskPin.invalid) {
+              <mat-error>{{ texts.t('zugang.feld.pinVierZiffern') }}</mat-error>
+            }
+          </mat-form-field>
+        }
+
+        <button matButton="filled" type="submit" [disabled]="busy()" data-testid="beitreten">{{ texts.t('zugang.beitritt.beitreten') }}</button>
+      </form>
+    }
+  }
+</section>

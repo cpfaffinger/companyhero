@@ -1,6 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup><Description>Identität und Zugang (A-005, A-007, A-014 bis A-019).</Description></PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
+    <PackageReference Include="Fido2" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../CompanyHero.Platform/CompanyHero.Platform.csproj" />
     <ProjectReference Include="../CompanyHero.Modules.Organisation/CompanyHero.Modules.Organisation.csproj" />
   </ItemGroup>

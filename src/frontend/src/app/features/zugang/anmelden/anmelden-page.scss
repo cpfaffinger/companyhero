@@ -1,0 +1,63 @@
+.ch-anmelden {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-5);
+}
+
+.ch-anmelden__title {
+  font: 700 var(--ch-type-headline-l) / var(--ch-line-headline-l) var(--ch-font-display);
+}
+
+.ch-anmelden__subtitle {
+  font: 600 var(--ch-type-title-m) / var(--ch-line-title-m) var(--ch-font-text);
+}
+
+.ch-anmelden__hint {
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-anmelden__status {
+  padding: var(--ch-space-3) var(--ch-space-4);
+  border-radius: var(--ch-radius-card);
+  background: var(--ch-surface-container-high);
+}
+
+.ch-anmelden__status--fehler {
+  background: var(--ch-error-container);
+  color: var(--ch-on-error-container);
+}
+
+.ch-anmelden__wege {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+}
+
+.ch-anmelden__weg {
+  justify-content: center;
+}
+
+.ch-anmelden__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+  align-items: flex-start;
+  padding: var(--ch-space-5);
+  border-radius: var(--ch-radius-sheet);
+  border: 1px solid var(--ch-outline-variant);
+}
+
+.ch-anmelden__block mat-form-field {
+  width: 100%;
+}
+
+.ch-anmelden__block--code {
+  background: var(--ch-surface-container);
+  border: none;
+}
+
+.ch-anmelden__code {
+  font: 700 var(--ch-type-headline-l) / var(--ch-line-headline-l) var(--ch-font-display);
+  letter-spacing: 0.12em;
+  user-select: all;
+}

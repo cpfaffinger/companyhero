@@ -32,4 +32,16 @@ public interface IOrganisationDirectory
 
     /// <summary>Tenant-Kontext: Anzeigename und Zustand des aktiven Tenants.</summary>
     Task<(string DisplayName, OrganisationState State)?> GetCurrentTenantAsync(CancellationToken cancellationToken);
+
+    /// <summary>Plattformkontext: Anzeigename und Zustand eines beliebigen Tenants (Tenant-Vorschau beim Beitritt, Zugang 2.1).</summary>
+    Task<(string DisplayName, OrganisationState State)?> GetTenantAsync(TenantId tenantId, CancellationToken cancellationToken);
+
+    /// <summary>Plattformkontext: alle aktiven Tenants, etwa für tenantübergreifende Zeitpläne.</summary>
+    Task<IReadOnlyList<TenantId>> ListActiveTenantsAsync(CancellationToken cancellationToken);
+
+    /// <summary>Tenant-Kontext: Rolle entziehen (Organisation 3.2); der letzte Tenant-Admin kann seine Rolle nicht abgeben (Organisation 4.1).</summary>
+    Task RemoveRoleAsync(PersonId personId, string role, CancellationToken cancellationToken);
+
+    /// <summary>Tenant-Kontext: Austritt der Person (Organisation 3.1, Zugang 8); ihre Rollen enden mit der Mitgliedschaft.</summary>
+    Task LeaveAsync(PersonId personId, CancellationToken cancellationToken);
 }

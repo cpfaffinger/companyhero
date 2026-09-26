@@ -1,0 +1,119 @@
+<section class="ch-zugang-ich" data-testid="zugang-einstellungen">
+  <h2 class="ch-zugang-ich__title">{{ texts.t('ich.zugang.titel') }}</h2>
+  @if (einrichten) {
+    <p class="ch-zugang-ich__status" role="status">{{ texts.t('ich.zugang.einrichtenPflicht') }}</p>
+  }
+  @if (anbieterHinweis; as key) {
+    <p class="ch-zugang-ich__status" role="status">{{ texts.t(key) }}</p>
+  }
+  @if (fehler(); as f) {
+    <p class="ch-zugang-ich__status ch-zugang-ich__status--fehler" role="alert">{{ texts.t(f.key) }}</p>
+  }
+
+  @if (access(); as a) {
+    <div class="ch-zugang-ich__block">
+      <h3 class="ch-zugang-ich__subtitle">{{ texts.t('ich.zugang.passkeys') }}</h3>
+      @for (passkey of a.passkeys; track passkey.passkeyId) {
+        <div class="ch-zugang-ich__row">
+          <span>{{ passkey.deviceName }}</span>
+          <button matButton type="button" [disabled]="busy() || !mehrereWege()" (click)="passkeyEntfernen(passkey.passkeyId)">{{ texts.t('ich.zugang.entfernen') }}</button>
+        </div>
+      } @empty {
+        <p class="ch-zugang-ich__hint">{{ texts.t('ich.zugang.keinPasskey') }}</p>
+      }
+      @if (passkeyMoeglich) {
+        <form class="ch-zugang-ich__inline" (submit)="$event.preventDefault(); passkeyHinzufuegen()">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ texts.t('ich.zugang.geraetename') }}</mat-label>
+            <input matInput [formControl]="geraetename" maxlength="60" data-testid="geraetename" />
+          </mat-form-field>
+          <button matButton="outlined" type="submit" [disabled]="busy()" data-testid="passkey-hinzufuegen">{{ texts.t('ich.zugang.passkeyHinzufuegen') }}</button>
+        </form>
+      }
+    </div>
+
+    <div class="ch-zugang-ich__block">
+      <h3 class="ch-zugang-ich__subtitle">{{ texts.t('zugang.weg.magicLink') }}</h3>
+      @if (a.email; as email) {
+        <div class="ch-zugang-ich__row">
+          <span>{{ email }}</span>
+          <button matButton type="button" [disabled]="busy() || !mehrereWege()" (click)="emailEntfernen()">{{ texts.t('ich.zugang.entfernen') }}</button>
+        </div>
+      } @else {
+        <form class="ch-zugang-ich__inline" (submit)="$event.preventDefault(); emailSetzen()">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>{{ texts.t('zugang.feld.email') }}</mat-label>
+            <input matInput type="email" autocomplete="email" [formControl]="email" data-testid="email" />
+            @if (email.touched && email.invalid) {
+              <mat-error>{{ texts.t('zugang.feld.emailPflicht') }}</mat-error>
+            }
+          </mat-form-field>
+          <button matButton="outlined" type="submit" [disabled]="busy()">{{ texts.t('ich.zugang.emailHinterlegen') }}</button>
+        </form>
+      }
+    </div>
+
+    <div class="ch-zugang-ich__block">
+      <h3 class="ch-zugang-ich__subtitle">{{ texts.t('ich.zugang.anbieter') }}</h3>
+      @for (link of a.providers; track link.linkId) {
+        <div class="ch-zugang-ich__row">
+          <span>{{ link.displayName }}</span>
+          <button matButton type="button" [disabled]="busy() || !mehrereWege()" (click)="anbieterTrennen(link.linkId)">{{ texts.t('ich.zugang.trennen') }}</button>
+        </div>
+      }
+      <div class="ch-zugang-ich__anbieter">
+        @for (provider of a.availableProviders; track provider.key) {
+          <a matButton="outlined" [href]="linkUrl(provider.key)">{{ texts.t('ich.zugang.anbieterVerknuepfen', { anbieter: provider.displayName }) }}</a>
+        }
+      </div>
+    </div>
+
+    <div class="ch-zugang-ich__block">
+      <h3 class="ch-zugang-ich__subtitle">{{ texts.t('zugang.weg.wiederherstellung') }}</h3>
+      @if (neuerCode(); as code) {
+        <p>{{ texts.t('zugang.neuerCode.hinweis') }}</p>
+        <code class="ch-zugang-ich__code" data-testid="neuer-code">{{ code }}</code>
+      } @else {
+        <p class="ch-zugang-ich__hint">{{ texts.t(a.recoveryCodeActive ? 'ich.zugang.codeAktiv' : 'ich.zugang.codeInaktiv') }}</p>
+      }
+      <button matButton="outlined" type="button" [disabled]="busy()" (click)="codeErneuern()" data-testid="code-erneuern">{{ texts.t('ich.zugang.codeErneuern') }}</button>
+    </div>
+
+    <div class="ch-zugang-ich__block">
+      <h3 class="ch-zugang-ich__subtitle">{{ texts.t('ich.zugang.kiosk') }}</h3>
+      <p class="ch-zugang-ich__hint">{{ texts.t('ich.zugang.kioskHinweis') }}</p>
+      <ch-qr-code [value]="a.kioskId" [alt]="texts.t('ich.zugang.kioskQrAlt')" [zeigeWert]="false" />
+      <code class="ch-zugang-ich__code" data-testid="kiosk-kennung">{{ kennungGruppiert() }}</code>
+      <form class="ch-zugang-ich__inline" (submit)="$event.preventDefault(); pinSetzen()">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>{{ texts.t(a.kioskPinSet ? 'ich.zugang.pinAendern' : 'ich.zugang.pinSetzen') }}</mat-label>
+          <input matInput inputmode="numeric" autocomplete="off" maxlength="4" [formControl]="pin" data-testid="pin" />
+          @if (pin.touched && pin.invalid) {
+            <mat-error>{{ texts.t('zugang.feld.pinVierZiffern') }}</mat-error>
+          }
+        </mat-form-field>
+        <button matButton="outlined" type="submit" [disabled]="busy()">{{ texts.t('ich.zugang.pinSpeichern') }}</button>
+      </form>
+      @if (pinGesetzt()) {
+        <p role="status">{{ texts.t('ich.zugang.pinGespeichert') }}</p>
+      }
+    </div>
+  }
+
+  <div class="ch-zugang-ich__block">
+    <h3 class="ch-zugang-ich__subtitle">{{ texts.t('ich.zugang.sitzungen') }}</h3>
+    @if (freigabeBis(); as bis) {
+      <p class="ch-zugang-ich__hint">{{ texts.t('ich.zugang.offlineFreigabe', { datum: bis.toLocaleDateString('de-AT') }) }}</p>
+    }
+    <div class="ch-zugang-ich__actions">
+      <button matButton="outlined" type="button" (click)="abmelden()" data-testid="abmelden">{{ texts.t('ich.zugang.abmelden') }}</button>
+      <button matButton="outlined" type="button" (click)="ueberallAbmelden()" data-testid="ueberall-abmelden">{{ texts.t('ich.zugang.ueberallAbmelden') }}</button>
+    </div>
+  </div>
+
+  <div class="ch-zugang-ich__block">
+    <h3 class="ch-zugang-ich__subtitle">{{ texts.t('ich.zugang.austrittTitel') }}</h3>
+    <p class="ch-zugang-ich__hint">{{ texts.t('ich.zugang.austrittHinweis') }}</p>
+    <button matButton type="button" class="ch-zugang-ich__austritt" (click)="austreten()" data-testid="austritt">{{ texts.t('ich.zugang.austreten') }}</button>
+  </div>
+</section>

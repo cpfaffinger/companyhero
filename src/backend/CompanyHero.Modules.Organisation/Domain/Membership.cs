@@ -33,8 +33,30 @@ public sealed class Membership : ITenantOwned
 
     public IReadOnlyList<RoleAssignment> Roles => _roles;
 
+    public DateTimeOffset? LeftAt { get; private set; }
+
     public static Membership Join(TenantId tenantId, PersonId personId, DateTimeOffset joinedAt) =>
         new(tenantId, personId, MembershipState.Active, joinedAt);
+
+    /// <summary>Austritt durch die Person (Organisation 3.1, A-019): Mitgliedschaft endet, Rollen enden mit ihr.</summary>
+    public void Leave(DateTimeOffset leftAt)
+    {
+        State = MembershipState.Left;
+        LeftAt = leftAt;
+        _roles.Clear();
+    }
+
+    /// <summary>Rolle entziehen; liefert die entfernte Zuweisung oder <c>null</c>.</summary>
+    public RoleAssignment? Revoke(string role)
+    {
+        var existing = _roles.Find(r => string.Equals(r.Role, role, StringComparison.Ordinal));
+        if (existing is not null)
+        {
+            _roles.Remove(existing);
+        }
+
+        return existing;
+    }
 
     /// <summary>Eine Person kann mehrere Rollen ihrer Organisation halten (Organisation 4.1); jede höchstens einmal.</summary>
     public RoleAssignment Assign(string role, DateTimeOffset assignedAt)

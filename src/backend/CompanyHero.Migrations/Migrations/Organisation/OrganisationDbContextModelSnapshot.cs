@@ -37,6 +37,10 @@ namespace CompanyHero.Migrations.Migrations.Organisation
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("joined_at");
 
+                    b.Property<DateTimeOffset?>("LeftAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("left_at");
+
                     b.Property<short>("State")
                         .HasColumnType("smallint")
                         .HasColumnName("state");

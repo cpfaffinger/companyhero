@@ -10,9 +10,8 @@ var modules = AllModules.Create();
 builder.Services.AddPlatformData(builder.Configuration);
 builder.AddCompanyHeroHost("companyhero-api", modules);
 
-// Die serverseitige Cookie-Sitzung (A-007) kommt in Stufe 4; bis dahin ist kein Schema registriert und jeder Request
-// bleibt ohne Identität. Der Tenant-Kontext entsteht ausschließlich aus geprüfter Identität und Mitgliedschaft.
-builder.Services.AddAuthentication();
+// Die serverseitige Cookie-Sitzung (A-007) registriert das Modul Identity als Standardschema; OIDC-Schemata entstehen je
+// Anbieter zur Laufzeit. Der Tenant-Kontext entsteht ausschließlich aus geprüfter Sitzung und Mitgliedschaft.
 builder.Services.AddProblemDetails();
 // Verbindlicher API-Vertrag (A-009): OpenAPI aus derselben Endpunktregistrierung, Export über --export-openapi (Stufe 5).
 builder.Services.AddCompanyHeroOpenApi();

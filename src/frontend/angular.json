@@ -45,7 +45,11 @@
               "includePaths": [
                 "src"
               ]
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "qrcode",
+              "dijkstrajs"
+            ]
           },
           "configurations": {
             "production": {

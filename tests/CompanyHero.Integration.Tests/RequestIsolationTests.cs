@@ -83,7 +83,7 @@ public sealed class RequestIsolationTests(PostgresFixture pg)
     public async Task Sitzung_mit_Person_eines_anderen_Tenants_ergibt_keinen_Kontext()
     {
         // Die Sitzung benennt Tenant Wiesner, die Person gehört zu Hödl: keine Mitgliedschaft, kein Kontext.
-        using var forged = Client(pg.Tenants.WiesnerId, pg.Tenants.HoedlMia);
+        using var forged = pg.ClientWithSession(await TestSessions.IssueAsync(pg.Api.Services, pg.Tenants.WiesnerId, pg.Tenants.HoedlMia, Ct));
         using var me = await forged.GetAsync(new Uri("/api/me", UriKind.Relative), Ct);
         Assert.Equal(HttpStatusCode.Unauthorized, me.StatusCode);
     }
@@ -115,7 +115,7 @@ public sealed class RequestIsolationTests(PostgresFixture pg)
             return id;
         }, Ct);
 
-        using var client = Client(tenant, person);
+        using var client = pg.ClientWithSession(await pg.IssueSessionAsync(tenant, person, Ct));
         using var me = await client.GetAsync(new Uri("/api/me", UriKind.Relative), Ct);
         Assert.Equal(HttpStatusCode.Unauthorized, me.StatusCode);
 
@@ -126,10 +126,5 @@ public sealed class RequestIsolationTests(PostgresFixture pg)
         Assert.Equal(HttpStatusCode.OK, meAfter.StatusCode);
     }
 
-    private HttpClient Client(TenantId tenant, PersonId person)
-    {
-        var client = pg.Api.CreateClient();
-        client.DefaultRequestHeaders.Add(TestSessionHandler.Header, TestSession.For(tenant, person));
-        return client;
-    }
+    private HttpClient Client(TenantId tenant, PersonId person) => pg.Client(tenant, person);
 }

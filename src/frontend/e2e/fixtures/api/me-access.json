@@ -1,0 +1,22 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "passkeys": [],
+    "email": null,
+    "providers": [],
+    "recoveryCodeActive": false,
+    "kioskId": "204111",
+    "kioskPinSet": false,
+    "availableProviders": [
+      {
+        "key": "google",
+        "displayName": "Google"
+      },
+      {
+        "key": "microsoft",
+        "displayName": "Microsoft"
+      }
+    ]
+  }
+}
