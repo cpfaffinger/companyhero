@@ -4,7 +4,7 @@
 **Nachweise aus:** Metering 9.1 bis 9.8 und 9.12; Entitlements 8.1 bis 8.5, 8.8 (Kiosk-Geräte) und 8.10; ergänzend Datenschutz 9.4 (Isolation), Backend 5.1 und 9; Entscheidungen A-006, A-011, A-023, A-030, A-064 bis A-074, A-106; Produktwahl A-113.
 **Umgebung:** Backend gegen PostgreSQL 18 in Testcontainern mit den Rollen des Compose-Projekts (Laufzeitrolle `ch_app`, Migrationsrolle für den Migrationslauf); echte Sitzungen über den Sitzungsdienst der Stufe 4 (Cookie und CSRF, Kiosk-Gerätesitzung); feste Testuhr (25.09.2026 08:00 UTC) in der API, für Zeitsprünge (Buchung am 16., Kündigung am 10., Versiegelung am 03.10. 03:00 Wien, Salzvernichtung am 10.10.) je Test gesetzt und zurückgestellt, Sitzungen nach Zeitsprüngen neu ausgestellt; Worker mit Systemuhr für Zustellung und Lebenszyklus; Frontend als Produktionsbuild hinter einem statischen Server mit den aufgenommenen Vertragsproben.
 **Branch:** `claude/stufe-7-geld-ffoa5t` (Stufe 7 „Geld“ gemäß Durchstich 3: ein Branch je Stufe; enthält die noch nicht auf `master` gemergte Stufe 6 aus `claude/stufe-6-fachpfad-r36muw` als Vorgänger-Commits).
-**Stand:** abgenommen am 26.09.2026 mit dem grünen CI-Lauf CI_RUN_ID (Abschnitt 6).
+**Stand:** abgenommen am 26.09.2026 mit dem grünen CI-Lauf 36268181076 (Abschnitt 6).
 
 ## 1. Was Stufe 7 liefert
 
@@ -23,7 +23,7 @@
 
 | Nr. | Nachweis aus dem Konzept | Test oder Prüfung | Ergebnis | Lauf |
 |---|---|---|---|---|
-| 1 | Metering 9.1 / A-069, A-070: Beitrag zweimal übertragen ergibt ein Ledger-Ereignis; Korrektur erzeugt Gegenbuchung; Summen je Periode stimmen | `Stufe7LedgerTests.Beitrag_zweimal_uebertragen_ein_Ledger_Ereignis_Korrektur_als_Gegenbuchung_Summen_je_Periode_stimmen`: zweite Übertragung 200 `already_recorded`, genau ein `challenge.participant_day`, ein `member.active_month`, ein `member.active_day`; Korrektur → Ereignis mit Menge −1 und `reversal_of` auf das Ursprungsereignis, Summe 0; `GET /api/billing/usage` liefert je Metrik dieselbe Summe wie das Ledger | grün | CI CI_RUN_ID |
+| 1 | Metering 9.1 / A-069, A-070: Beitrag zweimal übertragen ergibt ein Ledger-Ereignis; Korrektur erzeugt Gegenbuchung; Summen je Periode stimmen | `Stufe7LedgerTests.Beitrag_zweimal_uebertragen_ein_Ledger_Ereignis_Korrektur_als_Gegenbuchung_Summen_je_Periode_stimmen`: zweite Übertragung 200 `already_recorded`, genau ein `challenge.participant_day`, ein `member.active_month`, ein `member.active_day`; Korrektur → Ereignis mit Menge −1 und `reversal_of` auf das Ursprungsereignis, Summe 0; `GET /api/billing/usage` liefert je Metrik dieselbe Summe wie das Ledger | grün | CI 36268181076 |
 | 2 | Metering 3.1, 3.3 / A-070: alle Ereignisse der Stufen 4 und 6 im Ledger, ohne Personenbezug | `Alle_Fachereignisse_der_Stufen_4_und_6_stehen_ohne_Personenbezug_im_Ledger`: Beitritt am Kiosk, Geräteregistrierung, Beitrag, Push über Challenge-Start (Worker) → `member.joined`, `kiosk.device_month`, `challenge.participant_day`, `member.active_day`, `member.active_month`, `notification.sent` (Modul `Kern`), `tenant.month`; kein Bezug enthält eine Personenkennung, einen Anzeigenamen oder eine Adresse; aktive Mitglieder mit Präfix `slot:` | grün | ebd. |
 | 3 | Metering 9.2 / A-069, A-071: zehn Handlungen ein `member.active_month`; im Folgemonat neuer, nicht verkettbarer Slot; nach Salzvernichtung keine Rückrechnung | `Stufe7ActiveMemberTests.Zehn_Handlungen_ergeben_ein_active_month_…`: zehn Handlungen → ein Ereignis im September mit Slot A; Versiegelung des Septembers; Handlung im Oktober → Slot B ≠ A; `IMeteringSlots` für einen September-Zeitpunkt liefert B (offene Periode); Salzvernichtung erst nach sieben Tagen (`saltAvailable` falsch, `saltDestroyedAt` gesetzt), Slot A bleibt im Ledger, ist ohne Salz für keine Person berechenbar; Fachtest `PeriodRulesTests.Slot_ist_innerhalb_der_Periode_stabil_und_ueber_Perioden_nicht_verkettbar` | grün | ebd. |
 | 4 | Metering 9.3 / A-071: Öffnen, Login, Push, automatischer Tageswert und Kommentar erzeugen kein aktives Mitglied | `Oeffnen_Login_Push_automatischer_Tageswert_und_Kommentar_erzeugen_kein_aktives_Mitglied`: neue Sitzung, GET Feed/Fortschritt/Sitzung/Navigation/Challenges, `notification.sent`, Handlung mit Quelle automatisch, Kommentar → kein `member.active_month`/`active_day`; erst der Check-in erzeugt genau eines | grün | ebd. |
@@ -144,9 +144,9 @@ Mit allen Mechanismen: 147 Fachtests, 39 Architekturtests, 120 Integrationstests
 
 | Feld | Wert |
 |---|---|
-| Lauf | [CI_RUN_ID](https://github.com/cpfaffinger/companyhero/actions/runs/CI_RUN_ID), Workflow `CI`, Push auf `claude/stufe-7-geld-ffoa5t`, 26.09.2026 |
-| Commit | `CI_COMMIT` „Stufe 7 Geld: …“ (Umsetzung, Protokoll, Register A-113 und Nachweisstände in einem Commit) |
-| Jobs | CI_JOBS |
+| Lauf | [36268181076](https://github.com/cpfaffinger/companyhero/actions/runs/36268181076), Workflow `CI`, Push auf `claude/stufe-7-geld-ffoa5t`, 26.09.2026 |
+| Commit | `9dda961` „Stufe 7 Geld: Metering-Ledger mit Bewertungsmerker, Nachlauf und Gegenbuchung; Abrechnungsperioden mit Versiegelung, Periodensalz unter Data Protection und Salzvernichtung; …“ (Umsetzung, Protokoll, Register A-113 und Nachweisstände in einem Commit) |
+| Jobs | Backend 2 min 43 s grün (Build ohne Warnungen; 147 Fachtests, 39 Architekturtests, 120 Integrationstests in 1 min 01 s; elf Kontexte ohne ausstehende Modelländerungen, darunter `EntitlementsDbContext`); Frontend 1 min 28 s grün (verbotene Pakete, generierter Client gleich der Regeneration, ESLint, Stylelint, 41 Vitest-Tests in 14 Dateien, Produktionsbuild, Ladebudget unter 184 320 B gzip, 38 Playwright-Abnahmen in 33,5 s, 32 Screenshots als Artefakt `referenzscreen-screenshots`); Images, Trivy, Betriebsnachweise in Compose 4 min 49 s grün (Images lokal gebaut, Trivy ohne kritische Funde, Betriebsnachweise Betrieb 9.4, 9.5, 9.7; kein Push nach GHCR, da nicht `master`) |
 | Tests | 385: 120 Integration (Testcontainer, Laufzeitrolle), 39 Architektur, 147 Fachtests, 41 Vitest, 38 Playwright |
 
 Ergebnis je Nachweis aus Abschnitt 2: Nr. 1 bis 19 grün in diesem Lauf; Screenshots des lokalen Laufs unter [laeufe/stufe-7/](laeufe/stufe-7/).
