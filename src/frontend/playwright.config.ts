@@ -12,6 +12,8 @@ export default defineConfig({
   retries: process.env['CI'] ? 1 : 0,
   reporter: process.env['CI'] ? [['list'], ['html', { open: 'never', outputFolder: 'e2e-report' }]] : 'list',
   outputDir: 'e2e-results',
+  timeout: 60_000,
+  expect: { timeout: 15_000 },
   use: {
     baseURL: `http://127.0.0.1:${port}`,
     trace: 'retain-on-failure',

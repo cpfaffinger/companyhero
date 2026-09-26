@@ -29,7 +29,7 @@ async function openReferenceScreen(page: Page, brand: Brand, mode: 'hell' | 'dun
   await expect(page.getByRole('heading', { name: 'Rad oder Fuß zur Arbeit' })).toBeVisible();
   // Alle drei Zustände gleichzeitig: Select im Fehlerzustand (Serverfehler), Textfeld im Fokus, Dialog offen.
   await page.getByTestId('tag').click();
-  await page.getByRole('option', { name: 'Gestern' }).click();
+  await page.getByRole('option', { name: 'Gestern', exact: true }).click();
   await page.getByRole('button', { name: 'Eintragen' }).click();
   await expect(page.locator('mat-error')).toContainText('Zukunft');
   await page.getByTestId('notiz').fill('Bis zum Bahnhof gegangen');
@@ -50,7 +50,8 @@ for (const { brand, label, anrede } of brands) {
         const primary = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--ch-primary').trim());
         expect(primary).toBe(tokens['primary']);
         expect(await page.evaluate(() => document.documentElement.style.colorScheme)).toBe(mode === 'dunkel' ? 'dark' : 'light');
-        const filled = page.getByRole('button', { name: 'Heute erledigt' });
+        // Hinter dem offenen Dialog ist die Seite für Hilfstechnik verborgen (aria-hidden); Geometrie und Farben per CSS-Selektor.
+        const filled = page.locator('ch-challenge-card button');
         await expect(filled).toHaveCSS('background-color', hex(tokens['primary']));
         await expect(filled).toHaveCSS('color', hex(tokens['on-primary']));
         await expect(page.locator('.ch-card__percent')).toHaveCSS('color', hex(tokens['progress']));
@@ -69,7 +70,7 @@ for (const { brand, label, anrede } of brands) {
         await expect(dialog).toContainText('Beitrag von gestern löschen?');
 
         // Layout (K07): Leiste, Rail oder Seitennavigation; kein horizontaler Überlauf.
-        const nav = page.getByRole('navigation');
+        const nav = page.locator('nav.ch-shell__nav');
         const navBox = (await nav.boundingBox())!;
         if (tier === 'mobile') {
           expect(navBox.width).toBeGreaterThan(width - 1);
@@ -80,12 +81,13 @@ for (const { brand, label, anrede } of brands) {
           const context = page.locator('.ch-shell__context');
           await expect(context).toBeVisible();
           expect(Math.round((await context.boundingBox())!.width)).toBe(320);
+          await expect(context).toContainText(brand === 'hoedl' ? 'Ihr Anteil' : 'Dein Anteil');
         }
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 
         // Bedienflächen mindestens 48 px (K07, A-081).
         for (const name of ['Heute erledigt', 'Eintragen', 'Abbrechen']) {
-          const box = (await page.getByRole('button', { name, exact: true }).first().boundingBox())!;
+          const box = (await page.locator('button', { hasText: name }).first().boundingBox())!;
           expect(box.height, name).toBeGreaterThanOrEqual(48);
         }
 
@@ -108,15 +110,26 @@ test('Tastatur: Sprungmarke, Fokusring in primary, Dialog hält den Fokus und sc
   await expect(dialog).toBeHidden();
   await expect(page.getByRole('button', { name: 'Beitrag von gestern löschen' })).toBeFocused();
 
+  // Fokusring in primary mit 2 px Abstand auf eigenen Bedienelementen (Marke 7): Tastaturfokus auf einem Navigationseintrag.
+  await page.locator('nav.ch-shell__nav a').first().focus();
   await page.keyboard.press('Tab');
-  await page.keyboard.press('Tab');
-  const focusedOutline = await page.evaluate(() => getComputedStyle(document.activeElement!).outlineColor);
-  expect(focusedOutline).toBe(hex(tokens['primary']));
+  const focused = page.locator(':focus-visible');
+  await expect(focused).toHaveCSS('outline-color', hex(tokens['primary']));
+  await expect(focused).toHaveCSS('outline-offset', '2px');
+});
 
-  await page.goto(`/t/${(await mockApi(page, { brand: 'wiesner' })).tenantId}/challenges`);
+test('Tastatur: Sprungmarke ist das erste Bedienelement und führt zum Inhalt', async ({ page }) => {
+  await page.setViewportSize({ width: 800, height: 1000 });
+  const { tenantId } = await mockApi(page, { brand: 'wiesner' });
+  await page.goto(`/t/${tenantId}/challenges`);
+  await expect(page.getByRole('heading', { name: 'Rad oder Fuß zur Arbeit' })).toBeVisible();
   await page.keyboard.press('Tab');
-  const skip = page.getByRole('link', { name: 'Zum Inhalt springen' });
-  await expect(skip).toBeFocused();
+  const skip = page.locator('a.ch-skip-link');
+  await expect.poll(() => page.evaluate(() => document.activeElement?.classList.contains('ch-skip-link') ?? false)).toBe(true);
+  await expect(skip).toHaveText('Zum Inhalt springen');
+  // Mit Fokus sichtbar im Fenster (vorher außerhalb), dann Sprung zum Inhalt.
+  const box = (await skip.boundingBox())!;
+  expect(box.y).toBeGreaterThanOrEqual(0);
   await page.keyboard.press('Enter');
   await expect(page.locator('#ch-main')).toBeFocused();
 });
@@ -128,11 +141,11 @@ test('Systemmodus wirkt nur bei system; expliziter Modus bleibt bei Wechsel der 
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto(`/t/${tenantId}/ich`);
   const primary = () => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--ch-primary').trim());
-  expect(await primary()).toBe(tokens.hell['primary']);
+  await expect.poll(primary).toBe(tokens.hell['primary']);
   await page.emulateMedia({ colorScheme: 'dark' });
   await expect.poll(primary).toBe(tokens.dunkel['primary']);
 
-  await page.getByRole('button', { name: 'Hell' }).click();
+  await page.getByText('Hell', { exact: true }).click();
   await expect.poll(primary).toBe(tokens.hell['primary']);
   await page.emulateMedia({ colorScheme: 'light' });
   await page.emulateMedia({ colorScheme: 'dark' });
@@ -148,7 +161,7 @@ test('Großflächenmodus: gemessene Bedienflächen 56 px, Text zwei Stufen grö�
   await page.keyboard.press('Escape');
   expect(await page.evaluate(() => document.documentElement.dataset['chScale'])).toBe('gross');
   for (const name of ['Heute erledigt', 'Eintragen', 'Abbrechen']) {
-    const box = (await page.getByRole('button', { name, exact: true }).first().boundingBox())!;
+    const box = (await page.locator('button', { hasText: name }).first().boundingBox())!;
     expect(box.height, name).toBeGreaterThanOrEqual(56);
   }
   expect(await page.locator('.ch-card__form').evaluate((e) => parseFloat(getComputedStyle(e).fontSize))).toBe(18);
@@ -171,7 +184,8 @@ test('Bewegung ohne Einschränkung: Kollektivbalken füllt sich in 320 ms', asyn
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await openReferenceScreen(page, 'wiesner', 'hell');
   expect(await page.locator('.ch-bar__fill').evaluate((e) => getComputedStyle(e).animationDuration)).toBe('0.32s');
-  expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--ch-motion-state').trim())).toBe('120ms');
+  const state = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--ch-motion-state').trim());
+  expect(['120ms', '0.12s', '.12s']).toContain(state);
 });
 
 test('Formular und Submit: eine führende Eingabequelle, korrektes DTO, Erfolg erst nach Serverbestätigung', async ({ page }) => {
@@ -185,7 +199,7 @@ test('Formular und Submit: eine führende Eingabequelle, korrektes DTO, Erfolg e
   await page.goto(`/t/${tenantId}/challenges`);
   await expect(page.getByRole('button', { name: 'Eintragen' })).toBeDisabled();
   await page.getByTestId('tag').click();
-  await page.getByRole('option', { name: 'Vorgestern' }).click();
+  await page.getByRole('option', { name: 'Vorgestern', exact: true }).click();
   await page.getByTestId('notiz').fill('bleibt lokal');
   await page.getByRole('button', { name: 'Eintragen' }).click();
   await expect(page.getByRole('status')).toContainText('Danke');

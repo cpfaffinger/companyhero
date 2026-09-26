@@ -77,8 +77,28 @@ jobs:
         run: npx ng test --watch=false
       - name: Produktionsbuild (strict, strictTemplates, Budgets)
         run: npm run build
-      - name: Ladebudget 180 KB komprimiert (K17)
+      - name: Ladebudget 180 KB komprimiert am Referenzscreen (K17)
         run: node scripts/ladebudget.mjs
+      - name: Playwright-Browser
+        run: npx playwright install --with-deps chromium
+      - name: Referenzscreen (Frontend 7, Integrationsregeln 6, Marke 9): Marken, Modi, Breiten, Tastatur, Großflächenmodus, Bewegung
+        run: npx playwright test
+        env:
+          CH_SCREENSHOT_DIR: ${{ github.workspace }}/referenzscreen-screenshots
+      - uses: actions/upload-artifact@v5
+        if: always()
+        with:
+          name: referenzscreen-screenshots
+          path: referenzscreen-screenshots
+          retention-days: 30
+      - uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            src/frontend/e2e-report
+            src/frontend/e2e-results
+          retention-days: 7
       - uses: actions/upload-artifact@v5
         with:
           name: frontend-dist

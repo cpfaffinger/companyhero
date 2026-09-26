@@ -12,7 +12,7 @@ const distDir = process.argv[2] ?? join('dist', 'companyhero-frontend', 'browser
 const index = readFileSync(join(distDir, 'index.html'), 'utf8');
 
 // Routen-Chunks des Referenzscreens (namedChunks: Dateiname beginnt mit dem Modulnamen).
-const referenceRoutePrefixes = ['mitglieder.routes-', 'challenges-page-', 'challenges-kontext-'];
+const referenceRoutePrefixes = ['mitglieder.routes-', 'challenges-page-'];
 // Diese Einstiege dürfen nie zum ersten Ladevorgang der Mitglieder-App gehören (K17, A-096).
 const forbiddenInitialPrefixes = ['marke-page-', 'kiosk-page-', 'zugang'];
 

@@ -1,7 +1,8 @@
 // Feature-Einstieg der Mitglieder-App (A-002, K17): lädt das Theme des Tenants einmal, prüft den Tenant-Kennzeichner der
 // URL gegen die Sitzung (der Pfad benennt den Tenant, ersetzt aber keine Berechtigungsprüfung, Backend 5.1) und rahmt die
 // Seiten mit der Schale. Ohne Sitzung erscheint ein Leerzustand mit dem Weg zum Zugang; nichts wird geraten.
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { NgComponentOutlet } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, signal, type Type } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { AppShell } from '../../../libs/ui/app-shell/app-shell';
@@ -15,15 +16,23 @@ export const TENANT_PLACEHOLDER = '_';
 @Component({
   selector: 'ch-mitglieder-shell',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterOutlet, AppShell, EmptyState],
+  imports: [RouterOutlet, NgComponentOutlet, AppShell, EmptyState],
   template: `
     @if (state() === 'ready') {
-      <ch-app-shell [base]="base()" [title]="title()" [hasContext]="hasContext()">
+      <ch-app-shell [base]="base()" [title]="title()" [hasContext]="kontext() !== null">
         <router-outlet />
-        <ng-container chContext><router-outlet name="kontext" /></ng-container>
+        <ng-container chContext><ng-container *ngComponentOutlet="kontext()" /></ng-container>
       </ch-app-shell>
     } @else if (state() === 'unauthenticated') {
       <div class="ch-shell-fallback">
+        <header class="ch-shell-fallback__brand">
+          <svg width="34" height="24" viewBox="0 0 28 20" aria-hidden="true">
+            <path d="M2 18 A16 16 0 0 1 8 8" fill="none" stroke="var(--ch-primary)" stroke-width="4" stroke-linecap="round" />
+            <path d="M10 6.5 A16 16 0 0 1 18 4" fill="none" stroke="var(--ch-primary)" stroke-width="4" stroke-linecap="round" />
+            <path d="M20.5 4.5 A16 16 0 0 1 26 10" fill="none" stroke="var(--ch-progress)" stroke-width="4" stroke-linecap="round" />
+          </svg>
+          <span class="ch-shell-fallback__name">{{ theme.produktname() }}</span>
+        </header>
         <ch-empty-state [text]="texts.t('zugang.noetig')">
           <a href="/zugang">{{ texts.t('zugang.link') }}</a>
         </ch-empty-state>
@@ -32,14 +41,29 @@ export const TENANT_PLACEHOLDER = '_';
   `,
   styles: `
     .ch-shell-fallback {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ch-space-4);
       padding: var(--ch-space-4);
       max-width: 480px;
+    }
+
+    .ch-shell-fallback__brand {
+      display: flex;
+      align-items: center;
+      gap: var(--ch-space-3);
+      padding: var(--ch-space-3) 0;
+    }
+
+    .ch-shell-fallback__name {
+      font: 700 var(--ch-type-title-m) / var(--ch-line-title-m) var(--ch-font-display);
+      color: var(--ch-primary);
     }
   `,
 })
 export class MitgliederShell {
   private readonly branding = inject(BrandingApi);
-  private readonly theme = inject(ThemeService);
+  protected readonly theme = inject(ThemeService);
   protected readonly texts = inject(TextService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -48,8 +72,10 @@ export class MitgliederShell {
   readonly state = signal<'loading' | 'ready' | 'unauthenticated'>('loading');
   readonly tenantId = signal<string>(TENANT_PLACEHOLDER);
   readonly base = computed(() => `/t/${this.tenantId()}`);
-  readonly title = signal('');
-  readonly hasContext = signal(false);
+  readonly titleKey = signal<string | null>(null);
+  readonly title = computed(() => (this.titleKey() ? this.texts.t(this.titleKey()!) : ''));
+  /** Kontextspalte am Desktop (K07): Komponente aus den Routendaten der aktiven Seite. */
+  readonly kontext = signal<Type<unknown> | null>(null);
 
   constructor() {
     this.theme.context.set('tenant');
@@ -83,8 +109,7 @@ export class MitgliederShell {
     while (child?.firstChild) {
       child = child.firstChild;
     }
-    const key = child?.snapshot.data['titleKey'] as string | undefined;
-    this.title.set(key ? this.texts.t(key) : '');
-    this.hasContext.set(Boolean(child?.snapshot.data['kontext']));
+    this.titleKey.set((child?.snapshot.data['titleKey'] as string | undefined) ?? null);
+    this.kontext.set((child?.snapshot.data['kontext'] as Type<unknown> | undefined) ?? null);
   }
 }

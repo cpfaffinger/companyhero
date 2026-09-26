@@ -14,7 +14,7 @@ Die Umsetzung folgt dem [technischen Durchstich](concept/technischer-durchstich.
 | 2 Isolation | zwei Tenants, RLS mit Laufzeitrechten, Tenant-Kontext je Request und Job, Modulschemata, Sichtbarkeitsregel | [stufe-2.md](durchstich/abnahme/stufe-2.md) |
 | 3 Queue und Idempotenz | logische Queue, Outbox-Kopplung, Worker-Replikate, Vorgangskennung und Idempotenzschlüssel | [stufe-3.md](durchstich/abnahme/stufe-3.md) |
 | 4 Zugang | Beitritt, Passkey, Wiederherstellungscode, Magic-Link, OIDC, Kiosk, Sitzungen, Austritt | offen |
-| 5 Vertrag und Oberfläche | OpenAPI-Client, Referenzscreen, Marken, Großflächenmodus, Ladebudget, Manifest | offen |
+| 5 Vertrag und Oberfläche | OpenAPI-Client, Referenzscreen, Marken, Großflächenmodus, Ladebudget, Manifest | [stufe-5.md](durchstich/abnahme/stufe-5.md) |
 | 6 Fachpfad | Organisation, Kickoff-Challenge, Beiträge, Fortschritt, Feed, Sichtbarkeit, Push und E-Mail | offen |
 | 7 Geld | Ledger, Slots, Kostenvorschau, Testphase, Rechnungsentwurf | offen |
 | 8 Onboarding | Beitritt unter 90 Sekunden, Programmstart-Checkliste, Rollout-Fortschritt | offen |
@@ -48,8 +48,19 @@ dotnet test CompanyHero.slnx -c Release
 Die Integrationstests brauchen einen Docker-Host (Testcontainers). Frontend aus `src/frontend/`:
 
 ```bash
-npm ci && npm run lint && npm run lint:styles && npm run test:ci && npm run build && npm run ladebudget
+npm ci && npm run lint && npm run lint:styles && npm run test:ci && npm run build && npm run ladebudget && npx playwright install chromium && npm run e2e
 ```
+
+## API-Vertrag und generierter Client (A-009, A-109)
+
+Der Vertrag entsteht aus der Endpunktregistrierung der API und liegt eingecheckt unter `src/backend/CompanyHero.Api/Contracts/openapi.json`; der TypeScript-Client wird offline daraus erzeugt und nie von Hand geändert. Nach jeder Änderung an Endpunkten oder DTOs, aus `src/frontend/`:
+
+```bash
+npm run api:export      # startet die API kurz (kein Datenbankzugriff) und schreibt Contracts/openapi.json
+npm run api:generate    # openapi-typescript -> src/libs/api-client/generated/api.ts
+```
+
+Die Integrationstests (`OpenApiContractTests`) scheitern, wenn der eingecheckte Vertrag vom Export abweicht oder K13 verletzt (Kennungen und Dezimalwerte als Strings, Zeitpunkte mit `date-time`, Pflichtfelder); der CI-Schritt `check-generated-client.mjs` scheitert, wenn der generierte Client nicht zum Vertrag passt. Antworten werden mit `.Produces<T>()` typisiert, sonst bleibt der Client für diese Operation untypisiert. Vertragsproben (echte Antworten) liegen unter `src/frontend/e2e/fixtures/api/` und werden mit `CH_WRITE_SAMPLES=1 dotnet test tests/CompanyHero.Integration.Tests` neu aufgenommen.
 
 Lokaler Stack (Linux oder WSL, aus dem Repository-Stamm):
 

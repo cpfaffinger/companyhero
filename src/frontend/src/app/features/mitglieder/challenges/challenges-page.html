@@ -10,7 +10,7 @@
           <h2 class="ch-challenges__form-title">{{ texts.t('form.titel') }}</h2>
           <span class="ch-challenges__form-hint">{{ texts.t('form.rueckwirkend') }}</span>
         </div>
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>{{ texts.t('form.tag') }}</mat-label>
           <mat-select formControlName="daysAgo" data-testid="tag">
             @for (option of dayOptions; track option.value) {

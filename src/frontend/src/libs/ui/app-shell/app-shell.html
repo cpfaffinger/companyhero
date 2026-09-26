@@ -1,4 +1,4 @@
-<a class="ch-skip-link" href="#ch-main">{{ texts.t('allgemein.zumInhalt') }}</a>
+<a class="ch-skip-link" href="#ch-main" (click)="skipToMain($event)">{{ texts.t('allgemein.zumInhalt') }}</a>
 <div class="ch-shell" [class.ch-shell--context]="hasContext()">
   <nav class="ch-shell__nav" [attr.aria-label]="texts.t('nav.start') + ', ' + texts.t('nav.challenges') + ', ' + texts.t('nav.ich')">
     <div class="ch-shell__brand ch-shell__brand--nav">
@@ -41,7 +41,7 @@
       <span class="material-symbols-rounded" aria-hidden="true">notifications</span>
     </button>
   </header>
-  <main class="ch-shell__main" id="ch-main" tabindex="-1">
+  <main class="ch-shell__main" id="ch-main" tabindex="-1" #main>
     <h1 class="ch-shell__page-title">{{ title() }}</h1>
     <ng-content />
   </main>

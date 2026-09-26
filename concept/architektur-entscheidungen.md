@@ -27,7 +27,7 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Angular Material ist die alleinige Standard-UI-Bibliothek. Eigenes komponentenlokales CSS übernimmt Seitenlayout und produktspezifische Komponenten. Ein gemeinsames Design-System mit semantischen CSS-Variablen versorgt beide. Angular CDK ergänzt begründete Lücken. Tailwind, weitere UI-Kits und Utility-CSS-Systeme werden nicht eingesetzt.
 - **Begründung:** eindeutige Zuständigkeiten, ein Styling-System, keine konkurrierenden Konventionen und keine zusätzliche Buildkette.
 - **Folgen:** Material-Anpassungen nur über öffentliche Theming-Schnittstellen; keine Eingriffe in private Material-Strukturen; Sass nur für die zentrale Theme-Erzeugung.
-- **Nachweise:** Referenzscreen mit Firmen- und Plattformmarke, hell/dunkel, Overlays, Tastatur und Mindestbedienflächen.
+- **Nachweise:** Referenzscreen mit Firmen- und Plattformmarke, hell/dunkel, Overlays, Tastatur und Mindestbedienflächen. **Technisch nachgewiesen** am 26.09.2026 (`durchstich/abnahme/stufe-5.md`, Nachweise 1 bis 8).
 
 ## A-004 – Zuständigkeiten für Zustand und Daten
 
@@ -91,8 +91,8 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** C#-DTO → tatsächliches JSON → OpenAPI → generierter TypeScript-Client. Präzise Dezimalwerte als kulturunabhängige Strings mit expliziter Einheit oder Währung; Identifikatoren und große Ganzzahlen als Strings. Datum, Zeitpunkt, Zeitzone, Null und fehlendes Feld folgen [K13](architektur-integrationsregeln.md).
 - **Zwei Idempotenzregime, ein Namensraum:** Für Online-Vorgänge mit Vorschau, insbesondere am Kiosk, reserviert das Backend eine **Vorgangskennung**. Für offline erfasste Beiträge erzeugt der Client einen **Idempotenzschlüssel** als zeitlich sortierbare eindeutige Kennung. Beide werden serverseitig im selben Eindeutigkeitsraum je Tenant und Person geführt. Gleiche Kennung mit abweichendem Inhalt wird abgelehnt. Der Vertrag benennt je Endpunkt, welches Regime gilt.
 - **Folgen:** DTO-Serializer und Schema beschreiben dieselbe Darstellung. `strict` und `strictTemplates` sind verbindlich. Generierter Code wird nicht manuell geändert. Ältere installierte PWAs werden bei Vertragsänderungen berücksichtigt: additive Änderungen bevorzugt, inkompatible Änderungen mit Übergang oder Versionierung.
-- **Offen:** Clientgenerator und fachliche Rundungsregeln je Domäne.
-- **Nachweise:** echte API-Antworten durch den generierten Client prüfen; Präzision, Null/fehlend/Nullzahl, große Ganzzahlen, Datumswerte, beide Idempotenzregime und inkompatible Änderungen. Nachweisstand: beide Idempotenzregime in einem Namensraum je Tenant und Person serverseitig technisch nachgewiesen am 25.09.2026 (`durchstich/abnahme/stufe-3.md`); Prüfung durch den generierten Client folgt in Stufe 5.
+- **Offen:** fachliche Rundungsregeln je Domäne. Clientgenerator entschieden in A-109.
+- **Nachweise:** echte API-Antworten durch den generierten Client prüfen; Präzision, Null/fehlend/Nullzahl, große Ganzzahlen, Datumswerte, beide Idempotenzregime und inkompatible Änderungen. Nachweisstand: beide Idempotenzregime in einem Namensraum je Tenant und Person serverseitig technisch nachgewiesen am 25.09.2026 (`durchstich/abnahme/stufe-3.md`); echte Antworten durch den generierten Client (Präzision als Strings, Null/fehlend, Datumswerte mit Offset, Idempotenzschlüssel aus dem Client) und erkennbare inkompatible Änderungen (Vertragstest rot, Gegenprobe) technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-5.md`); Clientgenerator: A-109.
 
 ## A-010 – Entscheidungsführung
 
@@ -126,8 +126,8 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Umfang:** Die Ableitung der vollständigen Farbpalette aus der Tenant-Saatfarbe, die Kontrastprüfung nach WCAG 2.2 AA und die Ersetzung durchgefallener Rollen durch die nächstliegende zulässige Ableitung erfolgen ausschließlich im Backend. Ergebnis ist ein versionierter, gespeicherter Tokensatz je Tenant für hell und dunkel.
 - **Begründung:** Mitglieder-App, Admin-Vorschau und serverseitig erzeugte Dokumente wie das Aushang-PDF benötigen dieselbe Ableitung. Eine einzige Implementierung vermeidet abweichende Farben zwischen Bildschirm und Druck.
 - **Folgen:** Das Frontend konsumiert den Tokensatz und bildet ihn auf `--ch-*`-Variablen und die öffentlichen Material-Theming-Schnittstellen ab; es enthält keine Palettenableitung. Die Admin-Vorschau ruft die Ableitung über einen Backend-Endpunkt ohne Persistierung auf. Ungültige Eingaben führen zum geprüften Standard-Theme. Die Ableitung ist deterministisch und mit Referenzwerten getestet.
-- **Offen:** Bibliothek für das Material-3-Ableitungsverfahren im .NET-Umfeld oder eigene Umsetzung nach dem veröffentlichten Verfahren; Entscheidung im technischen Durchstich.
-- **Nachweise:** identische Farbwerte in App, Vorschau und PDF für zwei Firmenmarken; Kontrastprüfung mit bekannten Grenzfällen; Standard-Theme bei ungültiger Eingabe.
+- **Umsetzung:** eigene Portierung des veröffentlichten Verfahrens, entschieden in A-110.
+- **Nachweise:** identische Farbwerte in App, Vorschau und PDF für zwei Firmenmarken; Kontrastprüfung mit bekannten Grenzfällen; Standard-Theme bei ungültiger Eingabe. Nachweisstand: identische Werte in App und Vorschau, Kontrastprüfung mit Grenzfällen (Orange, Gelb, Grau, Schwarz, Weiß) und Standard-Theme bei ungültiger Eingabe technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-5.md`); das PDF folgt mit dem Aushang (Stufe 6, Benachrichtigungen) und verwendet denselben gespeicherten Tokensatz.
 
 ## A-014 – Beitritt und Rollenvergabe
 
@@ -591,14 +591,14 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Status:** angenommen, 21.09.2026.
 - **Umfang:** Drei Ebenen ref → sys → Komponente; Komponenten nur mit `--ch-*`-Rollen, Rohfarben sind Lint-Fehler. Farbrollen mit Startwerten für hell und dunkel gemäß [Marke und Theme](marke-und-theme.md), Abschnitt 2.2; `team`, `success`, `warning`, `error` und Diagrammfarben plattformweit fest. Inter und Inter Tight selbst ausgeliefert, Typografie-Skala, 4-px-Raster, Radien, Erhöhung über Flächenton, Bewegung 120/200/320 ms mit reduzierter Bewegung, ein Erfolgsmoment ohne Konfetti, Layoutgrenzen 640 und 1024 px, kleines Komponenteninventar, Material Symbols Rounded, Bildsprache mit echten Arbeitsumgebungen. Farbe trägt nie allein Information; höchstens zwei Akzente je Screen; keine Verläufe.
 - **Begründung:** Rollen statt Werte sind Voraussetzung für Tenant-Theming und Dunkelmodus ohne Sonderfälle; ein kleines Inventar begrenzt die Stellen, an denen Theming brechen kann.
-- **Nachweise:** Rohfarbe scheitert am Lint; Referenzscreen in beiden Modi und drei Marken.
+- **Nachweise:** Rohfarbe scheitert am Lint; Referenzscreen in beiden Modi und drei Marken. **Technisch nachgewiesen** am 26.09.2026 (`durchstich/abnahme/stufe-5.md`).
 
 ## A-077 – Tenant-Theme-Kontrakt und Ableitung
 
 - **Status:** angenommen, 21.09.2026.
 - **Umfang:** Einstellbar: Produktname, Logo hell und dunkel (SVG bereinigt oder PNG ab 512 px), Saatfarbe, optionaler Akzent mit Mindestabstand, Anrede, Tonalität, Startbild, Willkommenstext, Bezeichnungen für Punkte, Serie, Stufen, Sprachen mit Modul; die Bezeichnungen der Gruppendimensionen gehören zu Organisation (A-034). Nicht einstellbar: Schriften, Abstände, Radien, Formen, semantische und Teamfarben, Diagrammfarben, Navigation, Datenschutzregeln, Systemtexte, Erfolgsmoment, Icon-Stil. Versioniertes JSON-Dokument mit Schemaversion und Backend-Validierung. Ableitung nach Material-3-Verfahren im HCT-Farbraum für hell und dunkel, `progress` mit erzwungenem Farbtonabstand und nie in Blau, WCAG-2.2-AA-Prüfung aller Rollenpaare, Saatfarbe immer angenommen und nur dort ersetzt, wo sie durchfällt, Ersetzungsliste mit Begründung, Standard-Theme bei ungültiger Eingabe. Tokensatz versioniert, Laufzeitwechsel ohne Neuladen, Dokumente mit Version zum Erzeugungszeitpunkt, zwölf Monate Historie. Verwaltung mit Live-Vorschau in beiden Layouts und Modi, Kontrastbericht, Veröffentlichung als sensible Aktion.
 - **Begründung:** Die Firma ist der Absender und darf ihre Farbe nie verlieren; Lesbarkeit und Layoutstabilität bleiben Plattformeigenschaft.
-- **Nachweise:** orange Saatfarbe ergibt kontrastierende Fortschrittsfarbe; alle Paare bestehen; ungültiges Theme fällt auf Standard zurück.
+- **Nachweise:** orange Saatfarbe ergibt kontrastierende Fortschrittsfarbe; alle Paare bestehen; ungültiges Theme fällt auf Standard zurück. **Technisch nachgewiesen** am 26.09.2026 (`durchstich/abnahme/stufe-5.md`); Verfahren in A-110. Logo-Upload, Startbild und Live-Vorschau in beiden Layouts folgen mit der Medienverarbeitung und der Verwaltung.
 
 ## A-078 – Plattformmarke, Standard-Theme und Co-Branding
 
@@ -612,21 +612,21 @@ Dieses Register führt die Beschlüsse. Die Themenexporte erläutern ihre Umsetz
 - **Status:** angenommen, 21.09.2026.
 - **Umfang:** Dynamisches Web-App-Manifest je Tenant unter tenant-spezifischem Pfad auf derselben Origin: Name und Kurzname aus dem Produktnamen, Farben aus dem Tokensatz, `start_url`, `scope` und `id` je Tenant, Icons in allen Größen einschließlich maskierbarer Varianten aus dem Tenant-Logo oder ersatzweise aus dem Bildzeichen in Tenant-Farbe. Kiosk mit eigenem Manifest je Gerät im Vollbild. Anmeldeseite vor Zuordnung in Plattformmarke; nach Zuordnung Wechsel von Theme und Manifest-Verweis. Service Worker und Cookie-Sitzung unverändert.
 - **Begründung:** Jede Firma soll auf dem Startbildschirm unter ihrem Namen erscheinen, ohne eine zweite Origin und ohne Verlust der gemeinsamen Sitzung.
-- **Nachweise:** installierte App zeigt Tenant-Name und -Symbol; zwei Tenants auf einem Gerät unterscheidbar; Kiosk im Vollbild.
+- **Nachweise:** installierte App zeigt Tenant-Name und -Symbol; zwei Tenants auf einem Gerät unterscheidbar; Kiosk im Vollbild. Nachweisstand: Manifest je Tenant mit eigener `id`, `start_url` und `scope`, Name, Farben und Icons (PNG 192, 512, maskierbar; SVG) aus dem Tokensatz, Kiosk-Manifest mit `display: fullscreen`, Manifestverweis nach Zuordnung, Isolation gegen fremde Tenant-Pfade technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-5.md`); die Installation auf einem Gerät mit zwei Tenants ist eine manuelle Prüfung auf Staging und steht aus.
 
 ## A-080 – Tonalität, Sprache und Textkatalog
 
 - **Status:** angenommen, 21.09.2026.
 - **Umfang:** Drei Tonalitätsstufen (sachlich, freundlich, motivierend) wirken auf alle generierten Texte. Operator pflegt je Textschlüssel drei Varianten je Sprache mit Platzhaltern; Anrede Du und Sie je Variante ausgearbeitet; Tenants wählen Stufe und Anrede und ersetzen Bezeichnungen, schreiben aber keine Systemtexte; Fallback auf Tenant-Standardsprache, dann Deutsch; Katalog versioniert, nie rückwirkend auf gespeicherte Einträge. Sprachregeln: nie Schuld, nie Vergleich, nie Nichtteilnahme; Ausrufezeichen nur begrenzt; Sperrliste mit Gesundheitsdaten, Tracking, Monitoring, Auswertung, Überwachung, Krankenstand, Fehlzeiten, Leistung, Ranking als Oberflächenbegriffe; Nutzersprache in Titeln; Landesformat für Zahlen.
 - **Begründung:** Tonalität ist Markeneigenschaft des Tenants, die Sprachregeln sind Vertrauenseigenschaft der Plattform.
-- **Nachweise:** Tonalitätswechsel wirkt sofort auf neue Texte; Sperrbegriff im Katalog abgelehnt.
+- **Nachweise:** Tonalitätswechsel wirkt sofort auf neue Texte; Sperrbegriff im Katalog abgelehnt. Nachweisstand: für Systemtexte der Oberfläche und die Sperrliste des Katalogs technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-5.md`); Benachrichtigungen, Aushang und Feed-Einträge folgen mit Stufe 6.
 
 ## A-081 – Barrierefreiheit und Großflächenmodus
 
 - **Status:** angenommen, 21.09.2026.
 - **Umfang:** WCAG 2.2 AA vollständig; Kontrast 4,5:1 und 3:1 in jedem Theme durch die Ableitung; Bedienflächen 48 px mit 8 px Abstand; Großflächenmodus als persönliche Einstellung im Onboarding mit 56 px, zwei Textstufen größer, verstärkten Kontrasten und reduzierter Dichte, am Kiosk immer aktiv; vollständige Tastaturbedienung mit sichtbarem Fokusring; Screenreader-Texte für jeden Fortschritt, Live-Regionen, Textalternativen, Untertitel und Transkripte; reduzierte Bewegung; Prüfpunkte im Referenzscreen und in visuellen Tests; kein Tenant-Theme kann sie unterlaufen.
 - **Begründung:** Die Zielgruppe umfasst alle Beschäftigten, einschließlich Produktion mit Handschuhen und älterer Nutzer.
-- **Nachweise:** gemessene Flächen 56 px im Großflächenmodus; Kontrast in allen Themes; Tastatur- und Screenreader-Durchlauf des Referenzscreens.
+- **Nachweise:** gemessene Flächen 56 px im Großflächenmodus; Kontrast in allen Themes; Tastatur- und Screenreader-Durchlauf des Referenzscreens. Nachweisstand: gemessene Flächen 48 und 56 px, Text zwei Stufen größer, Kontrast in allen Themes durch die Ableitung, Tastaturdurchlauf mit Sprungmarke, Fokusring und Dialog, reduzierte Bewegung technisch nachgewiesen am 26.09.2026 (`durchstich/abnahme/stufe-5.md`); Textentsprechungen und Live-Regionen sind umgesetzt, der Durchlauf mit echter Hilfstechnik steht aus.
 
 ## A-082 – Workshops und Events: Angebotsmodell
 

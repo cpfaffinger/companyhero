@@ -8,8 +8,9 @@ import themeHoedl from '../../../../e2e/fixtures/api/theme-hoedl.json';
 
 describe('ChallengeCard (Marke 2.5, Challenges 6.2, A-080)', () => {
   const card = challenges.body[0] as ChallengeCardData;
-  // Vier Minuten nach dem Kollektivstand der Probe; die Probe endet neun Tage nach ihrer Aufnahme.
+  // Vier Minuten nach dem Kollektivstand der Probe; verbleibende Tage aus dem Ende der Probe (aufgerundet).
   const now = new Date(new Date(card.collective!.updatedAt).getTime() + 4 * 60_000);
+  const daysLeft = Math.ceil((new Date(card.endsAt).getTime() - now.getTime()) / 86_400_000);
 
   function render(data: ChallengeCardData, theme: TenantTheme) {
     TestBed.configureTestingModule({ imports: [ChallengeCard] });
@@ -26,7 +27,7 @@ describe('ChallengeCard (Marke 2.5, Challenges 6.2, A-080)', () => {
     const root = fixture.nativeElement as HTMLElement;
     expect(root.querySelector('h2')?.textContent).toContain('Rad oder Fuß zur Arbeit');
     expect(root.textContent).toContain('Sammelziel · Häkchen · ganze Firma');
-    expect(root.textContent).toContain('noch 9 Tage');
+    expect(root.textContent).toContain(`noch ${daysLeft} Tage`);
     expect(root.textContent).toContain('Stand vor 4 Min');
     expect(root.textContent).toContain('12 %');
     expect(root.querySelector('ch-collective-bar')?.getAttribute('aria-label')).toBe('12 Prozent des Firmenziels erreicht, nächster Meilenstein bei 25 Prozent');

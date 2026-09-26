@@ -34,6 +34,8 @@ public sealed class ContractSamplesTests(PostgresFixture pg)
     {
         var wiesner = await pg.CreateScratchTenantWithMembersAsync("Wiesner Probe");
         var hoedl = await pg.CreateScratchTenantWithMembersAsync("Hödl Probe");
+        // Dritter Tenant ohne veröffentlichtes Theme: Standard-Theme der Plattform mit dem Anzeigenamen des Tenants (A-013).
+        var standard = await pg.CreateScratchTenantWithMembersAsync("Standard Probe");
         var scopes = pg.Api.Services.GetRequiredService<ITenantScopeFactory>();
 
         using var wiesnerAdmin = Client(wiesner.Id, wiesner.Admin);
@@ -65,6 +67,7 @@ public sealed class ContractSamplesTests(PostgresFixture pg)
         {
             ["theme-wiesner"] = await member.GetAsync("/api/branding/theme", Ct),
             ["theme-hoedl"] = await hoedlAdmin.GetAsync("/api/branding/theme", Ct),
+            ["theme-standard"] = await Client(standard.Id, standard.MemberA).GetAsync("/api/branding/theme", Ct),
             ["platform"] = await anonymous.GetAsync("/api/branding/platform", Ct),
             ["manifest-wiesner"] = await member.GetAsync($"/api/branding/tenants/{wiesner.Id}/manifest.webmanifest", Ct),
             ["challenges"] = await member.GetAsync("/api/challenges", Ct),

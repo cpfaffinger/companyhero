@@ -2,7 +2,7 @@
 // unter 640 px, Navigations-Rail ab 640 px, Seitennavigation ab 1024 px mit Inhalt bis 1.280 px und Kontextspalte 320 px.
 // Navigation im Durchstich: Start, Challenges, Ich (keine Platzhalter für nicht gebuchte Module, A-064). Marke aus dem
 // Theme-Service: Tenant-Logo als Kennzeichen, Plattform-Bildzeichen in der Plattform-Schale (A-078).
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, viewChild } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TextService } from '../../theme/text.service';
@@ -37,4 +37,12 @@ export class AppShell {
 
   readonly initial = computed(() => this.theme.produktname().trim().charAt(0).toUpperCase() || 'C');
   readonly platform = computed(() => this.theme.context() === 'platform');
+
+  private readonly main = viewChild.required<ElementRef<HTMLElement>>('main');
+
+  /** Sprungmarke (Marke 7): setzt den Fokus in den Inhalt, ohne eine Navigation auf das Fragment auszulösen. */
+  skipToMain(event: Event): void {
+    event.preventDefault();
+    this.main().nativeElement.focus();
+  }
 }

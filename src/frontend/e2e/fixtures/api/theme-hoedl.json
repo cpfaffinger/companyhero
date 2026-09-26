@@ -2,7 +2,7 @@
   "status": 200,
   "contentType": "application/json",
   "body": {
-    "tenantId": "01a0dcad-8398-78fd-abac-b4da4118f185",
+    "tenantId": "01a0dd89-e2f3-75bd-b4dc-59f87b13a3bb",
     "version": 1,
     "verfahren": "hct-m3/1",
     "schema": 1,
@@ -207,7 +207,7 @@
       "zugang.noetig": "Für diese Seite ist eine Anmeldung nötig.",
       "zugang.link": "Zum Zugang"
     },
-    "manifestPfad": "/api/branding/tenants/01a0dcad-8398-78fd-abac-b4da4118f185/manifest.webmanifest",
+    "manifestPfad": "/api/branding/tenants/01a0dd89-e2f3-75bd-b4dc-59f87b13a3bb/manifest.webmanifest",
     "veroeffentlichtAm": "2026-09-25T08:08:00+00:00"
   }
 }
