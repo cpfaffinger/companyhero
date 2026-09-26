@@ -4,7 +4,7 @@
 **Nachweise aus:** Organisation 7; Challenges 9; Fortschritt 8; Feed 12.1 bis 12.5; Benachrichtigungen 10; Datenschutz 9.1 bis 9.5; ergänzend Backend 6.4 und 9; Entscheidungen A-005, A-006, A-008, A-009, A-020 bis A-026, A-032 bis A-036, A-038 bis A-040, A-042, A-044 bis A-050, A-058 bis A-063, A-106, A-111; Produktwahl A-112.
 **Umgebung:** Backend gegen PostgreSQL 18 in Testcontainern mit den Rollen des Compose-Projekts (Laufzeitrolle `ch_app`, Migrationsrolle für den Migrationslauf); echte Sitzungen über den Sitzungsdienst der Stufe 4 (Cookie und CSRF, Kiosk-Geräte- und Personensitzung); feste Testuhr (25.09.2026 08:00 UTC) in der API, Systemuhr im Worker; Push-Dienst und SMTP-Transport in den Tests durch aufzeichnende Fassungen ersetzt (VAPID-Schlüssel je Testlauf erzeugt); Frontend als Produktionsbuild hinter einem statischen Server mit den aufgenommenen Vertragsproben.
 **Branch:** `claude/stufe-6-fachpfad-r36muw` (Stufe 6 „Fachpfad“ gemäß Durchstich 3: ein Branch je Stufe); Stufe 4 und die CLAUDE.md-Änderung wurden vorab auf `master` gemergt.
-**Stand:** abgenommen am 26.09.2026 mit dem grünen CI-Lauf {{RUN_ID}} (Abschnitt 6).
+**Stand:** abgenommen am 26.09.2026 mit dem grünen CI-Lauf 36263383505 (Abschnitt 6).
 
 ## 1. Was Stufe 6 liefert
 
@@ -24,7 +24,7 @@
 
 | Nr. | Nachweis aus dem Konzept | Test oder Prüfung | Ergebnis | Lauf |
 |---|---|---|---|---|
-| 1 | Organisation 7 / A-033: Sperre und Entsperrung ohne Datenverlust; Kündigung zum Monatsende mit 90 Tagen Lesezugriff; Löschung nach der Frist | `Stufe6OrganisationTests.Sperre_Kuendigung_Lesefenster_und_Loeschung_des_Tenants`: gesperrt → `/api/me` 401 und `/api/auth/session` 403 `tenant_suspended`; entsperrt → 200; Kündigung wirksam 30.09.2026 22:00 UTC (Monatsende Wien); danach Mitglied 403 `tenant_terminated`, Tenant-Admin liest, schreibt nicht (`tenant_read_only`); nach 91 Tagen `privacy.retention`: Tenant gelöscht, keine aktiven Mitglieder | grün | CI {{RUN_ID}} |
+| 1 | Organisation 7 / A-033: Sperre und Entsperrung ohne Datenverlust; Kündigung zum Monatsende mit 90 Tagen Lesezugriff; Löschung nach der Frist | `Stufe6OrganisationTests.Sperre_Kuendigung_Lesefenster_und_Loeschung_des_Tenants`: gesperrt → `/api/me` 401 und `/api/auth/session` 403 `tenant_suspended`; entsperrt → 200; Kündigung wirksam 30.09.2026 22:00 UTC (Monatsende Wien); danach Mitglied 403 `tenant_terminated`, Tenant-Admin liest, schreibt nicht (`tenant_read_only`); nach 91 Tagen `privacy.retention`: Tenant gelöscht, keine aktiven Mitglieder | grün | CI 36263383505 |
 | 2 | Organisation 7 / A-034, A-035: Dimensionen, Gruppen, Sollstärke mit Warnung, Archivierung verlangt Neuwahl, Gruppenwahl jederzeit | `Dimensionen_Gruppen_Sollstaerke_und_eigene_Gruppenwahl`; `Tenant_Zeitzone_nur_durch_Tenant_Admin_und_nur_bekannte_Zonen`; Fachtests `GroupRulesTests` | grün | ebd. |
 | 3 | Zugang 2.2 Schritt 4 / A-035: Gruppenwahl im Beitritt (Vorschau mit Dimensionen, Kiosk-Beitritt mit Wahl, fremde Kennung abgelehnt) | `Beitritt_mit_Gruppenwahl_am_Kiosk`; Playwright Beitritt (Selects je Dimension) | grün | ebd. |
 | 4 | Challenges 9 / A-038, A-040: Kickoff-Vorbelegung, Vorschau als Pflicht, nur Programm-Manager oder Tenant-Admin, Texte änderbar, Ende nur laufend | `Stufe6ChallengeFeedTests.Kickoff_Wizard_Vorschau_ist_Pflicht…`; Fachtests `ChallengeLifecycleTests` (Übergänge, Kickoff-Termine, vorzeitiges Ende) | grün | ebd. |
@@ -123,10 +123,10 @@ Mit allen Mechanismen: 128 Fachtests, 39 Architekturtests, 107 Integrationstests
 
 | Feld | Wert |
 |---|---|
-| Lauf | [{{RUN_ID}}](https://github.com/cpfaffinger/companyhero/actions/runs/{{RUN_ID}}), Workflow `CI`, Push auf `claude/stufe-6-fachpfad-r36muw`, 26.09.2026 |
-| Commit | {{COMMIT}} |
-| Jobs | {{JOBS}} |
-| Tests | {{TESTS}} |
+| Lauf | [36263383505](https://github.com/cpfaffinger/companyhero/actions/runs/36263383505), Workflow `CI`, Push auf `claude/stufe-6-fachpfad-r36muw`, 26.09.2026 |
+| Commit | `0022c9a` „Stufe 6 Fachpfad: Organisation mit Gruppen, Sollstärken und Beitritt mit Gruppenwahl; Kickoff-Challenge …“ (Umsetzung, Protokoll, Register A-112 und Nachweisstände in einem Commit) |
+| Jobs | Backend 2 min 2 s grün (Build ohne Warnungen; 128 Fachtests, 39 Architekturtests, 107 Integrationstests in 47,9 s; zehn Kontexte ohne ausstehende Modelländerungen, darunter `FeedDbContext` und `NotificationsDbContext`); Frontend 1 min 36 s grün (verbotene Pakete, generierter Client gleich der Regeneration, ESLint, Stylelint, 37 Vitest-Tests in 13 Dateien, Produktionsbuild, Ladebudget 182 638 B gzip von 184 320 B, 35 Playwright-Abnahmen in 35,3 s, 29 Screenshots als Artefakt `referenzscreen-screenshots`); Images, Trivy, Betriebsnachweise in Compose 4 min 44 s grün (Images lokal gebaut, Trivy ohne kritische Funde, Betriebsnachweise Betrieb 9.4, 9.5, 9.7; kein Push nach GHCR, da nicht `master`) |
+| Tests | 346: 107 Integration (Testcontainer, Laufzeitrolle), 39 Architektur, 128 Fachtests, 37 Vitest, 35 Playwright |
 
 Ergebnis je Nachweis aus Abschnitt 2: Nr. 1 bis 25 grün in diesem Lauf; Screenshots des lokalen Laufs unter [laeufe/stufe-6/](laeufe/stufe-6/).
 
