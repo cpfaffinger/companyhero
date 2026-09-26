@@ -3,7 +3,7 @@
 **Stufe:** 5 Vertrag und Oberfläche gemäß [technischer-durchstich.md](../../concept/technischer-durchstich.md), Abschnitt 3: OpenAPI-Client, Referenzscreen mit zwei Firmenmarken und Plattformmarke, hell und dunkel, Großflächenmodus, Ladebudget, Manifest je Tenant.
 **Nachweise aus:** Integrationsregeln 6; Frontend 7; Marke 9.1 bis 9.5 und 9.7; ergänzend Backend 8 und 11.8, Frontend 4 bis 6, Integrationsregeln K01 bis K13, K17, K19; Entscheidungen A-003, A-009, A-013, A-076 bis A-081; Produktwahlen A-109 und A-110.
 **Umgebung:** Backend gegen PostgreSQL 18 in Testcontainern mit den Rollen des Compose-Projekts (Laufzeitrolle `ch_app`); Frontend als Produktionsbuild (Angular 22, `strict`, `strictTemplates`) hinter einem statischen Server mit App-Shell-Fallback wie Caddy, API-Antworten als eingecheckte Vertragsproben (echte Antworten der API aus dem Testcontainer-Lauf, `src/frontend/e2e/fixtures/api/`); Chromium (Playwright 1.63) in 390, 800 und 1280 px, hell und dunkel, reduzierte Bewegung. GitHub-Actions-Runner gemäß A-107; zusätzlich lokale Läufe unter Windows mit Docker in WSL.
-**Stand:** abgenommen am 26.09.2026 mit dem grünen CI-Lauf CI_RUN_ID (Abschnitt 6).
+**Stand:** abgenommen am 26.09.2026 mit dem grünen CI-Lauf 36241323942 (Abschnitt 6).
 
 ## 1. Was Stufe 5 liefert
 
@@ -102,9 +102,9 @@ Mit allen Mechanismen: 70 Fachtests, 39 Architekturtests, 68 Integrationstests, 
 
 | Feld | Wert |
 |---|---|
-| Lauf | [CI_RUN_ID](https://github.com/cpfaffinger/companyhero/actions/runs/CI_RUN_ID), Workflow `CI`, Push auf `master`, 26.09.2026 |
-| Commit | CI_COMMIT |
-| Jobs | CI_JOBS |
+| Lauf | [36241323942](https://github.com/cpfaffinger/companyhero/actions/runs/36241323942), Workflow `CI`, Push auf `master`, 26.09.2026 |
+| Commit | `b22c663` „CI: Schrittname des Referenzscreens als YAML-Zeichenkette“ auf `caf196d` „Stufe 5 Abnahme: Referenzscreen in Playwright …“ und `179c945` „Stufe 5 Vertrag und Oberfläche …“; der Lauf auf `caf196d` (36241288984) scheiterte an der Workflow-Syntax (unmaskierter Doppelpunkt im Schrittnamen), nicht an einem Test, der Folgecommit ändert nur `ci.yml` |
+| Jobs | Backend 1 min 9 s grün (70 Fachtests, 39 Architekturtests, 68 Integrationstests; acht Kontexte ohne ausstehende Modelländerungen); Frontend 1 min 25 s grün (30 Pakete ohne verbotene, generierter Client gleich der Regeneration, ESLint, Stylelint, 27 Vitest-Tests in 9 Dateien, Produktionsbuild, Ladebudget 178.531 B gzip von 184.320 B, 28 Playwright-Abnahmen in 26,3 s, 21 Screenshots als Artefakt); Images, Trivy, Betriebsnachweise, Push 5 min 6 s grün (Rollback auf vorherigen Digest, Anwendung gesund, Datenbank ohne Rollback; vier Images per Digest nach GHCR); Wiederherstellungsübung 1 min 26 s grün (RTO 7 s, RPO 2 s) |
 | Tests | 232: 68 Integration (Testcontainer, Laufzeitrolle), 39 Architektur, 70 Fachtests, 27 Vitest, 28 Playwright |
 
 Ergebnis je Nachweis aus Abschnitt 2: Nr. 1 bis 17 grün in diesem Lauf; Screenshots des Laufs als Artefakt `referenzscreen-screenshots`, die für diese Abnahme maßgeblichen Screenshots des lokalen Laufs unter [laeufe/stufe-5/](laeufe/stufe-5/).
