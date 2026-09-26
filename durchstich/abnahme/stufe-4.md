@@ -3,7 +3,7 @@
 **Stufe:** 4 Zugang gemäß [technischer-durchstich.md](../../concept/technischer-durchstich.md), Abschnitt 3: Beitritt mit Code, Passkey mit Wiederherstellungscode, Magic-Link, externe Anbieter über OpenID Connect, Kiosk mit Geräte- und Personensitzung, Sitzungen, Offline-Freigabe, Austritt.
 **Nachweise aus:** Zugang 10.1 bis 10.9; A-005 (Sitzungsteile); ergänzend Zugang 2 bis 8, Backend 5.1 und 9, Datenschutz 7, Integrationsregeln K10, K11, K17; Entscheidungen A-007, A-014 bis A-019, A-021, A-026, A-030; Produktwahl A-111.
 **Umgebung:** Backend gegen PostgreSQL 18 in Testcontainern mit den Rollen des Compose-Projekts (Laufzeitrolle `ch_app`), zwei API-Instanzen gegen dieselbe Datenbank, externer Anbieter als In-Prozess-Testserver mit Discovery-Dokument, signierten ID-Tokens und einem absichtlich fehlerhaften Issuer, Passkeys über einen Software-Authenticator (ES256, Attestation `none`); feste Testuhr. Frontend als Produktionsbuild (Angular 22) hinter einem statischen Server, API-Antworten als eingecheckte Vertragsproben, Chromium (Playwright 1.63) mit virtuellem WebAuthn-Authenticator (CDP). GitHub-Actions-Runner gemäß A-107; zusätzlich lokaler Lauf im Entwicklungscontainer (Linux, Docker).
-**Stand:** abgenommen am 26.09.2026 mit dem grünen CI-Lauf CI_RUN_ID (Abschnitt 6).
+**Stand:** abgenommen am 26.09.2026 mit dem grünen CI-Lauf 36249509118 (Abschnitt 6).
 
 ## 1. Was Stufe 4 liefert
 
@@ -103,9 +103,9 @@ Mit allen Mechanismen: 92 Fachtests, 39 Architekturtests, 86 Integrationstests, 
 
 | Feld | Wert |
 |---|---|
-| Lauf | [CI_RUN_ID](https://github.com/cpfaffinger/companyhero/actions/runs/CI_RUN_ID), Workflow `CI`, Push auf `claude/funny-mccarthy-p5tpil`, 26.09.2026 |
-| Commit | CI_COMMIT |
-| Jobs | CI_JOBS |
+| Lauf | [36249509118](https://github.com/cpfaffinger/companyhero/actions/runs/36249509118), Workflow `CI`, Push auf `claude/funny-mccarthy-p5tpil`, 26.09.2026 |
+| Commit | `33318aa7095fd8c9a412dfaed60fb307e895f8bb` (Stufe 4 Zugang, `c0e0305`, plus Lockfile-Korrektur `33318aa`) |
+| Jobs | Backend (Build, Architektur, Integration) grün; Frontend (Lint-Grenzen, Tests, Build, Ladebudget, Playwright) grün; Images, Trivy, Betriebsnachweise in Compose grün (Push nach GHCR nur auf `master`); Wiederherstellungsübung übersprungen (nur `master`) |
 | Tests | 284: 86 Integration (Testcontainer, Laufzeitrolle), 39 Architektur, 92 Fachtests, 37 Vitest, 30 Playwright |
 
 Ergebnis je Nachweis aus Abschnitt 2: Nr. 1 bis 13 grün in diesem Lauf; Screenshots des lokalen Laufs unter [laeufe/stufe-4/](laeufe/stufe-4/) (`zugang-anmelden-390.png`, `zugang-beitritt-ergebnis-390.png`, `kiosk-personensitzung-1024.png`, `kiosk-uebertragung-1024.png`).
