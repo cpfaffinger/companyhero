@@ -3,6 +3,7 @@ using CompanyHero.Platform.Events;
 using CompanyHero.Platform.Jobs;
 using CompanyHero.Platform.Tenancy;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -32,7 +33,12 @@ public static class PlatformDataExtensions
         var connectionString = configuration.GetConnectionString("Default")
             ?? throw new InvalidOperationException("ConnectionStrings:Default fehlt. In Compose liefert OpenBao das Geheimnis app/database.");
 
-        return services.AddPlatformData(new PlatformDataOptions { ConnectionString = connectionString, EnforceTenantContext = true });
+        return services.AddPlatformData(new PlatformDataOptions
+        {
+            ConnectionString = connectionString,
+            EnforceTenantContext = true,
+            DataProtectionCertificatePemFile = configuration["DataProtection:CertificatePemFile"],
+        });
     }
 
     public static IServiceCollection AddPlatformData(this IServiceCollection services, PlatformDataOptions options)
@@ -52,6 +58,15 @@ public static class PlatformDataExtensions
         services.TryAddScoped<IContextTransaction>(sp => sp.GetRequiredService<ContextTransaction>());
 
         services.AddDbContext<PlatformDbContext>((sp, o) => o.UseNpgsql(sp.GetRequiredService<NpgsqlDataSource>()));
+        // Gemeinsamer Schlüsselring aller Instanzen in PostgreSQL (A-007 Betrieb): OIDC-Zustand, Nonce und geschützte Übergaben
+        // eines API-Knotens sind auf jedem anderen Knoten prüfbar. Schutz der Schlüssel im Ruhezustand über ein Zertifikat aus
+        // dem Geheimnisspeicher, sobald der Betreiber eines hinterlegt (DataProtection:CertificatePemFile).
+        var dataProtection = services.AddDataProtection().SetApplicationName("companyhero").PersistKeysToDbContext<PlatformDbContext>();
+        if (options.DataProtectionCertificatePemFile is { Length: > 0 } pem)
+        {
+            dataProtection.ProtectKeysWithCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2.CreateFromPemFile(pem));
+        }
+
         services.AddJobQueue();
         services.AddDomainEvents();
         services.AddHealthChecks().AddCheck<DatabaseHealthCheck>("database", tags: [ReadyTag]);

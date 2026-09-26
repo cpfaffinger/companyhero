@@ -1,0 +1,11 @@
+{
+  "status": 201,
+  "contentType": "application/json",
+  "body": {
+    "tenantId": "01a0de15-1908-7486-b068-37d9ab0d4d83",
+    "personId": "01a0de15-231a-74f4-ad22-97fbd7724198",
+    "kioskId": "652716",
+    "recoveryCode": "8WY-9NE-HGD-4PU",
+    "sessionKind": null
+  }
+}

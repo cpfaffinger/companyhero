@@ -1,0 +1,22 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": {
+    "magicLink": true,
+    "passkey": true,
+    "kiosk": true,
+    "disabledProviderKeys": [],
+    "forcedProviderKeys": [],
+    "kioskIdleSeconds": 60,
+    "availableProviders": [
+      {
+        "key": "google",
+        "displayName": "Google"
+      },
+      {
+        "key": "microsoft",
+        "displayName": "Microsoft"
+      }
+    ]
+  }
+}

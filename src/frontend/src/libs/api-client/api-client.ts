@@ -60,6 +60,10 @@ export class ApiClient {
     return this.http.put<SuccessBody<P, 'put'>>(expand(path, params?.path), body, this.options(params?.query));
   }
 
+  delete<P extends PathsWith<'delete'>>(path: P, params?: ParamsArg<P, 'delete'>): Observable<SuccessBody<P, 'delete'>> {
+    return this.http.delete<SuccessBody<P, 'delete'>>(expand(path, params?.path), this.options(params?.query));
+  }
+
   private options(query?: Record<string, string>) {
     return {
       withCredentials: true,

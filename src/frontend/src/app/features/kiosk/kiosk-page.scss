@@ -132,3 +132,125 @@
     padding: var(--ch-space-12) 56px;
   }
 }
+
+.ch-kiosk-page__status--fehler {
+  background: var(--ch-error-container);
+  color: var(--ch-on-error-container);
+}
+
+.ch-kiosk-page__device {
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-kiosk-page__subtitle {
+  font: 700 var(--ch-type-headline-l) / var(--ch-line-headline-l) var(--ch-font-display);
+}
+
+.ch-kiosk-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-4);
+  align-items: flex-start;
+  max-width: 560px;
+}
+
+.ch-kiosk-page__form mat-form-field {
+  width: 100%;
+}
+
+.ch-kiosk-page__form--pin {
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.ch-kiosk-page__form--pin mat-form-field {
+  flex: 1 1 200px;
+  width: auto;
+}
+
+.ch-kiosk-page__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-2);
+}
+
+.ch-kiosk-page__label {
+  font-weight: 600;
+}
+
+.ch-kiosk-page__radios {
+  display: flex;
+  flex-direction: column;
+}
+
+.ch-kiosk-page__error {
+  color: var(--ch-error);
+}
+
+.ch-kiosk-page__person {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-5);
+}
+
+.ch-kiosk-page__person-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ch-space-3);
+}
+
+.ch-kiosk-page__countdown {
+  font: 700 var(--ch-type-metric-l) / var(--ch-line-metric-l) var(--ch-font-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--ch-on-surface-variant);
+}
+
+.ch-kiosk-page__countdown--warnung {
+  color: var(--ch-error);
+}
+
+.ch-kiosk-page__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+  align-items: stretch;
+  max-width: 560px;
+}
+
+.ch-kiosk-page__actions--row {
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.ch-kiosk-page__action {
+  justify-content: center;
+  min-height: 72px;
+}
+
+.ch-kiosk-page__transfer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ch-space-3);
+  align-items: flex-start;
+  padding: var(--ch-space-5);
+  border-radius: var(--ch-radius-sheet);
+  background: var(--ch-surface-container);
+}
+
+.ch-kiosk-page__code {
+  font: 700 var(--ch-type-headline-l) / var(--ch-line-headline-l) var(--ch-font-display);
+  letter-spacing: 0.12em;
+  user-select: all;
+}
+
+.ch-kiosk-page__link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--ch-type-body-m);
+}

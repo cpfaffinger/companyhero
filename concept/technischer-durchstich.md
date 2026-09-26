@@ -48,7 +48,7 @@ Jede Stufe endet mit grüner CI und einem Abnahmeprotokoll je Nachweis. Eine Stu
 ## 4. Arbeitsweise
 
 - Test Driven Development nach Backend 9: Akzeptanzfall, roter Test aus fachlichem Grund, kleinste Implementierung, Refaktorieren, Architekturprüfung.
-- Commits direkt auf `master`, ein Commit oder eine zusammenhängende Commit-Folge je Nachweis; CI läuft nach jedem Push (A-030).
+- Ein Commit oder eine zusammenhängende Commit-Folge je Nachweis; CI läuft nach jedem Push (A-030). Stufen 1 bis 5 entstanden direkt auf `master`; ab Stufe 6 arbeitet jede Stufe in einem eigenen Branch `stufe-<n>-<name>` mit derselben CI (ohne Image-Push) und wird nach der Abnahme mit grüner CI auf `master` gemergt; Register, Protokoll und Versionen liegen im selben Branch.
 - Agentische Entwicklung mit derselben CI und denselben Lint-Grenzen; die Regeln aus den Integrationsregeln sind Lint- und Abhängigkeitsprüfungen ab Stufe 1.
 - Testdaten synthetisch; keine echten Personen; feste Testuhren; Testcontainer mit echtem PostgreSQL und Laufzeitrechten.
 - Jede Abweichung vom Konzept, die der Durchstich erzwingt, ist eine Registeränderung im selben Commit, nicht danach.

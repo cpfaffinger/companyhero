@@ -76,8 +76,8 @@ public sealed class OpenApiContractTests(PostgresFixture pg)
             }
         }
 
-        // Binärantworten tragen kein JSON-Schema; die Identity-Endpunkte werden mit den Zugangs-Endpunkten der Stufe 4 typisiert.
-        string[] untypedAllowed = ["/api/branding/tenants/{tenantId}/icons/{name}", "/api/me", "/api/members"];
+        // Binärantworten und Weiterleitungen (OIDC-Start) tragen kein JSON-Schema.
+        string[] untypedAllowed = ["/api/branding/tenants/{tenantId}/icons/{name}", "/api/auth/oidc/{key}/start"];
         foreach (var (path, item) in document["paths"]!.AsObject())
         {
             foreach (var (method, operation) in item!.AsObject())
@@ -96,7 +96,8 @@ public sealed class OpenApiContractTests(PostgresFixture pg)
                 }
 
                 var content = success.Value["content"]?.AsObject();
-                if (content is null || content.Count == 0)
+                // 202 (angenommen) und 204 (kein Inhalt) haben nach HTTP keinen Körper; der Client erhält den Status.
+                if (success.Key is not ("202" or "204") && (content is null || content.Count == 0))
                 {
                     problems.Add($"{method.ToUpperInvariant()} {path}: Erfolgsantwort ohne Schema; der generierte Client wäre untypisiert");
                 }

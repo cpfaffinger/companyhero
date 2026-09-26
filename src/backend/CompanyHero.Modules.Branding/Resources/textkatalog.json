@@ -1007,20 +1007,6 @@
       "sie": "PIN vergessen"
     }
   },
-  "kiosk.nochNichtVerbunden": {
-    "sachlich": {
-      "du": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet.",
-      "sie": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet."
-    },
-    "freundlich": {
-      "du": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet.",
-      "sie": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet."
-    },
-    "motivierend": {
-      "du": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet.",
-      "sie": "Die Anmeldung am Kiosk wird mit dem Zugang eingerichtet."
-    }
-  },
   "allgemein.schliessen": {
     "sachlich": {
       "du": "Schließen",
@@ -1299,6 +1285,2274 @@
     "motivierend": {
       "du": "Zum Zugang",
       "sie": "Zum Zugang"
+    }
+  },
+  "zugang.anmelden.titel": {
+    "sachlich": {
+      "du": "Anmelden",
+      "sie": "Anmelden"
+    },
+    "freundlich": {
+      "du": "Anmelden",
+      "sie": "Anmelden"
+    },
+    "motivierend": {
+      "du": "Anmelden",
+      "sie": "Anmelden"
+    }
+  },
+  "zugang.anmelden.hinweis": {
+    "sachlich": {
+      "du": "Wähle einen Weg. Kennung und PIN gelten nur am Kiosk.",
+      "sie": "Wählen Sie einen Weg. Kennung und PIN gelten nur am Kiosk."
+    },
+    "freundlich": {
+      "du": "Wie möchtest du dich anmelden? Kennung und PIN gelten nur am Kiosk.",
+      "sie": "Wie möchten Sie sich anmelden? Kennung und PIN gelten nur am Kiosk."
+    },
+    "motivierend": {
+      "du": "Wie möchtest du dich anmelden? Kennung und PIN gelten nur am Kiosk.",
+      "sie": "Wie möchten Sie sich anmelden? Kennung und PIN gelten nur am Kiosk."
+    }
+  },
+  "zugang.weg.passkey": {
+    "sachlich": {
+      "du": "Mit Passkey anmelden",
+      "sie": "Mit Passkey anmelden"
+    },
+    "freundlich": {
+      "du": "Mit Passkey anmelden",
+      "sie": "Mit Passkey anmelden"
+    },
+    "motivierend": {
+      "du": "Mit Passkey anmelden",
+      "sie": "Mit Passkey anmelden"
+    }
+  },
+  "zugang.weg.passkeyMitEmail": {
+    "sachlich": {
+      "du": "Passkey und E-Mail",
+      "sie": "Passkey und E-Mail"
+    },
+    "freundlich": {
+      "du": "Passkey und E-Mail",
+      "sie": "Passkey und E-Mail"
+    },
+    "motivierend": {
+      "du": "Passkey und E-Mail",
+      "sie": "Passkey und E-Mail"
+    }
+  },
+  "zugang.weg.anbieter": {
+    "sachlich": {
+      "du": "Mit {anbieter} fortfahren",
+      "sie": "Mit {anbieter} fortfahren"
+    },
+    "freundlich": {
+      "du": "Mit {anbieter} fortfahren",
+      "sie": "Mit {anbieter} fortfahren"
+    },
+    "motivierend": {
+      "du": "Mit {anbieter} fortfahren",
+      "sie": "Mit {anbieter} fortfahren"
+    }
+  },
+  "zugang.weg.magicLink": {
+    "sachlich": {
+      "du": "Anmeldelink per E-Mail",
+      "sie": "Anmeldelink per E-Mail"
+    },
+    "freundlich": {
+      "du": "Anmeldelink per E-Mail",
+      "sie": "Anmeldelink per E-Mail"
+    },
+    "motivierend": {
+      "du": "Anmeldelink per E-Mail",
+      "sie": "Anmeldelink per E-Mail"
+    }
+  },
+  "zugang.weg.wiederherstellung": {
+    "sachlich": {
+      "du": "Wiederherstellungscode",
+      "sie": "Wiederherstellungscode"
+    },
+    "freundlich": {
+      "du": "Wiederherstellungscode",
+      "sie": "Wiederherstellungscode"
+    },
+    "motivierend": {
+      "du": "Wiederherstellungscode",
+      "sie": "Wiederherstellungscode"
+    }
+  },
+  "zugang.magicLink.anfordern": {
+    "sachlich": {
+      "du": "Link senden",
+      "sie": "Link senden"
+    },
+    "freundlich": {
+      "du": "Link senden",
+      "sie": "Link senden"
+    },
+    "motivierend": {
+      "du": "Link senden",
+      "sie": "Link senden"
+    }
+  },
+  "zugang.magicLink.gesendet": {
+    "sachlich": {
+      "du": "Wenn die Adresse hinterlegt ist, kommt ein Link. Er gilt 15 Minuten.",
+      "sie": "Wenn die Adresse hinterlegt ist, kommt ein Link. Er gilt 15 Minuten."
+    },
+    "freundlich": {
+      "du": "Schau in dein Postfach: Wenn die Adresse hinterlegt ist, wartet dort ein Link, 15 Minuten gültig.",
+      "sie": "Schauen Sie in Ihr Postfach: Wenn die Adresse hinterlegt ist, wartet dort ein Link, 15 Minuten gültig."
+    },
+    "motivierend": {
+      "du": "Schau in dein Postfach: Wenn die Adresse hinterlegt ist, wartet dort ein Link, 15 Minuten gültig.",
+      "sie": "Schauen Sie in Ihr Postfach: Wenn die Adresse hinterlegt ist, wartet dort ein Link, 15 Minuten gültig."
+    }
+  },
+  "zugang.magicLink.titel": {
+    "sachlich": {
+      "du": "Anmeldelink",
+      "sie": "Anmeldelink"
+    },
+    "freundlich": {
+      "du": "Anmeldelink",
+      "sie": "Anmeldelink"
+    },
+    "motivierend": {
+      "du": "Anmeldelink",
+      "sie": "Anmeldelink"
+    }
+  },
+  "zugang.wiederherstellung.hinweis": {
+    "sachlich": {
+      "du": "12 Zeichen in Dreiergruppen. Nach der Anmeldung erscheint ein neuer Code.",
+      "sie": "12 Zeichen in Dreiergruppen. Nach der Anmeldung erscheint ein neuer Code."
+    },
+    "freundlich": {
+      "du": "Dein Code hat 12 Zeichen in Dreiergruppen. Nach der Anmeldung bekommst du einen neuen.",
+      "sie": "Ihr Code hat 12 Zeichen in Dreiergruppen. Nach der Anmeldung erhalten Sie einen neuen."
+    },
+    "motivierend": {
+      "du": "Dein Code hat 12 Zeichen in Dreiergruppen. Nach der Anmeldung bekommst du einen neuen.",
+      "sie": "Ihr Code hat 12 Zeichen in Dreiergruppen. Nach der Anmeldung erhalten Sie einen neuen."
+    }
+  },
+  "zugang.wiederherstellung.anmelden": {
+    "sachlich": {
+      "du": "Mit Code anmelden",
+      "sie": "Mit Code anmelden"
+    },
+    "freundlich": {
+      "du": "Mit Code anmelden",
+      "sie": "Mit Code anmelden"
+    },
+    "motivierend": {
+      "du": "Mit Code anmelden",
+      "sie": "Mit Code anmelden"
+    }
+  },
+  "zugang.neuerCode.titel": {
+    "sachlich": {
+      "du": "Dein neuer Wiederherstellungscode",
+      "sie": "Ihr neuer Wiederherstellungscode"
+    },
+    "freundlich": {
+      "du": "Dein neuer Wiederherstellungscode",
+      "sie": "Ihr neuer Wiederherstellungscode"
+    },
+    "motivierend": {
+      "du": "Dein neuer Wiederherstellungscode",
+      "sie": "Ihr neuer Wiederherstellungscode"
+    }
+  },
+  "zugang.neuerCode.hinweis": {
+    "sachlich": {
+      "du": "Der alte Code ist verbraucht. Der neue erscheint nur jetzt; bewahre ihn sicher auf.",
+      "sie": "Der alte Code ist verbraucht. Der neue erscheint nur jetzt; bewahren Sie ihn sicher auf."
+    },
+    "freundlich": {
+      "du": "Der alte Code ist verbraucht. Notiere dir den neuen jetzt, er wird nicht noch einmal angezeigt.",
+      "sie": "Der alte Code ist verbraucht. Notieren Sie sich den neuen jetzt, er wird nicht noch einmal angezeigt."
+    },
+    "motivierend": {
+      "du": "Der alte Code ist verbraucht. Notiere dir den neuen jetzt, er wird nicht noch einmal angezeigt.",
+      "sie": "Der alte Code ist verbraucht. Notieren Sie sich den neuen jetzt, er wird nicht noch einmal angezeigt."
+    }
+  },
+  "zugang.neuerCode.notiert": {
+    "sachlich": {
+      "du": "Code notiert, weiter",
+      "sie": "Code notiert, weiter"
+    },
+    "freundlich": {
+      "du": "Code notiert, weiter",
+      "sie": "Code notiert, weiter"
+    },
+    "motivierend": {
+      "du": "Code notiert, weiter",
+      "sie": "Code notiert, weiter"
+    }
+  },
+  "zugang.passkey.diesesGeraet": {
+    "sachlich": {
+      "du": "Dieses Gerät",
+      "sie": "Dieses Gerät"
+    },
+    "freundlich": {
+      "du": "Dieses Gerät",
+      "sie": "Dieses Gerät"
+    },
+    "motivierend": {
+      "du": "Dieses Gerät",
+      "sie": "Dieses Gerät"
+    }
+  },
+  "zugang.link.wirdGeprueft": {
+    "sachlich": {
+      "du": "Der Link wird geprüft …",
+      "sie": "Der Link wird geprüft …"
+    },
+    "freundlich": {
+      "du": "Der Link wird geprüft …",
+      "sie": "Der Link wird geprüft …"
+    },
+    "motivierend": {
+      "du": "Der Link wird geprüft …",
+      "sie": "Der Link wird geprüft …"
+    }
+  },
+  "zugang.transfer.titel": {
+    "sachlich": {
+      "du": "Übertragung vom Kiosk",
+      "sie": "Übertragung vom Kiosk"
+    },
+    "freundlich": {
+      "du": "Übertragung vom Kiosk",
+      "sie": "Übertragung vom Kiosk"
+    },
+    "motivierend": {
+      "du": "Übertragung vom Kiosk",
+      "sie": "Übertragung vom Kiosk"
+    }
+  },
+  "zugang.feld.email": {
+    "sachlich": {
+      "du": "E-Mail-Adresse",
+      "sie": "E-Mail-Adresse"
+    },
+    "freundlich": {
+      "du": "E-Mail-Adresse",
+      "sie": "E-Mail-Adresse"
+    },
+    "motivierend": {
+      "du": "E-Mail-Adresse",
+      "sie": "E-Mail-Adresse"
+    }
+  },
+  "zugang.feld.emailPflicht": {
+    "sachlich": {
+      "du": "Gib eine gültige E-Mail-Adresse ein.",
+      "sie": "Geben Sie eine gültige E-Mail-Adresse ein."
+    },
+    "freundlich": {
+      "du": "Gib eine gültige E-Mail-Adresse ein.",
+      "sie": "Geben Sie eine gültige E-Mail-Adresse ein."
+    },
+    "motivierend": {
+      "du": "Gib eine gültige E-Mail-Adresse ein.",
+      "sie": "Geben Sie eine gültige E-Mail-Adresse ein."
+    }
+  },
+  "zugang.feld.wiederherstellungscode": {
+    "sachlich": {
+      "du": "Wiederherstellungscode",
+      "sie": "Wiederherstellungscode"
+    },
+    "freundlich": {
+      "du": "Wiederherstellungscode",
+      "sie": "Wiederherstellungscode"
+    },
+    "motivierend": {
+      "du": "Wiederherstellungscode",
+      "sie": "Wiederherstellungscode"
+    }
+  },
+  "zugang.feld.beitrittscode": {
+    "sachlich": {
+      "du": "Beitrittscode",
+      "sie": "Beitrittscode"
+    },
+    "freundlich": {
+      "du": "Beitrittscode",
+      "sie": "Beitrittscode"
+    },
+    "motivierend": {
+      "du": "Beitrittscode",
+      "sie": "Beitrittscode"
+    }
+  },
+  "zugang.feld.codePflicht": {
+    "sachlich": {
+      "du": "Gib den vollständigen Code ein.",
+      "sie": "Geben Sie den vollständigen Code ein."
+    },
+    "freundlich": {
+      "du": "Gib den vollständigen Code ein.",
+      "sie": "Geben Sie den vollständigen Code ein."
+    },
+    "motivierend": {
+      "du": "Gib den vollständigen Code ein.",
+      "sie": "Geben Sie den vollständigen Code ein."
+    }
+  },
+  "zugang.feld.anzeigename": {
+    "sachlich": {
+      "du": "Anzeigename",
+      "sie": "Anzeigename"
+    },
+    "freundlich": {
+      "du": "Anzeigename",
+      "sie": "Anzeigename"
+    },
+    "motivierend": {
+      "du": "Anzeigename",
+      "sie": "Anzeigename"
+    }
+  },
+  "zugang.feld.anzeigenameHinweis": {
+    "sachlich": {
+      "du": "Frei wählbar, 2 bis 80 Zeichen, später änderbar. Kein Klarname nötig.",
+      "sie": "Frei wählbar, 2 bis 80 Zeichen, später änderbar. Kein Klarname nötig."
+    },
+    "freundlich": {
+      "du": "Frei wählbar, 2 bis 80 Zeichen, später änderbar. Dein Klarname bleibt bei dir.",
+      "sie": "Frei wählbar, 2 bis 80 Zeichen, später änderbar. Ihr Klarname bleibt bei Ihnen."
+    },
+    "motivierend": {
+      "du": "Frei wählbar, 2 bis 80 Zeichen, später änderbar. Dein Klarname bleibt bei dir.",
+      "sie": "Frei wählbar, 2 bis 80 Zeichen, später änderbar. Ihr Klarname bleibt bei Ihnen."
+    }
+  },
+  "zugang.feld.anzeigenamePflicht": {
+    "sachlich": {
+      "du": "Wähle einen Anzeigenamen mit 2 bis 80 Zeichen.",
+      "sie": "Wählen Sie einen Anzeigenamen mit 2 bis 80 Zeichen."
+    },
+    "freundlich": {
+      "du": "Wähle einen Anzeigenamen mit 2 bis 80 Zeichen.",
+      "sie": "Wählen Sie einen Anzeigenamen mit 2 bis 80 Zeichen."
+    },
+    "motivierend": {
+      "du": "Wähle einen Anzeigenamen mit 2 bis 80 Zeichen.",
+      "sie": "Wählen Sie einen Anzeigenamen mit 2 bis 80 Zeichen."
+    }
+  },
+  "zugang.feld.klarname": {
+    "sachlich": {
+      "du": "Klarname",
+      "sie": "Klarname"
+    },
+    "freundlich": {
+      "du": "Klarname",
+      "sie": "Klarname"
+    },
+    "motivierend": {
+      "du": "Klarname",
+      "sie": "Klarname"
+    }
+  },
+  "zugang.feld.klarnamePflicht": {
+    "sachlich": {
+      "du": "Gib deinen Klarnamen ein.",
+      "sie": "Geben Sie Ihren Klarnamen ein."
+    },
+    "freundlich": {
+      "du": "Gib deinen Klarnamen ein.",
+      "sie": "Geben Sie Ihren Klarnamen ein."
+    },
+    "motivierend": {
+      "du": "Gib deinen Klarnamen ein.",
+      "sie": "Geben Sie Ihren Klarnamen ein."
+    }
+  },
+  "zugang.feld.kioskPin": {
+    "sachlich": {
+      "du": "Kiosk-PIN (optional)",
+      "sie": "Kiosk-PIN (optional)"
+    },
+    "freundlich": {
+      "du": "Kiosk-PIN (optional)",
+      "sie": "Kiosk-PIN (optional)"
+    },
+    "motivierend": {
+      "du": "Kiosk-PIN (optional)",
+      "sie": "Kiosk-PIN (optional)"
+    }
+  },
+  "zugang.feld.kioskPinHinweis": {
+    "sachlich": {
+      "du": "Vier Ziffern, keine einfache Folge wie 1234 oder 1111.",
+      "sie": "Vier Ziffern, keine einfache Folge wie 1234 oder 1111."
+    },
+    "freundlich": {
+      "du": "Vier Ziffern, keine einfache Folge wie 1234 oder 1111.",
+      "sie": "Vier Ziffern, keine einfache Folge wie 1234 oder 1111."
+    },
+    "motivierend": {
+      "du": "Vier Ziffern, keine einfache Folge wie 1234 oder 1111.",
+      "sie": "Vier Ziffern, keine einfache Folge wie 1234 oder 1111."
+    }
+  },
+  "zugang.feld.pinVierZiffern": {
+    "sachlich": {
+      "du": "Die PIN hat genau vier Ziffern.",
+      "sie": "Die PIN hat genau vier Ziffern."
+    },
+    "freundlich": {
+      "du": "Die PIN hat genau vier Ziffern.",
+      "sie": "Die PIN hat genau vier Ziffern."
+    },
+    "motivierend": {
+      "du": "Die PIN hat genau vier Ziffern.",
+      "sie": "Die PIN hat genau vier Ziffern."
+    }
+  },
+  "sichtbarkeit.frage": {
+    "sachlich": {
+      "du": "Wer sieht deine Beiträge?",
+      "sie": "Wer sieht Ihre Beiträge?"
+    },
+    "freundlich": {
+      "du": "Wer sieht deine Beiträge?",
+      "sie": "Wer sieht Ihre Beiträge?"
+    },
+    "motivierend": {
+      "du": "Wer sieht deine Beiträge?",
+      "sie": "Wer sieht Ihre Beiträge?"
+    }
+  },
+  "sichtbarkeit.pflicht": {
+    "sachlich": {
+      "du": "Wähle eine Sichtbarkeit; es gibt keine Voreinstellung.",
+      "sie": "Wählen Sie eine Sichtbarkeit; es gibt keine Voreinstellung."
+    },
+    "freundlich": {
+      "du": "Wähle eine Sichtbarkeit; es gibt keine Voreinstellung.",
+      "sie": "Wählen Sie eine Sichtbarkeit; es gibt keine Voreinstellung."
+    },
+    "motivierend": {
+      "du": "Wähle eine Sichtbarkeit; es gibt keine Voreinstellung.",
+      "sie": "Wählen Sie eine Sichtbarkeit; es gibt keine Voreinstellung."
+    }
+  },
+  "zugang.beitritt.titel": {
+    "sachlich": {
+      "du": "Beitreten",
+      "sie": "Beitreten"
+    },
+    "freundlich": {
+      "du": "Beitreten",
+      "sie": "Beitreten"
+    },
+    "motivierend": {
+      "du": "Beitreten",
+      "sie": "Beitreten"
+    }
+  },
+  "zugang.beitritt.hinweis": {
+    "sachlich": {
+      "du": "Gib den Beitrittscode ein oder öffne den Link aus dem QR-Code.",
+      "sie": "Geben Sie den Beitrittscode ein oder öffnen Sie den Link aus dem QR-Code."
+    },
+    "freundlich": {
+      "du": "Gib den Beitrittscode ein oder öffne den Link aus dem QR-Code.",
+      "sie": "Geben Sie den Beitrittscode ein oder öffnen Sie den Link aus dem QR-Code."
+    },
+    "motivierend": {
+      "du": "Gib den Beitrittscode ein oder öffne den Link aus dem QR-Code.",
+      "sie": "Geben Sie den Beitrittscode ein oder öffnen Sie den Link aus dem QR-Code."
+    }
+  },
+  "zugang.beitritt.weiter": {
+    "sachlich": {
+      "du": "Weiter",
+      "sie": "Weiter"
+    },
+    "freundlich": {
+      "du": "Weiter",
+      "sie": "Weiter"
+    },
+    "motivierend": {
+      "du": "Weiter",
+      "sie": "Weiter"
+    }
+  },
+  "zugang.beitritt.tenant": {
+    "sachlich": {
+      "du": "Du trittst {tenant} bei.",
+      "sie": "Sie treten {tenant} bei."
+    },
+    "freundlich": {
+      "du": "Schön, dass du dabei bist: {tenant}.",
+      "sie": "Schön, dass Sie dabei sind: {tenant}."
+    },
+    "motivierend": {
+      "du": "Los geht es bei {tenant}!",
+      "sie": "Los geht es bei {tenant}!"
+    }
+  },
+  "zugang.beitritt.wegFrage": {
+    "sachlich": {
+      "du": "Wie sicherst du deinen Zugang?",
+      "sie": "Wie sichern Sie Ihren Zugang?"
+    },
+    "freundlich": {
+      "du": "Wie sicherst du deinen Zugang?",
+      "sie": "Wie sichern Sie Ihren Zugang?"
+    },
+    "motivierend": {
+      "du": "Wie sicherst du deinen Zugang?",
+      "sie": "Wie sichern Sie Ihren Zugang?"
+    }
+  },
+  "zugang.beitritt.nurAnbieter": {
+    "sachlich": {
+      "du": "Der Beitritt läuft hier über den Anbieter der Firma.",
+      "sie": "Der Beitritt läuft hier über den Anbieter der Firma."
+    },
+    "freundlich": {
+      "du": "Der Beitritt läuft hier über den Anbieter der Firma.",
+      "sie": "Der Beitritt läuft hier über den Anbieter der Firma."
+    },
+    "motivierend": {
+      "du": "Der Beitritt läuft hier über den Anbieter der Firma.",
+      "sie": "Der Beitritt läuft hier über den Anbieter der Firma."
+    }
+  },
+  "zugang.beitritt.anbieterGeprueft": {
+    "sachlich": {
+      "du": "{anbieter} ist geprüft. Wähle Anzeigename und Sichtbarkeit.",
+      "sie": "{anbieter} ist geprüft. Wählen Sie Anzeigename und Sichtbarkeit."
+    },
+    "freundlich": {
+      "du": "{anbieter} ist geprüft. Wähle Anzeigename und Sichtbarkeit.",
+      "sie": "{anbieter} ist geprüft. Wählen Sie Anzeigename und Sichtbarkeit."
+    },
+    "motivierend": {
+      "du": "{anbieter} ist geprüft. Wähle Anzeigename und Sichtbarkeit.",
+      "sie": "{anbieter} ist geprüft. Wählen Sie Anzeigename und Sichtbarkeit."
+    }
+  },
+  "zugang.beitritt.externGeprueft": {
+    "sachlich": {
+      "du": "Die Anmeldung beim Anbieter ist geprüft, aber noch keiner Person zugeordnet. Gib den Beitrittscode ein.",
+      "sie": "Die Anmeldung beim Anbieter ist geprüft, aber noch keiner Person zugeordnet. Geben Sie den Beitrittscode ein."
+    },
+    "freundlich": {
+      "du": "Die Anmeldung beim Anbieter ist geprüft, aber noch keiner Person zugeordnet. Gib den Beitrittscode ein.",
+      "sie": "Die Anmeldung beim Anbieter ist geprüft, aber noch keiner Person zugeordnet. Geben Sie den Beitrittscode ein."
+    },
+    "motivierend": {
+      "du": "Die Anmeldung beim Anbieter ist geprüft, aber noch keiner Person zugeordnet. Gib den Beitrittscode ein.",
+      "sie": "Die Anmeldung beim Anbieter ist geprüft, aber noch keiner Person zugeordnet. Geben Sie den Beitrittscode ein."
+    }
+  },
+  "zugang.beitritt.beitreten": {
+    "sachlich": {
+      "du": "Beitreten",
+      "sie": "Beitreten"
+    },
+    "freundlich": {
+      "du": "Beitreten",
+      "sie": "Beitreten"
+    },
+    "motivierend": {
+      "du": "Beitreten",
+      "sie": "Beitreten"
+    }
+  },
+  "zugang.beitritt.willkommen": {
+    "sachlich": {
+      "du": "Willkommen",
+      "sie": "Willkommen"
+    },
+    "freundlich": {
+      "du": "Willkommen an Bord",
+      "sie": "Willkommen an Bord"
+    },
+    "motivierend": {
+      "du": "Willkommen an Bord!",
+      "sie": "Willkommen an Bord!"
+    }
+  },
+  "zugang.beitritt.kennungHinweis": {
+    "sachlich": {
+      "du": "Deine Kiosk-Kennung. Sie steht auch in der App unter „Ich“.",
+      "sie": "Ihre Kiosk-Kennung. Sie steht auch in der App unter „Ich“."
+    },
+    "freundlich": {
+      "du": "Deine Kiosk-Kennung. Sie steht auch in der App unter „Ich“.",
+      "sie": "Ihre Kiosk-Kennung. Sie steht auch in der App unter „Ich“."
+    },
+    "motivierend": {
+      "du": "Deine Kiosk-Kennung. Sie steht auch in der App unter „Ich“.",
+      "sie": "Ihre Kiosk-Kennung. Sie steht auch in der App unter „Ich“."
+    }
+  },
+  "zugang.beitritt.wiederherstellungscodeHinweis": {
+    "sachlich": {
+      "du": "Dein Wiederherstellungscode erscheint nur jetzt. Bewahre ihn sicher auf.",
+      "sie": "Ihr Wiederherstellungscode erscheint nur jetzt. Bewahren Sie ihn sicher auf."
+    },
+    "freundlich": {
+      "du": "Dein Wiederherstellungscode erscheint nur jetzt. Bewahre ihn sicher auf.",
+      "sie": "Ihr Wiederherstellungscode erscheint nur jetzt. Bewahren Sie ihn sicher auf."
+    },
+    "motivierend": {
+      "du": "Dein Wiederherstellungscode erscheint nur jetzt. Bewahre ihn sicher auf.",
+      "sie": "Ihr Wiederherstellungscode erscheint nur jetzt. Bewahren Sie ihn sicher auf."
+    }
+  },
+  "zugang.beitritt.los": {
+    "sachlich": {
+      "du": "Zur Startseite",
+      "sie": "Zur Startseite"
+    },
+    "freundlich": {
+      "du": "Los geht es",
+      "sie": "Los geht es"
+    },
+    "motivierend": {
+      "du": "Los geht es!",
+      "sie": "Los geht es!"
+    }
+  },
+  "zugang.rolle.titel": {
+    "sachlich": {
+      "du": "Rollencode einlösen",
+      "sie": "Rollencode einlösen"
+    },
+    "freundlich": {
+      "du": "Rollencode einlösen",
+      "sie": "Rollencode einlösen"
+    },
+    "motivierend": {
+      "du": "Rollencode einlösen",
+      "sie": "Rollencode einlösen"
+    }
+  },
+  "zugang.rolle.vorschau": {
+    "sachlich": {
+      "du": "{tenant}: Rolle {rolle}",
+      "sie": "{tenant}: Rolle {rolle}"
+    },
+    "freundlich": {
+      "du": "{tenant}: Rolle {rolle}",
+      "sie": "{tenant}: Rolle {rolle}"
+    },
+    "motivierend": {
+      "du": "{tenant}: Rolle {rolle}",
+      "sie": "{tenant}: Rolle {rolle}"
+    }
+  },
+  "zugang.rolle.klarnameHinweis": {
+    "sachlich": {
+      "du": "Für diese Rolle wird der Klarname als Anzeigename gesetzt.",
+      "sie": "Für diese Rolle wird der Klarname als Anzeigename gesetzt."
+    },
+    "freundlich": {
+      "du": "Für diese Rolle wird der Klarname als Anzeigename gesetzt.",
+      "sie": "Für diese Rolle wird der Klarname als Anzeigename gesetzt."
+    },
+    "motivierend": {
+      "du": "Für diese Rolle wird der Klarname als Anzeigename gesetzt.",
+      "sie": "Für diese Rolle wird der Klarname als Anzeigename gesetzt."
+    }
+  },
+  "zugang.rolle.wegFrage": {
+    "sachlich": {
+      "du": "Wie sicherst du deinen Zugang? Diese Rolle verlangt E-Mail oder Anbieter und Passkey oder Anbieter.",
+      "sie": "Wie sichern Sie Ihren Zugang? Diese Rolle verlangt E-Mail oder Anbieter und Passkey oder Anbieter."
+    },
+    "freundlich": {
+      "du": "Wie sicherst du deinen Zugang? Diese Rolle verlangt E-Mail oder Anbieter und Passkey oder Anbieter.",
+      "sie": "Wie sichern Sie Ihren Zugang? Diese Rolle verlangt E-Mail oder Anbieter und Passkey oder Anbieter."
+    },
+    "motivierend": {
+      "du": "Wie sicherst du deinen Zugang? Diese Rolle verlangt E-Mail oder Anbieter und Passkey oder Anbieter.",
+      "sie": "Wie sichern Sie Ihren Zugang? Diese Rolle verlangt E-Mail oder Anbieter und Passkey oder Anbieter."
+    }
+  },
+  "zugang.rolle.emailHinweis": {
+    "sachlich": {
+      "du": "Für Anmeldelinks und Rollencodes; wird nur mit der ausdrücklichen Angabe gespeichert.",
+      "sie": "Für Anmeldelinks und Rollencodes; wird nur mit der ausdrücklichen Angabe gespeichert."
+    },
+    "freundlich": {
+      "du": "Für Anmeldelinks und Rollencodes; wird nur mit der ausdrücklichen Angabe gespeichert.",
+      "sie": "Für Anmeldelinks und Rollencodes; wird nur mit der ausdrücklichen Angabe gespeichert."
+    },
+    "motivierend": {
+      "du": "Für Anmeldelinks und Rollencodes; wird nur mit der ausdrücklichen Angabe gespeichert.",
+      "sie": "Für Anmeldelinks und Rollencodes; wird nur mit der ausdrücklichen Angabe gespeichert."
+    }
+  },
+  "zugang.rolle.bestehendePerson": {
+    "sachlich": {
+      "du": "Du bist angemeldet: Die Rolle kommt zu deiner bestehenden Person. Danach meldest du dich neu an.",
+      "sie": "Sie sind angemeldet: Die Rolle kommt zu Ihrer bestehenden Person. Danach melden Sie sich neu an."
+    },
+    "freundlich": {
+      "du": "Du bist angemeldet: Die Rolle kommt zu deiner bestehenden Person. Danach meldest du dich neu an.",
+      "sie": "Sie sind angemeldet: Die Rolle kommt zu Ihrer bestehenden Person. Danach melden Sie sich neu an."
+    },
+    "motivierend": {
+      "du": "Du bist angemeldet: Die Rolle kommt zu deiner bestehenden Person. Danach meldest du dich neu an.",
+      "sie": "Sie sind angemeldet: Die Rolle kommt zu Ihrer bestehenden Person. Danach melden Sie sich neu an."
+    }
+  },
+  "zugang.rolle.einloesen": {
+    "sachlich": {
+      "du": "Für mein Konto einlösen",
+      "sie": "Für mein Konto einlösen"
+    },
+    "freundlich": {
+      "du": "Für mein Konto einlösen",
+      "sie": "Für mein Konto einlösen"
+    },
+    "motivierend": {
+      "du": "Für mein Konto einlösen",
+      "sie": "Für mein Konto einlösen"
+    }
+  },
+  "zugang.rolle.eingeloest": {
+    "sachlich": {
+      "du": "Rolle vergeben. Deine Sitzung ist beendet; melde dich mit Passkey oder Anbieter neu an.",
+      "sie": "Rolle vergeben. Ihre Sitzung ist beendet; melden Sie sich mit Passkey oder Anbieter neu an."
+    },
+    "freundlich": {
+      "du": "Rolle vergeben. Deine Sitzung ist beendet; melde dich mit Passkey oder Anbieter neu an.",
+      "sie": "Rolle vergeben. Ihre Sitzung ist beendet; melden Sie sich mit Passkey oder Anbieter neu an."
+    },
+    "motivierend": {
+      "du": "Rolle vergeben. Deine Sitzung ist beendet; melde dich mit Passkey oder Anbieter neu an.",
+      "sie": "Rolle vergeben. Ihre Sitzung ist beendet; melden Sie sich mit Passkey oder Anbieter neu an."
+    }
+  },
+  "zugang.rolle.neuAnmelden": {
+    "sachlich": {
+      "du": "Neu anmelden",
+      "sie": "Neu anmelden"
+    },
+    "freundlich": {
+      "du": "Neu anmelden",
+      "sie": "Neu anmelden"
+    },
+    "motivierend": {
+      "du": "Neu anmelden",
+      "sie": "Neu anmelden"
+    }
+  },
+  "rolle.operator_admin": {
+    "sachlich": {
+      "du": "Operator-Admin",
+      "sie": "Operator-Admin"
+    },
+    "freundlich": {
+      "du": "Operator-Admin",
+      "sie": "Operator-Admin"
+    },
+    "motivierend": {
+      "du": "Operator-Admin",
+      "sie": "Operator-Admin"
+    }
+  },
+  "rolle.operator_support": {
+    "sachlich": {
+      "du": "Operator-Support",
+      "sie": "Operator-Support"
+    },
+    "freundlich": {
+      "du": "Operator-Support",
+      "sie": "Operator-Support"
+    },
+    "motivierend": {
+      "du": "Operator-Support",
+      "sie": "Operator-Support"
+    }
+  },
+  "rolle.partner_admin": {
+    "sachlich": {
+      "du": "Partner-Admin",
+      "sie": "Partner-Admin"
+    },
+    "freundlich": {
+      "du": "Partner-Admin",
+      "sie": "Partner-Admin"
+    },
+    "motivierend": {
+      "du": "Partner-Admin",
+      "sie": "Partner-Admin"
+    }
+  },
+  "rolle.tenant_admin": {
+    "sachlich": {
+      "du": "Tenant-Admin",
+      "sie": "Tenant-Admin"
+    },
+    "freundlich": {
+      "du": "Tenant-Admin",
+      "sie": "Tenant-Admin"
+    },
+    "motivierend": {
+      "du": "Tenant-Admin",
+      "sie": "Tenant-Admin"
+    }
+  },
+  "rolle.programme_manager": {
+    "sachlich": {
+      "du": "Programm-Manager",
+      "sie": "Programm-Manager"
+    },
+    "freundlich": {
+      "du": "Programm-Manager",
+      "sie": "Programm-Manager"
+    },
+    "motivierend": {
+      "du": "Programm-Manager",
+      "sie": "Programm-Manager"
+    }
+  },
+  "rolle.editor": {
+    "sachlich": {
+      "du": "Redakteur",
+      "sie": "Redakteur"
+    },
+    "freundlich": {
+      "du": "Redakteur",
+      "sie": "Redakteur"
+    },
+    "motivierend": {
+      "du": "Redakteur",
+      "sie": "Redakteur"
+    }
+  },
+  "rolle.insight": {
+    "sachlich": {
+      "du": "Einsichtsrolle",
+      "sie": "Einsichtsrolle"
+    },
+    "freundlich": {
+      "du": "Einsichtsrolle",
+      "sie": "Einsichtsrolle"
+    },
+    "motivierend": {
+      "du": "Einsichtsrolle",
+      "sie": "Einsichtsrolle"
+    }
+  },
+  "rolle.health_ambassador": {
+    "sachlich": {
+      "du": "Gesundheitsbotschafter",
+      "sie": "Gesundheitsbotschafter"
+    },
+    "freundlich": {
+      "du": "Gesundheitsbotschafter",
+      "sie": "Gesundheitsbotschafter"
+    },
+    "motivierend": {
+      "du": "Gesundheitsbotschafter",
+      "sie": "Gesundheitsbotschafter"
+    }
+  },
+  "rolle.member": {
+    "sachlich": {
+      "du": "Mitglied",
+      "sie": "Mitglied"
+    },
+    "freundlich": {
+      "du": "Mitglied",
+      "sie": "Mitglied"
+    },
+    "motivierend": {
+      "du": "Mitglied",
+      "sie": "Mitglied"
+    }
+  },
+  "zugang.fehler.passkeyAbgebrochen": {
+    "sachlich": {
+      "du": "Der Passkey wurde nicht bestätigt.",
+      "sie": "Der Passkey wurde nicht bestätigt."
+    },
+    "freundlich": {
+      "du": "Der Passkey wurde nicht bestätigt.",
+      "sie": "Der Passkey wurde nicht bestätigt."
+    },
+    "motivierend": {
+      "du": "Der Passkey wurde nicht bestätigt.",
+      "sie": "Der Passkey wurde nicht bestätigt."
+    }
+  },
+  "zugang.fehler.abgelehnt": {
+    "sachlich": {
+      "du": "Die Anmeldung wurde abgelehnt.",
+      "sie": "Die Anmeldung wurde abgelehnt."
+    },
+    "freundlich": {
+      "du": "Die Anmeldung wurde abgelehnt.",
+      "sie": "Die Anmeldung wurde abgelehnt."
+    },
+    "motivierend": {
+      "du": "Die Anmeldung wurde abgelehnt.",
+      "sie": "Die Anmeldung wurde abgelehnt."
+    }
+  },
+  "zugang.fehler.codeUnbekannt": {
+    "sachlich": {
+      "du": "Dieser Code ist nicht gültig.",
+      "sie": "Dieser Code ist nicht gültig."
+    },
+    "freundlich": {
+      "du": "Dieser Code ist nicht gültig.",
+      "sie": "Dieser Code ist nicht gültig."
+    },
+    "motivierend": {
+      "du": "Dieser Code ist nicht gültig.",
+      "sie": "Dieser Code ist nicht gültig."
+    }
+  },
+  "zugang.fehler.anbieterFehler": {
+    "sachlich": {
+      "du": "Der Anbieter hat nicht geantwortet. Bitte später erneut versuchen.",
+      "sie": "Der Anbieter hat nicht geantwortet. Bitte später erneut versuchen."
+    },
+    "freundlich": {
+      "du": "Der Anbieter hat nicht geantwortet. Bitte später erneut versuchen.",
+      "sie": "Der Anbieter hat nicht geantwortet. Bitte später erneut versuchen."
+    },
+    "motivierend": {
+      "du": "Der Anbieter hat nicht geantwortet. Bitte später erneut versuchen.",
+      "sie": "Der Anbieter hat nicht geantwortet. Bitte später erneut versuchen."
+    }
+  },
+  "zugang.fehler.anbieterAbgelehnt": {
+    "sachlich": {
+      "du": "Der Anbieter hat die Anmeldung abgelehnt.",
+      "sie": "Der Anbieter hat die Anmeldung abgelehnt."
+    },
+    "freundlich": {
+      "du": "Der Anbieter hat die Anmeldung abgelehnt.",
+      "sie": "Der Anbieter hat die Anmeldung abgelehnt."
+    },
+    "motivierend": {
+      "du": "Der Anbieter hat die Anmeldung abgelehnt.",
+      "sie": "Der Anbieter hat die Anmeldung abgelehnt."
+    }
+  },
+  "zugang.fehler.linkUngueltig": {
+    "sachlich": {
+      "du": "Dieser Link ist nicht mehr gültig.",
+      "sie": "Dieser Link ist nicht mehr gültig."
+    },
+    "freundlich": {
+      "du": "Dieser Link ist nicht mehr gültig.",
+      "sie": "Dieser Link ist nicht mehr gültig."
+    },
+    "motivierend": {
+      "du": "Dieser Link ist nicht mehr gültig.",
+      "sie": "Dieser Link ist nicht mehr gültig."
+    }
+  },
+  "zugang.fehler.access_way_required": {
+    "sachlich": {
+      "du": "Wähle einen Weg, um deinen Zugang zu sichern.",
+      "sie": "Wählen Sie einen Weg, um Ihren Zugang zu sichern."
+    },
+    "freundlich": {
+      "du": "Wähle einen Weg, um deinen Zugang zu sichern.",
+      "sie": "Wählen Sie einen Weg, um Ihren Zugang zu sichern."
+    },
+    "motivierend": {
+      "du": "Wähle einen Weg, um deinen Zugang zu sichern.",
+      "sie": "Wählen Sie einen Weg, um Ihren Zugang zu sichern."
+    }
+  },
+  "zugang.fehler.device_unknown": {
+    "sachlich": {
+      "du": "Dieses Gerät ist nicht registriert.",
+      "sie": "Dieses Gerät ist nicht registriert."
+    },
+    "freundlich": {
+      "du": "Dieses Gerät ist nicht registriert.",
+      "sie": "Dieses Gerät ist nicht registriert."
+    },
+    "motivierend": {
+      "du": "Dieses Gerät ist nicht registriert.",
+      "sie": "Dieses Gerät ist nicht registriert."
+    }
+  },
+  "zugang.fehler.display_name_invalid": {
+    "sachlich": {
+      "du": "Der Anzeigename hat 2 bis 80 Zeichen.",
+      "sie": "Der Anzeigename hat 2 bis 80 Zeichen."
+    },
+    "freundlich": {
+      "du": "Der Anzeigename hat 2 bis 80 Zeichen.",
+      "sie": "Der Anzeigename hat 2 bis 80 Zeichen."
+    },
+    "motivierend": {
+      "du": "Der Anzeigename hat 2 bis 80 Zeichen.",
+      "sie": "Der Anzeigename hat 2 bis 80 Zeichen."
+    }
+  },
+  "zugang.fehler.display_name_taken": {
+    "sachlich": {
+      "du": "Dieser Anzeigename ist schon vergeben. Wähle einen anderen.",
+      "sie": "Dieser Anzeigename ist schon vergeben. Wählen Sie einen anderen."
+    },
+    "freundlich": {
+      "du": "Dieser Anzeigename ist schon vergeben. Wähle einen anderen.",
+      "sie": "Dieser Anzeigename ist schon vergeben. Wählen Sie einen anderen."
+    },
+    "motivierend": {
+      "du": "Dieser Anzeigename ist schon vergeben. Wähle einen anderen.",
+      "sie": "Dieser Anzeigename ist schon vergeben. Wählen Sie einen anderen."
+    }
+  },
+  "zugang.fehler.email_invalid": {
+    "sachlich": {
+      "du": "Die E-Mail-Adresse ist nicht gültig.",
+      "sie": "Die E-Mail-Adresse ist nicht gültig."
+    },
+    "freundlich": {
+      "du": "Die E-Mail-Adresse ist nicht gültig.",
+      "sie": "Die E-Mail-Adresse ist nicht gültig."
+    },
+    "motivierend": {
+      "du": "Die E-Mail-Adresse ist nicht gültig.",
+      "sie": "Die E-Mail-Adresse ist nicht gültig."
+    }
+  },
+  "zugang.fehler.email_or_provider_required": {
+    "sachlich": {
+      "du": "Diese Rolle braucht eine E-Mail-Adresse oder einen Anbieter.",
+      "sie": "Diese Rolle braucht eine E-Mail-Adresse oder einen Anbieter."
+    },
+    "freundlich": {
+      "du": "Diese Rolle braucht eine E-Mail-Adresse oder einen Anbieter.",
+      "sie": "Diese Rolle braucht eine E-Mail-Adresse oder einen Anbieter."
+    },
+    "motivierend": {
+      "du": "Diese Rolle braucht eine E-Mail-Adresse oder einen Anbieter.",
+      "sie": "Diese Rolle braucht eine E-Mail-Adresse oder einen Anbieter."
+    }
+  },
+  "zugang.fehler.email_unknown": {
+    "sachlich": {
+      "du": "Wenn die Adresse hinterlegt ist, kommt ein Link.",
+      "sie": "Wenn die Adresse hinterlegt ist, kommt ein Link."
+    },
+    "freundlich": {
+      "du": "Wenn die Adresse hinterlegt ist, kommt ein Link.",
+      "sie": "Wenn die Adresse hinterlegt ist, kommt ein Link."
+    },
+    "motivierend": {
+      "du": "Wenn die Adresse hinterlegt ist, kommt ein Link.",
+      "sie": "Wenn die Adresse hinterlegt ist, kommt ein Link."
+    }
+  },
+  "zugang.fehler.identity_taken": {
+    "sachlich": {
+      "du": "Diese Identität gehört bereits zu einer anderen Person.",
+      "sie": "Diese Identität gehört bereits zu einer anderen Person."
+    },
+    "freundlich": {
+      "du": "Diese Identität gehört bereits zu einer anderen Person.",
+      "sie": "Diese Identität gehört bereits zu einer anderen Person."
+    },
+    "motivierend": {
+      "du": "Diese Identität gehört bereits zu einer anderen Person.",
+      "sie": "Diese Identität gehört bereits zu einer anderen Person."
+    }
+  },
+  "zugang.fehler.join_code_invalid": {
+    "sachlich": {
+      "du": "Dieser Beitrittscode ist nicht gültig.",
+      "sie": "Dieser Beitrittscode ist nicht gültig."
+    },
+    "freundlich": {
+      "du": "Dieser Beitrittscode ist nicht gültig.",
+      "sie": "Dieser Beitrittscode ist nicht gültig."
+    },
+    "motivierend": {
+      "du": "Dieser Beitrittscode ist nicht gültig.",
+      "sie": "Dieser Beitrittscode ist nicht gültig."
+    }
+  },
+  "zugang.fehler.kiosk_device_session_required": {
+    "sachlich": {
+      "du": "Kennung und PIN gelten nur am Kiosk.",
+      "sie": "Kennung und PIN gelten nur am Kiosk."
+    },
+    "freundlich": {
+      "du": "Kennung und PIN gelten nur am Kiosk.",
+      "sie": "Kennung und PIN gelten nur am Kiosk."
+    },
+    "motivierend": {
+      "du": "Kennung und PIN gelten nur am Kiosk.",
+      "sie": "Kennung und PIN gelten nur am Kiosk."
+    }
+  },
+  "zugang.fehler.kiosk_join_not_allowed": {
+    "sachlich": {
+      "du": "Der Beitritt am Kiosk ist hier nicht vorgesehen. Bitte über den Anbieter der Firma beitreten.",
+      "sie": "Der Beitritt am Kiosk ist hier nicht vorgesehen. Bitte über den Anbieter der Firma beitreten."
+    },
+    "freundlich": {
+      "du": "Der Beitritt am Kiosk ist hier nicht vorgesehen. Bitte über den Anbieter der Firma beitreten.",
+      "sie": "Der Beitritt am Kiosk ist hier nicht vorgesehen. Bitte über den Anbieter der Firma beitreten."
+    },
+    "motivierend": {
+      "du": "Der Beitritt am Kiosk ist hier nicht vorgesehen. Bitte über den Anbieter der Firma beitreten.",
+      "sie": "Der Beitritt am Kiosk ist hier nicht vorgesehen. Bitte über den Anbieter der Firma beitreten."
+    }
+  },
+  "zugang.fehler.kiosk_join_pin_only": {
+    "sachlich": {
+      "du": "Am Kiosk wird der Zugang mit Kennung und PIN gesichert.",
+      "sie": "Am Kiosk wird der Zugang mit Kennung und PIN gesichert."
+    },
+    "freundlich": {
+      "du": "Am Kiosk wird der Zugang mit Kennung und PIN gesichert.",
+      "sie": "Am Kiosk wird der Zugang mit Kennung und PIN gesichert."
+    },
+    "motivierend": {
+      "du": "Am Kiosk wird der Zugang mit Kennung und PIN gesichert.",
+      "sie": "Am Kiosk wird der Zugang mit Kennung und PIN gesichert."
+    }
+  },
+  "zugang.fehler.kiosk_login_failed": {
+    "sachlich": {
+      "du": "Kennung oder PIN passen nicht.",
+      "sie": "Kennung oder PIN passen nicht."
+    },
+    "freundlich": {
+      "du": "Kennung oder PIN passen nicht.",
+      "sie": "Kennung oder PIN passen nicht."
+    },
+    "motivierend": {
+      "du": "Kennung oder PIN passen nicht.",
+      "sie": "Kennung oder PIN passen nicht."
+    }
+  },
+  "zugang.fehler.kiosk_id_locked": {
+    "sachlich": {
+      "du": "Diese Kennung ist an diesem Gerät 15 Minuten gesperrt.",
+      "sie": "Diese Kennung ist an diesem Gerät 15 Minuten gesperrt."
+    },
+    "freundlich": {
+      "du": "Diese Kennung ist an diesem Gerät 15 Minuten gesperrt.",
+      "sie": "Diese Kennung ist an diesem Gerät 15 Minuten gesperrt."
+    },
+    "motivierend": {
+      "du": "Diese Kennung ist an diesem Gerät 15 Minuten gesperrt.",
+      "sie": "Diese Kennung ist an diesem Gerät 15 Minuten gesperrt."
+    }
+  },
+  "zugang.fehler.device_locked": {
+    "sachlich": {
+      "du": "Dieses Gerät ist 15 Minuten gesperrt.",
+      "sie": "Dieses Gerät ist 15 Minuten gesperrt."
+    },
+    "freundlich": {
+      "du": "Dieses Gerät ist 15 Minuten gesperrt.",
+      "sie": "Dieses Gerät ist 15 Minuten gesperrt."
+    },
+    "motivierend": {
+      "du": "Dieses Gerät ist 15 Minuten gesperrt.",
+      "sie": "Dieses Gerät ist 15 Minuten gesperrt."
+    }
+  },
+  "zugang.fehler.kiosk_not_allowed": {
+    "sachlich": {
+      "du": "Der Kiosk ist hier nicht vorgesehen.",
+      "sie": "Der Kiosk ist hier nicht vorgesehen."
+    },
+    "freundlich": {
+      "du": "Der Kiosk ist hier nicht vorgesehen.",
+      "sie": "Der Kiosk ist hier nicht vorgesehen."
+    },
+    "motivierend": {
+      "du": "Der Kiosk ist hier nicht vorgesehen.",
+      "sie": "Der Kiosk ist hier nicht vorgesehen."
+    }
+  },
+  "zugang.fehler.kiosk_person_session_required": {
+    "sachlich": {
+      "du": "Dafür meldest du dich am Kiosk mit Kennung und PIN an.",
+      "sie": "Dafür melden Sie sich am Kiosk mit Kennung und PIN an."
+    },
+    "freundlich": {
+      "du": "Dafür meldest du dich am Kiosk mit Kennung und PIN an.",
+      "sie": "Dafür melden Sie sich am Kiosk mit Kennung und PIN an."
+    },
+    "motivierend": {
+      "du": "Dafür meldest du dich am Kiosk mit Kennung und PIN an.",
+      "sie": "Dafür melden Sie sich am Kiosk mit Kennung und PIN an."
+    }
+  },
+  "zugang.fehler.kiosk_channel_required": {
+    "sachlich": {
+      "du": "Dieser Beitrag gehört zum Kiosk.",
+      "sie": "Dieser Beitrag gehört zum Kiosk."
+    },
+    "freundlich": {
+      "du": "Dieser Beitrag gehört zum Kiosk.",
+      "sie": "Dieser Beitrag gehört zum Kiosk."
+    },
+    "motivierend": {
+      "du": "Dieser Beitrag gehört zum Kiosk.",
+      "sie": "Dieser Beitrag gehört zum Kiosk."
+    }
+  },
+  "zugang.fehler.last_way": {
+    "sachlich": {
+      "du": "Der letzte Weg kann nicht entfernt werden. Erst einen weiteren einrichten.",
+      "sie": "Der letzte Weg kann nicht entfernt werden. Erst einen weiteren einrichten."
+    },
+    "freundlich": {
+      "du": "Der letzte Weg kann nicht entfernt werden. Erst einen weiteren einrichten.",
+      "sie": "Der letzte Weg kann nicht entfernt werden. Erst einen weiteren einrichten."
+    },
+    "motivierend": {
+      "du": "Der letzte Weg kann nicht entfernt werden. Erst einen weiteren einrichten.",
+      "sie": "Der letzte Weg kann nicht entfernt werden. Erst einen weiteren einrichten."
+    }
+  },
+  "zugang.fehler.magic_link_invalid": {
+    "sachlich": {
+      "du": "Dieser Anmeldelink ist nicht mehr gültig.",
+      "sie": "Dieser Anmeldelink ist nicht mehr gültig."
+    },
+    "freundlich": {
+      "du": "Dieser Anmeldelink ist nicht mehr gültig.",
+      "sie": "Dieser Anmeldelink ist nicht mehr gültig."
+    },
+    "motivierend": {
+      "du": "Dieser Anmeldelink ist nicht mehr gültig.",
+      "sie": "Dieser Anmeldelink ist nicht mehr gültig."
+    }
+  },
+  "zugang.fehler.magic_link_not_allowed": {
+    "sachlich": {
+      "du": "Für deine Rolle ist der Anmeldelink allein kein Weg. Bitte Passkey oder Anbieter verwenden.",
+      "sie": "Für Ihre Rolle ist der Anmeldelink allein kein Weg. Bitte Passkey oder Anbieter verwenden."
+    },
+    "freundlich": {
+      "du": "Für deine Rolle ist der Anmeldelink allein kein Weg. Bitte Passkey oder Anbieter verwenden.",
+      "sie": "Für Ihre Rolle ist der Anmeldelink allein kein Weg. Bitte Passkey oder Anbieter verwenden."
+    },
+    "motivierend": {
+      "du": "Für deine Rolle ist der Anmeldelink allein kein Weg. Bitte Passkey oder Anbieter verwenden.",
+      "sie": "Für Ihre Rolle ist der Anmeldelink allein kein Weg. Bitte Passkey oder Anbieter verwenden."
+    }
+  },
+  "zugang.fehler.passkey_or_provider_required": {
+    "sachlich": {
+      "du": "Diese Rolle braucht einen Passkey oder einen Anbieter.",
+      "sie": "Diese Rolle braucht einen Passkey oder einen Anbieter."
+    },
+    "freundlich": {
+      "du": "Diese Rolle braucht einen Passkey oder einen Anbieter.",
+      "sie": "Diese Rolle braucht einen Passkey oder einen Anbieter."
+    },
+    "motivierend": {
+      "du": "Diese Rolle braucht einen Passkey oder einen Anbieter.",
+      "sie": "Diese Rolle braucht einen Passkey oder einen Anbieter."
+    }
+  },
+  "zugang.fehler.passkey_unknown": {
+    "sachlich": {
+      "du": "Dieser Passkey ist nicht bekannt.",
+      "sie": "Dieser Passkey ist nicht bekannt."
+    },
+    "freundlich": {
+      "du": "Dieser Passkey ist nicht bekannt.",
+      "sie": "Dieser Passkey ist nicht bekannt."
+    },
+    "motivierend": {
+      "du": "Dieser Passkey ist nicht bekannt.",
+      "sie": "Dieser Passkey ist nicht bekannt."
+    }
+  },
+  "zugang.fehler.passkey_rejected": {
+    "sachlich": {
+      "du": "Der Passkey wurde nicht angenommen.",
+      "sie": "Der Passkey wurde nicht angenommen."
+    },
+    "freundlich": {
+      "du": "Der Passkey wurde nicht angenommen.",
+      "sie": "Der Passkey wurde nicht angenommen."
+    },
+    "motivierend": {
+      "du": "Der Passkey wurde nicht angenommen.",
+      "sie": "Der Passkey wurde nicht angenommen."
+    }
+  },
+  "zugang.fehler.pin_trivial": {
+    "sachlich": {
+      "du": "Diese PIN ist zu einfach. Wähle vier andere Ziffern.",
+      "sie": "Diese PIN ist zu einfach. Wählen Sie vier andere Ziffern."
+    },
+    "freundlich": {
+      "du": "Diese PIN ist zu einfach. Wähle vier andere Ziffern.",
+      "sie": "Diese PIN ist zu einfach. Wählen Sie vier andere Ziffern."
+    },
+    "motivierend": {
+      "du": "Diese PIN ist zu einfach. Wähle vier andere Ziffern.",
+      "sie": "Diese PIN ist zu einfach. Wählen Sie vier andere Ziffern."
+    }
+  },
+  "zugang.fehler.provider_not_allowed": {
+    "sachlich": {
+      "du": "Dieser Anbieter ist hier nicht freigegeben.",
+      "sie": "Dieser Anbieter ist hier nicht freigegeben."
+    },
+    "freundlich": {
+      "du": "Dieser Anbieter ist hier nicht freigegeben.",
+      "sie": "Dieser Anbieter ist hier nicht freigegeben."
+    },
+    "motivierend": {
+      "du": "Dieser Anbieter ist hier nicht freigegeben.",
+      "sie": "Dieser Anbieter ist hier nicht freigegeben."
+    }
+  },
+  "zugang.fehler.provider_required": {
+    "sachlich": {
+      "du": "Der Beitritt läuft hier über den Anbieter der Firma.",
+      "sie": "Der Beitritt läuft hier über den Anbieter der Firma."
+    },
+    "freundlich": {
+      "du": "Der Beitritt läuft hier über den Anbieter der Firma.",
+      "sie": "Der Beitritt läuft hier über den Anbieter der Firma."
+    },
+    "motivierend": {
+      "du": "Der Beitritt läuft hier über den Anbieter der Firma.",
+      "sie": "Der Beitritt läuft hier über den Anbieter der Firma."
+    }
+  },
+  "zugang.fehler.provider_unknown": {
+    "sachlich": {
+      "du": "Dieser Anbieter ist nicht bekannt.",
+      "sie": "Dieser Anbieter ist nicht bekannt."
+    },
+    "freundlich": {
+      "du": "Dieser Anbieter ist nicht bekannt.",
+      "sie": "Dieser Anbieter ist nicht bekannt."
+    },
+    "motivierend": {
+      "du": "Dieser Anbieter ist nicht bekannt.",
+      "sie": "Dieser Anbieter ist nicht bekannt."
+    }
+  },
+  "zugang.fehler.real_name_required": {
+    "sachlich": {
+      "du": "Für diese Rolle ist der Klarname nötig.",
+      "sie": "Für diese Rolle ist der Klarname nötig."
+    },
+    "freundlich": {
+      "du": "Für diese Rolle ist der Klarname nötig.",
+      "sie": "Für diese Rolle ist der Klarname nötig."
+    },
+    "motivierend": {
+      "du": "Für diese Rolle ist der Klarname nötig.",
+      "sie": "Für diese Rolle ist der Klarname nötig."
+    }
+  },
+  "zugang.fehler.recovery_code_invalid": {
+    "sachlich": {
+      "du": "Dieser Wiederherstellungscode ist nicht gültig.",
+      "sie": "Dieser Wiederherstellungscode ist nicht gültig."
+    },
+    "freundlich": {
+      "du": "Dieser Wiederherstellungscode ist nicht gültig.",
+      "sie": "Dieser Wiederherstellungscode ist nicht gültig."
+    },
+    "motivierend": {
+      "du": "Dieser Wiederherstellungscode ist nicht gültig.",
+      "sie": "Dieser Wiederherstellungscode ist nicht gültig."
+    }
+  },
+  "zugang.fehler.registration_code_invalid": {
+    "sachlich": {
+      "du": "Dieser Registrierungscode ist nicht gültig.",
+      "sie": "Dieser Registrierungscode ist nicht gültig."
+    },
+    "freundlich": {
+      "du": "Dieser Registrierungscode ist nicht gültig.",
+      "sie": "Dieser Registrierungscode ist nicht gültig."
+    },
+    "motivierend": {
+      "du": "Dieser Registrierungscode ist nicht gültig.",
+      "sie": "Dieser Registrierungscode ist nicht gültig."
+    }
+  },
+  "zugang.fehler.role_code_invalid": {
+    "sachlich": {
+      "du": "Dieser Rollencode ist nicht gültig.",
+      "sie": "Dieser Rollencode ist nicht gültig."
+    },
+    "freundlich": {
+      "du": "Dieser Rollencode ist nicht gültig.",
+      "sie": "Dieser Rollencode ist nicht gültig."
+    },
+    "motivierend": {
+      "du": "Dieser Rollencode ist nicht gültig.",
+      "sie": "Dieser Rollencode ist nicht gültig."
+    }
+  },
+  "zugang.fehler.role_not_issuable": {
+    "sachlich": {
+      "du": "Diese Rolle kann hier nicht vergeben werden.",
+      "sie": "Diese Rolle kann hier nicht vergeben werden."
+    },
+    "freundlich": {
+      "du": "Diese Rolle kann hier nicht vergeben werden.",
+      "sie": "Diese Rolle kann hier nicht vergeben werden."
+    },
+    "motivierend": {
+      "du": "Diese Rolle kann hier nicht vergeben werden.",
+      "sie": "Diese Rolle kann hier nicht vergeben werden."
+    }
+  },
+  "zugang.fehler.role_required": {
+    "sachlich": {
+      "du": "Es fehlt die Rolle.",
+      "sie": "Es fehlt die Rolle."
+    },
+    "freundlich": {
+      "du": "Es fehlt die Rolle.",
+      "sie": "Es fehlt die Rolle."
+    },
+    "motivierend": {
+      "du": "Es fehlt die Rolle.",
+      "sie": "Es fehlt die Rolle."
+    }
+  },
+  "zugang.fehler.transfer_invalid": {
+    "sachlich": {
+      "du": "Dieser Übertragungslink ist nicht mehr gültig.",
+      "sie": "Dieser Übertragungslink ist nicht mehr gültig."
+    },
+    "freundlich": {
+      "du": "Dieser Übertragungslink ist nicht mehr gültig.",
+      "sie": "Dieser Übertragungslink ist nicht mehr gültig."
+    },
+    "motivierend": {
+      "du": "Dieser Übertragungslink ist nicht mehr gültig.",
+      "sie": "Dieser Übertragungslink ist nicht mehr gültig."
+    }
+  },
+  "zugang.fehler.way_disabled": {
+    "sachlich": {
+      "du": "Dieser Anmeldeweg ist hier nicht mehr offen.",
+      "sie": "Dieser Anmeldeweg ist hier nicht mehr offen."
+    },
+    "freundlich": {
+      "du": "Dieser Anmeldeweg ist hier nicht mehr offen.",
+      "sie": "Dieser Anmeldeweg ist hier nicht mehr offen."
+    },
+    "motivierend": {
+      "du": "Dieser Anmeldeweg ist hier nicht mehr offen.",
+      "sie": "Dieser Anmeldeweg ist hier nicht mehr offen."
+    }
+  },
+  "zugang.fehler.external_pending_missing": {
+    "sachlich": {
+      "du": "Die Anmeldung beim Anbieter fehlt oder ist abgelaufen. Bitte erneut beginnen.",
+      "sie": "Die Anmeldung beim Anbieter fehlt oder ist abgelaufen. Bitte erneut beginnen."
+    },
+    "freundlich": {
+      "du": "Die Anmeldung beim Anbieter fehlt oder ist abgelaufen. Bitte erneut beginnen.",
+      "sie": "Die Anmeldung beim Anbieter fehlt oder ist abgelaufen. Bitte erneut beginnen."
+    },
+    "motivierend": {
+      "du": "Die Anmeldung beim Anbieter fehlt oder ist abgelaufen. Bitte erneut beginnen.",
+      "sie": "Die Anmeldung beim Anbieter fehlt oder ist abgelaufen. Bitte erneut beginnen."
+    }
+  },
+  "zugang.fehler.fresh_login_required": {
+    "sachlich": {
+      "du": "Dafür ist eine frische Anmeldung nötig, nicht älter als 15 Minuten.",
+      "sie": "Dafür ist eine frische Anmeldung nötig, nicht älter als 15 Minuten."
+    },
+    "freundlich": {
+      "du": "Dafür ist eine frische Anmeldung nötig, nicht älter als 15 Minuten.",
+      "sie": "Dafür ist eine frische Anmeldung nötig, nicht älter als 15 Minuten."
+    },
+    "motivierend": {
+      "du": "Dafür ist eine frische Anmeldung nötig, nicht älter als 15 Minuten.",
+      "sie": "Dafür ist eine frische Anmeldung nötig, nicht älter als 15 Minuten."
+    }
+  },
+  "ich.zugang.titel": {
+    "sachlich": {
+      "du": "Zugang",
+      "sie": "Zugang"
+    },
+    "freundlich": {
+      "du": "Zugang",
+      "sie": "Zugang"
+    },
+    "motivierend": {
+      "du": "Zugang",
+      "sie": "Zugang"
+    }
+  },
+  "ich.zugang.einrichtenPflicht": {
+    "sachlich": {
+      "du": "Richte jetzt einen Weg ein: Passkey oder E-Mail, damit du dich wieder anmelden kannst.",
+      "sie": "Richten Sie jetzt einen Weg ein: Passkey oder E-Mail, damit Sie sich wieder anmelden können."
+    },
+    "freundlich": {
+      "du": "Richte jetzt einen Weg ein: Passkey oder E-Mail, damit du dich wieder anmelden kannst.",
+      "sie": "Richten Sie jetzt einen Weg ein: Passkey oder E-Mail, damit Sie sich wieder anmelden können."
+    },
+    "motivierend": {
+      "du": "Richte jetzt einen Weg ein: Passkey oder E-Mail, damit du dich wieder anmelden kannst.",
+      "sie": "Richten Sie jetzt einen Weg ein: Passkey oder E-Mail, damit Sie sich wieder anmelden können."
+    }
+  },
+  "ich.zugang.anbieterVerknuepft": {
+    "sachlich": {
+      "du": "Der Anbieter ist verknüpft.",
+      "sie": "Der Anbieter ist verknüpft."
+    },
+    "freundlich": {
+      "du": "Der Anbieter ist verknüpft.",
+      "sie": "Der Anbieter ist verknüpft."
+    },
+    "motivierend": {
+      "du": "Der Anbieter ist verknüpft.",
+      "sie": "Der Anbieter ist verknüpft."
+    }
+  },
+  "ich.zugang.passkeys": {
+    "sachlich": {
+      "du": "Passkeys",
+      "sie": "Passkeys"
+    },
+    "freundlich": {
+      "du": "Passkeys",
+      "sie": "Passkeys"
+    },
+    "motivierend": {
+      "du": "Passkeys",
+      "sie": "Passkeys"
+    }
+  },
+  "ich.zugang.keinPasskey": {
+    "sachlich": {
+      "du": "Noch kein Passkey eingerichtet.",
+      "sie": "Noch kein Passkey eingerichtet."
+    },
+    "freundlich": {
+      "du": "Noch kein Passkey eingerichtet.",
+      "sie": "Noch kein Passkey eingerichtet."
+    },
+    "motivierend": {
+      "du": "Noch kein Passkey eingerichtet.",
+      "sie": "Noch kein Passkey eingerichtet."
+    }
+  },
+  "ich.zugang.geraetename": {
+    "sachlich": {
+      "du": "Gerätename",
+      "sie": "Gerätename"
+    },
+    "freundlich": {
+      "du": "Gerätename",
+      "sie": "Gerätename"
+    },
+    "motivierend": {
+      "du": "Gerätename",
+      "sie": "Gerätename"
+    }
+  },
+  "ich.zugang.passkeyHinzufuegen": {
+    "sachlich": {
+      "du": "Passkey hinzufügen",
+      "sie": "Passkey hinzufügen"
+    },
+    "freundlich": {
+      "du": "Passkey hinzufügen",
+      "sie": "Passkey hinzufügen"
+    },
+    "motivierend": {
+      "du": "Passkey hinzufügen",
+      "sie": "Passkey hinzufügen"
+    }
+  },
+  "ich.zugang.entfernen": {
+    "sachlich": {
+      "du": "Entfernen",
+      "sie": "Entfernen"
+    },
+    "freundlich": {
+      "du": "Entfernen",
+      "sie": "Entfernen"
+    },
+    "motivierend": {
+      "du": "Entfernen",
+      "sie": "Entfernen"
+    }
+  },
+  "ich.zugang.emailHinterlegen": {
+    "sachlich": {
+      "du": "E-Mail hinterlegen",
+      "sie": "E-Mail hinterlegen"
+    },
+    "freundlich": {
+      "du": "E-Mail hinterlegen",
+      "sie": "E-Mail hinterlegen"
+    },
+    "motivierend": {
+      "du": "E-Mail hinterlegen",
+      "sie": "E-Mail hinterlegen"
+    }
+  },
+  "ich.zugang.anbieter": {
+    "sachlich": {
+      "du": "Anbieter",
+      "sie": "Anbieter"
+    },
+    "freundlich": {
+      "du": "Anbieter",
+      "sie": "Anbieter"
+    },
+    "motivierend": {
+      "du": "Anbieter",
+      "sie": "Anbieter"
+    }
+  },
+  "ich.zugang.anbieterVerknuepfen": {
+    "sachlich": {
+      "du": "{anbieter} verknüpfen",
+      "sie": "{anbieter} verknüpfen"
+    },
+    "freundlich": {
+      "du": "{anbieter} verknüpfen",
+      "sie": "{anbieter} verknüpfen"
+    },
+    "motivierend": {
+      "du": "{anbieter} verknüpfen",
+      "sie": "{anbieter} verknüpfen"
+    }
+  },
+  "ich.zugang.trennen": {
+    "sachlich": {
+      "du": "Trennen",
+      "sie": "Trennen"
+    },
+    "freundlich": {
+      "du": "Trennen",
+      "sie": "Trennen"
+    },
+    "motivierend": {
+      "du": "Trennen",
+      "sie": "Trennen"
+    }
+  },
+  "ich.zugang.codeAktiv": {
+    "sachlich": {
+      "du": "Ein Wiederherstellungscode ist aktiv.",
+      "sie": "Ein Wiederherstellungscode ist aktiv."
+    },
+    "freundlich": {
+      "du": "Ein Wiederherstellungscode ist aktiv.",
+      "sie": "Ein Wiederherstellungscode ist aktiv."
+    },
+    "motivierend": {
+      "du": "Ein Wiederherstellungscode ist aktiv.",
+      "sie": "Ein Wiederherstellungscode ist aktiv."
+    }
+  },
+  "ich.zugang.codeInaktiv": {
+    "sachlich": {
+      "du": "Kein Wiederherstellungscode aktiv.",
+      "sie": "Kein Wiederherstellungscode aktiv."
+    },
+    "freundlich": {
+      "du": "Kein Wiederherstellungscode aktiv.",
+      "sie": "Kein Wiederherstellungscode aktiv."
+    },
+    "motivierend": {
+      "du": "Kein Wiederherstellungscode aktiv.",
+      "sie": "Kein Wiederherstellungscode aktiv."
+    }
+  },
+  "ich.zugang.codeErneuern": {
+    "sachlich": {
+      "du": "Neuen Code erzeugen",
+      "sie": "Neuen Code erzeugen"
+    },
+    "freundlich": {
+      "du": "Neuen Code erzeugen",
+      "sie": "Neuen Code erzeugen"
+    },
+    "motivierend": {
+      "du": "Neuen Code erzeugen",
+      "sie": "Neuen Code erzeugen"
+    }
+  },
+  "ich.zugang.kiosk": {
+    "sachlich": {
+      "du": "Kiosk",
+      "sie": "Kiosk"
+    },
+    "freundlich": {
+      "du": "Kiosk",
+      "sie": "Kiosk"
+    },
+    "motivierend": {
+      "du": "Kiosk",
+      "sie": "Kiosk"
+    }
+  },
+  "ich.zugang.kioskHinweis": {
+    "sachlich": {
+      "du": "Deine Kiosk-Kennung, auch zum Vorzeigen als QR-Code. Am Kiosk meldest du dich mit Kennung und PIN an.",
+      "sie": "Ihre Kiosk-Kennung, auch zum Vorzeigen als QR-Code. Am Kiosk melden Sie sich mit Kennung und PIN an."
+    },
+    "freundlich": {
+      "du": "Deine Kiosk-Kennung, auch zum Vorzeigen als QR-Code. Am Kiosk meldest du dich mit Kennung und PIN an.",
+      "sie": "Ihre Kiosk-Kennung, auch zum Vorzeigen als QR-Code. Am Kiosk melden Sie sich mit Kennung und PIN an."
+    },
+    "motivierend": {
+      "du": "Deine Kiosk-Kennung, auch zum Vorzeigen als QR-Code. Am Kiosk meldest du dich mit Kennung und PIN an.",
+      "sie": "Ihre Kiosk-Kennung, auch zum Vorzeigen als QR-Code. Am Kiosk melden Sie sich mit Kennung und PIN an."
+    }
+  },
+  "ich.zugang.kioskQrAlt": {
+    "sachlich": {
+      "du": "QR-Code der Kiosk-Kennung",
+      "sie": "QR-Code der Kiosk-Kennung"
+    },
+    "freundlich": {
+      "du": "QR-Code der Kiosk-Kennung",
+      "sie": "QR-Code der Kiosk-Kennung"
+    },
+    "motivierend": {
+      "du": "QR-Code der Kiosk-Kennung",
+      "sie": "QR-Code der Kiosk-Kennung"
+    }
+  },
+  "ich.zugang.pinSetzen": {
+    "sachlich": {
+      "du": "Kiosk-PIN setzen",
+      "sie": "Kiosk-PIN setzen"
+    },
+    "freundlich": {
+      "du": "Kiosk-PIN setzen",
+      "sie": "Kiosk-PIN setzen"
+    },
+    "motivierend": {
+      "du": "Kiosk-PIN setzen",
+      "sie": "Kiosk-PIN setzen"
+    }
+  },
+  "ich.zugang.pinAendern": {
+    "sachlich": {
+      "du": "Kiosk-PIN ändern",
+      "sie": "Kiosk-PIN ändern"
+    },
+    "freundlich": {
+      "du": "Kiosk-PIN ändern",
+      "sie": "Kiosk-PIN ändern"
+    },
+    "motivierend": {
+      "du": "Kiosk-PIN ändern",
+      "sie": "Kiosk-PIN ändern"
+    }
+  },
+  "ich.zugang.pinSpeichern": {
+    "sachlich": {
+      "du": "PIN speichern",
+      "sie": "PIN speichern"
+    },
+    "freundlich": {
+      "du": "PIN speichern",
+      "sie": "PIN speichern"
+    },
+    "motivierend": {
+      "du": "PIN speichern",
+      "sie": "PIN speichern"
+    }
+  },
+  "ich.zugang.pinGespeichert": {
+    "sachlich": {
+      "du": "Die PIN ist gespeichert.",
+      "sie": "Die PIN ist gespeichert."
+    },
+    "freundlich": {
+      "du": "Die PIN ist gespeichert.",
+      "sie": "Die PIN ist gespeichert."
+    },
+    "motivierend": {
+      "du": "Die PIN ist gespeichert.",
+      "sie": "Die PIN ist gespeichert."
+    }
+  },
+  "ich.zugang.sitzungen": {
+    "sachlich": {
+      "du": "Sitzungen",
+      "sie": "Sitzungen"
+    },
+    "freundlich": {
+      "du": "Sitzungen",
+      "sie": "Sitzungen"
+    },
+    "motivierend": {
+      "du": "Sitzungen",
+      "sie": "Sitzungen"
+    }
+  },
+  "ich.zugang.offlineFreigabe": {
+    "sachlich": {
+      "du": "Offline nutzbar bis {datum}; jeder Serverkontakt verlängert um sieben Tage.",
+      "sie": "Offline nutzbar bis {datum}; jeder Serverkontakt verlängert um sieben Tage."
+    },
+    "freundlich": {
+      "du": "Offline nutzbar bis {datum}; jeder Serverkontakt verlängert um sieben Tage.",
+      "sie": "Offline nutzbar bis {datum}; jeder Serverkontakt verlängert um sieben Tage."
+    },
+    "motivierend": {
+      "du": "Offline nutzbar bis {datum}; jeder Serverkontakt verlängert um sieben Tage.",
+      "sie": "Offline nutzbar bis {datum}; jeder Serverkontakt verlängert um sieben Tage."
+    }
+  },
+  "ich.zugang.abmelden": {
+    "sachlich": {
+      "du": "Abmelden",
+      "sie": "Abmelden"
+    },
+    "freundlich": {
+      "du": "Abmelden",
+      "sie": "Abmelden"
+    },
+    "motivierend": {
+      "du": "Abmelden",
+      "sie": "Abmelden"
+    }
+  },
+  "ich.zugang.ueberallAbmelden": {
+    "sachlich": {
+      "du": "Aus allen Sitzungen abmelden",
+      "sie": "Aus allen Sitzungen abmelden"
+    },
+    "freundlich": {
+      "du": "Aus allen Sitzungen abmelden",
+      "sie": "Aus allen Sitzungen abmelden"
+    },
+    "motivierend": {
+      "du": "Aus allen Sitzungen abmelden",
+      "sie": "Aus allen Sitzungen abmelden"
+    }
+  },
+  "ich.zugang.austrittTitel": {
+    "sachlich": {
+      "du": "Austritt",
+      "sie": "Austritt"
+    },
+    "freundlich": {
+      "du": "Austritt",
+      "sie": "Austritt"
+    },
+    "motivierend": {
+      "du": "Austritt",
+      "sie": "Austritt"
+    }
+  },
+  "ich.zugang.austrittHinweis": {
+    "sachlich": {
+      "du": "Der Austritt beendet alle Sitzungen und löscht alle Anmeldewege, Wiederherstellungscodes, Kennung und PIN sofort.",
+      "sie": "Der Austritt beendet alle Sitzungen und löscht alle Anmeldewege, Wiederherstellungscodes, Kennung und PIN sofort."
+    },
+    "freundlich": {
+      "du": "Der Austritt beendet alle Sitzungen und löscht alle Anmeldewege, Wiederherstellungscodes, Kennung und PIN sofort.",
+      "sie": "Der Austritt beendet alle Sitzungen und löscht alle Anmeldewege, Wiederherstellungscodes, Kennung und PIN sofort."
+    },
+    "motivierend": {
+      "du": "Der Austritt beendet alle Sitzungen und löscht alle Anmeldewege, Wiederherstellungscodes, Kennung und PIN sofort.",
+      "sie": "Der Austritt beendet alle Sitzungen und löscht alle Anmeldewege, Wiederherstellungscodes, Kennung und PIN sofort."
+    }
+  },
+  "ich.zugang.austrittText": {
+    "sachlich": {
+      "du": "Alle Sitzungen enden, alle Anmeldewege werden gelöscht. Ein späterer Beitritt erzeugt eine neue Person ohne Verbindung zur alten.",
+      "sie": "Alle Sitzungen enden, alle Anmeldewege werden gelöscht. Ein späterer Beitritt erzeugt eine neue Person ohne Verbindung zur alten."
+    },
+    "freundlich": {
+      "du": "Alle Sitzungen enden, alle Anmeldewege werden gelöscht. Ein späterer Beitritt erzeugt eine neue Person ohne Verbindung zur alten.",
+      "sie": "Alle Sitzungen enden, alle Anmeldewege werden gelöscht. Ein späterer Beitritt erzeugt eine neue Person ohne Verbindung zur alten."
+    },
+    "motivierend": {
+      "du": "Alle Sitzungen enden, alle Anmeldewege werden gelöscht. Ein späterer Beitritt erzeugt eine neue Person ohne Verbindung zur alten.",
+      "sie": "Alle Sitzungen enden, alle Anmeldewege werden gelöscht. Ein späterer Beitritt erzeugt eine neue Person ohne Verbindung zur alten."
+    }
+  },
+  "ich.zugang.austreten": {
+    "sachlich": {
+      "du": "Austreten",
+      "sie": "Austreten"
+    },
+    "freundlich": {
+      "du": "Austreten",
+      "sie": "Austreten"
+    },
+    "motivierend": {
+      "du": "Austreten",
+      "sie": "Austreten"
+    }
+  },
+  "kiosk.laden": {
+    "sachlich": {
+      "du": "Gerät wird geprüft …",
+      "sie": "Gerät wird geprüft …"
+    },
+    "freundlich": {
+      "du": "Gerät wird geprüft …",
+      "sie": "Gerät wird geprüft …"
+    },
+    "motivierend": {
+      "du": "Gerät wird geprüft …",
+      "sie": "Gerät wird geprüft …"
+    }
+  },
+  "kiosk.geraet": {
+    "sachlich": {
+      "du": "Gerät: {name}",
+      "sie": "Gerät: {name}"
+    },
+    "freundlich": {
+      "du": "Gerät: {name}",
+      "sie": "Gerät: {name}"
+    },
+    "motivierend": {
+      "du": "Gerät: {name}",
+      "sie": "Gerät: {name}"
+    }
+  },
+  "kiosk.registrieren.titel": {
+    "sachlich": {
+      "du": "Gerät registrieren",
+      "sie": "Gerät registrieren"
+    },
+    "freundlich": {
+      "du": "Gerät registrieren",
+      "sie": "Gerät registrieren"
+    },
+    "motivierend": {
+      "du": "Gerät registrieren",
+      "sie": "Gerät registrieren"
+    }
+  },
+  "kiosk.registrieren.hinweis": {
+    "sachlich": {
+      "du": "Der Registrierungscode kommt aus der Verwaltung und gilt 15 Minuten.",
+      "sie": "Der Registrierungscode kommt aus der Verwaltung und gilt 15 Minuten."
+    },
+    "freundlich": {
+      "du": "Der Registrierungscode kommt aus der Verwaltung und gilt 15 Minuten.",
+      "sie": "Der Registrierungscode kommt aus der Verwaltung und gilt 15 Minuten."
+    },
+    "motivierend": {
+      "du": "Der Registrierungscode kommt aus der Verwaltung und gilt 15 Minuten.",
+      "sie": "Der Registrierungscode kommt aus der Verwaltung und gilt 15 Minuten."
+    }
+  },
+  "kiosk.registrieren.code": {
+    "sachlich": {
+      "du": "Registrierungscode",
+      "sie": "Registrierungscode"
+    },
+    "freundlich": {
+      "du": "Registrierungscode",
+      "sie": "Registrierungscode"
+    },
+    "motivierend": {
+      "du": "Registrierungscode",
+      "sie": "Registrierungscode"
+    }
+  },
+  "kiosk.registrieren.aktion": {
+    "sachlich": {
+      "du": "Registrieren",
+      "sie": "Registrieren"
+    },
+    "freundlich": {
+      "du": "Registrieren",
+      "sie": "Registrieren"
+    },
+    "motivierend": {
+      "du": "Registrieren",
+      "sie": "Registrieren"
+    }
+  },
+  "kiosk.hallo": {
+    "sachlich": {
+      "du": "Hallo {name}",
+      "sie": "Hallo {name}"
+    },
+    "freundlich": {
+      "du": "Hallo {name}",
+      "sie": "Hallo {name}"
+    },
+    "motivierend": {
+      "du": "Hallo {name}!",
+      "sie": "Hallo {name}!"
+    }
+  },
+  "kiosk.countdown": {
+    "sachlich": {
+      "du": "Noch {sekunden} s",
+      "sie": "Noch {sekunden} s"
+    },
+    "freundlich": {
+      "du": "Noch {sekunden} s",
+      "sie": "Noch {sekunden} s"
+    },
+    "motivierend": {
+      "du": "Noch {sekunden} s",
+      "sie": "Noch {sekunden} s"
+    }
+  },
+  "kiosk.ablaufWarnung": {
+    "sachlich": {
+      "du": "Die Sitzung endet gleich. Unbestätigte Eingaben gehen verloren.",
+      "sie": "Die Sitzung endet gleich. Unbestätigte Eingaben gehen verloren."
+    },
+    "freundlich": {
+      "du": "Die Sitzung endet gleich. Unbestätigte Eingaben gehen verloren.",
+      "sie": "Die Sitzung endet gleich. Unbestätigte Eingaben gehen verloren."
+    },
+    "motivierend": {
+      "du": "Die Sitzung endet gleich. Unbestätigte Eingaben gehen verloren.",
+      "sie": "Die Sitzung endet gleich. Unbestätigte Eingaben gehen verloren."
+    }
+  },
+  "kiosk.heuteErledigt": {
+    "sachlich": {
+      "du": "{challenge}: heute erledigt",
+      "sie": "{challenge}: heute erledigt"
+    },
+    "freundlich": {
+      "du": "{challenge}: heute erledigt",
+      "sie": "{challenge}: heute erledigt"
+    },
+    "motivierend": {
+      "du": "{challenge}: heute erledigt",
+      "sie": "{challenge}: heute erledigt"
+    }
+  },
+  "kiosk.beitragErfasst": {
+    "sachlich": {
+      "du": "Beitrag erfasst",
+      "sie": "Beitrag erfasst"
+    },
+    "freundlich": {
+      "du": "Beitrag erfasst, danke",
+      "sie": "Beitrag erfasst, danke"
+    },
+    "motivierend": {
+      "du": "Beitrag erfasst, stark!",
+      "sie": "Beitrag erfasst, stark!"
+    }
+  },
+  "kiosk.uebertragen": {
+    "sachlich": {
+      "du": "Auf mein Handy übertragen",
+      "sie": "Auf mein Handy übertragen"
+    },
+    "freundlich": {
+      "du": "Auf mein Handy übertragen",
+      "sie": "Auf mein Handy übertragen"
+    },
+    "motivierend": {
+      "du": "Auf mein Handy übertragen",
+      "sie": "Auf mein Handy übertragen"
+    }
+  },
+  "kiosk.uebertragenHinweis": {
+    "sachlich": {
+      "du": "QR-Code mit dem Handy scannen; der Link gilt einmal, noch {sekunden} s.",
+      "sie": "QR-Code mit dem Handy scannen; der Link gilt einmal, noch {sekunden} s."
+    },
+    "freundlich": {
+      "du": "QR-Code mit dem Handy scannen; der Link gilt einmal, noch {sekunden} s.",
+      "sie": "QR-Code mit dem Handy scannen; der Link gilt einmal, noch {sekunden} s."
+    },
+    "motivierend": {
+      "du": "QR-Code mit dem Handy scannen; der Link gilt einmal, noch {sekunden} s.",
+      "sie": "QR-Code mit dem Handy scannen; der Link gilt einmal, noch {sekunden} s."
+    }
+  },
+  "kiosk.uebertragenQrAlt": {
+    "sachlich": {
+      "du": "QR-Code zum Übertragen auf das eigene Gerät",
+      "sie": "QR-Code zum Übertragen auf das eigene Gerät"
+    },
+    "freundlich": {
+      "du": "QR-Code zum Übertragen auf das eigene Gerät",
+      "sie": "QR-Code zum Übertragen auf das eigene Gerät"
+    },
+    "motivierend": {
+      "du": "QR-Code zum Übertragen auf das eigene Gerät",
+      "sie": "QR-Code zum Übertragen auf das eigene Gerät"
+    }
+  },
+  "kiosk.abmelden": {
+    "sachlich": {
+      "du": "Abmelden",
+      "sie": "Abmelden"
+    },
+    "freundlich": {
+      "du": "Abmelden",
+      "sie": "Abmelden"
+    },
+    "motivierend": {
+      "du": "Abmelden",
+      "sie": "Abmelden"
+    }
+  },
+  "kiosk.sitzungBeendet": {
+    "sachlich": {
+      "du": "Die Sitzung ist beendet.",
+      "sie": "Die Sitzung ist beendet."
+    },
+    "freundlich": {
+      "du": "Die Sitzung ist beendet.",
+      "sie": "Die Sitzung ist beendet."
+    },
+    "motivierend": {
+      "du": "Die Sitzung ist beendet.",
+      "sie": "Die Sitzung ist beendet."
+    }
+  },
+  "kiosk.pinNeuGesetzt": {
+    "sachlich": {
+      "du": "Die PIN ist neu gesetzt. Melde dich mit Kennung und PIN an.",
+      "sie": "Die PIN ist neu gesetzt. Melden Sie sich mit Kennung und PIN an."
+    },
+    "freundlich": {
+      "du": "Die PIN ist neu gesetzt. Melde dich mit Kennung und PIN an.",
+      "sie": "Die PIN ist neu gesetzt. Melden Sie sich mit Kennung und PIN an."
+    },
+    "motivierend": {
+      "du": "Die PIN ist neu gesetzt. Melde dich mit Kennung und PIN an.",
+      "sie": "Die PIN ist neu gesetzt. Melden Sie sich mit Kennung und PIN an."
+    }
+  },
+  "kiosk.pinReset.titel": {
+    "sachlich": {
+      "du": "PIN neu setzen",
+      "sie": "PIN neu setzen"
+    },
+    "freundlich": {
+      "du": "PIN neu setzen",
+      "sie": "PIN neu setzen"
+    },
+    "motivierend": {
+      "du": "PIN neu setzen",
+      "sie": "PIN neu setzen"
+    }
+  },
+  "kiosk.pinReset.hinweis": {
+    "sachlich": {
+      "du": "Mit Kennung und Wiederherstellungscode; danach gilt ein neuer Wiederherstellungscode, den die App zeigt.",
+      "sie": "Mit Kennung und Wiederherstellungscode; danach gilt ein neuer Wiederherstellungscode, den die App zeigt."
+    },
+    "freundlich": {
+      "du": "Mit Kennung und Wiederherstellungscode; danach gilt ein neuer Wiederherstellungscode, den die App zeigt.",
+      "sie": "Mit Kennung und Wiederherstellungscode; danach gilt ein neuer Wiederherstellungscode, den die App zeigt."
+    },
+    "motivierend": {
+      "du": "Mit Kennung und Wiederherstellungscode; danach gilt ein neuer Wiederherstellungscode, den die App zeigt.",
+      "sie": "Mit Kennung und Wiederherstellungscode; danach gilt ein neuer Wiederherstellungscode, den die App zeigt."
+    }
+  },
+  "kiosk.pinReset.neuePin": {
+    "sachlich": {
+      "du": "Neue PIN",
+      "sie": "Neue PIN"
+    },
+    "freundlich": {
+      "du": "Neue PIN",
+      "sie": "Neue PIN"
+    },
+    "motivierend": {
+      "du": "Neue PIN",
+      "sie": "Neue PIN"
+    }
+  },
+  "kiosk.pinReset.aktion": {
+    "sachlich": {
+      "du": "PIN setzen",
+      "sie": "PIN setzen"
+    },
+    "freundlich": {
+      "du": "PIN setzen",
+      "sie": "PIN setzen"
+    },
+    "motivierend": {
+      "du": "PIN setzen",
+      "sie": "PIN setzen"
+    }
+  },
+  "kiosk.beitritt.kennungHinweis": {
+    "sachlich": {
+      "du": "Deine Kiosk-Kennung. Merke sie dir; sie ist dein Weg zur Anmeldung hier.",
+      "sie": "Ihre Kiosk-Kennung. Merken Sie sie sich; sie ist Ihr Weg zur Anmeldung hier."
+    },
+    "freundlich": {
+      "du": "Deine Kiosk-Kennung. Merke sie dir; sie ist dein Weg zur Anmeldung hier.",
+      "sie": "Ihre Kiosk-Kennung. Merken Sie sie sich; sie ist Ihr Weg zur Anmeldung hier."
+    },
+    "motivierend": {
+      "du": "Deine Kiosk-Kennung. Merke sie dir; sie ist dein Weg zur Anmeldung hier.",
+      "sie": "Ihre Kiosk-Kennung. Merken Sie sie sich; sie ist Ihr Weg zur Anmeldung hier."
+    }
+  },
+  "kiosk.beitritt.wiederherstellungscodeHinweis": {
+    "sachlich": {
+      "du": "Dein Wiederherstellungscode für eine vergessene PIN. Er erscheint nur jetzt.",
+      "sie": "Ihr Wiederherstellungscode für eine vergessene PIN. Er erscheint nur jetzt."
+    },
+    "freundlich": {
+      "du": "Dein Wiederherstellungscode für eine vergessene PIN. Er erscheint nur jetzt.",
+      "sie": "Ihr Wiederherstellungscode für eine vergessene PIN. Er erscheint nur jetzt."
+    },
+    "motivierend": {
+      "du": "Dein Wiederherstellungscode für eine vergessene PIN. Er erscheint nur jetzt.",
+      "sie": "Ihr Wiederherstellungscode für eine vergessene PIN. Er erscheint nur jetzt."
+    }
+  },
+  "kiosk.beitritt.fertig": {
+    "sachlich": {
+      "du": "Fertig",
+      "sie": "Fertig"
+    },
+    "freundlich": {
+      "du": "Fertig",
+      "sie": "Fertig"
+    },
+    "motivierend": {
+      "du": "Fertig",
+      "sie": "Fertig"
     }
   }
 }

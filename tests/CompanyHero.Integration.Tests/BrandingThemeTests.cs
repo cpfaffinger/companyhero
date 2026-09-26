@@ -214,10 +214,5 @@ public sealed class BrandingThemeTests(PostgresFixture pg) : IAsyncLifetime
         Assert.Equal(expected.Dunkel.Werte, theme.Dunkel);
     }
 
-    private HttpClient Client(TenantId tenant, PersonId person)
-    {
-        var client = pg.Api.CreateClient();
-        client.DefaultRequestHeaders.Add(TestSessionHandler.Header, TestSession.For(tenant, person));
-        return client;
-    }
+    private HttpClient Client(TenantId tenant, PersonId person) => pg.Client(tenant, person);
 }

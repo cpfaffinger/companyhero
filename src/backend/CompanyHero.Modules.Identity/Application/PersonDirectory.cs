@@ -24,6 +24,7 @@ internal sealed class PersonDirectory(IdentityDbContext db, IContextTransaction 
         var tenantId = context.Require().RequireTenant();
         await using var tx = await transaction.BeginAsync(cancellationToken);
         var person = await db.Persons.SingleOrDefaultAsync(p => p.TenantId == tenantId && p.Id == personId, cancellationToken);
+        await tx.CommitAsync(cancellationToken);
         return person is null ? null : new PersonRecord(person.Id, person.DisplayName);
     }
 
@@ -36,6 +37,7 @@ internal sealed class PersonDirectory(IdentityDbContext db, IContextTransaction 
             .Where(p => p.TenantId == tenantId && ids.Contains(p.Id))
             .Select(p => new { p.Id, p.DisplayName })
             .ToListAsync(cancellationToken);
+        await tx.CommitAsync(cancellationToken);
         return persons.ToDictionary(p => p.Id, p => p.DisplayName);
     }
 }

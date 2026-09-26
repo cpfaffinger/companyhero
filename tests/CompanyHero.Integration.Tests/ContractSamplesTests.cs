@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using CompanyHero.Modules.Branding.Api;
 using CompanyHero.Modules.Challenges.Api;
+using CompanyHero.Modules.Identity.Api;
 using CompanyHero.Modules.Challenges.Application;
 using CompanyHero.Modules.Challenges.Domain;
 using CompanyHero.Modules.Organisation.Domain;
@@ -63,8 +64,24 @@ public sealed class ContractSamplesTests(PostgresFixture pg)
         await TestJobControl.WaitUntilAsync(() => member.GetFromJsonAsync<CollectiveResponse>($"/api/challenges/{challenge:D}/collective", Ct).Result!.ContributionCount == 3, TimeSpan.FromSeconds(20), Ct);
         await worker.StopAsync(Ct);
 
+        // Zugang (Stufe 4): Sitzung, Beitrittsvorschau, Anmeldewege, Kiosk-Gerät und -Anmeldung, Anbieterliste.
+        var joinCode = await AccessJoinTests.CreateJoinCodeAsync(pg, wiesner, Ct);
+        var (kiosk, _) = await KioskTests.RegisterKioskAsync(pg, wiesner, Ct);
+        using var kioskDevice = kiosk;
+        var kioskJoin = await kiosk.PostJsonAsync<JoinResponse>($"/api/join/{joinCode}/kiosk", new KioskJoinRequest("Probe Kiosk", VisibilityDto.Company, "7391"), Ct, HttpStatusCode.Created);
+
         var samples = new Dictionary<string, HttpResponseMessage>(StringComparer.Ordinal)
         {
+            ["session"] = await member.GetAsync("/api/auth/session", Ct),
+            ["session-none"] = await anonymous.GetAsync("/api/auth/session", Ct),
+            ["join-preview"] = await anonymous.GetAsync($"/api/join/{joinCode}", Ct),
+            ["providers"] = await anonymous.GetAsync($"/api/auth/providers?tenant={wiesner.Id}", Ct),
+            ["me-access"] = await member.GetAsync("/api/me/access", Ct),
+            ["kiosk-device"] = await kiosk.GetAsync("/api/kiosk/device", Ct),
+            ["kiosk-join"] = await kiosk.PostAsync($"/api/join/{joinCode}/kiosk", new KioskJoinRequest("Probe Kiosk Zwei", VisibilityDto.Team, "4826"), Ct),
+            ["kiosk-login"] = await kiosk.PostAsync("/api/kiosk/login", new KioskLoginRequest(kioskJoin.KioskId, "7391"), Ct),
+            ["kiosk-login-rejected"] = await kiosk.PostAsync("/api/kiosk/login", new KioskLoginRequest(kioskJoin.KioskId, "0000"), Ct),
+            ["access-policy"] = await wiesnerAdmin.GetAsync("/api/access/policy", Ct),
             ["theme-wiesner"] = await member.GetAsync("/api/branding/theme", Ct),
             ["theme-hoedl"] = await hoedlAdmin.GetAsync("/api/branding/theme", Ct),
             ["theme-standard"] = await Client(standard.Id, standard.MemberA).GetAsync("/api/branding/theme", Ct),
@@ -78,6 +95,13 @@ public sealed class ContractSamplesTests(PostgresFixture pg)
         };
 
         Assert.Equal(HttpStatusCode.Created, samples["contribution-created"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["session"].StatusCode);
+        Assert.Equal(HttpStatusCode.Unauthorized, samples["session-none"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["join-preview"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["me-access"].StatusCode);
+        Assert.Equal(HttpStatusCode.Created, samples["kiosk-join"].StatusCode);
+        Assert.Equal(HttpStatusCode.OK, samples["kiosk-login"].StatusCode);
+        Assert.Equal(HttpStatusCode.Unauthorized, samples["kiosk-login-rejected"].StatusCode);
         Assert.Equal(HttpStatusCode.UnprocessableEntity, samples["contribution-rejected"].StatusCode);
         Assert.Equal(HttpStatusCode.BadRequest, samples["theme-rejected"].StatusCode);
 
@@ -86,7 +110,7 @@ public sealed class ContractSamplesTests(PostgresFixture pg)
         foreach (var (name, response) in samples)
         {
             var body = await response.Content.ReadAsStringAsync(Ct);
-            var live = JsonNode.Parse(body)!;
+            var live = body.Length == 0 ? null : JsonNode.Parse(body);
             var envelope = new JsonObject
             {
                 ["status"] = (int)response.StatusCode,
@@ -177,10 +201,5 @@ public sealed class ContractSamplesTests(PostgresFixture pg)
     /// <summary>Wörterbücher mit Rollen- oder Textschlüsseln: Schlüsselmenge ist Inhalt, nicht Struktur.</summary>
     private static bool IsDynamicMap(string key) => key is "hell" or "dunkel" or "texte" or "errors";
 
-    private HttpClient Client(TenantId tenant, PersonId person)
-    {
-        var client = pg.Api.CreateClient();
-        client.DefaultRequestHeaders.Add(TestSessionHandler.Header, TestSession.For(tenant, person));
-        return client;
-    }
+    private HttpClient Client(TenantId tenant, PersonId person) => pg.Client(tenant, person);
 }

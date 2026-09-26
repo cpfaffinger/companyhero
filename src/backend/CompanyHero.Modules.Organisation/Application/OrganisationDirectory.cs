@@ -74,6 +74,7 @@ internal sealed class OrganisationDirectory(OrganisationDbContext db, IContextTr
             .Where(r => r.TenantId == tenantId && r.PersonId == personId)
             .Select(r => r.Role)
             .ToListAsync(cancellationToken);
+        await tx.CommitAsync(cancellationToken);
         return new HashSet<string>(roles, StringComparer.Ordinal);
     }
 
@@ -85,6 +86,7 @@ internal sealed class OrganisationDirectory(OrganisationDbContext db, IContextTr
             .Where(m => m.TenantId == tenantId && m.State == MembershipState.Active)
             .OrderBy(m => m.PersonId)
             .ToListAsync(cancellationToken);
+        await tx.CommitAsync(cancellationToken);
         return members.Select(m => new MemberRecord(m.PersonId, m.JoinedAt, m.Roles.Select(r => r.Role).Order(StringComparer.Ordinal).ToList())).ToList();
     }
 
@@ -93,7 +95,69 @@ internal sealed class OrganisationDirectory(OrganisationDbContext db, IContextTr
         var tenantId = context.Require().RequireTenant();
         await using var tx = await transaction.BeginAsync(cancellationToken);
         var tenant = await db.Organisations.SingleOrDefaultAsync(o => o.Id == tenantId.Value, cancellationToken);
+        await tx.CommitAsync(cancellationToken);
         return tenant is null ? null : (tenant.DisplayName, tenant.State);
+    }
+
+    public async Task<(string DisplayName, OrganisationState State)?> GetTenantAsync(TenantId tenantId, CancellationToken cancellationToken)
+    {
+        RequirePlatform();
+        await using var tx = await transaction.BeginAsync(cancellationToken);
+        var tenant = await db.Organisations.SingleOrDefaultAsync(o => o.Id == tenantId.Value && o.Type == OrganisationType.Tenant, cancellationToken);
+        await tx.CommitAsync(cancellationToken);
+        return tenant is null ? null : (tenant.DisplayName, tenant.State);
+    }
+
+    public async Task<IReadOnlyList<TenantId>> ListActiveTenantsAsync(CancellationToken cancellationToken)
+    {
+        RequirePlatform();
+        await using var tx = await transaction.BeginAsync(cancellationToken);
+        var ids = await db.Organisations
+            .Where(o => o.Type == OrganisationType.Tenant && o.State == OrganisationState.Active)
+            .OrderBy(o => o.Id)
+            .Select(o => o.Id)
+            .ToListAsync(cancellationToken);
+        await tx.CommitAsync(cancellationToken);
+        return ids.Select(id => new TenantId(id)).ToList();
+    }
+
+    public async Task RemoveRoleAsync(PersonId personId, string role, CancellationToken cancellationToken)
+    {
+        var tenantId = context.Require().RequireTenant();
+        await using var tx = await transaction.BeginAsync(cancellationToken);
+        var membership = await db.Memberships.Include(m => m.Roles)
+            .SingleOrDefaultAsync(m => m.TenantId == tenantId && m.PersonId == personId, cancellationToken)
+            ?? throw new InvalidOperationException("Rolle nur für Mitglieder des Tenants.");
+        if (string.Equals(role, Role.TenantAdmin, StringComparison.Ordinal))
+        {
+            var admins = await db.RoleAssignments.CountAsync(r => r.TenantId == tenantId && r.Role == Role.TenantAdmin, cancellationToken);
+            if (admins <= 1)
+            {
+                throw new OrganisationHierarchyException("Der letzte Tenant-Admin kann seine Rolle nicht abgeben (Organisation 4.1).");
+            }
+        }
+
+        var removed = membership.Revoke(role);
+        if (removed is not null)
+        {
+            db.RoleAssignments.Remove(removed);
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        await tx.CommitAsync(cancellationToken);
+    }
+
+    public async Task LeaveAsync(PersonId personId, CancellationToken cancellationToken)
+    {
+        var tenantId = context.Require().RequireTenant();
+        await using var tx = await transaction.BeginAsync(cancellationToken);
+        var membership = await db.Memberships.Include(m => m.Roles)
+            .SingleOrDefaultAsync(m => m.TenantId == tenantId && m.PersonId == personId, cancellationToken)
+            ?? throw new InvalidOperationException("Austritt nur für Mitglieder des Tenants.");
+        db.RoleAssignments.RemoveRange(membership.Roles);
+        membership.Leave(clock.GetUtcNow());
+        await db.SaveChangesAsync(cancellationToken);
+        await tx.CommitAsync(cancellationToken);
     }
 
     private void RequirePlatform()
@@ -112,18 +176,23 @@ internal sealed class MembershipVerification(OrganisationDbContext db, IContextT
     {
         await using var tx = await transaction.BeginAsync(cancellationToken);
         var tenant = await db.Organisations.SingleOrDefaultAsync(o => o.Id == tenantId.Value, cancellationToken);
-        if (tenant is null || !tenant.GrantsMemberAccess)
-        {
-            return MembershipVerdict.Denied;
-        }
-
-        var membership = await db.Memberships.Include(m => m.Roles)
-            .SingleOrDefaultAsync(m => m.TenantId == tenantId && m.PersonId == personId, cancellationToken);
+        var membership = tenant is null || !tenant.GrantsMemberAccess
+            ? null
+            : await db.Memberships.Include(m => m.Roles).SingleOrDefaultAsync(m => m.TenantId == tenantId && m.PersonId == personId, cancellationToken);
+        await tx.CommitAsync(cancellationToken);
         if (membership is null || membership.State != MembershipState.Active)
         {
             return MembershipVerdict.Denied;
         }
 
         return new MembershipVerdict(true, new HashSet<string>(membership.Roles.Select(r => r.Role), StringComparer.Ordinal));
+    }
+
+    public async Task<bool> VerifyTenantAsync(TenantId tenantId, CancellationToken cancellationToken)
+    {
+        await using var tx = await transaction.BeginAsync(cancellationToken);
+        var tenant = await db.Organisations.SingleOrDefaultAsync(o => o.Id == tenantId.Value, cancellationToken);
+        await tx.CommitAsync(cancellationToken);
+        return tenant is not null && tenant.GrantsMemberAccess;
     }
 }

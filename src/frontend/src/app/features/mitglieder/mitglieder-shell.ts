@@ -1,13 +1,16 @@
 // Feature-Einstieg der Mitglieder-App (A-002, K17): lädt das Theme des Tenants einmal, prüft den Tenant-Kennzeichner der
 // URL gegen die Sitzung (der Pfad benennt den Tenant, ersetzt aber keine Berechtigungsprüfung, Backend 5.1) und rahmt die
-// Seiten mit der Schale. Ohne Sitzung erscheint ein Leerzustand mit dem Weg zum Zugang; nichts wird geraten.
+// Seiten mit der Schale. Ohne Sitzung erscheint ein Leerzustand mit dem Weg zum Zugang; nichts wird geraten. Endet die
+// Sitzung während der Nutzung (401, Zugang 5), führt die Schale ebenfalls zum Zugang (K11).
 import { NgComponentOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, signal, type Type } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, effect, inject, signal, type Type } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { AppShell } from '../../../libs/ui/app-shell/app-shell';
 import { EmptyState } from '../../../libs/ui/empty-state/empty-state';
 import { BrandingApi } from '../../../libs/data-access/branding/branding.api';
+import { ApiClient } from '../../../libs/api-client/api-client';
+import { SessionStore } from '../../../libs/data-access/zugang/session.store';
 import { TextService } from '../../../libs/theme/text.service';
 import { ThemeService } from '../../../libs/theme/theme.service';
 
@@ -34,7 +37,7 @@ export const TENANT_PLACEHOLDER = '_';
           <span class="ch-shell-fallback__name">{{ theme.produktname() }}</span>
         </header>
         <ch-empty-state [text]="texts.t('zugang.noetig')">
-          <a href="/zugang">{{ texts.t('zugang.link') }}</a>
+          <a [href]="zugangUrl()">{{ texts.t('zugang.link') }}</a>
         </ch-empty-state>
       </div>
     }
@@ -68,6 +71,8 @@ export class MitgliederShell {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly sessions = inject(SessionStore);
+  private readonly api = inject(ApiClient);
 
   readonly state = signal<'loading' | 'ready' | 'unauthenticated'>('loading');
   readonly tenantId = signal<string>(TENANT_PLACEHOLDER);
@@ -76,8 +81,16 @@ export class MitgliederShell {
   readonly title = computed(() => (this.titleKey() ? this.texts.t(this.titleKey()!) : ''));
   /** Kontextspalte am Desktop (K07): Komponente aus den Routendaten der aktiven Seite. */
   readonly kontext = signal<Type<unknown> | null>(null);
+  /** Zurück zur aktuellen Seite nach der Anmeldung; nur lokale Pfade (Zugang 3.2). */
+  readonly zugangUrl = computed(() => '/zugang?zurueck=' + encodeURIComponent(this.router.url.startsWith('/t/') ? this.router.url : '/t/_/start'));
 
   constructor() {
+    effect(() => {
+      if (this.sessions.ended() && this.state() === 'ready') {
+        this.theme.context.set('platform');
+        this.state.set('unauthenticated');
+      }
+    });
     this.theme.context.set('tenant');
     this.theme.forcedScale.set(null);
     this.branding
@@ -93,6 +106,8 @@ export class MitgliederShell {
             void this.router.navigate(['/t', theme.tenantId, ...rest], { replaceUrl: true });
           }
           this.state.set('ready');
+          // Sitzungsdaten für Offline-Freigabe und Sitzungsart (Zugang 5, 7); der Zugang selbst bleibt ein eigener Lazy-Einstieg (K17).
+          this.api.get('/api/auth/session').pipe(takeUntilDestroyed(this.destroyRef)).subscribe({ next: (session) => this.sessions.set(session), error: () => undefined });
         },
         error: () => {
           // Anmeldeseite vor Tenant-Zuordnung in Plattformmarke (A-078); Texte aus dem öffentlichen Plattformkatalog.

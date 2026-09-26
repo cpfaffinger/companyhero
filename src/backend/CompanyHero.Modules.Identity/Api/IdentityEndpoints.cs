@@ -37,7 +37,9 @@ internal static class IdentityEndpoints
                     current.Roles.Order(StringComparer.Ordinal).ToList()));
             })
             .RequireTenantContext()
-            .WithName("GetMe");
+            .WithName("GetMe")
+            .Produces<MeResponse>()
+            .Produces(StatusCodes.Status404NotFound);
 
         // Rechtematrix (Organisation 4.2): Mitgliederliste nur für den Tenant-Admin; jede andere Rolle wird abgelehnt.
         endpoints.MapGet("/api/members", async (ITenantContextAccessor context, IPersonDirectory persons, IOrganisationDirectory organisations, CancellationToken ct) =>
@@ -56,6 +58,8 @@ internal static class IdentityEndpoints
                 return Results.Ok(response);
             })
             .RequireTenantContext()
-            .WithName("ListMembers");
+            .WithName("ListMembers")
+            .Produces<List<MemberResponse>>()
+            .Produces(StatusCodes.Status403Forbidden);
     }
 }

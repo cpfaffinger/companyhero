@@ -6,14 +6,14 @@ Das verbindliche Konzept steht in [concept/](concept/README.md); alle Entscheidu
 
 ## Technischer Durchstich
 
-Die Umsetzung folgt dem [technischen Durchstich](concept/technischer-durchstich.md) (A-106) in acht Stufen. Je Stufe liegt ein Abnahmeprotokoll unter [durchstich/abnahme/](durchstich/abnahme/); die fixierten Versionen stehen in [durchstich/versionen.md](durchstich/versionen.md). Arbeit direkt auf `master`, CI bei jedem Push (A-030).
+Die Umsetzung folgt dem [technischen Durchstich](concept/technischer-durchstich.md) (A-106) in acht Stufen. Je Stufe liegt ein Abnahmeprotokoll unter [durchstich/abnahme/](durchstich/abnahme/); die fixierten Versionen stehen in [durchstich/versionen.md](durchstich/versionen.md). CI bei jedem Push auf jedem Branch (A-030); Stufen 1 bis 5 entstanden direkt auf `master`, ab Stufe 6 arbeitet jede Stufe in einem eigenen Branch `stufe-<n>-<name>` und wird am Ende auf `master` gemergt; Images werden nur aus `master` nach GHCR gebracht.
 
 | Stufe | Inhalt | Protokoll |
 |---|---|---|
 | 1 Fundament | Repository, CI, Compose, Images, Migrations-Container, OpenBao, Caddy, Beobachtung, Backup mit Wiederherstellung | [stufe-1.md](durchstich/abnahme/stufe-1.md) |
 | 2 Isolation | zwei Tenants, RLS mit Laufzeitrechten, Tenant-Kontext je Request und Job, Modulschemata, Sichtbarkeitsregel | [stufe-2.md](durchstich/abnahme/stufe-2.md) |
 | 3 Queue und Idempotenz | logische Queue, Outbox-Kopplung, Worker-Replikate, Vorgangskennung und Idempotenzschlüssel | [stufe-3.md](durchstich/abnahme/stufe-3.md) |
-| 4 Zugang | Beitritt, Passkey, Wiederherstellungscode, Magic-Link, OIDC, Kiosk, Sitzungen, Austritt | offen |
+| 4 Zugang | Beitritt, Passkey, Wiederherstellungscode, Magic-Link, OIDC, Kiosk, Sitzungen, Austritt | [stufe-4.md](durchstich/abnahme/stufe-4.md) |
 | 5 Vertrag und Oberfläche | OpenAPI-Client, Referenzscreen, Marken, Großflächenmodus, Ladebudget, Manifest | [stufe-5.md](durchstich/abnahme/stufe-5.md) |
 | 6 Fachpfad | Organisation, Kickoff-Challenge, Beiträge, Fortschritt, Feed, Sichtbarkeit, Push und E-Mail | offen |
 | 7 Geld | Ledger, Slots, Kostenvorschau, Testphase, Rechnungsentwurf | offen |

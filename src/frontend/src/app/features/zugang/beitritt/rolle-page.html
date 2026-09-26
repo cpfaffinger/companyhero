@@ -1,0 +1,81 @@
+<section class="ch-beitritt">
+  <h1 class="ch-beitritt__title">{{ texts.t('zugang.rolle.titel') }}</h1>
+
+  @if (fehler(); as f) {
+    <p class="ch-beitritt__status ch-beitritt__status--fehler" role="alert">{{ texts.t(f.key) }}</p>
+  }
+
+  @if (eingeloest()) {
+    <div class="ch-beitritt__block ch-beitritt__block--ergebnis">
+      <p role="status">{{ texts.t('zugang.rolle.eingeloest') }}</p>
+      <button matButton="filled" type="button" (click)="weiter()">{{ texts.t('zugang.rolle.neuAnmelden') }}</button>
+    </div>
+  } @else if (ergebnis(); as result) {
+    <div class="ch-beitritt__block ch-beitritt__block--ergebnis" data-testid="ergebnis">
+      <h2 class="ch-beitritt__subtitle">{{ texts.t('zugang.beitritt.willkommen') }}</h2>
+      <p>{{ texts.t('zugang.beitritt.kennungHinweis') }}</p>
+      <code class="ch-beitritt__code">{{ result.kioskId }}</code>
+      <button matButton="filled" type="button" (click)="weiter()">{{ texts.t('zugang.beitritt.los') }}</button>
+    </div>
+  } @else if (preview(); as p) {
+    <p class="ch-beitritt__tenant">{{ texts.t('zugang.rolle.vorschau', { tenant: p.tenantName, rolle: texts.t(rolleKey()) }) }}</p>
+    <form class="ch-beitritt__block" [formGroup]="form" (ngSubmit)="angemeldet() ? einloesen() : beitreten()">
+      <p class="ch-beitritt__hint">{{ texts.t('zugang.rolle.klarnameHinweis') }}</p>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ texts.t('zugang.feld.klarname') }}</mat-label>
+        <input matInput formControlName="name" autocomplete="name" maxlength="80" data-testid="klarname" />
+        @if (form.controls.name.touched && form.controls.name.invalid) {
+          <mat-error>{{ texts.t('zugang.feld.klarnamePflicht') }}</mat-error>
+        }
+      </mat-form-field>
+
+      @if (angemeldet()) {
+        <p>{{ texts.t('zugang.rolle.bestehendePerson') }}</p>
+        <button matButton="filled" type="submit" [disabled]="busy()">{{ texts.t('zugang.rolle.einloesen') }}</button>
+      } @else {
+        <div class="ch-beitritt__group" role="group" aria-labelledby="ch-sichtbarkeit">
+          <span class="ch-beitritt__label" id="ch-sichtbarkeit">{{ texts.t('sichtbarkeit.frage') }}</span>
+          <mat-radio-group formControlName="visibility" class="ch-beitritt__radios">
+            @for (option of visibilities; track option.value) {
+              <mat-radio-button [value]="option.value">{{ texts.t(option.key) }}</mat-radio-button>
+            }
+          </mat-radio-group>
+          @if (form.controls.visibility.touched && form.controls.visibility.invalid) {
+            <span class="ch-beitritt__error" role="alert">{{ texts.t('sichtbarkeit.pflicht') }}</span>
+          }
+        </div>
+
+        <div class="ch-beitritt__group" role="group" aria-labelledby="ch-weg">
+          <span class="ch-beitritt__label" id="ch-weg">{{ texts.t('zugang.rolle.wegFrage') }}</span>
+          <mat-radio-group formControlName="weg" class="ch-beitritt__radios">
+            @if (passkeyMoeglich) {
+              <mat-radio-button value="passkey">{{ texts.t('zugang.weg.passkeyMitEmail') }}</mat-radio-button>
+            }
+            <mat-radio-button value="email">{{ texts.t('zugang.weg.magicLink') }}</mat-radio-button>
+            @if (p.pendingExternal; as ext) {
+              <mat-radio-button value="extern">{{ texts.t('zugang.weg.anbieter', { anbieter: ext.displayName }) }}</mat-radio-button>
+            }
+          </mat-radio-group>
+          @if (form.controls.weg.value !== 'extern') {
+            <mat-form-field appearance="outline">
+              <mat-label>{{ texts.t('zugang.feld.email') }}</mat-label>
+              <input matInput type="email" formControlName="email" autocomplete="email" />
+              <mat-hint>{{ texts.t('zugang.rolle.emailHinweis') }}</mat-hint>
+              @if (form.controls.email.touched && form.controls.email.invalid) {
+                <mat-error>{{ texts.t('zugang.feld.emailPflicht') }}</mat-error>
+              }
+            </mat-form-field>
+          }
+          @if (!p.pendingExternal && p.ways.providers.length > 0) {
+            <div class="ch-beitritt__anbieter">
+              @for (provider of p.ways.providers; track provider.key) {
+                <a matButton="outlined" [href]="oidcUrl(provider.key)">{{ texts.t('zugang.weg.anbieter', { anbieter: provider.displayName }) }}</a>
+              }
+            </div>
+          }
+        </div>
+        <button matButton="filled" type="submit" [disabled]="busy()">{{ texts.t('zugang.beitritt.beitreten') }}</button>
+      }
+    </form>
+  }
+</section>

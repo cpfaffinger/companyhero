@@ -33,6 +33,13 @@ public sealed record TwoTenants(
     public const int CemActivities = 3;
     public const int MiaActivities = 2;
 
+    /// <summary>Alle Personen der beiden Tenants mit ihrem Tenant; die Fixture stellt ihnen Sitzungen aus.</summary>
+    public IEnumerable<(TenantId Tenant, PersonId Person)> Persons =>
+    [
+        (WiesnerId, WiesnerAdmin), (WiesnerId, WiesnerManager), (WiesnerId, WiesnerBea), (WiesnerId, WiesnerCem),
+        (HoedlId, HoedlAdmin), (HoedlId, HoedlMia),
+    ];
+
     public static async Task<TwoTenants> SeedAsync(IServiceProvider services, FixedClock clock)
     {
         var scopes = services.GetRequiredService<ITenantScopeFactory>();

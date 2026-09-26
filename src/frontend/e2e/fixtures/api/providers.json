@@ -1,0 +1,14 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "body": [
+    {
+      "key": "google",
+      "displayName": "Google"
+    },
+    {
+      "key": "microsoft",
+      "displayName": "Microsoft"
+    }
+  ]
+}

@@ -34,7 +34,17 @@
         "operationId": "GetMe",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -47,7 +57,20 @@
         "operationId": "ListMembers",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemberResponse"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -299,6 +322,52 @@
         }
       }
     },
+    "/api/audit": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListAuditEntries",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuditEntryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/audit/security": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListSecurityEntries",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SecurityEntryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/persons/{personId}/activities": {
       "get": {
         "tags": [
@@ -387,6 +456,16 @@
               }
             }
           },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
           "404": {
             "description": "Not Found"
           }
@@ -447,6 +526,16 @@
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -520,10 +609,1659 @@
           }
         }
       }
+    },
+    "/api/auth/session": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetSession",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "Logout",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/auth/logout-all": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "LogoutEverywhere",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CountResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/providers": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListLoginProviders",
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProviderResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/oidc/{key}/start": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "StartExternalLogin",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "intent",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "returnUrl",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Found"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/auth/passkey/options": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "BeginPasskeyLogin",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PasskeyCeremonyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/passkey": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "CompletePasskeyLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasskeyAnswerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/recovery": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RecoveryCodeLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecoveryLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/magic-link": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RequestMagicLink",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MagicLinkRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/api/auth/magic-link/consume": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ConsumeMagicLink",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/transfer": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ConsumeTransfer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/join/{code}": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "PreviewJoin",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinPreviewResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "Join",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/join/{code}/passkey-options": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "BeginJoinPasskey",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinPasskeyOptionsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PasskeyCeremonyResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/join/{code}/kiosk": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "JoinAtKiosk",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KioskJoinRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/join/role/{code}": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "PreviewRoleJoin",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinPreviewResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "JoinWithRoleCode",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleJoinRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/join/role/{code}/passkey-options": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "BeginRoleJoinPasskey",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinPasskeyOptionsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PasskeyCeremonyResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/kiosk/register": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RegisterKioskDevice",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KioskRegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KioskDeviceResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/kiosk/device": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetKioskDevice",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KioskDeviceResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/kiosk/login": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "KioskLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/KioskLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KioskLoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "423": {
+            "description": "Locked",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/kiosk/pin": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ChangeKioskPin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/kiosk/pin/reset": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ResetKioskPin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PinResetRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/kiosk/transfer": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "CreateKioskTransfer",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransferResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/access": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetMyAccess",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessOverviewResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/passkeys/options": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "BeginMyPasskey",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinPasskeyOptionsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PasskeyCeremonyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/passkeys": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "AddMyPasskey",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasskeyAnswerRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PasskeyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/passkeys/{passkeyId}": {
+      "delete": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RemoveMyPasskey",
+        "parameters": [
+          {
+            "name": "passkeyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/email": {
+      "put": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "SetMyEmail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RemoveMyEmail",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/me/providers/{linkId}": {
+      "delete": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "UnlinkMyProvider",
+        "parameters": [
+          {
+            "name": "linkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/me/recovery-code": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RenewMyRecoveryCode",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryCodeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/me/leave": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "LeaveTenant",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/access/join-codes": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListJoinCodes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JoinCodeResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "CreateJoinCode",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateJoinCodeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinCodeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/access/join-codes/{id}/revoke": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RevokeJoinCode",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/access/role-codes": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "IssueRoleCode",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueRoleCodeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleCodeResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/access/role-codes/redeem": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RedeemRoleCode",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RedeemRoleCodeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/access/policy": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "GetLoginPolicy",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginPolicyResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "UpdateLoginPolicy",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginPolicyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginPolicyResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/access/policy/preview": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "PreviewLoginPolicy",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginPolicyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginPolicyImpactResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/access/providers": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListTenantProviders",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TenantProviderResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ConfigureTenantProvider",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfigureProviderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantProviderResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/access/providers/{id}": {
+      "delete": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "DisableTenantProvider",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/access/kiosk-devices": {
+      "get": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "ListKioskDevices",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/KioskDeviceAdminResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "CreateKioskDevice",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKioskDeviceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KioskDeviceAdminResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/access/kiosk-devices/{id}/revoke": {
+      "post": {
+        "tags": [
+          "CompanyHero.Api"
+        ],
+        "operationId": "RevokeKioskDevice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AccessOverviewResponse": {
+        "required": [
+          "passkeys",
+          "email",
+          "providers",
+          "recoveryCodeActive",
+          "kioskId",
+          "kioskPinSet",
+          "availableProviders"
+        ],
+        "type": "object",
+        "properties": {
+          "passkeys": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PasskeyResponse"
+            }
+          },
+          "email": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LinkedProviderResponse"
+            }
+          },
+          "recoveryCodeActive": {
+            "type": "boolean"
+          },
+          "kioskId": {
+            "type": "string"
+          },
+          "kioskPinSet": {
+            "type": "boolean"
+          },
+          "availableProviders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProviderResponse"
+            }
+          }
+        }
+      },
       "ActivityResponse": {
         "required": [
           "id",
@@ -549,6 +2287,54 @@
           "du",
           "sie"
         ]
+      },
+      "AuditEntryResponse": {
+        "required": [
+          "entryId",
+          "occurredAt",
+          "actorId",
+          "actorRoles",
+          "action",
+          "subjectRef",
+          "detail"
+        ],
+        "type": "object",
+        "properties": {
+          "entryId": {
+            "type": "string"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actorId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "actorRoles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "action": {
+            "type": "string"
+          },
+          "subjectRef": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
       },
       "BezeichnungenDto": {
         "required": [
@@ -662,6 +2448,29 @@
           }
         }
       },
+      "ConfigureProviderRequest": {
+        "required": [
+          "displayName",
+          "issuer",
+          "clientId",
+          "clientSecret"
+        ],
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "issuer": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "clientSecret": {
+            "type": "string"
+          }
+        }
+      },
       "ContributionRequest": {
         "required": [
           "value",
@@ -707,6 +2516,63 @@
             "type": "string"
           },
           "outcome": {
+            "type": "string"
+          }
+        }
+      },
+      "CountResponse": {
+        "required": [
+          "count"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CreateJoinCodeRequest": {
+        "required": [
+          "usageLimit",
+          "validDays"
+        ],
+        "type": "object",
+        "properties": {
+          "usageLimit": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "validDays": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "CreateKioskDeviceRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "EmailRequest": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
             "type": "string"
           }
         }
@@ -786,6 +2652,400 @@
           }
         }
       },
+      "IssueRoleCodeRequest": {
+        "required": [
+          "role",
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string"
+          },
+          "email": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "JoinCodeResponse": {
+        "required": [
+          "joinCodeId",
+          "code",
+          "createdAt",
+          "expiresAt",
+          "usageLimit",
+          "usedCount",
+          "revokedAt",
+          "joinUrl"
+        ],
+        "type": "object",
+        "properties": {
+          "joinCodeId": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usageLimit": {
+            "type": [
+              "null",
+              "integer"
+            ],
+            "format": "int32"
+          },
+          "usedCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "revokedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "joinUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "JoinPasskeyOptionsRequest": {
+        "required": [
+          "displayName"
+        ],
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "JoinPreviewResponse": {
+        "required": [
+          "tenantId",
+          "tenantName",
+          "ways",
+          "pendingExternal",
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "tenantName": {
+            "type": "string"
+          },
+          "ways": {
+            "$ref": "#/components/schemas/JoinWaysResponse"
+          },
+          "pendingExternal": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PendingExternalResponse"
+              }
+            ]
+          },
+          "role": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "JoinRequest": {
+        "required": [
+          "displayName",
+          "visibility",
+          "passkey",
+          "email",
+          "useExternal",
+          "kioskPin"
+        ],
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/VisibilityDto"
+          },
+          "passkey": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PasskeyAnswerRequest"
+              }
+            ]
+          },
+          "email": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "useExternal": {
+            "type": "boolean"
+          },
+          "kioskPin": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "JoinResponse": {
+        "required": [
+          "tenantId",
+          "personId",
+          "kioskId",
+          "recoveryCode",
+          "sessionKind"
+        ],
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "personId": {
+            "type": "string"
+          },
+          "kioskId": {
+            "type": "string"
+          },
+          "recoveryCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "sessionKind": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SessionKindDto"
+              }
+            ]
+          }
+        }
+      },
+      "JoinWaysResponse": {
+        "required": [
+          "passkey",
+          "magicLink",
+          "kiosk",
+          "providers",
+          "forcedProviderKeys"
+        ],
+        "type": "object",
+        "properties": {
+          "passkey": {
+            "type": "boolean"
+          },
+          "magicLink": {
+            "type": "boolean"
+          },
+          "kiosk": {
+            "type": "boolean"
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProviderResponse"
+            }
+          },
+          "forcedProviderKeys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "JsonElement": {},
+      "KioskDeviceAdminResponse": {
+        "required": [
+          "deviceId",
+          "name",
+          "createdAt",
+          "registeredAt",
+          "revokedAt",
+          "lastSeenAt",
+          "loginCount",
+          "registrationCode",
+          "registrationExpiresAt"
+        ],
+        "type": "object",
+        "properties": {
+          "deviceId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "registeredAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "revokedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "lastSeenAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "loginCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "registrationCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "registrationExpiresAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "KioskDeviceResponse": {
+        "required": [
+          "tenantId",
+          "deviceId",
+          "name",
+          "idleSeconds"
+        ],
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "deviceId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "idleSeconds": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "KioskJoinRequest": {
+        "required": [
+          "displayName",
+          "visibility",
+          "pin"
+        ],
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/VisibilityDto"
+          },
+          "pin": {
+            "type": "string"
+          }
+        }
+      },
+      "KioskLoginRequest": {
+        "required": [
+          "kioskId",
+          "pin"
+        ],
+        "type": "object",
+        "properties": {
+          "kioskId": {
+            "type": "string"
+          },
+          "pin": {
+            "type": "string"
+          }
+        }
+      },
+      "KioskLoginResponse": {
+        "required": [
+          "personId",
+          "displayName",
+          "idleSeconds",
+          "idleUntil",
+          "absoluteUntil"
+        ],
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "idleSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idleUntil": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "absoluteUntil": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "KioskRegisterRequest": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        }
+      },
       "KontrastDto": {
         "required": [
           "modus",
@@ -809,6 +3069,166 @@
             "type": "string"
           },
           "erreicht": {
+            "type": "string"
+          }
+        }
+      },
+      "LinkedProviderResponse": {
+        "required": [
+          "linkId",
+          "providerKey",
+          "displayName",
+          "createdAt"
+        ],
+        "type": "object",
+        "properties": {
+          "linkId": {
+            "type": "string"
+          },
+          "providerKey": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "LoginPolicyImpactResponse": {
+        "required": [
+          "personsWithoutWay"
+        ],
+        "type": "object",
+        "properties": {
+          "personsWithoutWay": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "LoginPolicyRequest": {
+        "required": [
+          "magicLink",
+          "passkey",
+          "kiosk",
+          "disabledProviderKeys",
+          "forcedProviderKeys",
+          "kioskIdleSeconds"
+        ],
+        "type": "object",
+        "properties": {
+          "magicLink": {
+            "type": "boolean"
+          },
+          "passkey": {
+            "type": "boolean"
+          },
+          "kiosk": {
+            "type": "boolean"
+          },
+          "disabledProviderKeys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "forcedProviderKeys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "kioskIdleSeconds": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "LoginPolicyResponse": {
+        "required": [
+          "magicLink",
+          "passkey",
+          "kiosk",
+          "disabledProviderKeys",
+          "forcedProviderKeys",
+          "kioskIdleSeconds",
+          "availableProviders"
+        ],
+        "type": "object",
+        "properties": {
+          "magicLink": {
+            "type": "boolean"
+          },
+          "passkey": {
+            "type": "boolean"
+          },
+          "kiosk": {
+            "type": "boolean"
+          },
+          "disabledProviderKeys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "forcedProviderKeys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "kioskIdleSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "availableProviders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProviderResponse"
+            }
+          }
+        }
+      },
+      "LoginResponse": {
+        "required": [
+          "tenantId",
+          "personId",
+          "kind",
+          "newRecoveryCode",
+          "mustSetUpAccess"
+        ],
+        "type": "object",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "personId": {
+            "type": "string"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/SessionKindDto"
+          },
+          "newRecoveryCode": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "mustSetUpAccess": {
+            "type": "boolean"
+          }
+        }
+      },
+      "MagicLinkRequest": {
+        "required": [
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
             "type": "string"
           }
         }
@@ -839,6 +3259,63 @@
           }
         }
       },
+      "MeResponse": {
+        "required": [
+          "personId",
+          "displayName",
+          "tenantId",
+          "tenantName",
+          "roles"
+        ],
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "tenantId": {
+            "type": "string"
+          },
+          "tenantName": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "MemberResponse": {
+        "required": [
+          "personId",
+          "displayName",
+          "roles",
+          "joinedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "joinedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "OperationResponse": {
         "required": [
           "operationId"
@@ -846,6 +3323,116 @@
         "type": "object",
         "properties": {
           "operationId": {
+            "type": "string"
+          }
+        }
+      },
+      "PasskeyAnswerRequest": {
+        "required": [
+          "state",
+          "credential",
+          "deviceName"
+        ],
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string"
+          },
+          "credential": {
+            "$ref": "#/components/schemas/JsonElement"
+          },
+          "deviceName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "PasskeyCeremonyResponse": {
+        "required": [
+          "options",
+          "state"
+        ],
+        "type": "object",
+        "properties": {
+          "options": {
+            "$ref": "#/components/schemas/JsonElement"
+          },
+          "state": {
+            "type": "string"
+          }
+        }
+      },
+      "PasskeyResponse": {
+        "required": [
+          "passkeyId",
+          "deviceName",
+          "createdAt",
+          "lastUsedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "passkeyId": {
+            "type": "string"
+          },
+          "deviceName": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUsedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "PendingExternalResponse": {
+        "required": [
+          "providerKey",
+          "displayName"
+        ],
+        "type": "object",
+        "properties": {
+          "providerKey": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "PinRequest": {
+        "required": [
+          "pin"
+        ],
+        "type": "object",
+        "properties": {
+          "pin": {
+            "type": "string"
+          }
+        }
+      },
+      "PinResetRequest": {
+        "required": [
+          "kioskId",
+          "recoveryCode",
+          "pin"
+        ],
+        "type": "object",
+        "properties": {
+          "kioskId": {
+            "type": "string"
+          },
+          "recoveryCode": {
+            "type": "string"
+          },
+          "pin": {
             "type": "string"
           }
         }
@@ -919,6 +3506,266 @@
               "null",
               "string"
             ]
+          }
+        }
+      },
+      "ProviderResponse": {
+        "required": [
+          "key",
+          "displayName"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "RecoveryCodeResponse": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "RecoveryLoginRequest": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "RedeemRoleCodeRequest": {
+        "required": [
+          "code",
+          "realName"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "realName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "RoleCodeResponse": {
+        "required": [
+          "roleCodeId",
+          "code",
+          "role",
+          "expiresAt"
+        ],
+        "type": "object",
+        "properties": {
+          "roleCodeId": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RoleJoinRequest": {
+        "required": [
+          "realName",
+          "visibility",
+          "passkey",
+          "email",
+          "useExternal"
+        ],
+        "type": "object",
+        "properties": {
+          "realName": {
+            "type": "string"
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/VisibilityDto"
+          },
+          "passkey": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/PasskeyAnswerRequest"
+              }
+            ]
+          },
+          "email": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "useExternal": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SecurityEntryResponse": {
+        "required": [
+          "entryId",
+          "occurredAt",
+          "eventType",
+          "success",
+          "pseudonym",
+          "detail"
+        ],
+        "type": "object",
+        "properties": {
+          "entryId": {
+            "type": "string"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "eventType": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "pseudonym": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "detail": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "SessionKindDto": {
+        "enum": [
+          "member",
+          "privileged",
+          "kiosk_device",
+          "kiosk_person"
+        ]
+      },
+      "SessionResponse": {
+        "required": [
+          "kind",
+          "tenantId",
+          "personId",
+          "authenticatedAt",
+          "slidingUntil",
+          "absoluteUntil",
+          "freshUntil",
+          "kioskDeviceId"
+        ],
+        "type": "object",
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/SessionKindDto"
+          },
+          "tenantId": {
+            "type": "string"
+          },
+          "personId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "authenticatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "slidingUntil": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "absoluteUntil": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "freshUntil": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "kioskDeviceId": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "TenantProviderResponse": {
+        "required": [
+          "providerId",
+          "key",
+          "displayName",
+          "issuer",
+          "clientId",
+          "validatedAt",
+          "disabledAt"
+        ],
+        "type": "object",
+        "properties": {
+          "providerId": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "issuer": {
+            "type": "string"
+          },
+          "clientId": {
+            "type": "string"
+          },
+          "validatedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "disabledAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
           }
         }
       },
@@ -1101,12 +3948,39 @@
           }
         }
       },
+      "TokenRequest": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
       "TonalitaetDto": {
         "enum": [
           "sachlich",
           "freundlich",
           "motivierend"
         ]
+      },
+      "TransferResponse": {
+        "required": [
+          "url",
+          "expiresAt"
+        ],
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
       },
       "VersionResponse": {
         "required": [
@@ -1118,6 +3992,13 @@
             "type": "string"
           }
         }
+      },
+      "VisibilityDto": {
+        "enum": [
+          "only_me",
+          "team",
+          "company"
+        ]
       },
       "WebManifest": {
         "required": [

@@ -43,6 +43,7 @@ public sealed class OrganisationDbContext(DbContextOptions<OrganisationDbContext
             b.Property(m => m.PersonId).HasColumnName("person_id");
             b.Property(m => m.State).HasColumnName("state").HasConversion<short>();
             b.Property(m => m.JoinedAt).HasColumnName("joined_at");
+            b.Property(m => m.LeftAt).HasColumnName("left_at");
             // Fremdschlüssel tenant_id -> organisation.id liegt in der Migration (EF kann TenantId nicht auf Guid binden).
             b.HasMany(m => m.Roles).WithOne().HasForeignKey(r => new { r.TenantId, r.PersonId }).OnDelete(DeleteBehavior.Cascade);
             b.Navigation(m => m.Roles).HasField("_roles").UsePropertyAccessMode(PropertyAccessMode.Field);

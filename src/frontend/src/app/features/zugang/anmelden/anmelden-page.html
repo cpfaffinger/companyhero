@@ -1,0 +1,74 @@
+<section class="ch-anmelden">
+  <h1 class="ch-anmelden__title">{{ texts.t('zugang.anmelden.titel') }}</h1>
+  <p class="ch-anmelden__hint">{{ texts.t('zugang.anmelden.hinweis') }}</p>
+
+  @if (hinweis(); as key) {
+    <p class="ch-anmelden__status" role="status">{{ texts.t(key) }}</p>
+  }
+  @if (fehler(); as f) {
+    <p class="ch-anmelden__status ch-anmelden__status--fehler" role="alert">{{ texts.t(f.key) }}</p>
+  }
+
+  @if (neuerCode(); as state) {
+    <div class="ch-anmelden__block ch-anmelden__block--code">
+      <h2 class="ch-anmelden__subtitle">{{ texts.t('zugang.neuerCode.titel') }}</h2>
+      <p>{{ texts.t('zugang.neuerCode.hinweis') }}</p>
+      <code class="ch-anmelden__code" data-testid="neuer-code">{{ state.code }}</code>
+      <button matButton="filled" type="button" (click)="codeGesehen()">{{ texts.t('zugang.neuerCode.notiert') }}</button>
+    </div>
+  } @else {
+    <div class="ch-anmelden__wege">
+      @if (passkeyMoeglich) {
+        <button matButton="filled" type="button" class="ch-anmelden__weg" [disabled]="busy()" (click)="mitPasskey()" data-testid="passkey">
+          <span class="material-symbols-rounded" aria-hidden="true">passkey</span>
+          {{ texts.t('zugang.weg.passkey') }}
+        </button>
+      }
+      @for (provider of providers(); track provider.key) {
+        <a matButton="outlined" class="ch-anmelden__weg" [href]="oidcUrl(provider.key)" [attr.data-testid]="'anbieter-' + provider.key">{{ texts.t('zugang.weg.anbieter', { anbieter: provider.displayName }) }}</a>
+      }
+    </div>
+
+    <form class="ch-anmelden__block" (submit)="$event.preventDefault(); magicLink()">
+      <h2 class="ch-anmelden__subtitle">{{ texts.t('zugang.weg.magicLink') }}</h2>
+      @if (magicGesendet()) {
+        <p role="status">{{ texts.t('zugang.magicLink.gesendet') }}</p>
+      } @else {
+        <mat-form-field appearance="outline">
+          <mat-label>{{ texts.t('zugang.feld.email') }}</mat-label>
+          <input matInput type="email" autocomplete="email" [formControl]="email" data-testid="email" />
+          @if (email.touched && email.invalid) {
+            <mat-error>{{ texts.t('zugang.feld.emailPflicht') }}</mat-error>
+          }
+        </mat-form-field>
+        <button matButton type="submit" [disabled]="busy()">{{ texts.t('zugang.magicLink.anfordern') }}</button>
+      }
+    </form>
+
+    <form class="ch-anmelden__block" (submit)="$event.preventDefault(); wiederherstellen()">
+      <h2 class="ch-anmelden__subtitle">{{ texts.t('zugang.weg.wiederherstellung') }}</h2>
+      <p class="ch-anmelden__hint">{{ texts.t('zugang.wiederherstellung.hinweis') }}</p>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ texts.t('zugang.feld.wiederherstellungscode') }}</mat-label>
+        <input matInput autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" [formControl]="code" data-testid="wiederherstellungscode" />
+        @if (code.touched && code.invalid) {
+          <mat-error>{{ texts.t('zugang.feld.codePflicht') }}</mat-error>
+        }
+      </mat-form-field>
+      <button matButton type="submit" [disabled]="busy()">{{ texts.t('zugang.wiederherstellung.anmelden') }}</button>
+    </form>
+
+    <form class="ch-anmelden__block" (submit)="$event.preventDefault(); zumBeitritt()">
+      <h2 class="ch-anmelden__subtitle">{{ texts.t('zugang.beitritt.titel') }}</h2>
+      <p class="ch-anmelden__hint">{{ texts.t('zugang.beitritt.hinweis') }}</p>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ texts.t('zugang.feld.beitrittscode') }}</mat-label>
+        <input matInput autocomplete="off" autocapitalize="characters" spellcheck="false" [formControl]="beitrittscode" data-testid="beitrittscode" />
+        @if (beitrittscode.touched && beitrittscode.invalid) {
+          <mat-error>{{ texts.t('zugang.feld.codePflicht') }}</mat-error>
+        }
+      </mat-form-field>
+      <button matButton type="submit">{{ texts.t('zugang.beitritt.weiter') }}</button>
+    </form>
+  }
+</section>

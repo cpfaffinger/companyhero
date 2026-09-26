@@ -93,7 +93,7 @@ internal static class BrandingEndpoints
                 var theme = await themes.GetCurrentAsync(ct);
                 return Results.Ok(ToResponse(context.Require().RequireTenant(), theme, themes.Platform));
             })
-            .RequireTenantContext()
+            .RequireTenantContext().AllowKiosk(device: true)
             .WithName("GetTheme")
             .Produces<ThemeResponse>();
 
@@ -107,7 +107,7 @@ internal static class BrandingEndpoints
             .Produces<ThemeResponse>()
             .Produces(StatusCodes.Status404NotFound);
 
-        // Marke veröffentlichen: Tenant-Admin, sensible Aktion (Zugang 3.3; die frische Anmeldung prüft Stufe 4 in der Sitzung).
+        // Marke veröffentlichen: Tenant-Admin, sensible Aktion mit frischer Anmeldung (Zugang 3.3).
         endpoints.MapPut("/api/branding/theme", async (ThemeDocumentRequest request, ITenantContextAccessor context, IThemeService themes, CancellationToken ct) =>
             {
                 if (!context.Require().HasRole(Role.TenantAdmin))
@@ -120,7 +120,7 @@ internal static class BrandingEndpoints
                     ? Results.Ok(ToResponse(context.Require().RequireTenant(), outcome.Theme!, themes.Platform))
                     : Results.ValidationProblem(new Dictionary<string, string[]> { ["theme"] = [.. outcome.Gruende] }, title: "Theme abgelehnt; das Standard-Theme oder die letzte Version bleibt gültig.");
             })
-            .RequireTenantContext()
+            .RequireTenantContext().RequireFreshLogin()
             .WithName("PublishTheme")
             .Produces<ThemeResponse>()
             .ProducesValidationProblem()
@@ -181,7 +181,7 @@ internal static class BrandingEndpoints
                 var theme = await themes.GetCurrentAsync(ct);
                 return Results.Json(ManifestBuilder.ForKiosk(context.Require().RequireTenant(), theme), contentType: ManifestPaths.ContentType);
             })
-            .RequireTenantContext()
+            .RequireTenantContext().AllowKiosk(device: true)
             .WithName("GetKioskManifest")
             .Produces<WebManifest>(StatusCodes.Status200OK, ManifestPaths.ContentType);
 
@@ -206,7 +206,7 @@ internal static class BrandingEndpoints
                     _ => Results.Text(IconRenderer.Svg(primary, progress, background), "image/svg+xml"),
                 };
             })
-            .RequireTenantContext()
+            .RequireTenantContext().AllowKiosk(device: true)
             .WithName("GetTenantIcon")
             .Produces(StatusCodes.Status200OK, contentType: "image/png")
             .Produces(StatusCodes.Status404NotFound);

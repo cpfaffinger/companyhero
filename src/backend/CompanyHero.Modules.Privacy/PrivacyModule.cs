@@ -1,7 +1,10 @@
+using CompanyHero.Modules.Privacy.Api;
 using CompanyHero.Modules.Privacy.Application;
+using CompanyHero.Platform.Audit;
 using CompanyHero.Modules.Privacy.Infrastructure;
 using CompanyHero.Platform.Data;
 using CompanyHero.Platform.Modules;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +20,12 @@ public sealed class PrivacyModule : IModule
     {
         services.AddModuleDbContext<PrivacyDbContext>(ModuleSchemas.Privacy);
         services.AddScoped<IVisibilityRule, VisibilityRuleService>();
-        services.AddScoped<IVisibilityChoice, VisibilityChoice>();
+        services.AddScoped<IVisibilityChoice, Application.VisibilityChoice>();
+        services.AddScoped<Platform.Privacy.IVisibilityChoiceRecorder, VisibilityChoiceRecorder>();
+        services.AddScoped<IAuditLog, AuditLog>();
+        services.AddScoped<ISecurityLog, SecurityLog>();
+        services.AddScoped<IAuditReader, AuditReader>();
     }
+
+    public void MapEndpoints(IEndpointRouteBuilder endpoints) => PrivacyEndpoints.Map(endpoints);
 }

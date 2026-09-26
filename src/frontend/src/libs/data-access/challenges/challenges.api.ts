@@ -10,6 +10,7 @@ import { uuidv7 } from '../uuidv7';
 export type ChallengeCard = components['schemas']['ChallengeCardResponse'];
 export type ContributionResponse = components['schemas']['ContributionResponse'];
 export type ContributionRequest = components['schemas']['ContributionRequest'];
+export type OperationResponse = components['schemas']['OperationResponse'];
 
 /** Eingabe des Formulars „Beitrag nachtragen“ (K10: Typed Reactive Forms besitzen den Zustand, die Abbildung ist ausdrücklich). */
 export interface ContributionInput {
@@ -64,6 +65,18 @@ export class ChallengesApi {
       idempotencyKey,
       operationId: null,
     };
+  }
+
+  /** Kiosk (A-005, Zugang 6.3): die Vorgangskennung wird serverseitig in der Kiosk-Personensitzung reserviert. */
+  reserveOperation(challengeId: string): Observable<OperationResponse> {
+    return this.api.post('/api/challenges/{challengeId}/contribution-operations', null, { path: { challengeId } }).pipe(
+      catchError((error: unknown) => throwError(() => toContributionError(error))),
+    );
+  }
+
+  /** Beitrag am Kiosk: Häkchen heute, Kanal kiosk, reservierte Vorgangskennung statt Idempotenzschlüssel des Clients. */
+  toKioskRequest(operationId: string, now: Date): ContributionRequest {
+    return { value: '1', recordedAt: toOffsetIso(now), channel: 'kiosk', idempotencyKey: null, operationId };
   }
 
   submit(challengeId: string, request: ContributionRequest): Observable<ContributionResponse> {

@@ -17,4 +17,7 @@ public sealed record MembershipVerdict(bool Active, IReadOnlySet<string> Roles)
 public interface IMembershipVerification
 {
     Task<MembershipVerdict> VerifyAsync(TenantId tenantId, PersonId personId, CancellationToken cancellationToken);
+
+    /// <summary>Kiosk-Gerätesitzung ohne Person: Gewährt der Tenant Mitgliedern derzeit Zugang (Organisation 1.3)?</summary>
+    Task<bool> VerifyTenantAsync(TenantId tenantId, CancellationToken cancellationToken);
 }

@@ -1,0 +1,11 @@
+{
+  "status": 401,
+  "contentType": "application/problem+json",
+  "body": {
+    "type": "https://tools.ietf.org/html/rfc9110#section-15.5.2",
+    "title": "Zugang abgelehnt",
+    "status": 401,
+    "detail": "kiosk_login_failed",
+    "traceId": "00-bf699bcfae5b06296fbf7b0bd7f4b49e-07380acfc08506b9-01"
+  }
+}

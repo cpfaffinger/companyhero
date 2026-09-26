@@ -43,4 +43,4 @@ createServer(async (request, response) => {
     response.writeHead(500);
     response.end();
   }
-}).listen(port, '127.0.0.1', () => console.log(`Produktionsbuild unter http://127.0.0.1:${port} (${root})`));
+}).listen(port, () => console.log(`Produktionsbuild unter http://localhost:${port} (${root})`));

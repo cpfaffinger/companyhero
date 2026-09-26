@@ -10,7 +10,7 @@ mkdirSync(screenshotDir, { recursive: true });
 test('Kiosk 1024px: Großflächenmodus erzwungen, Ziffernblock mit 72-px-Tasten, keine Namensliste', async ({ page }) => {
   await page.setViewportSize({ width: 1024, height: 768 });
   await page.emulateMedia({ colorScheme: 'light' });
-  await mockApi(page, { brand: 'wiesner' });
+  await mockApi(page, { brand: 'wiesner', kiosk: 'device' });
   await page.goto('/kiosk');
   await expect(page.getByRole('heading', { name: 'Kiosk' })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.dataset['chScale'])).toBe('gross');

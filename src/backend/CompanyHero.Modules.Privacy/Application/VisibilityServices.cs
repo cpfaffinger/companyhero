@@ -21,6 +21,7 @@ internal sealed class VisibilityRuleService(PrivacyDbContext db, IContextTransac
             .Where(v => v.TenantId == tenantId && v.PersonId == subject)
             .Select(v => (VisibilityLevel?)v.Level)
             .SingleOrDefaultAsync(cancellationToken);
+        await tx.CommitAsync(cancellationToken);
 
         // Gruppen entstehen mit dem Fachpfad (Stufe 6, Organisation 2); bis dahin teilt niemand eine Gruppe und
         // „Mein Team“ bleibt geschlossen. Die restriktivere Einstellung gewinnt (Datenschutz 3.3).
@@ -52,9 +53,24 @@ internal sealed class VisibilityChoice(PrivacyDbContext db, IContextTransaction 
     {
         var tenantId = context.Require().RequireTenant();
         await using var tx = await transaction.BeginAsync(cancellationToken);
-        return await db.VisibilitySettings
+        var level = await db.VisibilitySettings
             .Where(v => v.TenantId == tenantId && v.PersonId == personId)
             .Select(v => (VisibilityLevel?)v.Level)
             .SingleOrDefaultAsync(cancellationToken);
+        await tx.CommitAsync(cancellationToken);
+        return level;
     }
+}
+
+/// <summary>Umsetzung des Plattform-Querschnitts für den Beitritt: dieselbe Wahl, dieselbe Tabelle, dieselbe Transaktion.</summary>
+internal sealed class VisibilityChoiceRecorder(IVisibilityChoice choice) : Platform.Privacy.IVisibilityChoiceRecorder
+{
+    public Task RecordAsync(PersonId personId, Platform.Privacy.VisibilityChoice visibility, CancellationToken cancellationToken) =>
+        choice.ChooseAsync(personId, visibility switch
+        {
+            Platform.Privacy.VisibilityChoice.OnlyMe => VisibilityLevel.OnlyMe,
+            Platform.Privacy.VisibilityChoice.Team => VisibilityLevel.Team,
+            Platform.Privacy.VisibilityChoice.Company => VisibilityLevel.Company,
+            _ => throw new ArgumentOutOfRangeException(nameof(visibility)),
+        }, cancellationToken);
 }
